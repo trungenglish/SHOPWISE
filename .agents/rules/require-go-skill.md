@@ -1,0 +1,30 @@
+---
+trigger: glob
+description: Go Gin API — route to the matching skill in .agents/skills before implementing
+globs: apps/server/**/*.go, apps/server/Dockerfile, apps/server/docker-compose.yml
+---
+
+1. Go Gin skills
+
+When editing matched files for **Go Gin API** work (server, worker, Docker):
+
+- **Read the matching skill first** — open `.agents/skills/<skill>/SKILL.md` and follow it (including any `references/` it points to). Do not guess when a skill exists.
+- **Pick the most specific skill** for the task. If several apply, start with the narrowest one, then pull in `golang-gin-architect` for cross-cutting design decisions or `golang-gin-api` for shared handler/middleware conventions.
+- **Measure before optimizing** — for performance or schema work, profile or run `EXPLAIN ANALYZE` first; do not add indexes, caching, or abstractions without evidence.
+
+2. Skill router
+
+| Topic | Skill path |
+| --- | --- |
+| Architecture decisions, complexity budget, ADRs, greenfield sequencing | `.agents/skills/golang-gin-architect/SKILL.md` |
+| Routes, handlers, middleware, binding, error responses, project structure | `.agents/skills/golang-gin-api/SKILL.md` |
+| JWT auth, login/signup, protected routes, RBAC, token lifecycle | `.agents/skills/golang-gin-auth/SKILL.md` |
+| PostgreSQL wiring, repository pattern, GORM/sqlx, migrations tooling | `.agents/skills/golang-gin-database/SKILL.md` |
+| Schema design, indexes, query tuning, extensions (pgvector, PostGIS) | `.agents/skills/golang-gin-psql-dba/SKILL.md` |
+| Swagger/OpenAPI annotations, swaggo, Swagger UI, `swagger.json` generation | `.agents/skills/golang-gin-swagger/SKILL.md` |
+| Handler/service/repository tests, httptest, testcontainers, e2e flows | `.agents/skills/golang-gin-testing/SKILL.md` |
+| Dockerfile, docker-compose, health probes, 12-factor config, CI/CD | `.agents/skills/golang-gin-deploy/SKILL.md` |
+
+**`golang-gin-database` vs `golang-gin-psql-dba`:** use database for Go code (repositories, connections, transactions); use psql-dba for PostgreSQL decisions (schema, indexes, `EXPLAIN`, extensions).
+
+If no skill matches, say so and fall back to Go / Gin docs.
