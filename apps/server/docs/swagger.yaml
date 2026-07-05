@@ -1,0 +1,614 @@
+basePath: /api/v1
+definitions:
+  handler.CreateUserRequest:
+    properties:
+      email:
+        example: jane@example.com
+        format: email
+        type: string
+      name:
+        example: Jane Doe
+        maxLength: 255
+        minLength: 1
+        type: string
+    required:
+    - email
+    - name
+    type: object
+  handler.ErrorResponse:
+    properties:
+      code:
+        example: VALIDATION_FAILED
+        type: string
+      detail:
+        example: email and name are required
+        type: string
+      instance:
+        type: string
+      status:
+        example: 400
+        type: integer
+      title:
+        example: Bad Request
+        type: string
+      type:
+        example: about:blank
+        type: string
+    type: object
+  handler.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  handler.MeResponse:
+    properties:
+      email:
+        type: string
+      emailVerifiedAt:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      preferences:
+        $ref: '#/definitions/handler.UserPreferencesResponse'
+    type: object
+  handler.RefreshRequest:
+    properties:
+      refreshToken:
+        type: string
+    required:
+    - refreshToken
+    type: object
+  handler.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        minLength: 8
+        type: string
+    required:
+    - email
+    - name
+    - password
+    type: object
+  handler.TokenResponse:
+    properties:
+      accessToken:
+        type: string
+      expiresIn:
+        type: integer
+      refreshToken:
+        type: string
+    type: object
+  handler.UpdateMeRequest:
+    properties:
+      brandOpenness:
+        type: string
+      budgetSensitivity:
+        type: string
+      defaultCurrency:
+        type: string
+      name:
+        type: string
+      preferredCategories:
+        items:
+          type: string
+        type: array
+    type: object
+  handler.UpdateUserRequest:
+    properties:
+      email:
+        example: jane@example.com
+        format: email
+        type: string
+      name:
+        example: Jane Doe
+        maxLength: 255
+        minLength: 1
+        type: string
+    type: object
+  handler.UserListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/handler.UserResponse'
+        type: array
+      limit:
+        example: 20
+        type: integer
+      offset:
+        example: 0
+        type: integer
+    type: object
+  handler.UserPreferencesResponse:
+    properties:
+      brandOpenness:
+        type: string
+      budgetSensitivity:
+        type: string
+      defaultCurrency:
+        type: string
+      preferredCategories:
+        items:
+          type: string
+        type: array
+    type: object
+  handler.UserResponse:
+    properties:
+      created_at:
+        format: date-time
+        type: string
+      email:
+        example: jane@example.com
+        format: email
+        type: string
+      id:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        format: uuid
+        type: string
+      name:
+        example: Jane Doe
+        type: string
+      updated_at:
+        format: date-time
+        type: string
+    type: object
+  handler.VerifyEmailRequest:
+    properties:
+      token:
+        type: string
+    required:
+    - token
+    type: object
+  health.Response:
+    properties:
+      db:
+        type: string
+      redis:
+        type: string
+      status:
+        type: string
+    type: object
+  internal_administration_handler.statusResponse:
+    properties:
+      module:
+        example: administration
+        type: string
+      status:
+        example: ok
+        type: string
+    type: object
+  internal_files_handler.statusResponse:
+    properties:
+      module:
+        example: files
+        type: string
+      status:
+        example: ok
+        type: string
+    type: object
+  internal_identity_handler.statusResponse:
+    properties:
+      module:
+        example: identity
+        type: string
+      status:
+        example: ok
+        type: string
+    type: object
+  response.ProblemDetail:
+    properties:
+      code:
+        type: string
+      detail:
+        type: string
+      instance:
+        type: string
+      status:
+        type: integer
+      title:
+        type: string
+      type:
+        type: string
+    type: object
+host: localhost:18080
+info:
+  contact: {}
+  description: Modular monolith REST API for React web and native clients.
+  title: Boilerplate Server API
+  version: "1.0"
+paths:
+  /admin/status:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_administration_handler.statusResponse'
+      summary: Administration module status
+      tags:
+      - administration
+  /files/status:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_files_handler.statusResponse'
+      summary: Files module status
+      tags:
+      - files
+  /health:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/health.Response'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/health.Response'
+      summary: Health check
+      tags:
+      - platform
+  /identity/google/callback:
+    get:
+      responses:
+        "302":
+          description: Found
+      summary: Google OAuth callback
+      tags:
+      - identity
+  /identity/google/start:
+    get:
+      responses:
+        "302":
+          description: Found
+      summary: Start Google OAuth flow
+      tags:
+      - identity
+  /identity/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Login
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.TokenResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.ProblemDetail'
+      summary: Login with email and password
+      tags:
+      - identity
+  /identity/refresh:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Refresh
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RefreshRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.TokenResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/response.ProblemDetail'
+      summary: Refresh access token
+      tags:
+      - identity
+  /identity/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Register
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ProblemDetail'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ProblemDetail'
+      summary: Register with email and password
+      tags:
+      - identity
+  /identity/status:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_identity_handler.statusResponse'
+      summary: Identity module status
+      tags:
+      - identity
+  /identity/verify-email:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Verify email
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.VerifyEmailRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ProblemDetail'
+      summary: Verify email with token
+      tags:
+      - identity
+  /users:
+    get:
+      parameters:
+      - default: 20
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.UserListResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: List users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Create user
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Create user
+      tags:
+      - users
+  /users/{id}:
+    delete:
+      parameters:
+      - description: User ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Delete user
+      tags:
+      - users
+    get:
+      parameters:
+      - description: User ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.UserResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Get user by ID
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update user
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Update user
+      tags:
+      - users
+  /users/me:
+    delete:
+      responses:
+        "204":
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete account and all user data (FR-037)
+      tags:
+      - users
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.MeResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get current user profile
+      tags:
+      - users
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Profile update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateMeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.MeResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update profile and preferences
+      tags:
+      - users
+schemes:
+- http
+swagger: "2.0"

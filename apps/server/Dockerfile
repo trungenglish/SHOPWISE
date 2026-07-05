@@ -1,0 +1,26 @@
+# Stage 1: build
+FROM golang:1.25-alpine AS builder
+
+WORKDIR /app
+
+RUN apk add --no-cache ca-certificates git
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /server ./cmd/server && \
+    CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /worker ./cmd/worker
+
+# Stage 2: runtime
+FROM gcr.io/distroless/static-debian12:nonroot
+
+COPY --from=builder /server /server
+COPY --from=builder /worker /worker
+
+USER nonroot:nonroot
+
+EXPOSE 8080
+
+ENTRYPOINT ["/server"]

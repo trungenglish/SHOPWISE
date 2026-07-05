@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "scheme": "shopwise",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "web": {
+      "bundler": "metro"
+    },
+    "name": "shopwise",
+    "slug": "shopwise",
+    "plugins": ["expo-font"],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

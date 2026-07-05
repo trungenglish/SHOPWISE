@@ -1,0 +1,19 @@
+packages:
+  - apps/*
+  - packages/*
+
+allowBuilds:
+  esbuild: true
+  msgpackr-extract: true
+  msw: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
+
+catalog:
+  "@types/react-dom": ^19.2.3
+  alchemy: ^0.91.2
+  dotenv: ^17.2.2
+  next-themes: ^0.4.6
+  typescript: ^6
+  zod: ^4.1.13

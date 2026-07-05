@@ -1,0 +1,14 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "emmet.showExpandedAbbreviation": "never",
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "gopls": {
+    "buildFlags": ["-tags=integration"]
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}
