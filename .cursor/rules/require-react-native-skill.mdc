@@ -1,0 +1,39 @@
+---
+description: React Native / Expo — route to the matching skill in .agents/skills before implementing
+globs:
+  - "apps/native/**/*.{tsx,ts,jsx,js}"
+  - "packages/**/*native*/*.{tsx,ts,jsx,js}"
+alwaysApply: false
+---
+
+# React Native & Expo skills
+
+When editing matched files for **React Native or Expo** work:
+
+1. **Read the matching skill first** — open `.agents/skills/<skill>/SKILL.md` and follow it (including any `references/` it points to). Do not guess when a skill exists.
+2. **Pick the most specific skill** for the task. If several apply, start with the narrowest one, then pull in `vercel-react-native-skills` for performance or `building-native-ui` for general UI/navigation patterns.
+3. **Profile before micro-optimizing** — for performance work, measure first; do not add `memo` / `useCallback` / `useMemo` without evidence.
+
+## Skill router
+
+| Topic | Skill path |
+| --- | --- |
+| App Clip, AASA, smart app banner | `.agents/skills/add-app-clip/SKILL.md` |
+| Expo Router UI, navigation, animations, native tabs | `.agents/skills/building-native-ui/SKILL.md` |
+| EAS Update health, rollout metrics, OTA vs embedded | `.agents/skills/eas-update-insights/SKILL.md` |
+| Expo Router API routes, EAS Hosting | `.agents/skills/expo-api-routes/SKILL.md` |
+| Brownfield: embed RN in existing native apps | `.agents/skills/expo-brownfield/SKILL.md` |
+| EAS workflow YAML, `.eas/workflows/`, CI/CD | `.agents/skills/expo-cicd-workflows/SKILL.md` |
+| App Store, Play Store, web deploy, API routes | `.agents/skills/expo-deployment/SKILL.md` |
+| Dev client builds, TestFlight distribution | `.agents/skills/expo-dev-client/SKILL.md` |
+| Custom Expo native modules & views | `.agents/skills/expo-module/SKILL.md` |
+| EAS Observe, launch/TTR/TTI metrics | `.agents/skills/expo-observe/SKILL.md` |
+| Tailwind v4, NativeWind v5, Uniwind setup | `.agents/skills/expo-tailwind-setup/SKILL.md` |
+| `@expo/ui` — SwiftUI / Jetpack Compose from React | `.agents/skills/expo-ui/SKILL.md` |
+| Expo SDK upgrade, dependency fixes | `.agents/skills/upgrading-expo/SKILL.md` |
+| DOM components, web-in-native incremental migration | `.agents/skills/use-dom/SKILL.md` |
+| Fetch, React Query, SWR, loaders, offline | `.agents/skills/native-data-fetching/SKILL.md` |
+| HeroUI Native components & theming | `.agents/skills/heroui-native/SKILL.md` |
+| RN performance (lists, animations, rendering) | `.agents/skills/vercel-react-native-skills/SKILL.md` |
+
+If no skill matches, say so and fall back to Expo / React Native docs.
