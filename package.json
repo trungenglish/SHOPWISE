@@ -1,4 +1,29 @@
 {
+  "name": "shopwise",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F server dev",
+    "dev:server:docker": "turbo -F server dev:docker",
+    "deploy": "turbo -F @shopwise/infra deploy",
+    "destroy": "turbo -F @shopwise/infra destroy",
+    "check": "ultracite check",
+    "fix": "ultracite fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trungenglish/SHOPWISE.git"
+  },
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
   "dependencies": {
     "@shopwise/env": "workspace:*",
     "axios": "1.18.0",
@@ -42,26 +67,5 @@
     "turbo": "^2.10.3",
     "typescript": "catalog:",
     "ultracite": "7.8.3"
-  },
-  "name": "shopwise",
-  "scripts": {
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "check-types": "turbo check-types",
-    "dev:native": "turbo -F native dev",
-    "dev:web": "turbo -F web dev",
-    "dev:server": "turbo -F server dev",
-    "dev:server:docker": "turbo -F server dev:docker",
-    "deploy": "turbo -F @shopwise/infra deploy",
-    "destroy": "turbo -F @shopwise/infra destroy",
-    "check": "ultracite check",
-    "fix": "ultracite fix"
-  },
-  "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "private": true,
-  "packageManager": "pnpm@11.9.0"
+  }
 }
