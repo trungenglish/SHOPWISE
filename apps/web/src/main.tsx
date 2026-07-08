@@ -1,15 +1,23 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactDOM from "react-dom/client";
 
 import Loader from "./components/loader";
 import { routeTree } from "./routeTree.gen";
+import { StrictMode } from "react";
+import { ThemeProvider } from "./components/theme-provider";
+import { FontProvider } from "@shopwise/ui/contexts/font-provider"
+
+const queryClient = new QueryClient();
 
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   scrollRestoration: true,
   defaultPendingComponent: () => <Loader />,
-  context: {},
+  context: {
+    queryClient,
+  },
 });
 
 declare module "@tanstack/react-router" {
@@ -26,5 +34,15 @@ if (!rootElement) {
 
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
-  root.render(<RouterProvider router={router} />);
+  root.render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider>
+          <FontProvider>
+            <RouterProvider router={router} />
+          </FontProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StrictMode>,
+  );
 }
