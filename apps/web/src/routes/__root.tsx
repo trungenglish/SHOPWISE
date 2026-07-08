@@ -1,20 +1,29 @@
+import type { QueryClient } from "@tanstack/react-query";
 import { Toaster } from "@shopwise/ui/components/sonner";
+import { TooltipProvider } from "@shopwise/ui/components/tooltip";
+import { env } from "@shopwise/env/web";
 import {
   HeadContent,
   Outlet,
   createRootRouteWithContext,
 } from "@tanstack/react-router";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 import { ThemeProvider } from "@/components/theme-provider";
 
 import "../index.css";
+import Loader from "@/components/loader";
+import { NotFoundError } from "@/features/errors/not-found-error";
+import { GeneralError } from "@/features/errors/general-error";
 
-export interface RouterAppContext { }
+export interface RouterAppContext {
+  queryClient: QueryClient;
+}
 
 const RootComponent = () => {
   return (
-    <>
+    <TooltipProvider>
       <HeadContent />
       <ThemeProvider
         attribute="class"
@@ -23,10 +32,16 @@ const RootComponent = () => {
         storageKey="vite-ui-theme"
       >
         <Outlet />
-        <Toaster richColors />
+        <Toaster richColors duration={5000} />
+        {env.VITE_NODE_ENV === "development" && (
+          <>
+            <ReactQueryDevtools buttonPosition="bottom-left" />
+            <TanStackRouterDevtools position="bottom-right" />
+          </>
+        )}
       </ThemeProvider>
       <TanStackRouterDevtools position="bottom-left" />
-    </>
+    </TooltipProvider>
   );
 };
 
@@ -35,7 +50,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   head: () => ({
     meta: [
       {
-        title: "shopwise",
+        title: "Shopwise",
       },
       {
         name: "description",
@@ -49,4 +64,7 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       },
     ],
   }),
+  pendingComponent: () => <Loader />,
+  notFoundComponent: NotFoundError,
+  errorComponent: GeneralError,
 });

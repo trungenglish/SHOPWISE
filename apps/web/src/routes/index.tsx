@@ -1,7 +1,13 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-  beforeLoad: () => {
-    throw redirect({ to: "/error/something-went-wrong" });
-  },
+  component: LandingPageComponent,
 });
+
+function LandingPageComponent() {
+  return (
+    <div>
+      <h1>Landing Page</h1>
+    </div>
+  );
+}
