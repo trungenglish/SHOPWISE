@@ -1,0 +1,43 @@
+classDiagram
+
+class Customer
+
+class ShoppingSession
+
+class Requirement
+
+class Recommendation
+
+class Comparison
+
+class ShoppingCart
+
+class Order
+
+class Product
+
+class Promotion
+
+class Inventory
+
+Customer "1" --> "*" ShoppingSession
+
+ShoppingSession --> Requirement
+
+ShoppingSession --> Recommendation
+
+ShoppingSession --> Comparison
+
+ShoppingSession --> ShoppingCart
+
+ShoppingCart --> Product
+
+Recommendation --> Product
+
+Comparison --> Product
+
+Product --> Promotion
+
+Product --> Inventory
+
+ShoppingCart --> Order

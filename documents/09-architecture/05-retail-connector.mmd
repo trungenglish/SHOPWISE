@@ -1,0 +1,37 @@
+flowchart LR
+
+subgraph AI
+    Agent
+    ToolRuntime
+end
+
+subgraph Backend
+    RetailConnector
+    ProviderRegistry
+end
+
+subgraph Providers
+    PhongVuProvider
+    ShopeeProvider
+    CellphoneSProvider
+end
+
+subgraph External
+    PhongVuAPI
+    ShopeeAPI
+    CellphoneSAPI
+end
+
+Agent --> ToolRuntime
+
+ToolRuntime --> RetailConnector
+
+RetailConnector --> ProviderRegistry
+
+ProviderRegistry --> PhongVuProvider
+ProviderRegistry --> ShopeeProvider
+ProviderRegistry --> CellphoneSProvider
+
+PhongVuProvider --> PhongVuAPI
+ShopeeProvider --> ShopeeAPI
+CellphoneSProvider --> CellphoneSAPI

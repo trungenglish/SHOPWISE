@@ -1,0 +1,153 @@
+flowchart TD
+
+%% =========================
+%% Input
+%% =========================
+
+User["Customer Request"]
+
+Conversation["Conversation Context"]
+
+Memory["Customer Memory"]
+
+Knowledge["Knowledge Base"]
+
+Catalog["Retail Catalog"]
+
+User --> Intent
+
+Conversation --> Intent
+
+%% =========================
+%% Understanding
+%% =========================
+
+subgraph Understanding
+
+Intent["Intent Detection"]
+
+Requirements["Requirement Extraction"]
+
+Preference["Preference Resolution"]
+
+end
+
+Intent --> Requirements
+
+Memory --> Preference
+
+Preference --> Requirements
+
+%% =========================
+%% Retrieval
+%% =========================
+
+subgraph Retrieval
+
+Structured["Structured Retrieval"]
+
+Semantic["Semantic Retrieval"]
+
+Hybrid["Hybrid Ranking"]
+
+end
+
+Requirements --> Structured
+
+Requirements --> Semantic
+
+Catalog --> Structured
+
+Knowledge --> Semantic
+
+Structured --> Hybrid
+
+Semantic --> Hybrid
+
+%% =========================
+%% Candidate Generation
+%% =========================
+
+subgraph CandidateGeneration
+
+Candidates["Candidate Generation"]
+
+Filtering["Business Rules"]
+
+Ranking["Ranking Engine"]
+
+end
+
+Hybrid --> Candidates
+
+Candidates --> Filtering
+
+Filtering --> Ranking
+
+%% =========================
+%% Reasoning
+%% =========================
+
+subgraph Reasoning
+
+Tradeoffs["Trade-off Analysis"]
+
+Alternatives["Alternative Generation"]
+
+Confidence["Confidence Estimation"]
+
+Explanation["Explainability"]
+
+end
+
+Ranking --> Tradeoffs
+
+Tradeoffs --> Alternatives
+
+Alternatives --> Confidence
+
+Confidence --> Explanation
+
+%% =========================
+%% Commerce
+%% =========================
+
+subgraph Commerce
+
+Recommendation["Recommendation"]
+
+Comparison["Comparison"]
+
+Cart["Cart Readiness"]
+
+Checkout["Checkout Readiness"]
+
+end
+
+Explanation --> Recommendation
+
+Recommendation --> Comparison
+
+Comparison --> Cart
+
+Cart --> Checkout
+
+%% =========================
+%% UI
+%% =========================
+
+subgraph Output
+
+UISchema["Dynamic UI Schema"]
+
+Response["Assistant Response"]
+
+end
+
+Checkout --> UISchema
+
+Recommendation --> UISchema
+
+Comparison --> UISchema
+
+UISchema --> Response

@@ -1,0 +1,17 @@
+sequenceDiagram
+
+User->>AI: Buy
+
+AI->>Backend: add_to_cart()
+
+Backend->>Retail: Cart
+
+Retail-->>Backend: Success
+
+AI->>Backend: checkout()
+
+Backend->>Retail: Checkout
+
+Retail-->>Backend: Order
+
+Backend-->>Frontend: Order Summary

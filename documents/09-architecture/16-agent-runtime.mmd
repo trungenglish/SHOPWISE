@@ -1,0 +1,98 @@
+flowchart TD
+
+%% =========================
+%% User Interaction
+%% =========================
+
+User([Customer])
+
+Frontend["React / Flutter UI"]
+
+Conversation["Conversation API"]
+
+User --> Frontend
+Frontend --> Conversation
+
+%% =========================
+%% Agent Runtime
+%% =========================
+
+subgraph AI_Runtime["AI Runtime"]
+
+Planner["Planner"]
+
+Context["Context Builder"]
+
+Memory["Memory Manager"]
+
+Retriever["Knowledge Retriever"]
+
+ToolSelector["Tool Selector"]
+
+ToolExecutor["Tool Executor"]
+
+Observation["Observation Processor"]
+
+Reasoner["Reasoning Engine"]
+
+Confidence["Confidence Evaluator"]
+
+UI["UI Generator"]
+
+end
+
+Conversation --> Planner
+
+Planner --> Context
+
+Context --> Memory
+
+Context --> Retriever
+
+Context --> ToolSelector
+
+ToolSelector --> ToolExecutor
+
+ToolExecutor --> Observation
+
+Observation --> Reasoner
+
+Reasoner --> Confidence
+
+Confidence --> UI
+
+UI --> Conversation
+
+Conversation --> Frontend
+
+%% =========================
+%% External Systems
+%% =========================
+
+subgraph External
+
+BusinessAPI["Go Business API"]
+
+Knowledge["Vector Knowledge"]
+
+CustomerMemory["Memory Store"]
+
+LLM["LLM Provider"]
+
+end
+
+Retriever --> Knowledge
+
+Memory --> CustomerMemory
+
+ToolExecutor --> BusinessAPI
+
+Planner --> LLM
+
+Reasoner --> LLM
+
+Confidence --> LLM
+
+%% =========================
+
+style AI_Runtime fill:#eef7ff

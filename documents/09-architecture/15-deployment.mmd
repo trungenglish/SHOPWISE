@@ -1,0 +1,81 @@
+flowchart TB
+
+subgraph Client
+
+Web
+
+Mobile
+
+end
+
+subgraph Edge
+
+Cloudflare
+
+LoadBalancer
+
+end
+
+subgraph Backend
+
+GoAPI1
+
+GoAPI2
+
+Redis
+
+PostgreSQL
+
+end
+
+subgraph AI
+
+AI1
+
+AI2
+
+OpenAI
+
+end
+
+subgraph Retail
+
+PhongVu
+
+Shopee
+
+CellphoneS
+
+end
+
+Web --> Cloudflare
+
+Mobile --> Cloudflare
+
+Cloudflare --> LoadBalancer
+
+LoadBalancer --> GoAPI1
+
+LoadBalancer --> GoAPI2
+
+GoAPI1 --> Redis
+
+GoAPI2 --> Redis
+
+GoAPI1 --> PostgreSQL
+
+GoAPI2 --> PostgreSQL
+
+GoAPI1 --> AI1
+
+GoAPI2 --> AI2
+
+AI1 --> OpenAI
+
+AI2 --> OpenAI
+
+GoAPI1 --> PhongVu
+
+GoAPI1 --> Shopee
+
+GoAPI1 --> CellphoneS

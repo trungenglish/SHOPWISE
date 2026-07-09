@@ -1,0 +1,25 @@
+stateDiagram-v2
+
+[*] --> Created
+
+Created --> AwaitingPayment
+
+AwaitingPayment --> Paid
+
+Paid --> Processing
+
+Processing --> Packed
+
+Packed --> Shipping
+
+Shipping --> Delivered
+
+Delivered --> Completed
+
+AwaitingPayment --> Cancelled
+
+Processing --> Cancelled
+
+Shipping --> Returned
+
+Returned --> Refunded

@@ -1,0 +1,25 @@
+stateDiagram-v2
+
+[*] --> Empty
+
+Empty --> Active : Add Item
+
+Active --> Active : Add Item
+
+Active --> Active : Update Quantity
+
+Active --> CouponApplied : Apply Coupon
+
+CouponApplied --> Active : Remove Coupon
+
+Active --> CheckoutReady : Validate Cart
+
+CouponApplied --> CheckoutReady : Validate Cart
+
+CheckoutReady --> Submitted : Checkout
+
+Submitted --> Ordered : Success
+
+Submitted --> Active : Failed
+
+Ordered --> [*]

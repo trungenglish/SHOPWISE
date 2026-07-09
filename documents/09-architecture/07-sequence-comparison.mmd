@@ -1,0 +1,33 @@
+sequenceDiagram
+
+actor User
+
+participant Frontend
+
+participant Backend
+
+participant AI
+
+participant Retail
+
+User->>Frontend: Compare products
+
+Frontend->>Backend: POST /compare
+
+Backend->>AI: compare_products()
+
+AI->>Backend: retrieve_specifications()
+
+Backend->>Retail: Query product details
+
+Retail-->>Backend: Specifications
+
+Backend-->>AI: Product data
+
+AI->>AI: Analyze trade-offs
+
+AI-->>Backend: Comparison Result
+
+Backend-->>Frontend: Comparison Table + Explanation
+
+Frontend-->>User: Interactive Comparison

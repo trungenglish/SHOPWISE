@@ -1,0 +1,175 @@
+flowchart TB
+
+%% =========================
+%% Client Layer
+%% =========================
+
+subgraph Client
+
+Web["React Web"]
+
+Mobile["React Native"]
+
+end
+
+%% =========================
+%% Edge
+%% =========================
+
+subgraph Edge
+
+CDN["Cloudflare"]
+
+Gateway["API Gateway"]
+
+end
+
+%% =========================
+%% Backend
+%% =========================
+
+subgraph Backend
+
+ConversationAPI
+
+CommerceAPI
+
+CatalogAPI
+
+MemoryAPI
+
+EventBus
+
+end
+
+%% =========================
+%% AI Runtime
+%% =========================
+
+subgraph AI
+
+Planner
+
+ContextBuilder
+
+Retriever
+
+MemoryManager
+
+ToolRuntime
+
+Reasoner
+
+Confidence
+
+UIGenerator
+
+end
+
+%% =========================
+%% Infrastructure
+%% =========================
+
+subgraph Storage
+
+PostgreSQL
+
+Redis
+
+pgvector
+
+ObjectStorage
+
+end
+
+%% =========================
+%% External
+%% =========================
+
+subgraph External
+
+OpenAI
+
+Gemini
+
+RetailConnector
+
+PhongVu
+
+Shopee
+
+CellphoneS
+
+end
+
+%% =========================
+%% Connections
+%% =========================
+
+Web --> CDN
+
+Mobile --> CDN
+
+CDN --> Gateway
+
+Gateway --> ConversationAPI
+
+Gateway --> CommerceAPI
+
+Gateway --> CatalogAPI
+
+Gateway --> MemoryAPI
+
+ConversationAPI --> Planner
+
+Planner --> ContextBuilder
+
+ContextBuilder --> Retriever
+
+ContextBuilder --> MemoryManager
+
+Planner --> ToolRuntime
+
+ToolRuntime --> CommerceAPI
+
+ToolRuntime --> CatalogAPI
+
+ToolRuntime --> MemoryAPI
+
+Retriever --> pgvector
+
+Retriever --> PostgreSQL
+
+MemoryManager --> Redis
+
+MemoryManager --> PostgreSQL
+
+Reasoner --> OpenAI
+
+Reasoner --> Gemini
+
+Planner --> Reasoner
+
+Reasoner --> Confidence
+
+Confidence --> UIGenerator
+
+UIGenerator --> ConversationAPI
+
+CommerceAPI --> RetailConnector
+
+CatalogAPI --> RetailConnector
+
+RetailConnector --> PhongVu
+
+RetailConnector --> Shopee
+
+RetailConnector --> CellphoneS
+
+PostgreSQL --> ObjectStorage
+
+EventBus --> Planner
+
+EventBus --> CommerceAPI
+
+EventBus --> MemoryAPI

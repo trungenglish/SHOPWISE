@@ -1,0 +1,65 @@
+sequenceDiagram
+
+actor Customer
+
+participant UI
+
+participant Agent
+
+participant Planner
+
+participant ToolRuntime
+
+participant GoAPI
+
+participant RetailConnector
+
+participant RetailAPI
+
+participant Memory
+
+Customer->>UI: "Recommend a gaming laptop"
+
+UI->>Agent: Conversation Request
+
+Agent->>Planner: Build Plan
+
+Planner->>Planner: Determine required tools
+
+Planner->>ToolRuntime: search_products()
+
+ToolRuntime->>GoAPI: Internal Tool API
+
+GoAPI->>RetailConnector: Search Products
+
+RetailConnector->>RetailAPI: Query
+
+RetailAPI-->>RetailConnector: Products
+
+RetailConnector-->>GoAPI: Normalized Catalog
+
+GoAPI-->>ToolRuntime: Structured Result
+
+ToolRuntime-->>Agent: Observation
+
+Agent->>Planner: Continue Planning
+
+Planner->>ToolRuntime: retrieve_promotions()
+
+ToolRuntime->>GoAPI: Promotion Tool
+
+GoAPI->>RetailConnector: Promotion API
+
+RetailConnector-->>GoAPI: Promotions
+
+GoAPI-->>ToolRuntime: Promotion Data
+
+ToolRuntime-->>Agent: Observation
+
+Agent->>Memory: Read Customer Preference
+
+Memory-->>Agent: Preferences
+
+Agent->>Agent: Final Reasoning
+
+Agent-->>UI: Recommendation + Dynamic UI

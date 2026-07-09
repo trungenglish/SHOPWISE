@@ -1,0 +1,23 @@
+flowchart LR
+
+ConversationManager
+
+Planner
+
+ToolRuntime
+
+Reasoner
+
+Memory
+
+UIGenerator
+
+ConversationManager --> Planner
+
+Planner --> ToolRuntime
+
+ToolRuntime --> Reasoner
+
+Reasoner --> UIGenerator
+
+Planner --> Memory

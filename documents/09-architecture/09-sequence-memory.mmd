@@ -1,0 +1,31 @@
+sequenceDiagram
+
+actor User
+
+participant Frontend
+
+participant Backend
+
+participant AI
+
+participant Memory
+
+User->>Frontend: "I prefer ASUS"
+
+Frontend->>Backend: Conversation
+
+Backend->>AI: Message
+
+AI->>AI: Extract preference
+
+AI->>Memory: Store Preference
+
+Memory-->>AI: Success
+
+AI-->>Backend: Updated Memory
+
+Backend-->>Frontend: Response
+
+%% Note over AI,Memory:
+%% Future recommendations use
+%% stored preferences.

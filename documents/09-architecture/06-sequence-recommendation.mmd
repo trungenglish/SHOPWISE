@@ -1,0 +1,17 @@
+sequenceDiagram
+
+User->>Frontend: Ask
+
+Frontend->>Backend: Message
+
+Backend->>AI: Conversation
+
+AI->>Backend: search_products()
+
+Backend->>Retail: Query
+
+Retail-->>Backend: Products
+
+Backend-->>AI: Results
+
+AI->>Frontend: Recommendation + UI
