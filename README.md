@@ -110,6 +110,15 @@ shopwise/
 │   └── env/         # Shared environment validation
 ```
 
+## Web Environment Variables
+
+Configure `apps/server/.env` using `apps/server/.env.example`:
+
+| Variable          | Default                  | Description    |
+| ----------------- | ------------------------ | -------------- |
+| `VITE_NODE_ENV`   | `development`            |                |
+| `VITE_SERVER_URL` | `http://localhost:18080` | Gin server URL |
+
 ## Server Environment Variables
 
 Configure `apps/server/.env` using `apps/server/.env.example`:
@@ -123,6 +132,15 @@ Configure `apps/server/.env` using `apps/server/.env.example`:
 | `REDIS_URL` | — | Redis connection string |
 | `LOG_LEVEL` | `info` | Structured log level |
 | `APP_NAME` | `server` | Application name in logs |
+
+## AI service Environment Variables
+
+Configure `apps/server/.env` using `apps/server/.env.example`:
+
+| Variable          | Default                 | Description                  |
+| ----------------- | ----------------------- | ---------------------------- |
+| `PORT`            | `18080`                 | API bind port                |
+| `ALLOWED_ORIGINS` | `http://localhost:3001` | Comma-separated CORS origins |
 
 ## Available Scripts
 

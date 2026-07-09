@@ -253,9 +253,8 @@ ESLint + Prettier + Stylelint's linter will catch most issues automatically. Foc
 Most formatting and common issues are automatically fixed by ESLint + Prettier + Stylelint. Run `pnpm dlx ultracite fix` before committing to ensure compliance.
 
 <!-- SPECKIT START -->
-
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan
-
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
 <!-- SPECKIT END -->
 
 ## TinyFish

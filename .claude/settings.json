@@ -2,19 +2,24 @@
   "hooks": {
     "PostToolUse": [
       {
+        "matcher": "Write|Edit",
         "hooks": [
           {
-            "command": "pnpm run fix",
-            "type": "command"
+            "type": "command",
+            "command": "pnpm run fix"
           }
-        ],
-        "matcher": "Write|Edit"
+        ]
       }
     ]
   },
   "enabledPlugins": {
     "claude-mem@thedotmack": true,
-    "diagram-design@diagram-design": true
+    "diagram-design@diagram-design": true,
+    "superpowers@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true,
+    "ponytail@ponytail": true
   },
-  "plugins": ["chrome-devtools"]
+  "plugins": [
+    "chrome-devtools"
+  ]
 }
