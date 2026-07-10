@@ -20,7 +20,7 @@ The system is designed around three architectural principles:
 
 ```mermaid
 flowchart TD
-    Customer([Customer]) --> App[React Web / Mobile App]
+    Customer([Customer]) --> App[React + Vite Web / Mobile App]
     App --> Backend[Go Backend API]
 
     Backend --> BA_API[Business API]

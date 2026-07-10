@@ -5,7 +5,7 @@
   "type": "module",
   "exports": {
     "./web": "./src/web.ts",
-    "./native": "./src/native.ts"
+    "./mobile": "./src/mobile.ts"
   },
   "dependencies": {
     "@t3-oss/env-core": "^0.13.1",
