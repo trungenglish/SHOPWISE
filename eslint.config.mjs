@@ -17,7 +17,7 @@ export default defineConfig([
       ".gemini",
       ".ultracite",
       "prettier.config.mjs",
-      "apps/native/**",
+      "apps/mobile/**",
       "apps/web/.alchemy/**",
       "apps/web/vitest.config.ts",
       "documents/**"

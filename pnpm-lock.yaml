@@ -151,7 +151,7 @@ importers:
         specifier: 7.8.3
         version: 7.8.3
 
-  apps/native:
+  apps/mobile:
     dependencies:
       '@expo/metro-runtime':
         specifier: ~56.0.11

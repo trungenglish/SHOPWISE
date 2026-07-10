@@ -1,7 +1,7 @@
 ---
 trigger: glob
 description: React Native / Expo — route to the matching skill in .agents/skills before implementing
-globs: apps/native/**/*.{tsx,ts,jsx,js}, packages/**/*native*/*.{tsx,ts,jsx,js}
+globs: apps/mobile/**/*.{tsx,ts,jsx,js}, packages/**/*native*/*.{tsx,ts,jsx,js}
 ---
 
 1. React Native & Expo skills
