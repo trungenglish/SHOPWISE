@@ -20,6 +20,7 @@ export default defineConfig([
       "apps/native/**",
       "apps/web/.alchemy/**",
       "apps/web/vitest.config.ts",
+      "documents/**"
     ],
   },
   {
