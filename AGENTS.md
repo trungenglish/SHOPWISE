@@ -254,7 +254,16 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
+shell commands, and other important information, read the current plan at:
+specs/001-marketing-landing-page/plan.md
+
+Active feature: Marketing Landing Page (001-marketing-landing-page)
+- Spec: specs/001-marketing-landing-page/spec.md
+- Data model: specs/001-marketing-landing-page/data-model.md
+- UI contracts: specs/001-marketing-landing-page/contracts/ui-contracts.md
+- Quickstart: specs/001-marketing-landing-page/quickstart.md
+- Research: specs/001-marketing-landing-page/research.md
+- Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 
 ## TinyFish

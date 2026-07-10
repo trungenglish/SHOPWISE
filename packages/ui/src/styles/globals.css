@@ -75,6 +75,14 @@
   --sidebar-accent-foreground: oklch(98.7% 0.002 197.1deg);
   --sidebar-border: oklch(100% 0 0deg / 10%);
   --sidebar-ring: oklch(56% 0.021 213.5deg);
+
+  /* Landing page — gradient & glass tokens */
+  --landing-gradient-start: oklch(10% 0.025 260deg);
+  --landing-gradient-mid: oklch(18% 0.06 265deg);
+  --landing-gradient-accent: oklch(55% 0.2 290deg);
+  --landing-glow: oklch(55% 0.2 290deg / 20%);
+  --landing-glass-bg: oklch(100% 0 0deg / 6%);
+  --landing-glass-border: oklch(100% 0 0deg / 10%);
 }
 
 @theme inline {
