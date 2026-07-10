@@ -52,6 +52,8 @@ Observable by default
 
 ## Architecture Layers
 
+For details on how these layers are organized in our Turborepo monorepo, see [Monorepo Strategy](./01-monorepo-strategy.md).
+
 Business
 
 ↓

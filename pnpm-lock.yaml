@@ -374,6 +374,16 @@ importers:
         specifier: ^4.1.9
         version: 4.1.9(@types/node@22.19.20)(jsdom@26.1.0)(msw@2.14.6(@types/node@22.19.20)(typescript@6.0.3))(vite@8.0.16(@types/node@22.19.20)(esbuild@0.27.7)(jiti@2.7.0)(terser@5.48.0)(yaml@2.9.0))
 
+  conformance/retail-sdk: {}
+
+  conformance/tool-sdk: {}
+
+  conformance/ui-protocol: {}
+
+  deploy: {}
+
+  infra: {}
+
   packages/api-types:
     dependencies:
       zod:
@@ -429,6 +439,14 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
+
+  packages/protocols: {}
+
+  packages/schemas: {}
+
+  packages/sdk: {}
+
+  packages/types: {}
 
   packages/ui:
     dependencies:
@@ -517,6 +535,14 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 6.0.3
+
+  scripts: {}
+
+  services/ai-runtime: {}
+
+  services/gateway: {}
+
+  services/retail: {}
 
 packages:
 

@@ -42,5 +42,5 @@ Team size is small (MVP). Traffic is low. Postgres and Redis already run in dock
 
 ## Compliance
 
-- Go module path: `shopwise/apps/server`
+- Go module path: `shopwise/retail`
 - Docs link: [quanngynx tree URL](https://github.com/quanngynx/shopwise/tree/main/apps/server)

@@ -1,0 +1,24 @@
+{
+  "name": "@shopwise/retail",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ./scripts/dev.mjs",
+    "dev:app": "node ./scripts/with-go-env.mjs run ./cmd/server",
+    "dev:worker": "node ./scripts/with-go-env.mjs run ./cmd/worker",
+    "worker": "node ./scripts/with-go-env.mjs run ./cmd/worker",
+    "dev:docker": "docker compose up --build",
+    "dev:deps": "docker compose up postgres redis -d --wait",
+    "build": "node ./scripts/with-go-env.mjs build -o ./bin/server ./cmd/server",
+    "build:worker": "node ./scripts/with-go-env.mjs build -o ./bin/worker ./cmd/worker",
+    "start": "./bin/server",
+    "swagger:gen": "node ./scripts/with-go-env.mjs run github.com/swaggo/swag/cmd/swag@latest fmt && node ./scripts/with-go-env.mjs run github.com/swaggo/swag/cmd/swag@latest init -g cmd/server/main.go --parseInternal -d ./",
+    "check-types": "node ./scripts/with-go-env.mjs vet ./...",
+    "test": "node ./scripts/with-go-env.mjs test ./...",
+    "test:unit": "node ./scripts/with-go-env.mjs test ./...",
+    "test:integration": "node ./scripts/with-go-env.mjs test -tags=integration ./internal/platform/testutil/integration/... ./internal/users/repository/postgres/... ./internal/identity/repository/postgres/... ./internal/advisor/repository/postgres/...",
+    "test:race": "node ./scripts/with-go-env.mjs test -race ./...",
+    "docker:build": "docker compose build",
+    "docker:down": "docker compose down -v"
+  }
+}

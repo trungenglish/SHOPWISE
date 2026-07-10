@@ -5,66 +5,6 @@
       "status": "installed",
       "checksum": "b8f858f8143114ed9189b29ea8af1672378d66db3b8c92c5ec1b23712141ef1b"
     },
-    "bigquery-data-transfer-service": {
-      "status": "installed",
-      "checksum": "a560c16c715c2d240eeb2abafc1bcea079062ccd7ff99b80b84cdf29eb43d69d"
-    },
-    "building-data-apps": {
-      "status": "installed",
-      "checksum": "7017fc6bbcad594b1a572cc7a0ea5ce15ce460dbd0cdbf978697edad1768ee26"
-    },
-    "data-autocleaning": {
-      "status": "installed",
-      "checksum": "4ff7ce836870f6775477f79ece9f1b0390e31c6d7921ee94c148cd2a357a4ecc"
-    },
-    "discovering-gcp-data-assets": {
-      "status": "installed",
-      "checksum": "553a6cd984882b1a63782885c54c0120f40de214c11fdbf46ec05e6acbf88840"
-    },
-    "federate-lakehouse-catalog": {
-      "status": "installed",
-      "checksum": "c1e071ca3d8c9eaa42ae814f2d4ae2e5e12f3e0f289367c74ced4d87ccf157d3"
-    },
-    "gcloud-auth-verification": {
-      "status": "installed",
-      "checksum": "b4a6f58394290ad1c22de6e14e211b08b21ec015053929101e725dbccc0b6b09"
-    },
-    "gcp-composer-troubleshooting": {
-      "status": "installed",
-      "checksum": "9128f016ece2b9dbde8a62af809685b152048694be672c93152ffc34e81dbe49"
-    },
-    "gcp-data-pipelines": {
-      "status": "installed",
-      "checksum": "8cd8124624e803a22cff67911a3542f1e5ec29bae6024ce33b9a76aceacb5ce5"
-    },
-    "gcp-dataflow": {
-      "status": "installed",
-      "checksum": "ff2362809250302d2cbca19835af3f7114480e4e4a6cdea794979a97dd6ca6d4"
-    },
-    "gcp-pipeline-resource-provisioning": {
-      "status": "installed",
-      "checksum": "d9f68d99f5d7e291868a2968ba9483b73f520c61108fcdbdfc7e65f21c0c232c"
-    },
-    "gcp-spark": {
-      "status": "installed",
-      "checksum": "ff78313ac52d2c99292e513f307e63c45377bc3cfb989ac191e56bfaf70337a7"
-    },
-    "managing-python-dependencies": {
-      "status": "installed",
-      "checksum": "04a1ab128e1167a02a605d6b1459d9512c4a58cfeb81a8f5303e814eafe089ef"
-    },
-    "ml-best-practices": {
-      "status": "installed",
-      "checksum": "d3f2134aed8ce5865776363a5e0d704de0166970bca121ace8bdfaa28c8cf213"
-    },
-    "notebook-guidance": {
-      "status": "installed",
-      "checksum": "b7ef387087342eaa4a6db2bec83b7ade8fd9fdf096951266737709a3199debe3"
-    },
-    "skill-repair": {
-      "status": "installed",
-      "checksum": "276efcab0cdeb25cb412644bcf0fd5fb827f4873b44a6ba24f4e49e035d25c3e"
-    },
     "alloydb-omni-access-control": {
       "status": "installed",
       "checksum": "dc035bfeee970633aedb5c54949e436cd0f3802f4237a40f05b80bc4afbe12f0"
@@ -133,6 +73,14 @@
       "status": "installed",
       "checksum": "14ebbc2e086b8ba9e4f798754f4ed148491e9fbc62387f0e92413a993868f9ba"
     },
+    "bigquery-data-transfer-service": {
+      "status": "installed",
+      "checksum": "a560c16c715c2d240eeb2abafc1bcea079062ccd7ff99b80b84cdf29eb43d69d"
+    },
+    "building-data-apps": {
+      "status": "installed",
+      "checksum": "7017fc6bbcad594b1a572cc7a0ea5ce15ce460dbd0cdbf978697edad1768ee26"
+    },
     "cloud-sql-mysql-admin": {
       "status": "installed",
       "checksum": "e45ec79ecc6f4ef3d68bbec13e306b1fc69c7b7ca248701cd4d0c7788fb44e81"
@@ -197,33 +145,85 @@
       "status": "installed",
       "checksum": "0269ff3099beef73af7ca2801d1611268874127d019859e03a6ecf872a783641"
     },
-    "dataform-bigquery": {
-      "status": "conflict",
-      "checksum": "680e3fc62d7e4e9ea78ce3627479fec5b7f4bc421fae0f5e742f4ef99c553f56"
+    "data-autocleaning": {
+      "status": "installed",
+      "checksum": "4ff7ce836870f6775477f79ece9f1b0390e31c6d7921ee94c148cd2a357a4ecc"
     },
-    "dbt-bigquery": {
-      "status": "conflict",
-      "checksum": "55b3d410b47a240cb188cc7142e4efade3bb1daea22a24af7916e95e17952b3f"
+    "discovering-gcp-data-assets": {
+      "status": "installed",
+      "checksum": "553a6cd984882b1a63782885c54c0120f40de214c11fdbf46ec05e6acbf88840"
+    },
+    "federate-lakehouse-catalog": {
+      "status": "installed",
+      "checksum": "c1e071ca3d8c9eaa42ae814f2d4ae2e5e12f3e0f289367c74ced4d87ccf157d3"
     },
     "firestore-data": {
       "status": "installed",
       "checksum": "5cc1c5153c7bfcec15eb7c918fa2d0d0c04985f4ef61b3f50b245e9e91ad29c2"
     },
+    "gcloud-auth-verification": {
+      "status": "installed",
+      "checksum": "b4a6f58394290ad1c22de6e14e211b08b21ec015053929101e725dbccc0b6b09"
+    },
+    "gcp-composer-troubleshooting": {
+      "status": "installed",
+      "checksum": "9128f016ece2b9dbde8a62af809685b152048694be672c93152ffc34e81dbe49"
+    },
+    "gcp-data-pipelines": {
+      "status": "installed",
+      "checksum": "8cd8124624e803a22cff67911a3542f1e5ec29bae6024ce33b9a76aceacb5ce5"
+    },
+    "gcp-dataflow": {
+      "status": "installed",
+      "checksum": "ff2362809250302d2cbca19835af3f7114480e4e4a6cdea794979a97dd6ca6d4"
+    },
     "gcp-managed-airflow-migrations": {
       "status": "installed",
       "checksum": "f558527e1d46e9b22449a2da8e723cbda19c3afe6f5216bb5c25054bfc3b2b0a"
     },
-    "gcp-pipeline-orchestration": {
-      "status": "conflict",
-      "checksum": "5fd043c5dc4c83e906375d80fd10a8b557ea2337dc9f42a26e8ffa5a702d7008"
+    "gcp-pipeline-resource-provisioning": {
+      "status": "installed",
+      "checksum": "d9f68d99f5d7e291868a2968ba9483b73f520c61108fcdbdfc7e65f21c0c232c"
+    },
+    "gcp-spark": {
+      "status": "installed",
+      "checksum": "ff78313ac52d2c99292e513f307e63c45377bc3cfb989ac191e56bfaf70337a7"
     },
     "gcs-security-assessment": {
       "status": "installed",
       "checksum": "0f5d2c7a8a6431a27ffa6b2c05aad42f12c3a61a0c248cb9f772edc636e4f543"
     },
+    "managing-python-dependencies": {
+      "status": "installed",
+      "checksum": "04a1ab128e1167a02a605d6b1459d9512c4a58cfeb81a8f5303e814eafe089ef"
+    },
+    "ml-best-practices": {
+      "status": "installed",
+      "checksum": "d3f2134aed8ce5865776363a5e0d704de0166970bca121ace8bdfaa28c8cf213"
+    },
+    "notebook-guidance": {
+      "status": "installed",
+      "checksum": "b7ef387087342eaa4a6db2bec83b7ade8fd9fdf096951266737709a3199debe3"
+    },
+    "skill-repair": {
+      "status": "installed",
+      "checksum": "276efcab0cdeb25cb412644bcf0fd5fb827f4873b44a6ba24f4e49e035d25c3e"
+    },
     "spanner-data": {
       "status": "installed",
       "checksum": "bd735f0ef27a74d0a20ebb0e0e1be3f190f369648a1e576af27b3ffaca8582df"
+    },
+    "dataform-bigquery": {
+      "status": "installed",
+      "checksum": "680e3fc62d7e4e9ea78ce3627479fec5b7f4bc421fae0f5e742f4ef99c553f56"
+    },
+    "dbt-bigquery": {
+      "status": "installed",
+      "checksum": "55b3d410b47a240cb188cc7142e4efade3bb1daea22a24af7916e95e17952b3f"
+    },
+    "gcp-pipeline-orchestration": {
+      "status": "installed",
+      "checksum": "5fd043c5dc4c83e906375d80fd10a8b557ea2337dc9f42a26e8ffa5a702d7008"
     }
   }
 }
