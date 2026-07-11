@@ -71,7 +71,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["apps/server/scripts/**/*.mjs"],
+    files: ["apps/retail/scripts/**/*.mjs"],
     rules: {
       "import-x/no-nodejs-modules": "off",
       "n/no-process-exit": "off",
