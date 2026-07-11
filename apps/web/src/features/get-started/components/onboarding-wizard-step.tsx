@@ -6,7 +6,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Loader2,
-  Save,
 } from "lucide-react";
 
 import {
@@ -50,12 +49,10 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
 
   const nextStep = async () => {
     let isValid = false;
-    if (step === 1) {
-      isValid = await trigger("fullName");
-    } else if (step === 2) {
-      isValid = await trigger("phoneNumber");
-    } else if (step === 3) {
-      isValid = await trigger("email");
+    const fields: (keyof OnboardingFormData)[] = ["fullName", "phoneNumber", "email"];
+    
+    if (step <= fields.length) {
+      isValid = await trigger(fields[step - 1]);
     }
 
     if (isValid) {
