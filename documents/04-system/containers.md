@@ -16,7 +16,7 @@ Responsibilities
 
 Technologies
 
-React
+React + Vite (Web)
 
 TanStack Router
 

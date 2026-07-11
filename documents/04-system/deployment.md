@@ -6,7 +6,7 @@ Version: 1.0
 
 # Development
 
-React
+React + Vite
 
 ↓
 

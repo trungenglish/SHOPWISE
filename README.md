@@ -59,7 +59,7 @@ Open [http://localhost:3001](http://localhost:3001) in your browser to see the w
 For native development, copy the Expo environment file:
 
 ```bash
-cp apps/native/.env.example apps/native/.env
+cp apps/mobile/.env.example apps/mobile/.env
 ```
 
 ## UI Customization
