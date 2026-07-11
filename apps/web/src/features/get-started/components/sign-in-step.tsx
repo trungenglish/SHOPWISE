@@ -50,8 +50,9 @@ export function SignInStep({ onBack }: SignInStepProps) {
       setIsSubmitting(true);
       await mockSubmitSignIn(data);
       toast.success("Signed in successfully!");
-      // @ts-expect-error /dashboard route is in another branch
-      navigate({ to: "/dashboard" });
+      // MOCKED FLOW: Bypass real authentication and navigate directly to dashboard
+      // Note: We use replace: true to prevent navigating back to the sign-in step
+      navigate({ to: "/dashboard", replace: true });
     } catch (error) {
       toast.error("Failed to sign in. Please try again.");
     } finally {
