@@ -54,7 +54,10 @@ export function AiDecisionSection() {
             </h2>
 
             <p className="gsap-decision-reveal text-muted-foreground max-w-lg text-base leading-relaxed sm:text-lg">
-              Give online shoppers an AI assistant that understands specs, compares products, looks up promotions, and guides them to checkout. Improve conversion rates with instant, verified product recommendations.
+              Give online shoppers an AI assistant that understands specs,
+              compares products, looks up promotions, and guides them to
+              checkout. Improve conversion rates with instant, verified product
+              recommendations.
             </p>
 
             <div className="gsap-decision-reveal pt-2">
@@ -71,7 +74,11 @@ export function AiDecisionSection() {
           {/* Right Column: Visual Mockup */}
           <div className="flex justify-center lg:col-span-5 lg:justify-end">
             <span className="sr-only">
-              Simulated demonstration of the ShopWise AI Shopping Assistant: evaluates and recommends laptop products based on user requirements. In this demonstration, ASUS TUF A15 receives a 96% fit rating, Lenovo LOQ shows 88% verification, and Acer Nitro V has a 74% rating.
+              Simulated demonstration of the ShopWise AI Shopping Assistant:
+              evaluates and recommends laptop products based on user
+              requirements. In this demonstration, ASUS TUF A15 receives a 96%
+              fit rating, Lenovo LOQ shows 88% verification, and Acer Nitro V
+              has a 74% rating.
             </span>
             <AiDecisionPanel />
           </div>

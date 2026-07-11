@@ -43,7 +43,7 @@ export function LandingNavbar() {
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
         {/* Left: ShopWise Wordmark */}
         <Link to="/" className="flex items-center space-x-2 select-none">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-500 text-background">
+          <div className="text-background flex h-6 w-6 items-center justify-center rounded-md bg-blue-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="14"
@@ -94,7 +94,7 @@ export function LandingNavbar() {
             <Link to="/auth">Sign In</Link>
           </Button>
           <Button asChild size="sm">
-            <Link to="/auth">Get Started</Link>
+            <Link to="/get-started">Get Started</Link>
           </Button>
         </div>
 

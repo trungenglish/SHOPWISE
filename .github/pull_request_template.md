@@ -10,9 +10,7 @@
 
 <!-- Why is this change needed? -->
 
--
-
----
+- ***
 
 ## Related Issue / Spec
 
@@ -43,8 +41,8 @@ Spec:
 ## Screenshots / Demo
 
 | Before | After |
-|---------|-------|
-|         |       |
+| ------ | ----- |
+|        |       |
 
 Video/GIF (optional):
 
@@ -63,9 +61,7 @@ Who benefits from this change?
 
 Describe the expected user impact:
 
--
-
----
+- ***
 
 ## Testing
 
@@ -147,9 +143,7 @@ Impact:
 
 Notes:
 
--
-
----
+- ***
 
 ## Security Checklist
 
@@ -169,9 +163,7 @@ Special deployment steps:
 
 Rollback strategy:
 
--
-
----
+- ***
 
 ## Checklist
 

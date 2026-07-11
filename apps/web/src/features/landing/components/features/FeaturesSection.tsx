@@ -47,7 +47,8 @@ export function FeaturesSection() {
             AI Sales Agent Capabilities
           </h2>
           <p className="gsap-feature-reveal text-muted-foreground max-w-lg text-sm sm:text-base">
-            ShopWise centralizes the tools required to assist, convert, and retain e-commerce customers.
+            ShopWise centralizes the tools required to assist, convert, and
+            retain e-commerce customers.
           </p>
         </div>
 

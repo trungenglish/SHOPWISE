@@ -47,7 +47,8 @@ export function WorkflowSection() {
             How ShopWise Works
           </h2>
           <p className="gsap-workflow-reveal text-muted-foreground max-w-lg text-sm sm:text-base">
-            See how ShopWise handles user requests, retrieves product specifications, and delivers verified recommendations.
+            See how ShopWise handles user requests, retrieves product
+            specifications, and delivers verified recommendations.
           </p>
         </div>
 

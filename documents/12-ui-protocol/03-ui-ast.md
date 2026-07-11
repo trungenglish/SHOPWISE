@@ -8,11 +8,11 @@ Every SAUP payload starts with a `UIRoot`:
 
 ```typescript
 interface UIRoot {
-    version: string;
-    sessionId: string;
-    conversationId: string;
-    tree: UINode;
-    metadata: Record<string, unknown>;
+  version: string;
+  sessionId: string;
+  conversationId: string;
+  tree: UINode;
+  metadata: Record<string, unknown>;
 }
 ```
 
@@ -22,12 +22,12 @@ Everything in SAUP is a Node. There is no limit to the nesting depth.
 
 ```typescript
 interface UINode {
-    id: string;
-    type: string;
-    props: Record<string, any>;
-    state: UIState;
-    actions: UIAction[];
-    children: UINode[];
+  id: string;
+  type: string;
+  props: Record<string, any>;
+  state: UIState;
+  actions: UIAction[];
+  children: UINode[];
 }
 ```
 
@@ -51,13 +51,10 @@ As JSON payload:
 {
   "type": "workspace",
   "children": [
-      {
-        "type": "recommendation.panel",
-        "children": [
-            { "type": "product.card" },
-            { "type": "product.card" }
-        ]
-      }
+    {
+      "type": "recommendation.panel",
+      "children": [{ "type": "product.card" }, { "type": "product.card" }]
+    }
   ]
 }
 ```

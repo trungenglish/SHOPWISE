@@ -54,9 +54,9 @@ export function HeroSection() {
             <div className="gsap-animate gsap-eyebrow">
               <Badge
                 variant="outline"
-                className="border-blue-500/30 bg-blue-500/10 px-3 py-1 text-[11px] font-semibold text-blue-400 backdrop-blur-xs select-none flex items-center gap-1.5"
+                className="flex items-center gap-1.5 border-blue-500/30 bg-blue-500/10 px-3 py-1 text-[11px] font-semibold text-blue-400 backdrop-blur-xs select-none"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" />
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-blue-400" />
                 AI SALES AGENT FOR E-COMMERCE
               </Badge>
             </div>
@@ -68,27 +68,45 @@ export function HeroSection() {
               </span>
             </h1>
 
-            <p className="gsap-animate gsap-subtitle text-muted-foreground max-w-lg text-sm sm:text-base leading-relaxed">
-              ShopWise helps customers discover products, compare options, check live inventory and promotions, and purchase with confidence through conversational AI.
+            <p className="gsap-animate gsap-subtitle text-muted-foreground max-w-lg text-sm leading-relaxed sm:text-base">
+              ShopWise helps customers discover products, compare options, check
+              live inventory and promotions, and purchase with confidence
+              through conversational AI.
             </p>
 
             {/* Stats Cards Row */}
-            <div className="gsap-animate gsap-stats grid grid-cols-2 gap-3 sm:grid-cols-4 w-full pt-2">
-              <div className="border border-border/10 rounded-lg p-3 bg-muted/5">
-                <div className="text-xl sm:text-2xl font-bold text-foreground">94%</div>
-                <div className="text-[9px] tracking-wider text-muted-foreground uppercase font-semibold">CONFIDENCE</div>
+            <div className="gsap-animate gsap-stats grid w-full grid-cols-2 gap-3 pt-2 sm:grid-cols-4">
+              <div className="border-border/10 bg-muted/5 rounded-lg border p-3">
+                <div className="text-foreground text-xl font-bold sm:text-2xl">
+                  94%
+                </div>
+                <div className="text-muted-foreground text-[9px] font-semibold tracking-wider uppercase">
+                  CONFIDENCE
+                </div>
               </div>
-              <div className="border border-border/10 rounded-lg p-3 bg-muted/5">
-                <div className="text-xl sm:text-2xl font-bold text-foreground">6</div>
-                <div className="text-[9px] tracking-wider text-muted-foreground uppercase font-semibold">SPECIALISTS</div>
+              <div className="border-border/10 bg-muted/5 rounded-lg border p-3">
+                <div className="text-foreground text-xl font-bold sm:text-2xl">
+                  6
+                </div>
+                <div className="text-muted-foreground text-[9px] font-semibold tracking-wider uppercase">
+                  SPECIALISTS
+                </div>
               </div>
-              <div className="border border-border/10 rounded-lg p-3 bg-muted/5">
-                <div className="text-xl sm:text-2xl font-bold text-foreground">50+</div>
-                <div className="text-[9px] tracking-wider text-muted-foreground uppercase font-semibold">BRANDS</div>
+              <div className="border-border/10 bg-muted/5 rounded-lg border p-3">
+                <div className="text-foreground text-xl font-bold sm:text-2xl">
+                  50+
+                </div>
+                <div className="text-muted-foreground text-[9px] font-semibold tracking-wider uppercase">
+                  BRANDS
+                </div>
               </div>
-              <div className="border border-border/10 rounded-lg p-3 bg-muted/5">
-                <div className="text-xl sm:text-2xl font-bold text-foreground">Live</div>
-                <div className="text-[9px] tracking-wider text-muted-foreground uppercase font-semibold">INVENTORY</div>
+              <div className="border-border/10 bg-muted/5 rounded-lg border p-3">
+                <div className="text-foreground text-xl font-bold sm:text-2xl">
+                  Live
+                </div>
+                <div className="text-muted-foreground text-[9px] font-semibold tracking-wider uppercase">
+                  INVENTORY
+                </div>
               </div>
             </div>
 
@@ -96,7 +114,7 @@ export function HeroSection() {
               <Button
                 asChild
                 size="lg"
-                className="shadow-[var(--landing-glow)] shadow-lg transition-all hover:shadow-[var(--landing-glow)] hover:shadow-xl flex items-center gap-2"
+                className="flex items-center gap-2 shadow-[var(--landing-glow)] shadow-lg transition-all hover:shadow-[var(--landing-glow)] hover:shadow-xl"
               >
                 <Link to="/auth">
                   Try AI Sales Agent
@@ -122,7 +140,7 @@ export function HeroSection() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="hover:bg-muted/40 border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] transition-colors flex items-center gap-2"
+                className="hover:bg-muted/40 flex items-center gap-2 border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] transition-colors"
               >
                 <a href="#problem">
                   See AI in Action

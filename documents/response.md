@@ -2,11 +2,11 @@ Mình nghĩ đây là **phần quan trọng nhất sau AI Architecture**.
 
 Nếu làm tốt **Tool SDK + Retail SDK**, thì:
 
-* AI Runtime (Python) không cần biết Go.
-* Go không cần biết LangGraph/PydanticAI.
-* Retail Connector không cần biết AI.
-* Thêm Phong Vũ, Shopee, Tiki, Lazada chỉ cần implement interface.
-* Sau này có thể mở SDK cho đối tác thứ ba.
+- AI Runtime (Python) không cần biết Go.
+- Go không cần biết LangGraph/PydanticAI.
+- Retail Connector không cần biết AI.
+- Thêm Phong Vũ, Shopee, Tiki, Lazada chỉ cần implement interface.
+- Sau này có thể mở SDK cho đối tác thứ ba.
 
 Theo mình, đây nên là **Protocol chứ không chỉ là SDK**.
 
@@ -80,8 +80,8 @@ README.md
 
 Toàn bộ hệ thống chỉ có **hai contract**.
 
-* Tool Contract
-* Retail Contract
+- Tool Contract
+- Retail Contract
 
 ---
 
@@ -127,15 +127,13 @@ LLM chỉ gọi Tool.
 
 ```typescript
 interface Tool {
+  metadata: ToolMetadata;
 
-    metadata: ToolMetadata
+  input: JSONSchema;
 
-    input: JSONSchema
+  output: JSONSchema;
 
-    output: JSONSchema
-
-    execute()
-
+  execute();
 }
 ```
 
@@ -145,21 +143,19 @@ interface Tool {
 
 ```typescript
 interface ToolMetadata {
+  id: string;
 
-    id:string
+  name: string;
 
-    name:string
+  description: string;
 
-    description:string
+  category: string;
 
-    category:string
+  version: string;
 
-    version:string
+  timeout: number;
 
-    timeout:number
-
-    permissions:string[]
-
+  permissions: string[];
 }
 ```
 
@@ -167,11 +163,11 @@ Ví dụ
 
 ```json
 {
-  "id":"catalog.search",
+  "id": "catalog.search",
 
-  "version":"1",
+  "version": "1",
 
-  "category":"catalog"
+  "category": "catalog"
 }
 ```
 
@@ -273,9 +269,7 @@ TypeScript
 
 ```ts
 interface Tool {
-
-    execute(input:any):Promise<any>
-
+  execute(input: any): Promise<any>;
 }
 ```
 
@@ -332,13 +326,7 @@ Backend
 ↓
 
 ```json
-[
- "catalog.search",
-
- "cart.add",
-
- "checkout.prepare"
-]
+["catalog.search", "cart.add", "checkout.prepare"]
 ```
 
 LLM biết tool nào tồn tại.
@@ -399,11 +387,11 @@ Admin
 
 ```json
 {
-  "code":"PRODUCT_NOT_FOUND",
+  "code": "PRODUCT_NOT_FOUND",
 
-  "message":"...",
+  "message": "...",
 
-  "retryable":false
+  "retryable": false
 }
 ```
 
@@ -419,13 +407,11 @@ Nhận
 
 ```json
 {
- "summary":"3 products found",
+  "summary": "3 products found",
 
- "data":{
+  "data": {},
 
- },
-
- "confidence":0.98
+  "confidence": 0.98
 }
 ```
 
@@ -685,7 +671,7 @@ Shopee
 
 ```json
 {
- "item_name":"Laptop"
+  "item_name": "Laptop"
 }
 ```
 
@@ -693,7 +679,7 @@ Phong Vũ
 
 ```json
 {
- "name":"Laptop"
+  "name": "Laptop"
 }
 ```
 
@@ -701,7 +687,7 @@ Canonical
 
 ```json
 {
- "name":"Laptop"
+  "name": "Laptop"
 }
 ```
 
