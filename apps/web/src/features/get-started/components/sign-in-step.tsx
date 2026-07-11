@@ -61,27 +61,24 @@ export function SignInStep({ onBack }: SignInStepProps) {
   };
 
   return (
-    <Card className="animate-in slide-in-from-right-4 fade-in w-full duration-300">
-      <CardHeader>
-        <div className="mb-2 flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-foreground -ml-2 min-h-[44px] min-w-[44px]"
-            onClick={onBack}
-            disabled={isSubmitting}
-            aria-label="Go back"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <CardTitle className="text-xl font-bold">Sign In</CardTitle>
-        </div>
-        <CardDescription>
+    <Card className="animate-in fade-in slide-in-from-right-4 w-full duration-200 border-outline-variant/20 bg-surface-low shadow-xl">
+      <CardHeader className="p-8 pb-6">
+        <Button
+          variant="ghost"
+          className="text-muted-foreground hover:text-foreground -ml-4 mb-2 w-fit px-4"
+          onClick={onBack}
+          disabled={isSubmitting}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
+        </Button>
+        <CardTitle className="text-foreground text-2xl font-bold tracking-tight">Sign In</CardTitle>
+        <CardDescription className="text-muted-foreground mt-1">
           Enter your email or phone number to access your account.
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-5 px-8 pb-6">
           <Field data-invalid={!!errors.emailOrPhone}>
             <FieldLabel htmlFor="emailOrPhone">
               Email or Phone Number
@@ -94,6 +91,7 @@ export function SignInStep({ onBack }: SignInStepProps) {
                 disabled={isSubmitting}
                 {...register("emailOrPhone")}
                 aria-invalid={!!errors.emailOrPhone}
+                className="h-12"
               />
               <FieldError errors={[errors.emailOrPhone]} />
             </FieldContent>
@@ -109,16 +107,16 @@ export function SignInStep({ onBack }: SignInStepProps) {
                 disabled={isSubmitting}
                 {...register("password")}
                 aria-invalid={!!errors.password}
+                className="h-12"
               />
               <FieldError errors={[errors.password]} />
             </FieldContent>
           </Field>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="px-8 pb-8">
           <Button
             type="submit"
-            className="w-full"
-            size="lg"
+            className="w-full h-12"
             disabled={isSubmitting}
           >
             {isSubmitting ? (

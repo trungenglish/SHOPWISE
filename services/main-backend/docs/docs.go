@@ -34,6 +34,68 @@ const docTemplate = `{
                 }
             }
         },
+        "/checkout": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "checkout"
+                ],
+                "summary": "Create a checkout order",
+                "parameters": [
+                    {
+                        "description": "Checkout items",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handler.CheckoutRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/handler.OrderResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/internal_orders_handler.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/internal_orders_handler.ErrorResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/internal_orders_handler.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/internal_orders_handler.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/files/status": {
             "get": {
                 "produces": [
@@ -314,7 +376,7 @@ const docTemplate = `{
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -351,19 +413,19 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -393,7 +455,7 @@ const docTemplate = `{
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -415,19 +477,19 @@ const docTemplate = `{
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -469,7 +531,7 @@ const docTemplate = `{
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -504,13 +566,13 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -537,13 +599,13 @@ const docTemplate = `{
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -588,25 +650,25 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "Conflict",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/internal_users_handler.ErrorResponse"
                         }
                     }
                 }
@@ -614,6 +676,59 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "handler.CheckoutItemRequest": {
+            "type": "object",
+            "required": [
+                "product_id",
+                "quantity"
+            ],
+            "properties": {
+                "product_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "quantity": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            }
+        },
+        "handler.CheckoutRequest": {
+            "type": "object",
+            "required": [
+                "customer_id",
+                "fulfillment_method",
+                "items"
+            ],
+            "properties": {
+                "coupon_code": {
+                    "type": "string",
+                    "maxLength": 50
+                },
+                "customer_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "fulfillment_method": {
+                    "type": "string",
+                    "enum": [
+                        "DELIVERY",
+                        "STORE_PICKUP"
+                    ]
+                },
+                "items": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "$ref": "#/definitions/handler.CheckoutItemRequest"
+                    }
+                },
+                "shipping_address": {
+                    "type": "string",
+                    "maxLength": 1000
+                }
+            }
+        },
         "handler.CreateUserRequest": {
             "type": "object",
             "required": [
@@ -631,34 +746,6 @@ const docTemplate = `{
                     "maxLength": 255,
                     "minLength": 1,
                     "example": "Jane Doe"
-                }
-            }
-        },
-        "handler.ErrorResponse": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string",
-                    "example": "VALIDATION_FAILED"
-                },
-                "detail": {
-                    "type": "string",
-                    "example": "email and name are required"
-                },
-                "instance": {
-                    "type": "string"
-                },
-                "status": {
-                    "type": "integer",
-                    "example": 400
-                },
-                "title": {
-                    "type": "string",
-                    "example": "Bad Request"
-                },
-                "type": {
-                    "type": "string",
-                    "example": "about:blank"
                 }
             }
         },
@@ -692,8 +779,94 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
+                "phone": {
+                    "type": "string"
+                },
                 "preferences": {
                     "$ref": "#/definitions/handler.UserPreferencesResponse"
+                }
+            }
+        },
+        "handler.OrderItemResponse": {
+            "type": "object",
+            "properties": {
+                "product_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "unit_price": {
+                    "type": "integer"
+                }
+            }
+        },
+        "handler.OrderResponse": {
+            "type": "object",
+            "properties": {
+                "coupon_code": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "customer_email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "customer_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "customer_name": {
+                    "type": "string"
+                },
+                "customer_phone": {
+                    "type": "string"
+                },
+                "discount_amount": {
+                    "type": "integer"
+                },
+                "fulfillment_method": {
+                    "type": "string",
+                    "enum": [
+                        "DELIVERY",
+                        "STORE_PICKUP"
+                    ]
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/handler.OrderItemResponse"
+                    }
+                },
+                "order_id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "shipping_address": {
+                    "type": "string"
+                },
+                "shipping_amount": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string",
+                    "enum": [
+                        "PENDING",
+                        "PROCESSING"
+                    ]
+                },
+                "subtotal_amount": {
+                    "type": "integer"
+                },
+                "tax_amount": {
+                    "type": "integer"
+                },
+                "total_amount": {
+                    "type": "integer"
                 }
             }
         },
@@ -755,6 +928,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "phone": {
                     "type": "string"
                 },
                 "preferredCategories": {
@@ -911,6 +1087,57 @@ const docTemplate = `{
                 }
             }
         },
+        "internal_orders_handler.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string"
+                },
+                "detail": {
+                    "type": "string"
+                },
+                "instance": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_users_handler.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "string",
+                    "example": "VALIDATION_FAILED"
+                },
+                "detail": {
+                    "type": "string",
+                    "example": "email and name are required"
+                },
+                "instance": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "integer",
+                    "example": 400
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Bad Request"
+                },
+                "type": {
+                    "type": "string",
+                    "example": "about:blank"
+                }
+            }
+        },
         "response.ProblemDetail": {
             "type": "object",
             "properties": {
@@ -943,7 +1170,7 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "localhost:18080",
 	BasePath:         "/api/v1",
 	Schemes:          []string{"http"},
-	Title:            "Boilerplate Server API",
+	Title:            "Server API",
 	Description:      "Modular monolith REST API for React web and native clients.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,

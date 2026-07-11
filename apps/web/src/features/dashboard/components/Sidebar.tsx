@@ -5,6 +5,7 @@ import {
   UserCheck,
   Settings,
   User,
+  ShoppingBag,
 } from "lucide-react";
 
 interface SidebarProps {
@@ -98,6 +99,21 @@ export default function Sidebar({
             className={activeTab === "retail" ? "text-[#4F7CFF]" : ""}
           />
           <span className="font-sans text-sm font-medium">Retail Account</span>
+        </button>
+
+        <button
+          onClick={() => setActiveTab("orders")}
+          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-all ${
+            activeTab === "orders"
+              ? "border-r-2 border-[#4F7CFF] bg-[#4F7CFF]/5 font-bold text-[#4F7CFF]"
+              : "text-on-surface-variant hover:bg-surface-high hover:text-on-surface"
+          }`}
+        >
+          <ShoppingBag
+            size={18}
+            className={activeTab === "orders" ? "text-[#4F7CFF]" : ""}
+          />
+          <span className="font-sans text-sm font-medium">Order History</span>
         </button>
       </nav>
 

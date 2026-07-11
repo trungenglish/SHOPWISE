@@ -21,6 +21,7 @@ import (
 
 type handlerRepoStub struct {
 	createFn func(ctx context.Context, user *domain.User) error
+	profile  *domain.UserProfile
 }
 
 func (s *handlerRepoStub) Create(ctx context.Context, user *domain.User) error {
@@ -38,7 +39,11 @@ func (s *handlerRepoStub) List(context.Context, int, int) ([]domain.User, error)
 	return []domain.User{}, nil
 }
 
-func (s *handlerRepoStub) Update(context.Context, *domain.User) error {
+func (s *handlerRepoStub) Update(_ context.Context, user *domain.User) error {
+	if s.profile != nil {
+		s.profile.User = *user
+		return nil
+	}
 	return domain.ErrNotFound
 }
 
@@ -47,6 +52,10 @@ func (s *handlerRepoStub) Delete(context.Context, uuid.UUID) error {
 }
 
 func (s *handlerRepoStub) GetProfile(context.Context, uuid.UUID) (*domain.UserProfile, error) {
+	if s.profile != nil {
+		copyProfile := *s.profile
+		return &copyProfile, nil
+	}
 	return nil, domain.ErrNotFound
 }
 
