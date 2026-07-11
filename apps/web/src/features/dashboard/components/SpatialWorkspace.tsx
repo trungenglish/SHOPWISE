@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   ZoomIn,
   ZoomOut,
@@ -8,9 +8,26 @@ import {
   AlertTriangle,
   GitCompare,
   HelpCircle,
-  Bell,
 } from "lucide-react";
 import { Laptop, TrustFactors, PriceAlert } from "../types";
+import {
+  ReactFlow,
+  ReactFlowProvider,
+  useReactFlow,
+  Background,
+  useNodesState,
+  useEdgesState,
+  Node,
+  Edge,
+} from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
+import { UserGoalNode, PriorityNode, LaptopNode } from "./FlowNodes";
+
+const nodeTypes = {
+  userGoal: UserGoalNode,
+  priority: PriorityNode,
+  laptopNode: LaptopNode,
+};
 
 interface SpatialWorkspaceProps {
   products: Laptop[];
@@ -31,7 +48,7 @@ interface SpatialWorkspaceProps {
   onOpenPriceAlert: (laptop: Laptop) => void;
 }
 
-export default function SpatialWorkspace({
+function SpatialWorkspaceContent({
   products,
   activeProductId,
   setActiveProductId,
@@ -49,14 +66,122 @@ export default function SpatialWorkspace({
   priceAlerts,
   onOpenPriceAlert,
 }: SpatialWorkspaceProps) {
-  const suggestions = [
-    `Compare with ${products[1]?.name || "Razer Blade"}`,
-    `Cooling: Vapor Chamber vs Dual Fans`,
-    `Test AI Performance with TensorRT`,
-  ];
+
+  const { zoomIn, zoomOut, fitView } = useReactFlow();
+
+  const [hoveredProductId, setHoveredProductId] = useState<string | null>(null);
+
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+
+  useEffect(() => {
+    // Generate the Goal title based on intent/context
+    const updatedNodes = [
+      {
+        id: "goal",
+        type: "userGoal",
+        position: { x: 30, y: 160 },
+        data: { label: "Hardware Optimization" },
+      },
+      {
+        id: "p1",
+        type: "priority",
+        position: { x: 260, y: 70 },
+        data: { label: graphNodes[0] || "GPU Priority" },
+      },
+      {
+        id: "p2",
+        type: "priority",
+        position: { x: 260, y: 250 },
+        data: { label: graphNodes[1] || "Thermals" },
+      },
+      ...products.map((laptop, index) => ({
+        id: laptop.id,
+        type: "laptopNode",
+        position: { x: 470, y: index * 170 },
+        data: {
+          laptop,
+          isActive: laptop.id === activeProductId,
+          discountRate,
+          priceAlerts,
+          onOpenPriceAlert,
+          onSelect: () => setActiveProductId(laptop.id),
+          onHover: () => setHoveredProductId(laptop.id),
+          onHoverLeave: () => setHoveredProductId(null),
+          onToggleSave,
+          isSaved: savedIds.includes(laptop.id),
+          isHovered: laptop.id === hoveredProductId,
+        },
+      })),
+    ];
+
+    const updatedEdges = [
+      {
+        id: "e-goal-p1",
+        source: "goal",
+        sourceHandle: "a",
+        target: "p1",
+        targetHandle: "in",
+        animated: true,
+        style: { stroke: "#4F7CFF", strokeWidth: 2 },
+      },
+      {
+        id: "e-goal-p2",
+        source: "goal",
+        sourceHandle: "a",
+        target: "p2",
+        targetHandle: "in",
+        animated: true,
+        style: { stroke: "#4F7CFF", strokeWidth: 2 },
+      },
+      ...products.map((laptop) => {
+        const isL1Active = laptop.id === activeProductId;
+        return {
+          id: `e-p1-${laptop.id}`,
+          source: "p1",
+          sourceHandle: "out",
+          target: laptop.id,
+          animated: isL1Active,
+          style: {
+            stroke: isL1Active ? "#4F7CFF" : "rgba(255, 255, 255, 0.15)",
+            strokeWidth: isL1Active ? 2 : 1,
+          },
+        };
+      }),
+      ...products.map((laptop) => {
+        const isL2Active = laptop.id === activeProductId;
+        return {
+          id: `e-p2-${laptop.id}`,
+          source: "p2",
+          sourceHandle: "out",
+          target: laptop.id,
+          animated: isL2Active,
+          style: {
+            stroke: isL2Active ? "#4F7CFF" : "rgba(255, 255, 255, 0.15)",
+            strokeWidth: isL2Active ? 2 : 1,
+          },
+        };
+      }),
+    ];
+
+    setNodes(updatedNodes);
+    setEdges(updatedEdges);
+  }, [
+    products,
+    activeProductId,
+    discountRate,
+    priceAlerts,
+    graphNodes,
+    setActiveProductId,
+    onOpenPriceAlert,
+  ]);
 
   const activeProduct =
     products.find((p) => p.id === activeProductId) || products[0];
+  const displayProduct = hoveredProductId
+    ? products.find((p) => p.id === hoveredProductId)
+    : activeProduct;
+  const isSaved = displayProduct ? savedIds.includes(displayProduct.id) : false;
 
   return (
     <main className="relative flex h-full flex-1 flex-col overflow-hidden bg-transparent p-6 select-none">
@@ -73,431 +198,163 @@ export default function SpatialWorkspace({
 
         {/* Zoom controls */}
         <div className="bg-surface-lowest/60 border-outline-variant/15 flex gap-1.5 rounded-lg border p-1 backdrop-blur">
-          <button className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded p-1.5 transition-colors">
+          <button
+            onClick={() => zoomIn()}
+            className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded p-1.5 transition-colors"
+            title="Zoom In"
+          >
             <ZoomIn size={15} />
           </button>
-          <button className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded p-1.5 transition-colors">
+          <button
+            onClick={() => zoomOut()}
+            className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded p-1.5 transition-colors"
+            title="Zoom Out"
+          >
             <ZoomOut size={15} />
+          </button>
+          <button
+            onClick={() => fitView()}
+            className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded px-2 py-1 font-mono text-[10px] font-bold transition-colors"
+            title="Fit View"
+          >
+            FIT
           </button>
         </div>
       </div>
 
       {/* Main Canvas Area */}
-      <div className="relative h-full min-h-[480px] w-full flex-1">
-        {/* Floating AI Constraint Suggestion Chips */}
-        <div className="absolute top-[280px] left-[20px] z-20 flex max-w-[280px] flex-col gap-2.5">
-          {suggestions.map((s, idx) => (
-            <button
-              key={idx}
-              onClick={() => onChipClick(s)}
-              className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex cursor-pointer items-center gap-2 rounded-full border px-3.5 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-all hover:scale-[1.03] active:scale-[0.97]"
-              style={{ animationDelay: `${idx * 1.5}s` }}
-            >
-              <Sparkles size={11} />
-              <span>{s}</span>
-            </button>
-          ))}
-        </div>
+      <div className="border-outline-variant/15 relative h-full min-h-[480px] w-full flex-1 overflow-hidden rounded-2xl border bg-[#0e0e11]/30">
+        {/* React Flow Editor */}
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          nodeTypes={nodeTypes}
+          fitView
+          className="animate-fade-in bg-transparent"
+          minZoom={0.2}
+          maxZoom={1.5}
+          proOptions={{ hideAttribution: true }}
+        >
+          <Background color="rgba(79, 124, 255, 0.08)" gap={16} size={1} />
+        </ReactFlow>
 
-        {/* Trust Center Overlay Panel */}
-        <div className="glass-card absolute top-0 right-0 z-20 flex w-[280px] flex-col gap-2 rounded-xl border border-[#4F7CFF]/20 p-4 text-xs shadow-[0_0_20px_rgba(79,124,255,0.08)]">
-          <div className="border-outline-variant/15 flex items-center justify-between border-b pb-1.5">
-            <span className="font-display text-on-surface-variant text-[10px] font-black tracking-wider">
-              TRUST CENTER
-            </span>
-            <div className="flex items-center gap-1.5">
-              <span className="text-on-surface font-mono text-xs font-extrabold">
-                {trustScore || 94}%
+        {/* Contextual Specs Side Panel */}
+        {displayProduct && (
+          <div className="glass-card border-outline-variant/15 absolute top-4 left-4 z-20 flex w-[300px] flex-col gap-4 rounded-2xl border p-5 shadow-[0_15px_40px_-10px_rgba(79,124,255,0.15)] transition-all">
+            <div className="border-outline-variant/15 flex items-start justify-between border-b pb-3">
+              <span className="font-display text-[11px] font-black tracking-wider text-[#4F7CFF]">
+                {hoveredProductId ? "PREVIEWING DETAILS" : "SELECTED PRODUCT"}
               </span>
-              <CheckCircle2 size={13} className="text-[#4F7CFF]" />
-            </div>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-on-surface-variant font-mono text-[10px]">
-              Benchmark Cross-References
-            </span>
-            <span className="text-on-surface font-mono font-semibold">
-              {trustFactors?.benchmarkSources || 8}
-            </span>
-          </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-on-surface-variant font-mono text-[10px]">
-              Review Coverage
-            </span>
-            <span className="text-on-surface font-mono font-semibold">
-              {trustFactors?.reviewCoverage || 85}%
-            </span>
-          </div>
-          <div className="border-outline-variant/10 flex items-center justify-between border-t pt-1.5 text-[11px]">
-            <span className="text-on-surface-variant font-mono text-[10px]">
-              Retail Consensus
-            </span>
-            <span className="font-mono font-bold text-green-400">
-              {trustFactors?.retailConsensus || "Recommended"}
-            </span>
-          </div>
-          <div className="border-outline-variant/10 flex flex-col gap-1 border-t pt-1.5">
-            <div className="flex items-center justify-between text-[11px]">
-              <span className="text-on-surface-variant font-mono text-[10px]">
-                Cumulative Reliability
-              </span>
-              <span className="flex items-center gap-0.5 font-mono text-xs text-green-400">
-                Increasing
-                <Star size={11} className="fill-green-400" />
+              <span className="font-mono text-sm font-bold text-emerald-400">
+                {(displayProduct.price * (1 - discountRate)).toLocaleString(
+                  "vi-VN"
+                )} ₫
               </span>
             </div>
-            {/* Confidence bars */}
-            <div className="mt-1 flex h-6 w-full items-end gap-1">
-              {(trustFactors?.confidenceEvolution || [20, 40, 50, 75, 94]).map(
-                (val, idx) => (
-                  <div
-                    key={idx}
-                    className="w-1/5 rounded-t-sm bg-[#4F7CFF]/20 transition-all duration-700"
-                    style={{
-                      height: `${Math.max(10, val)}%`,
-                      backgroundColor:
-                        idx === 4
-                          ? "#4F7CFF"
-                          : `rgba(79, 124, 255, ${0.3 + idx * 0.15})`,
-                      boxShadow: idx === 4 ? "0 0 8px #4F7CFF" : "none",
-                    }}
-                  />
-                )
-              )}
-            </div>
-          </div>
-        </div>
 
-        {/* SVG Flow Connections */}
-        <svg className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-60">
-          <defs>
-            <filter
-              id="glow-filter"
-              x="-20%"
-              y="-20%"
-              width="140%"
-              height="140%"
-            >
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
+            <h3 className="text-on-surface text-lg leading-tight font-bold">
+              {displayProduct.name}
+            </h3>
 
-          {/* Lines from User Goal -> priorities */}
-          <path
-            d="M 60 160 C 100 160, 100 100, 140 100"
-            fill="none"
-            stroke="#4F7CFF"
-            strokeWidth="2"
-            className="flow-line-highlight"
-            filter="url(#glow-filter)"
-          />
-          <path
-            d="M 60 160 C 100 160, 100 220, 140 220"
-            fill="none"
-            stroke="#4F7CFF"
-            strokeWidth="2"
-            className="flow-line-highlight"
-            filter="url(#glow-filter)"
-          />
-
-          {/* Lines from Priorities -> Laptop Match targets */}
-          {/* We assume laptops coordinates are roughly top-right clustered */}
-          <path
-            d="M 230 100 C 310 100, 310 80, 450 80"
-            fill="none"
-            stroke="#4F7CFF"
-            strokeWidth="1.5"
-            className="flow-line-highlight"
-          />
-          <path
-            d="M 230 220 C 310 220, 310 120, 450 120"
-            fill="none"
-            stroke="#4F7CFF"
-            strokeWidth="1.5"
-            className="flow-line-highlight"
-          />
-
-          {/* Distant targets */}
-          <path
-            d="M 230 100 C 310 100, 310 240, 450 250"
-            fill="none"
-            stroke="#434654"
-            strokeWidth="1"
-            className="flow-line"
-          />
-          <path
-            d="M 230 220 C 310 220, 310 280, 450 290"
-            fill="none"
-            stroke="#434654"
-            strokeWidth="1"
-            className="flow-line"
-          />
-
-          <path
-            d="M 230 100 C 310 100, 310 380, 450 420"
-            fill="none"
-            stroke="#434654"
-            strokeWidth="1"
-            className="flow-line"
-          />
-
-          {/* Terminal node circles */}
-          <circle cx="450" cy="80" r="4" fill="#4F7CFF" />
-          <circle cx="450" cy="250" r="3" fill="#4F7CFF" opacity="0.6" />
-          <circle cx="450" cy="420" r="3" fill="#4F7CFF" opacity="0.6" />
-
-          {/* Main User Goal Node */}
-          <rect
-            x="10"
-            y="140"
-            width="100"
-            height="40"
-            rx="20"
-            fill="#18181B"
-            stroke="#4F7CFF"
-            strokeWidth="1.5"
-            className="pulse-border"
-          />
-
-          {/* Priorities Rects */}
-          <rect
-            x="135"
-            y="85"
-            width="100"
-            height="30"
-            rx="4"
-            fill="#18181B"
-            stroke="#4F7CFF"
-            strokeWidth="1.5"
-          />
-          <rect
-            x="135"
-            y="205"
-            width="100"
-            height="30"
-            rx="4"
-            fill="#18181B"
-            stroke="#4F7CFF"
-            strokeWidth="1.5"
-          />
-        </svg>
-
-        {/* HTML Labels Over SVG coordinates */}
-        <div className="font-display text-on-surface pointer-events-none absolute top-[150px] left-[25px] z-10 text-[11px] font-bold">
-          Target
-        </div>
-        <div className="font-display text-on-surface pointer-events-none absolute top-[92px] left-[150px] z-10 w-[75px] truncate text-center text-[10px] font-semibold">
-          {graphNodes[0] || "GPU Priority"}
-        </div>
-        <div className="font-display text-on-surface pointer-events-none absolute top-[212px] left-[150px] z-10 w-[75px] truncate text-center text-[10px] font-semibold">
-          {graphNodes[1] || "Thermals"}
-        </div>
-
-        {/* Match zone label */}
-        <div className="absolute top-[-5px] left-[420px] font-mono text-[9px] font-bold tracking-widest text-[#4F7CFF] uppercase opacity-80 select-none">
-          /// PRIMARY MATCH CLUSTER
-        </div>
-
-        {/* Laptop Stack (Spatial Cards) */}
-        <div className="absolute top-[20px] left-[420px] z-10 flex w-[310px] flex-col gap-4">
-          {products.map((laptop, index) => {
-            const isActive = laptop.id === activeProductId;
-            const isSaved = savedIds.includes(laptop.id);
-
-            return (
-              <div
-                key={laptop.id}
-                onClick={() => setActiveProductId(laptop.id)}
-                className={`glass-card cursor-pointer overflow-hidden rounded-xl transition-all duration-300 ${
-                  isActive
-                    ? "border-primary ring-primary/40 scale-[1.02] border-2 shadow-[0_0_25px_rgba(79,124,255,0.25)] ring-1"
-                    : "border-outline-variant/15 border opacity-75 hover:scale-[1.01] hover:opacity-100"
-                }`}
-              >
-                {/* Header Match Score */}
-                <div className="border-outline-variant/30 absolute top-3 right-3 z-10 flex items-center gap-1 rounded-full border bg-black/60 px-2 py-0.5 backdrop-blur">
-                  <Star
-                    size={11}
-                    className={
-                      isActive
-                        ? "fill-[#4F7CFF] text-[#4F7CFF]"
-                        : "text-on-surface-variant"
-                    }
-                  />
-                  <span
-                    className={`font-mono text-[9px] font-bold ${isActive ? "text-[#4F7CFF]" : "text-on-surface"}`}
-                  >
-                    {laptop.matchScore}% MATCH
-                  </span>
-                </div>
-
-                {/* Laptop Image */}
-                <div className="relative h-28 w-full">
-                  <img
-                    src={laptop.image}
-                    alt={laptop.name}
-                    referrerPolicy="no-referrer"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
-                </div>
-
-                {/* Body Content */}
-                <div className="p-3">
-                  <div className="mb-1 flex items-start justify-between">
-                    <h3 className="font-display text-on-surface flex-1 truncate pr-2 text-sm font-bold">
-                      {laptop.name}
-                    </h3>
-                    <div className="flex shrink-0 items-center gap-1.5">
-                      <div className="flex flex-col items-end">
-                        {discountRate > 0 ? (
-                          <>
-                            <span className="text-on-surface-variant font-mono text-[9px] leading-none line-through">
-                              ${laptop.price.toLocaleString("en-US")}
-                            </span>
-                            <span className="font-mono text-xs font-bold text-emerald-400">
-                              $
-                              {Math.round(
-                                laptop.price * (1 - discountRate)
-                              ).toLocaleString("en-US")}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="font-mono text-xs font-bold text-emerald-400">
-                            ${laptop.price.toLocaleString("en-US")}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Bell price alert trigger */}
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onOpenPriceAlert(laptop);
-                        }}
-                        className={`cursor-pointer rounded-md p-1.5 transition-all ${
-                          priceAlerts.some(
-                            (a) => a.productId === laptop.id && a.active
-                          )
-                            ? "animate-pulse border border-[#4F7CFF]/40 bg-[#4F7CFF]/20 text-[#4F7CFF]"
-                            : "text-on-surface-variant hover:bg-surface-low hover:text-[#4F7CFF]"
-                        }`}
-                        title="Set Price Alert"
-                      >
-                        <Bell size={12} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Tiny specs list */}
-                  <div className="text-on-surface-variant mb-2.5 flex flex-col gap-0.5 font-mono text-[10px]">
-                    <div className="border-outline-variant/10 flex justify-between border-b pb-0.5">
-                      <span>GPU</span>
-                      <span className="text-on-surface max-w-[150px] truncate">
-                        {laptop.specs.gpu}
-                      </span>
-                    </div>
-                    <div className="border-outline-variant/10 flex justify-between border-b pb-0.5">
-                      <span>RAM</span>
-                      <span className="text-on-surface">
-                        {laptop.specs.ram}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Cooling</span>
-                      <span className="text-on-surface max-w-[150px] truncate">
-                        {laptop.specs.cooling}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Price alert active badge */}
-                  {priceAlerts.some(
-                    (a) => a.productId === laptop.id && a.active
-                  ) && (
-                    <div className="mt-1.5 mb-2 flex items-center justify-between rounded-lg border border-[#4F7CFF]/20 bg-[#4F7CFF]/10 px-2 py-1 font-mono text-[10px] text-[#4F7CFF]">
-                      <span className="flex items-center gap-1">
-                        <Bell size={10} className="animate-bounce" />
-                        Price alert: &le; $
-                        {priceAlerts
-                          .find((a) => a.productId === laptop.id && a.active)
-                          ?.targetPrice.toLocaleString()}
-                      </span>
-                      <span className="text-[9px] font-bold text-emerald-400">
-                        (Current: $
-                        {Math.round(
-                          laptop.price * (1 - discountRate)
-                        ).toLocaleString()}
-                        )
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Match Parameter Bars (only expand for Active) */}
-                  {isActive && (
-                    <div className="border-outline-variant/15 flex flex-col gap-1.5 border-t pt-2 transition-all">
-                      <div className="flex items-center justify-between text-[9px]">
-                        <span className="text-on-surface-variant w-14">
-                          AI Performance
-                        </span>
-                        <div className="bg-surface-low ml-2 h-1.5 flex-1 overflow-hidden rounded-full">
-                          <div
-                            className="h-full rounded-full bg-[#4F7CFF]"
-                            style={{ width: `${laptop.aiPerf}%` }}
-                          />
-                        </div>
-                        <span className="ml-1 w-6 text-right font-mono">
-                          {laptop.aiPerf}%
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-[9px]">
-                        <span className="text-on-surface-variant w-14">
-                          3D Rendering
-                        </span>
-                        <div className="bg-surface-low ml-2 h-1.5 flex-1 overflow-hidden rounded-full">
-                          <div
-                            className="h-full rounded-full bg-[#4F7CFF]"
-                            style={{ width: `${laptop.rendering}%` }}
-                          />
-                        </div>
-                        <span className="ml-1 w-6 text-right font-mono">
-                          {laptop.rendering}%
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-[9px]">
-                        <span className="text-on-surface-variant w-14">
-                          Cooling
-                        </span>
-                        <div className="bg-surface-low ml-2 h-1.5 flex-1 overflow-hidden rounded-full">
-                          <div
-                            className="h-full rounded-full bg-[#4F7CFF]"
-                            style={{ width: `${laptop.thermals}%` }}
-                          />
-                        </div>
-                        <span className="ml-1 w-6 text-right font-mono">
-                          {laptop.thermals}%
-                        </span>
-                      </div>
-
-                      {/* Quick Pin/Save Action */}
-                      <button
-                        onClick={(e) => onToggleSave(laptop.id, e)}
-                        className="text-on-primary-container border-primary/20 mt-2 flex w-full cursor-pointer items-center justify-center gap-1 rounded-md border bg-[#4F7CFF]/10 px-3 py-1.5 text-[11px] font-semibold transition-colors hover:bg-[#4F7CFF]/20"
-                      >
-                        {isSaved ? "Unpin from Board" : "Pin to Board"}
-                      </button>
-                    </div>
-                  )}
-                </div>
+            <div className="text-on-surface-variant mt-2 flex flex-col gap-1.5 font-mono text-xs">
+              <div className="border-outline-variant/5 flex justify-between border-b pb-1">
+                <span className="opacity-70">CPU:</span>
+                <span className="max-w-[180px] truncate text-right text-white">
+                  {displayProduct.specs?.cpu || "Standard"}
+                </span>
               </div>
-            );
-          })}
-        </div>
+              <div className="border-outline-variant/5 flex justify-between border-b pb-1">
+                <span className="opacity-70">RAM:</span>
+                <span className="max-w-[180px] truncate text-right text-white">
+                  {displayProduct.specs?.ram || "16GB"}
+                </span>
+              </div>
+              <div className="border-outline-variant/5 flex justify-between border-b pb-1">
+                <span className="opacity-70">GPU:</span>
+                <span className="max-w-[180px] truncate text-right text-white">
+                  {displayProduct.specs?.gpu || "Integrated"}
+                </span>
+              </div>
+              <div className="border-outline-variant/5 flex justify-between border-b pb-1">
+                <span className="opacity-70">Screen:</span>
+                <span className="max-w-[180px] truncate text-right text-white">
+                  {displayProduct.specs?.screen || "Standard"}
+                </span>
+              </div>
+              <div className="border-outline-variant/5 flex justify-between border-b pb-1">
+                <span className="opacity-70">Cooling:</span>
+                <span className="max-w-[180px] truncate text-right text-white">
+                  {displayProduct.specs?.cooling || "Standard"}
+                </span>
+              </div>
+              <div className="flex justify-between pb-1">
+                <span className="opacity-70">Warranty:</span>
+                <span className="max-w-[180px] truncate text-right text-white">
+                  {displayProduct.specs?.warranty || "Standard 1-Year"}
+                </span>
+              </div>
+            </div>
+
+            {/* Match Parameter Bars */}
+            <div className="border-outline-variant/15 mt-1 flex flex-col gap-2.5 border-t pt-3">
+              <span className="text-on-surface-variant mb-1 text-[10px] font-bold tracking-wider uppercase">
+                Performance Match
+              </span>
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-on-surface-variant w-16">AI Perf</span>
+                <div className="bg-surface-low mx-2 h-1.5 flex-1 overflow-hidden rounded-full">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#4F7CFF] to-indigo-400 transition-all duration-500"
+                    style={{ width: `${displayProduct.aiPerf}%` }}
+                  />
+                </div>
+                <span className="w-7 text-right font-mono text-white">
+                  {displayProduct.aiPerf}%
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-on-surface-variant w-16">3D Render</span>
+                <div className="bg-surface-low mx-2 h-1.5 flex-1 overflow-hidden rounded-full">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#4F7CFF] to-indigo-400 transition-all duration-500"
+                    style={{ width: `${displayProduct.rendering}%` }}
+                  />
+                </div>
+                <span className="w-7 text-right font-mono text-white">
+                  {displayProduct.rendering}%
+                </span>
+              </div>
+              <div className="flex items-center justify-between text-[10px]">
+                <span className="text-on-surface-variant w-16">Thermals</span>
+                <div className="bg-surface-low mx-2 h-1.5 flex-1 overflow-hidden rounded-full">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-[#4F7CFF] to-indigo-400 transition-all duration-500"
+                    style={{ width: `${displayProduct.thermals}%` }}
+                  />
+                </div>
+                <span className="w-7 text-right font-mono text-white">
+                  {displayProduct.thermals}%
+                </span>
+              </div>
+            </div>
+
+            {/* Pin action */}
+            <button
+              onClick={(e) => onToggleSave(displayProduct.id, e)}
+              className="mt-4 flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-lg border border-[#4F7CFF]/30 bg-[#4F7CFF]/15 px-3 py-2 text-[11px] font-bold text-[#4F7CFF] transition-colors hover:bg-[#4F7CFF]/25"
+            >
+              {isSaved ? "Unpin from Board" : "Pin to Board"}
+            </button>
+          </div>
+        )}
+
+
       </div>
 
       {/* Persistent Floating Action Dock */}
-      <div className="bg-surface-highest/80 border-outline-variant/40 absolute bottom-6 left-1/2 z-20 flex w-full max-w-2xl -translate-x-1/2 items-center justify-between gap-5 rounded-full border px-6 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+      <div className="bg-surface-highest/80 border-outline-variant/40 z-20 mx-auto mb-2 flex w-full max-w-2xl items-center justify-between gap-5 rounded-full border px-6 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
         <button
           onClick={onCompareAll}
           className="text-on-surface flex cursor-pointer items-center gap-2 font-mono text-[12px] font-bold transition-colors hover:text-[#4F7CFF]"
@@ -524,5 +381,13 @@ export default function SpatialWorkspace({
         </button>
       </div>
     </main>
+  );
+}
+
+export default function SpatialWorkspace(props: SpatialWorkspaceProps) {
+  return (
+    <ReactFlowProvider>
+      <SpatialWorkspaceContent {...props} />
+    </ReactFlowProvider>
   );
 }

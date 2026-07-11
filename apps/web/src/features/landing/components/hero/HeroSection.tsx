@@ -78,26 +78,10 @@ export function HeroSection() {
             <div className="gsap-animate gsap-stats grid w-full grid-cols-2 gap-3 pt-2 sm:grid-cols-4">
               <div className="border-border/10 bg-muted/5 rounded-lg border p-3">
                 <div className="text-foreground text-xl font-bold sm:text-2xl">
-                  94%
+                  1+
                 </div>
                 <div className="text-muted-foreground text-[9px] font-semibold tracking-wider uppercase">
-                  CONFIDENCE
-                </div>
-              </div>
-              <div className="border-border/10 bg-muted/5 rounded-lg border p-3">
-                <div className="text-foreground text-xl font-bold sm:text-2xl">
-                  6
-                </div>
-                <div className="text-muted-foreground text-[9px] font-semibold tracking-wider uppercase">
-                  SPECIALISTS
-                </div>
-              </div>
-              <div className="border-border/10 bg-muted/5 rounded-lg border p-3">
-                <div className="text-foreground text-xl font-bold sm:text-2xl">
-                  50+
-                </div>
-                <div className="text-muted-foreground text-[9px] font-semibold tracking-wider uppercase">
-                  BRANDS
+                  BRANDS (Phong Vu)
                 </div>
               </div>
               <div className="border-border/10 bg-muted/5 rounded-lg border p-3">

@@ -15,6 +15,7 @@ interface AuditTrailProps {
   onInjectConstraint: (constraint: string) => void;
   isLoading: boolean;
   onReplay: () => void;
+  suggestions?: string[];
 }
 
 export default function AuditTrail({
@@ -23,10 +24,11 @@ export default function AuditTrail({
   onInjectConstraint,
   isLoading,
   onReplay,
+  suggestions,
 }: AuditTrailProps) {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (inputValue.trim()) {
       onInjectConstraint(inputValue.trim());
@@ -97,9 +99,10 @@ export default function AuditTrail({
                         className="bg-surface rounded-full text-green-400"
                       />
                     ) : isRunning ? (
-                      <div className="flex h-[15px] w-[15px] animate-pulse items-center justify-center rounded-full bg-[#4F7CFF]/20">
-                        <div className="h-[7px] w-[7px] rounded-full bg-[#4F7CFF] shadow-[0_0_8px_#4F7CFF]"></div>
-                      </div>
+                      <Loader2
+                        size={15}
+                        className="animate-spin text-[#4F7CFF] drop-shadow-[0_0_8px_rgba(79,124,255,0.8)]"
+                      />
                     ) : (
                       <div className="bg-surface-low border-outline-variant/60 h-[11px] w-[11px] rounded-full border-2"></div>
                     )}
@@ -125,7 +128,22 @@ export default function AuditTrail({
       </div>
 
       {/* Input section */}
-      <div className="border-outline-variant/15 bg-surface-lowest border-t p-4">
+      <div className="border-outline-variant/15 bg-surface-lowest border-t p-4 flex flex-col gap-3">
+        {suggestions && suggestions.length > 0 && (
+          <div className="flex w-full gap-2 overflow-x-auto pb-1 scrollbar-hide snap-x">
+            {suggestions.map((s, idx) => (
+              <button
+                key={idx}
+                onClick={() => onInjectConstraint(s)}
+                className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex cursor-pointer shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-all hover:scale-[1.03] active:scale-[0.97] snap-start"
+              >
+                <Sparkles size={11} />
+                <span className="whitespace-nowrap">{s}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         <form
           onSubmit={handleSubmit}
           className="bg-surface border-outline-variant/30 flex items-center rounded-lg border p-1.5 transition-all focus-within:border-[#4F7CFF]/70 focus-within:ring-1 focus-within:ring-[#4F7CFF]/30"
@@ -135,7 +153,7 @@ export default function AuditTrail({
             onChange={(e) => setInputValue(e.target.value)}
             disabled={isLoading}
             className="text-on-surface placeholder:text-on-surface-variant/40 w-full border-none bg-transparent px-2 py-1.5 font-sans text-xs outline-none focus:ring-0 focus:outline-none"
-            placeholder="Add new constraint (e.g., OLED screen, under $3000)..."
+            placeholder="Add new constraint (e.g., OLED screen, under 80.000.000 ₫)..."
             type="text"
           />
           <button

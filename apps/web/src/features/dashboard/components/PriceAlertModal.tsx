@@ -100,10 +100,10 @@ export default function PriceAlertModal({
               </h4>
               <div className="mt-1 flex items-center gap-2">
                 <span className="text-on-surface-variant font-mono text-xs line-through">
-                  ${product.price.toLocaleString("en-US")}
+                  {product.price.toLocaleString("vi-VN")} ₫
                 </span>
                 <span className="font-mono text-xs font-bold text-emerald-400">
-                  ${currentDiscountedPrice.toLocaleString("en-US")} (Current
+                  {currentDiscountedPrice.toLocaleString("vi-VN")} ₫ (Current
                   price)
                 </span>
               </div>
@@ -115,9 +115,9 @@ export default function PriceAlertModal({
             <div className="flex items-center justify-between rounded-xl border border-[#4F7CFF]/20 bg-[#4F7CFF]/10 p-3">
               <div className="flex items-center gap-2">
                 <Check size={14} className="text-[#4F7CFF]" />
-                <span className="font-sans text-[11px] font-semibold text-[#4F7CFF]">
+                <span className="text-on-surface font-sans text-[11px]">
                   Active: Alert below{" "}
-                  <strong>${activeAlert.targetPrice.toLocaleString()}</strong>
+                  <strong>{activeAlert.targetPrice.toLocaleString("vi-VN")} ₫</strong>
                 </span>
               </div>
               <button
@@ -149,7 +149,7 @@ export default function PriceAlertModal({
 
             <div className="relative flex items-center">
               <span className="text-on-surface-variant absolute left-3.5 font-mono text-sm">
-                $
+                ₫
               </span>
               <input
                 type="number"
@@ -174,8 +174,8 @@ export default function PriceAlertModal({
                 className="bg-surface-lowest h-1.5 w-full cursor-pointer appearance-none rounded-lg accent-[#4F7CFF]"
               />
               <div className="text-on-surface-variant mt-1.5 flex justify-between font-mono text-[10px]">
-                <span>30% Off (${Math.round(product.price * 0.7)})</span>
-                <span>Original price (${product.price})</span>
+                <span>30% Off ({Math.round(product.price * 0.7).toLocaleString("vi-VN")} ₫)</span>
+                <span>Original price ({product.price.toLocaleString("vi-VN")} ₫)</span>
               </div>
             </div>
           </div>
