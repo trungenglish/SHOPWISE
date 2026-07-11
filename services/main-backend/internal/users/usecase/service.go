@@ -85,6 +85,17 @@ func (s *Service) GetByID(ctx context.Context, id uuid.UUID) (*domain.User, erro
 	return user, nil
 }
 
+func (s *Service) GetVerifiedNotificationIdentity(ctx context.Context, userID uuid.UUID) (string, error) {
+	user, err := s.GetByID(ctx, userID)
+	if err != nil {
+		return "", err
+	}
+	if user.Phone == "" {
+		return "", errors.New("user has no verified phone number")
+	}
+	return user.Phone, nil
+}
+
 func (s *Service) List(ctx context.Context, limit, offset int) ([]domain.User, error) {
 	if limit <= 0 {
 		limit = defaultListLimit
