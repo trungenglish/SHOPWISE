@@ -254,17 +254,17 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/006-product-comparison/plan.md
+For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/007-checkout-readiness/plan.md
 
-Active feature: Product Comparison Workspace (006-product-comparison)
+Active feature: Checkout Readiness (007-checkout-readiness)
 
-- Spec: specs/006-product-comparison/spec.md
-- Plan: specs/006-product-comparison/plan.md
-- Data model: specs/006-product-comparison/data-model.md
-- API contracts: specs/006-product-comparison/contracts/api-contracts.md
-- UI contracts: specs/006-product-comparison/contracts/ui-contracts.md
-- Quickstart: specs/006-product-comparison/quickstart.md
-- Research: specs/006-product-comparison/research.md
+- Spec: specs/007-checkout-readiness/spec.md
+- Plan: specs/007-checkout-readiness/plan.md
+- Data model: specs/007-checkout-readiness/data-model.md
+- API contracts: specs/007-checkout-readiness/contracts/api-contracts.md
+- UI contracts: specs/007-checkout-readiness/contracts/ui-contracts.md
+- Quickstart: specs/007-checkout-readiness/quickstart.md
+- Research: specs/007-checkout-readiness/research.md
 - Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 
