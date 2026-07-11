@@ -12,6 +12,7 @@ interface SidebarProps {
   setActiveTab: (tab: string) => void;
   onNewSession: () => void;
   savedCount: number;
+  onClose?: () => void;
 }
 
 export default function Sidebar({
@@ -19,20 +20,31 @@ export default function Sidebar({
   setActiveTab,
   onNewSession,
   savedCount,
+  onClose,
 }: SidebarProps) {
   return (
     <aside
       className="glass-panel flex h-full shrink-0 flex-col px-4 py-6 select-none"
       style={{ width: "260px" }}
     >
-      {/* Brand Logo */}
-      <div className="mt-2 mb-8 px-2">
-        <h1 className="font-display text-gradient text-[26px] leading-tight font-black tracking-tight">
-          SHOPWISE
-        </h1>
-        <p className="font-display text-on-surface-variant text-[11px] font-medium tracking-widest uppercase opacity-80">
-          AI Decision OS
-        </p>
+      {/* Brand Logo & Close Button */}
+      <div className="mt-2 mb-8 flex items-center justify-between px-2">
+        <div>
+          <h1 className="font-display text-gradient text-[26px] leading-tight font-black tracking-tight">
+            SHOPWISE
+          </h1>
+          <p className="font-display text-on-surface-variant text-[11px] font-medium tracking-widest uppercase opacity-80">
+            AI Decision OS
+          </p>
+        </div>
+        {onClose && (
+          <button
+            onClick={onClose}
+            className="text-on-surface-variant hover:text-on-surface hover:bg-surface-high rounded p-1 transition-colors"
+          >
+            <Plus size={20} className="rotate-45" />
+          </button>
+        )}
       </div>
 
       {/* New Session Action */}

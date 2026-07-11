@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import Sidebar from "@/features/dashboard/components/Sidebar";
 import AuditTrail from "@/features/dashboard/components/AuditTrail";
 import AgentHub from "@/features/dashboard/components/AgentHub";
+import TrustCenterHeader from "@/features/dashboard/components/TrustCenterHeader";
 import SpatialWorkspace from "@/features/dashboard/components/SpatialWorkspace";
 import ComparisonModal from "@/features/dashboard/components/ComparisonModal";
 import AccessoriesModal from "@/features/dashboard/components/AccessoriesModal";
@@ -25,7 +26,8 @@ import {
   initialReasoning,
   initialAccessories,
 } from "@/features/dashboard/mock-data";
-import { Sparkles, Loader2, Bookmark, Bell } from "lucide-react";
+import { Sparkles, Loader2, Bookmark, Bell, Menu } from "lucide-react";
+import EmptyWorkspace from "@/features/dashboard/components/EmptyWorkspace";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
@@ -77,28 +79,21 @@ const mockDecisionApi = async (queryText: string) => {
 };
 
 function DashboardPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isInitialState, setIsInitialState] = useState(true);
   const [activeTab, setActiveTab] = useState<string>("sessions");
-  const [userIntent, setUserIntent] = useState<string>(
-    "Intensive 3D rendering and local AI development. Focus: cooling and GPU."
+  const [userIntent, setUserIntent] = useState<string>("");
+  const [sessionTitle, setSessionTitle] = useState<string>("");
+  const [products, setProducts] = useState<Laptop[]>([]);
+  const [logs, setLogs] = useState<AuditLog[]>([]);
+  const [agents, setAgents] = useState<AgentStatus[]>([]);
+  const [trustScore, setTrustScore] = useState<number>(0);
+  const [trustFactors, setTrustFactors] = useState<TrustFactors>(
+    {} as TrustFactors
   );
-  const [sessionTitle, setSessionTitle] =
-    useState<string>("Hardware Render OS");
-  const [products, setProducts] = useState<Laptop[]>(initialProducts);
-  const [logs, setLogs] = useState<AuditLog[]>(initialLogs);
-  const [agents, setAgents] = useState<AgentStatus[]>(initialAgents);
-  const [trustScore, setTrustScore] = useState<number>(94);
-  const [trustFactors, setTrustFactors] = useState<TrustFactors>({
-    benchmarkSources: 8,
-    reviewCoverage: 85,
-    retailConsensus: "Highly recommended",
-    confidenceEvolution: [20, 40, 50, 75, 94],
-  });
-  const [graphNodes, setGraphNodes] = useState<string[]>([
-    "GPU Priority",
-    "Thermals",
-  ]);
-  const [reasoning, setReasoning] = useState<string>(initialReasoning);
-  const [accessories, setAccessories] = useState<any[]>(initialAccessories);
+  const [graphNodes, setGraphNodes] = useState<string[]>([]);
+  const [reasoning, setReasoning] = useState<string>("");
+  const [accessories, setAccessories] = useState<any[]>([]);
 
   // Active highlighted product card
   const [activeProductId, setActiveProductId] = useState<string>("macbook-pro");
@@ -264,8 +259,10 @@ function DashboardPage() {
     });
   }, [retailAccounts, priceAlerts, products, connectedDiscount]);
 
-  const handleToggleSave = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleToggleSave = (id: string, e?: React.MouseEvent) => {
+    if (e && e.stopPropagation) {
+      e.stopPropagation();
+    }
     if (savedIds.includes(id)) {
       setSavedIds(savedIds.filter((item) => item !== id));
     } else {
@@ -273,50 +270,99 @@ function DashboardPage() {
     }
   };
 
-  const decisionMutation = useMutation({
-    mutationFn: mockDecisionApi,
-    onMutate: (queryText) => {
-      setUserIntent(queryText);
-      setLogs([
-        {
-          time: "Now",
-          message: "Parsing new hardware requirements...",
-          status: "running",
-        },
-        {
-          time: "Pending",
-          message: "Mapping ideal graphics specifications...",
-          status: "pending",
-        },
-        {
-          time: "Pending",
-          message: "Connecting to Gemini data center for cross-checking...",
-          status: "pending",
-        },
-      ]);
-    },
-    onSuccess: (data) => {
-      setSessionTitle(data.sessionTitle);
-      setProducts(data.products);
-      setLogs(data.logs);
-      setAgents(data.agents);
-      setTrustScore(data.trustScore);
-      setTrustFactors(data.trustFactors);
-      setGraphNodes(data.graphNodes);
-      setReasoning(data.reasoningExplanation);
-      setAccessories(data.accessories);
-
-      if (data.products && data.products.length > 0) {
-        setActiveProductId(data.products[0].id);
-      }
-    },
-    onError: (err, queryText) => {
-      console.error("Decision mutation error", err);
-    },
-  });
+  const [isSimulating, setIsSimulating] = useState(false);
 
   const handleQueryEvaluation = (queryText: string) => {
-    decisionMutation.mutate(queryText);
+    if (isSimulating) return;
+
+    setIsInitialState(false);
+    setIsSimulating(true);
+    setUserIntent(queryText);
+
+    // Clear state for progressive load
+    setLogs([]);
+    setAgents([]);
+    setProducts([]);
+    setTrustFactors({} as TrustFactors);
+    setAccessories([]);
+    setGraphNodes([]);
+
+    // Step 1: Initial Parsing
+    setLogs([
+      {
+        time: "Now",
+        message: "Parsing new hardware requirements...",
+        status: "running",
+      },
+    ]);
+
+    // Step 2: Agent initialization
+    setTimeout(() => {
+      setAgents(initialAgents.map((a) => ({ ...a, progress: 10 })));
+      setLogs([
+        {
+          time: "01:14",
+          message: "Parsed dynamic requirements",
+          status: "done",
+        },
+        {
+          time: "Now",
+          message: "Mapping ideal graphics specifications...",
+          status: "running",
+        },
+      ]);
+      setGraphNodes(["GPU Priority", "Thermals"]);
+    }, 1000);
+
+    // Step 3: API cross-check
+    setTimeout(() => {
+      setAgents(initialAgents.map((a) => ({ ...a, progress: 60 })));
+      setLogs([
+        {
+          time: "01:14",
+          message: "Parsed dynamic requirements",
+          status: "done",
+        },
+        {
+          time: "01:15",
+          message: "Mapped ideal graphics specifications",
+          status: "done",
+        },
+        {
+          time: "Now",
+          message: "Connecting to retail data centers...",
+          status: "running",
+        },
+      ]);
+    }, 2000);
+
+    // Step 4: Final Resolve
+    setTimeout(() => {
+      setSessionTitle("AI Custom Decision");
+      setProducts(
+        initialProducts.map((p) => ({
+          ...p,
+          matchScore: Math.floor(Math.random() * 15) + 84,
+          matchExplanation: `Recommended for: "${queryText}". Demonstrates solid real-world performance.`,
+        }))
+      );
+      setLogs(initialLogs);
+      setAgents(initialAgents);
+      setTrustScore(95);
+      setTrustFactors({
+        benchmarkSources: 10,
+        reviewCoverage: 90,
+        retailConsensus: "Extremely well matched",
+        confidenceEvolution: [30, 45, 60, 80, 95],
+      });
+      setReasoning(initialReasoning);
+      setAccessories(initialAccessories);
+
+      if (initialProducts.length > 0) {
+        setActiveProductId(initialProducts[0].id);
+      }
+      setIsSimulating(false);
+    }, 3500);
   };
 
   const handleReplay = () => {
@@ -348,20 +394,40 @@ function DashboardPage() {
   };
 
   const activeProduct =
-    products.find((p) => p.id === activeProductId) || products[0];
+    products.find((p) => p.id === activeProductId) || products[0] || null;
 
   return (
     <div className="relative flex h-screen w-full overflow-hidden bg-[#09090B]">
       {/* Background radial overlays */}
       <div className="shader-bg" />
 
-      {/* 3-zone core workspace layout */}
-      <Sidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onNewSession={handleNewSession}
-        savedCount={savedIds.length}
+      {/* Global Header */}
+      <TrustCenterHeader
+        trustScore={trustScore}
+        trustFactors={trustFactors}
+        isSimulating={isSimulating}
       />
+
+      {/* Sidebar Toggle Button (if hidden) */}
+      {!isSidebarOpen && (
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="border-outline-variant/20 bg-surface-high text-on-surface-variant hover:bg-surface-highest hover:text-on-surface absolute top-4 left-4 z-50 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border shadow-lg transition-colors"
+        >
+          <Menu size={20} />
+        </button>
+      )}
+
+      {/* 3-zone core workspace layout */}
+      {isSidebarOpen && (
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onNewSession={handleNewSession}
+          savedCount={savedIds.length}
+          onClose={() => setIsSidebarOpen(false)}
+        />
+      )}
 
       {/* Main Core Section */}
       <div className="flex h-full flex-1 overflow-hidden">
@@ -431,65 +497,48 @@ function DashboardPage() {
         ) : (
           /* MAIN SPATIAL DECISION OS WORKSPACE */
           <>
-            <AuditTrail
-              logs={logs}
-              userIntent={userIntent}
-              onInjectConstraint={handleQueryEvaluation}
-              isLoading={decisionMutation.isPending}
-              onReplay={handleReplay}
-            />
+            {!isInitialState && (
+              <AuditTrail
+                logs={logs}
+                userIntent={userIntent}
+                onInjectConstraint={handleQueryEvaluation}
+                isLoading={isSimulating}
+                onReplay={handleReplay}
+                suggestions={[
+                  `Compare with ${products[1]?.name || "Razer Blade"}`,
+                  `Cooling: Vapor Chamber vs Dual Fans`,
+                  `Test AI Performance with TensorRT`,
+                ]}
+              />
+            )}
 
-            <SpatialWorkspace
-              products={products}
-              activeProductId={activeProductId}
-              setActiveProductId={setActiveProductId}
-              savedIds={savedIds}
-              onToggleSave={handleToggleSave}
-              trustScore={trustScore}
-              trustFactors={trustFactors}
-              graphNodes={graphNodes}
-              onChipClick={handleQueryEvaluation}
-              onCompareAll={() => setIsCompareOpen(true)}
-              onExplainReasoning={() => setIsReasoningOpen(true)}
-              onAccessories={() => setIsAccessoriesOpen(true)}
-              onCheckout={() => setIsCheckoutOpen(true)}
-              discountRate={connectedDiscount}
-              priceAlerts={priceAlerts}
-              onOpenPriceAlert={handleOpenPriceAlert}
-            />
+            {isInitialState ? (
+              <EmptyWorkspace onSubmit={handleQueryEvaluation} />
+            ) : (
+              <SpatialWorkspace
+                products={products}
+                activeProductId={activeProductId}
+                setActiveProductId={setActiveProductId}
+                savedIds={savedIds}
+                onToggleSave={handleToggleSave}
+                trustScore={trustScore}
+                trustFactors={trustFactors}
+                graphNodes={graphNodes}
+                onChipClick={handleQueryEvaluation}
+                onCompareAll={() => setIsCompareOpen(true)}
+                onExplainReasoning={() => setIsReasoningOpen(true)}
+                onAccessories={() => setIsAccessoriesOpen(true)}
+                onCheckout={() => setIsCheckoutOpen(true)}
+                discountRate={connectedDiscount}
+                priceAlerts={priceAlerts}
+                onOpenPriceAlert={handleOpenPriceAlert}
+              />
+            )}
           </>
         )}
 
-        <AgentHub agents={agents} />
+        {!isInitialState && <AgentHub agents={agents} />}
       </div>
-
-      {/* IMMERSIVE LOADING SCREEN OVERLAY */}
-      {decisionMutation.isPending && (
-        <div className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-black/80 p-4 backdrop-blur-xl select-none">
-          <div className="glass-card flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl border border-[#4F7CFF]/30 p-8 text-center shadow-[0_0_50px_rgba(79,124,255,0.2)]">
-            <div className="relative flex items-center justify-center">
-              <Loader2 size={44} className="animate-spin text-[#4F7CFF]" />
-              <Sparkles
-                size={18}
-                className="absolute animate-pulse text-[#4F7CFF]"
-              />
-            </div>
-            <div>
-              <h3 className="font-display text-on-surface text-sm font-black tracking-wide uppercase">
-                SHOPWISE AI Decision Engine
-              </h3>
-              <p className="text-on-surface-variant mt-2 font-sans text-xs leading-relaxed">
-                Simulating multi-agent collaboration flow, measuring thermal
-                data & cross-checking optimal configurations...
-              </p>
-            </div>
-            {/* Visual indicators */}
-            <div className="bg-surface-lowest relative mt-2 h-1.5 w-full overflow-hidden rounded-full">
-              <div className="h-full w-full animate-pulse bg-gradient-to-r from-[#4F7CFF] to-cyan-400" />
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Modals Mounting */}
       <ComparisonModal

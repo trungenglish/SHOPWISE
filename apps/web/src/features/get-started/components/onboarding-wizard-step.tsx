@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "@tanstack/react-router";
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  Loader2,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 
 import {
   Card,
@@ -49,8 +44,12 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
 
   const nextStep = async () => {
     let isValid = false;
-    const fields: (keyof OnboardingFormData)[] = ["fullName", "phoneNumber", "email"];
-    
+    const fields: (keyof OnboardingFormData)[] = [
+      "fullName",
+      "phoneNumber",
+      "email",
+    ];
+
     if (step <= fields.length) {
       isValid = await trigger(fields[step - 1]);
     }
@@ -119,7 +118,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
         </CardDescription>
       </CardHeader>
 
-      <form 
+      <form
         onSubmit={(e) => {
           if (step < totalSteps) {
             e.preventDefault();
@@ -235,7 +234,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           ) : (
-            <div className="w-full flex flex-col gap-2">
+            <div className="flex w-full flex-col gap-2">
               <Button
                 type="submit"
                 className="w-full"
@@ -248,9 +247,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
                   <CheckCircle2 className="mr-2 h-4 w-4" />
                 )}
                 <span aria-live="polite">
-                  {isSubmitting
-                    ? "Creating profile..."
-                    : "Create Profile"}
+                  {isSubmitting ? "Creating profile..." : "Create Profile"}
                 </span>
               </Button>
               <Button

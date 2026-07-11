@@ -5,8 +5,8 @@ import {
   Archive,
   ShieldCheck,
   Landmark,
-  ChevronRight,
-  ChevronLeft,
+  X,
+  Bot,
 } from "lucide-react";
 import { AgentStatus } from "../types";
 
@@ -15,19 +15,25 @@ interface AgentHubProps {
 }
 
 export default function AgentHub({ agents }: AgentHubProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   // Helper to map type to icon
   const getIcon = (type: string, className?: string) => {
     switch (type) {
       case "shopping":
-        return <ShoppingCart size={14} className={className || "text-[#4F7CFF]"} />;
+        return (
+          <ShoppingCart size={14} className={className || "text-[#4F7CFF]"} />
+        );
       case "inventory":
         return <Archive size={14} className={className || "text-secondary"} />;
       case "warranty":
-        return <ShieldCheck size={14} className={className || "text-yellow-400"} />;
+        return (
+          <ShieldCheck size={14} className={className || "text-yellow-400"} />
+        );
       case "finance":
-        return <Landmark size={14} className={className || "text-purple-400"} />;
+        return (
+          <Landmark size={14} className={className || "text-purple-400"} />
+        );
       default:
         return <Cpu size={14} className={className} />;
     }
@@ -65,45 +71,28 @@ export default function AgentHub({ agents }: AgentHubProps) {
     }
   };
 
+  const hasActiveAgents = agents.some(
+    (a) => a.progress > 0 && a.progress < 100
+  );
+
   return (
     <aside
-      className={`glass-panel border-outline-variant/15 flex h-full shrink-0 flex-col border-l shadow-[-10px_0_30px_rgba(0,0,0,0.5)] select-none transition-all duration-300 ${
-        isOpen ? "w-[320px] p-5" : "w-16 items-center p-3"
+      className={`fixed right-6 bottom-6 z-50 flex flex-col transition-all duration-300 select-none ${
+        isOpen
+          ? "glass-panel border-outline-variant/15 max-h-[70vh] w-[320px] rounded-2xl border p-5 shadow-[0_15px_40px_rgba(0,0,0,0.6)]"
+          : "glass-panel border-outline-variant/15 hover:bg-surface-high h-14 w-14 cursor-pointer items-center justify-center rounded-full border shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:scale-105"
       }`}
+      onClick={() => !isOpen && setIsOpen(true)}
     >
       {!isOpen ? (
-        <div className="flex h-full flex-col items-center">
-          <button
-            onClick={() => setIsOpen(true)}
-            className="hover:bg-surface-high text-on-surface-variant cursor-pointer rounded-lg p-2 transition-colors"
-            title="Expand Agent Hub"
-          >
-            <ChevronLeft size={20} />
-          </button>
-
-          <div className="mt-8 flex flex-1 flex-col items-center gap-6">
-            {agents.map((agent) => (
-              <div
-                key={agent.id}
-                className={`relative flex h-10 w-10 items-center justify-center rounded-full border border-transparent transition-all ${
-                  agent.progress === 0
-                    ? "opacity-60"
-                    : "bg-surface-low shadow-[0_0_10px_rgba(0,0,0,0.2)]"
-                }`}
-                title={`${agent.name} - ${
-                  agent.progress === 0 ? "QUEUED" : `${agent.progress}%`
-                }`}
-              >
-                {getIcon(agent.type, "scale-125")}
-                {agent.progress > 0 && agent.progress < 100 && (
-                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4F7CFF] opacity-75"></span>
-                    <span className="relative inline-flex h-3 w-3 rounded-full bg-[#4F7CFF]"></span>
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
+        <div className="relative flex h-full w-full items-center justify-center text-[#4F7CFF]">
+          <Bot size={24} />
+          {hasActiveAgents && (
+            <span className="absolute top-0 right-0 flex h-3 w-3">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4F7CFF] opacity-75"></span>
+              <span className="relative inline-flex h-3 w-3 rounded-full bg-[#4F7CFF]"></span>
+            </span>
+          )}
         </div>
       ) : (
         <>
@@ -113,20 +102,26 @@ export default function AgentHub({ agents }: AgentHubProps) {
                 Agent Hub
               </h2>
               <p className="mt-1.5 flex items-center gap-2 font-mono text-[11px] text-[#4F7CFF]">
-                <span className="shadow-[0_0_8px_#4F7CFF] h-2.5 w-2.5 animate-pulse rounded-full bg-[#4F7CFF]"></span>
+                <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[#4F7CFF] shadow-[0_0_8px_#4F7CFF]"></span>
                 Inter-Agent Collaboration
               </p>
             </div>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(false);
+              }}
               className="hover:bg-surface-high text-on-surface-variant cursor-pointer rounded p-1 transition-colors"
-              title="Collapse Agent Hub"
+              title="Close Agent Hub"
             >
-              <ChevronRight size={18} />
+              <X size={18} />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto pr-1">
+          <div
+            className="flex-1 overflow-y-auto pr-1"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex flex-col">
               {agents.map((agent, index) => {
                 const isQueued = agent.progress === 0;
