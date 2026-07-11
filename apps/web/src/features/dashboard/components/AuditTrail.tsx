@@ -28,7 +28,7 @@ export default function AuditTrail({
 }: AuditTrailProps) {
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
     if (inputValue.trim()) {
       onInjectConstraint(inputValue.trim());
@@ -99,9 +99,10 @@ export default function AuditTrail({
                         className="bg-surface rounded-full text-green-400"
                       />
                     ) : isRunning ? (
-                      <div className="flex h-[15px] w-[15px] animate-pulse items-center justify-center rounded-full bg-[#4F7CFF]/20">
-                        <div className="h-[7px] w-[7px] rounded-full bg-[#4F7CFF] shadow-[0_0_8px_#4F7CFF]"></div>
-                      </div>
+                      <Loader2
+                        size={15}
+                        className="animate-spin text-[#4F7CFF] drop-shadow-[0_0_8px_rgba(79,124,255,0.8)]"
+                      />
                     ) : (
                       <div className="bg-surface-low border-outline-variant/60 h-[11px] w-[11px] rounded-full border-2"></div>
                     )}
@@ -152,7 +153,7 @@ export default function AuditTrail({
             onChange={(e) => setInputValue(e.target.value)}
             disabled={isLoading}
             className="text-on-surface placeholder:text-on-surface-variant/40 w-full border-none bg-transparent px-2 py-1.5 font-sans text-xs outline-none focus:ring-0 focus:outline-none"
-            placeholder="Add new constraint (e.g., OLED screen, under $3000)..."
+            placeholder="Add new constraint (e.g., OLED screen, under 80.000.000 ₫)..."
             type="text"
           />
           <button

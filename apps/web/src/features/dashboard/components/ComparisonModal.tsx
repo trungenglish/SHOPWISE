@@ -63,7 +63,7 @@ export default function ComparisonModal({
                   {p.name}
                 </h4>
                 <span className="mt-1 font-mono text-sm font-bold text-[#4F7CFF]">
-                  ${p.price.toLocaleString("en-US")}
+                  {p.price.toLocaleString("vi-VN")} ₫
                 </span>
               </div>
             ))}
@@ -77,7 +77,7 @@ export default function ComparisonModal({
                 key={p.id}
                 className="border-outline-variant/10 text-on-surface col-span-1 border-b py-3 text-center font-mono text-xs font-bold"
               >
-                ${p.price.toLocaleString("en-US")}
+                {p.price.toLocaleString("vi-VN")} ₫
               </div>
             ))}
 
@@ -117,6 +117,19 @@ export default function ComparisonModal({
                 className="border-outline-variant/10 text-on-surface col-span-1 border-b py-3 text-center font-sans text-xs font-medium"
               >
                 {p.specs.cooling}
+              </div>
+            ))}
+
+            {/* Warranty row */}
+            <div className="border-outline-variant/10 text-on-surface-variant col-span-1 border-b py-3 font-sans text-xs font-bold">
+              Warranty
+            </div>
+            {products.map((p) => (
+              <div
+                key={p.id}
+                className="border-outline-variant/10 text-on-surface col-span-1 border-b py-3 text-center font-sans text-xs font-medium"
+              >
+                {p.specs.warranty || "Standard 1-Year"}
               </div>
             ))}
 

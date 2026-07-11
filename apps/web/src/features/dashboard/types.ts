@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface Laptop {
   id: string;
   name: string;
@@ -10,6 +12,7 @@ export interface Laptop {
     cooling: string;
     cpu?: string;
     screen?: string;
+    warranty?: string;
   };
   aiPerf: number;
   rendering: number;
@@ -26,7 +29,7 @@ export interface PriceAlert {
 
 export interface AuditLog {
   time: string;
-  message: string;
+  message: React.ReactNode;
   status: "done" | "running" | "pending";
 }
 

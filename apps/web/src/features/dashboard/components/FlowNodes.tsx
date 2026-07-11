@@ -134,15 +134,15 @@ export function LaptopNode({ data }: any) {
             {discountRate > 0 ? (
               <>
                 <span className="text-on-surface-variant mb-0.5 font-mono text-[8px] line-through">
-                  ${laptop.price.toLocaleString()}
+                  {laptop.price.toLocaleString("vi-VN")} ₫
                 </span>
                 <span className="font-mono text-xs font-bold text-emerald-400">
-                  ${currentDiscountedPrice.toLocaleString()}
+                  {currentDiscountedPrice.toLocaleString("vi-VN")} ₫
                 </span>
               </>
             ) : (
               <span className="font-mono text-xs font-bold text-emerald-400">
-                ${laptop.price.toLocaleString()}
+                {laptop.price.toLocaleString("vi-VN")} ₫
               </span>
             )}
           </div>
@@ -164,7 +164,7 @@ export function LaptopNode({ data }: any) {
             <div className="flex animate-pulse items-center gap-1 font-mono text-[8px] font-bold text-[#4F7CFF]">
               <Bell size={9} />
               <span>
-                Target: &le; ${activeAlert.targetPrice.toLocaleString()}
+                Target: &le; {activeAlert.targetPrice.toLocaleString("vi-VN")} ₫
               </span>
             </div>
           ) : (

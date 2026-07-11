@@ -16,8 +16,8 @@ export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
   };
 
   const suggestions = [
-    "I want to find laptop ABC",
-    "Compare top gaming rigs under $2000",
+    "I want to find laptop for gaming",
+    "Compare top gaming rigs under 50.000.000VND",
     "Best thin & light for programming",
     "High refresh rate OLED screen laptops",
   ];
@@ -31,11 +31,10 @@ export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
             <Sparkles size={40} className="animate-pulse" />
           </div>
           <h1 className="font-display text-on-surface mb-2 text-4xl font-black tracking-tight">
-            What are you looking for today?
+            Welcome to Phong Vũ!
           </h1>
           <p className="text-on-surface-variant font-sans text-base">
-            Describe your ideal hardware, and SHOPWISE AI will orchestrate
-            multiple agents to find the perfect match.
+            💻 I am your Smart Shopping Agent. Whether you need a machine for studying, gaming, or professional graphic design, I can find the perfect setup for you.
           </p>
         </div>
 
@@ -52,7 +51,7 @@ export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               className="text-on-surface placeholder:text-on-surface-variant/40 h-14 w-full border-none bg-transparent px-2 font-sans text-lg outline-none focus:ring-0"
-              placeholder="e.g. Intensive 3D rendering and local AI development..."
+              placeholder="e.g. Describe your ideal hardware...."
               type="text"
             />
             <button

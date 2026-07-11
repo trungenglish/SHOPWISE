@@ -81,8 +81,8 @@ const checkoutSchema = z
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
-const formatVND = (usdAmount: number) => {
-  const vndAmount = usdAmount * 25000;
+const formatVND = (amount: number) => {
+  const vndAmount = amount;
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -141,7 +141,7 @@ export default function CheckoutModal({
   const basePrice = product.price;
   const retailDiscount = basePrice * discountRate;
   const promoDiscount = promoApplied ? basePrice * 0.05 : 0; // extra 5% for promo "SHOPWISE5"
-  const shipping = basePrice > 1500 ? 0 : 25;
+  const shipping = basePrice > 37500000 ? 0 : 625000;
   const tax = (basePrice - retailDiscount - promoDiscount) * 0.08;
   const finalTotal =
     basePrice - retailDiscount - promoDiscount + shipping + tax;

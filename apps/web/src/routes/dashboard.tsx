@@ -82,6 +82,9 @@ const mockDecisionApi = async (queryText: string) => {
 function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isInitialState, setIsInitialState] = useState(true);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [isSimulationComplete, setIsSimulationComplete] = useState(false);
+  const [conversationStep, setConversationStep] = useState<string>("initial");
   const [activeTab, setActiveTab] = useState<string>("sessions");
   const [userIntent, setUserIntent] = useState<string>("");
   const [sessionTitle, setSessionTitle] = useState<string>("");
@@ -124,11 +127,11 @@ function DashboardPage() {
         return prev.map((a, idx) =>
           idx === existingIdx
             ? {
-                ...a,
-                targetPrice,
-                active: true,
-                createdAt: new Date().toISOString(),
-              }
+              ...a,
+              targetPrice,
+              active: true,
+              createdAt: new Date().toISOString(),
+            }
             : a
         );
       }
@@ -152,7 +155,7 @@ function DashboardPage() {
       setLogs((prev) => [
         {
           time: timeNow,
-          message: `🔔 Price alert set for ${product.name} at $${targetPrice.toLocaleString()}`,
+          message: `🔔 Price alert set for ${product.name} at ${targetPrice.toLocaleString("vi-VN")} ₫`,
           status: "done",
         },
         ...prev,
@@ -237,7 +240,7 @@ function DashboardPage() {
 
       if (currentDiscountedPrice <= alert.targetPrice) {
         setToastNotification(
-          `Price for ${laptop.name} dropped to $${currentDiscountedPrice.toLocaleString()} (reached target $${alert.targetPrice.toLocaleString()}!)`
+          `Price for ${laptop.name} dropped to ${currentDiscountedPrice.toLocaleString("vi-VN")} ₫ (reached target ${alert.targetPrice.toLocaleString("vi-VN")} ₫!)`
         );
 
         const timeNow = new Date().toLocaleTimeString("vi-VN", {
@@ -245,7 +248,7 @@ function DashboardPage() {
           minute: "2-digit",
         });
         setLogs((prevLogs) => {
-          const logMsg = `🔔 PRICE ALERT REACHED: ${laptop.name} is $${currentDiscountedPrice.toLocaleString()} (Target: $${alert.targetPrice.toLocaleString()})`;
+          const logMsg = `🔔 PRICE ALERT REACHED: ${laptop.name} is ${currentDiscountedPrice.toLocaleString("vi-VN")} ₫ (Target: ${alert.targetPrice.toLocaleString("vi-VN")} ₫)`;
           if (prevLogs.some((l) => l.message === logMsg)) return prevLogs;
           return [
             {
@@ -271,99 +274,224 @@ function DashboardPage() {
     }
   };
 
-  const [isSimulating, setIsSimulating] = useState(false);
+  // const [isSimulating, setIsSimulating] = useState(false);
 
   const handleQueryEvaluation = (queryText: string) => {
     if (isSimulating) return;
 
-    setIsInitialState(false);
-    setIsSimulating(true);
-    setUserIntent(queryText);
+    if (isInitialState) {
+      setIsInitialState(false);
+      setUserIntent(queryText);
+      setConversationStep("asked_aaa");
 
-    // Clear state for progressive load
-    setLogs([]);
-    setAgents([]);
-    setProducts([]);
-    setTrustFactors({} as TrustFactors);
-    setAccessories([]);
-    setGraphNodes([]);
-
-    // Step 1: Initial Parsing
-    setLogs([
-      {
-        time: "Now",
-        message: "Parsing new hardware requirements...",
-        status: "running",
-      },
-    ]);
-
-    // Step 2: Agent initialization
-    setTimeout(() => {
-      setAgents(initialAgents.map((a) => ({ ...a, progress: 10 })));
-      setLogs([
-        {
-          time: "01:14",
-          message: "Parsed dynamic requirements",
-          status: "done",
-        },
-        {
-          time: "Now",
-          message: "Mapping ideal graphics specifications...",
-          status: "running",
-        },
-      ]);
-      setGraphNodes(["GPU Priority", "Thermals"]);
-    }, 1000);
-
-    // Step 3: API cross-check
-    setTimeout(() => {
-      setAgents(initialAgents.map((a) => ({ ...a, progress: 60 })));
-      setLogs([
-        {
-          time: "01:14",
-          message: "Parsed dynamic requirements",
-          status: "done",
-        },
-        {
-          time: "01:15",
-          message: "Mapped ideal graphics specifications",
-          status: "done",
-        },
-        {
-          time: "Now",
-          message: "Connecting to retail data centers...",
-          status: "running",
-        },
-      ]);
-    }, 2000);
-
-    // Step 4: Final Resolve
-    setTimeout(() => {
-      setSessionTitle("AI Custom Decision");
-      setProducts(
-        initialProducts.map((p) => ({
-          ...p,
-          matchScore: Math.floor(Math.random() * 15) + 84,
-          matchExplanation: `Recommended for: "${queryText}". Demonstrates solid real-world performance.`,
-        }))
-      );
-      setLogs(initialLogs);
-      setAgents(initialAgents);
-      setTrustScore(95);
-      setTrustFactors({
-        benchmarkSources: 10,
-        reviewCoverage: 90,
-        retailConsensus: "Extremely well matched",
-        confidenceEvolution: [30, 45, 60, 80, 95],
+      const timeNow = new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
       });
-      setReasoning(initialReasoning);
-      setAccessories(initialAccessories);
+      setLogs([
+        {
+          time: timeNow,
+          message: `User: ${queryText}`,
+          status: "done",
+        },
+        {
+          time: timeNow,
+          message: "Agent: Do you play AAA titles (e.g., Cyberpunk, Call of Duty)?",
+          status: "done",
+        },
+      ]);
+      return;
+    }
 
-      if (initialProducts.length > 0) {
-        setActiveProductId(initialProducts[0].id);
-      }
-      setIsSimulating(false);
-    }, 3500);
+    if (conversationStep === "asked_aaa") {
+      const timeNow = new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      setLogs((prev) => [
+        ...prev,
+        {
+          time: timeNow,
+          message: `User: ${queryText}`,
+          status: "done",
+        },
+        {
+          time: timeNow,
+          message: "Agent: Are you planning to stream or play competitively for money?",
+          status: "done",
+        }
+      ]);
+      setConversationStep("asked_money");
+      if (queryText.includes("Yes")) setUserIntent(prev => prev + " | Plays AAA");
+      else setUserIntent(prev => prev + " | Esports/Indie");
+      return;
+    }
+
+    if (conversationStep === "asked_money") {
+      const timeNow = new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      setLogs((prev) => [
+        ...prev,
+        {
+          time: timeNow,
+          message: `User: ${queryText}`,
+          status: "done",
+        },
+        {
+          time: timeNow,
+          message: "Agent: What's your budget?",
+          status: "done",
+        }
+      ]);
+      setConversationStep("asked_budget");
+      if (queryText.includes("Yes")) setUserIntent(prev => prev + " | Earning money");
+      else setUserIntent(prev => prev + " | Just for fun");
+      return;
+    }
+
+    if (conversationStep === "asked_budget") {
+      const timeNow = new Date().toLocaleTimeString("vi-VN", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      setLogs((prev) => [
+        ...prev,
+        {
+          time: timeNow,
+          message: `User: ${queryText}`,
+          status: "done",
+        },
+      ]);
+      setConversationStep("completed");
+      setUserIntent(prev => prev + ` | Budget: ${queryText}`);
+
+      setIsSimulating(true);
+
+      // Clear state for progressive load
+      setAgents([]);
+      setProducts([]);
+      setTrustFactors({} as TrustFactors);
+      setAccessories([]);
+      setGraphNodes([]);
+
+      // Step 1: Initial Parsing
+      setLogs((prev) => [
+        ...prev,
+        {
+          time: "Now",
+          message: (
+            <span className="flex items-center gap-2">
+              <Loader2 size={14} className="animate-spin text-[#4F7CFF]" />
+              Parsing final hardware requirements...
+            </span>
+          ),
+          status: "running",
+        },
+      ]);
+
+      // Step 2: Agent initialization
+      setTimeout(() => {
+        setAgents(initialAgents.map((a) => ({ ...a, progress: 10 })));
+        setLogs((prev) => {
+          const newLogs = [...prev];
+          newLogs[newLogs.length - 1] = {
+            ...newLogs[newLogs.length - 1],
+            status: "done",
+            message: "Parsed final hardware requirements",
+          };
+          return [
+            ...newLogs,
+            {
+              time: "Now",
+              message: (
+                <span className="flex items-center gap-2">
+                  <Loader2 size={14} className="animate-spin text-[#4F7CFF]" />
+                  Mapping ideal graphics specifications...
+                </span>
+              ),
+              status: "running",
+            },
+          ];
+        });
+        setGraphNodes(["GPU Priority", "Thermals"]);
+      }, 4000);
+
+      // Step 3: API cross-check
+      setTimeout(() => {
+        setAgents(initialAgents.map((a) => ({ ...a, progress: 60 })));
+        setLogs((prev) => {
+          const newLogs = [...prev];
+          newLogs[newLogs.length - 1] = {
+            ...newLogs[newLogs.length - 1],
+            status: "done",
+            message: "Mapped ideal graphics specifications",
+          };
+          return [
+            ...newLogs,
+            {
+              time: "Now",
+              message: (
+                <span className="flex items-center gap-2">
+                  <Loader2 size={14} className="animate-spin text-[#4F7CFF]" />
+                  Connecting to retail data centers...
+                </span>
+              ),
+              status: "running",
+            },
+          ];
+        });
+      }, 8000);
+
+      // Step 4: Final Resolve
+      setTimeout(() => {
+        setSessionTitle("AI Custom Decision");
+
+        // Customize products based on intent
+        let finalProducts = [...initialProducts];
+        if (queryText.includes("Yes")) {
+          // If earning money, push high reliability options (just reordering mock data as an example)
+          finalProducts = [initialProducts[0], initialProducts[2], initialProducts[1]];
+        }
+
+        setProducts(
+          finalProducts.map((p) => ({
+            ...p,
+            matchScore: Math.floor(Math.random() * 15) + 84,
+            matchExplanation: `Recommended based on your specific requirements for AAA titles and earning money.`,
+          }))
+        );
+
+        setLogs((prev) => {
+          const newLogs = [...prev];
+          newLogs[newLogs.length - 1] = {
+            ...newLogs[newLogs.length - 1],
+            status: "done",
+            message: "Connected to retail data centers",
+          };
+          return newLogs;
+        });
+
+        setAgents(initialAgents);
+        setTrustScore(95);
+        setTrustFactors({
+          benchmarkSources: 10,
+          reviewCoverage: 90,
+          retailConsensus: "Extremely well matched",
+          confidenceEvolution: [30, 45, 60, 80, 95],
+        });
+        setReasoning(initialReasoning);
+        setAccessories(initialAccessories);
+
+        if (finalProducts.length > 0) {
+          setActiveProductId(finalProducts[0].id);
+          setGraphNodes(["Completed"]);
+        }
+        setIsSimulating(false);
+        setIsSimulationComplete(true);
+      }, 12000);
+    }
   };
 
   const handleReplay = () => {
@@ -478,7 +606,7 @@ function DashboardPage() {
                           {p.name}
                         </h4>
                         <p className="mt-1 font-mono text-xs font-semibold text-[#4F7CFF]">
-                          ${p.price.toLocaleString("en-US")}
+                          {p.price.toLocaleString("vi-VN")} ₫
                         </p>
                       </div>
                       <p className="text-on-surface-variant font-sans text-xs leading-relaxed">
@@ -507,11 +635,19 @@ function DashboardPage() {
                 onInjectConstraint={handleQueryEvaluation}
                 isLoading={isSimulating}
                 onReplay={handleReplay}
-                suggestions={[
-                  `Compare with ${products[1]?.name || "Razer Blade"}`,
-                  `Cooling: Vapor Chamber vs Dual Fans`,
-                  `Test AI Performance with TensorRT`,
-                ]}
+                suggestions={
+                  conversationStep === "asked_aaa"
+                    ? ["Yes", "No (esports/indie)"]
+                    : conversationStep === "asked_money"
+                      ? ["streaming/esports", "just for fun"]
+                      : conversationStep === "asked_budget"
+                        ? ["Under 25tr VND", "25tr - 30tr VND", "30tr - 40tr VND", "40tr - 50tr VND", "50tr - 60tr VND", "Over 60tr VND"]
+                        : [
+                          `Compare with ${products[1]?.name || "Razer Blade"}`,
+                          `Cooling: Vapor Chamber vs Dual Fans`,
+                          `Test AI Performance with TensorRT`,
+                        ]
+                }
               />
             )}
 
@@ -588,7 +724,7 @@ function DashboardPage() {
         activeAlert={
           selectedAlertLaptop
             ? priceAlerts.find((a) => a.productId === selectedAlertLaptop.id) ||
-              null
+            null
             : null
         }
         onSaveAlert={handleSaveAlert}

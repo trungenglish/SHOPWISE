@@ -248,10 +248,9 @@ function SpatialWorkspaceContent({
                 {hoveredProductId ? "PREVIEWING DETAILS" : "SELECTED PRODUCT"}
               </span>
               <span className="font-mono text-sm font-bold text-emerald-400">
-                $
                 {(displayProduct.price * (1 - discountRate)).toLocaleString(
-                  "en-US"
-                )}
+                  "vi-VN"
+                )} ₫
               </span>
             </div>
 
@@ -284,10 +283,16 @@ function SpatialWorkspaceContent({
                   {displayProduct.specs?.screen || "Standard"}
                 </span>
               </div>
-              <div className="flex justify-between pb-1">
+              <div className="border-outline-variant/5 flex justify-between border-b pb-1">
                 <span className="opacity-70">Cooling:</span>
                 <span className="max-w-[180px] truncate text-right text-white">
                   {displayProduct.specs?.cooling || "Standard"}
+                </span>
+              </div>
+              <div className="flex justify-between pb-1">
+                <span className="opacity-70">Warranty:</span>
+                <span className="max-w-[180px] truncate text-right text-white">
+                  {displayProduct.specs?.warranty || "Standard 1-Year"}
                 </span>
               </div>
             </div>
