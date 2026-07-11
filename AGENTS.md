@@ -254,15 +254,15 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/003-ai-shopping-conversation/plan.md
+For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/004-dynamic-ui-protocol/plan.md
 
-Active feature: AI Shopping Conversation (003-ai-shopping-conversation)
+Active feature: Dynamic UI Protocol (004-dynamic-ui-protocol)
 
-- Spec: specs/003-ai-shopping-conversation/spec.md
-- Data model: specs/003-ai-shopping-conversation/data-model.md
-- UI contracts: specs/003-ai-shopping-conversation/contracts/ui-contracts.md
-- Quickstart: specs/003-ai-shopping-conversation/quickstart.md
-- Research: specs/003-ai-shopping-conversation/research.md
+- Spec: specs/004-dynamic-ui-protocol/spec.md
+- Data model: specs/004-dynamic-ui-protocol/data-model.md
+- UI contracts: specs/004-dynamic-ui-protocol/contracts/ui-contracts.md
+- Quickstart: specs/004-dynamic-ui-protocol/quickstart.md
+- Research: specs/004-dynamic-ui-protocol/research.md
 - Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 

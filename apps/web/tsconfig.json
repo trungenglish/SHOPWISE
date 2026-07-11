@@ -11,7 +11,8 @@
     "rootDirs": ["."],
     "paths": {
       "@/*": ["./src/*"],
-      "@shopwise/ui/*": ["../../packages/ui/src/*"]
+      "@shopwise/ui/*": ["../../packages/ui/src/*"],
+      "@shopwise/ui-protocol/*": ["../../packages/ui-protocol/src/*"]
     }
   },
   "exclude": ["vitest.config.ts"]
