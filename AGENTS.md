@@ -254,17 +254,17 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/005-decision-memory/plan.md
+For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/006-product-comparison/plan.md
 
-Active feature: Decision Memory (005-decision-memory)
+Active feature: Product Comparison Workspace (006-product-comparison)
 
-- Spec: specs/005-decision-memory/spec.md
-- Plan: specs/005-decision-memory/plan.md
-- Data model: specs/005-decision-memory/data-model.md
-- API contracts: specs/005-decision-memory/contracts/api-contracts.md
-- UI contracts: specs/005-decision-memory/contracts/ui-contracts.md
-- Quickstart: specs/005-decision-memory/quickstart.md
-- Research: specs/005-decision-memory/research.md
+- Spec: specs/006-product-comparison/spec.md
+- Plan: specs/006-product-comparison/plan.md
+- Data model: specs/006-product-comparison/data-model.md
+- API contracts: specs/006-product-comparison/contracts/api-contracts.md
+- UI contracts: specs/006-product-comparison/contracts/ui-contracts.md
+- Quickstart: specs/006-product-comparison/quickstart.md
+- Research: specs/006-product-comparison/research.md
 - Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 
