@@ -23,9 +23,9 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Initialize product comparison workspace project context and structure in `backend/src/api/events/`
-- [ ] T002 Initialize product comparison components directory in `frontend/src/components/`
-- [ ] T003 [P] Add necessary tool registration skeleton in `ai-runtime/src/tools/fetch_comparison_data.py`
+- [x] T001 Initialize product comparison workspace project context and structure in `backend/src/api/events/`
+- [x] T002 Initialize product comparison components directory in `frontend/src/components/`
+- [x] T003 [P] Add necessary tool registration skeleton in `ai-runtime/src/tools/fetch_comparison_data.py`
 
 ---
 
@@ -35,10 +35,10 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 Create `ComparisonWorkspace` model matching `data-model.md` in `backend/src/models/comparison_workspace.go`
-- [ ] T005 Create `ComparisonProductDetail` model matching `data-model.md` in `backend/src/models/comparison_product.go`
-- [ ] T006 [P] Update Decision Memory service in `backend/src/services/decision_memory.go` to handle `ComparisonWorkspace` persistence
-- [ ] T007 Configure error mapping for Decision Memory failures in `backend/src/api/errors.go`
+- [x] T004 Create `ComparisonWorkspace` model matching `data-model.md` in `backend/src/models/comparison_workspace.go`
+- [x] T005 Create `ComparisonProductDetail` model matching `data-model.md` in `backend/src/models/comparison_product.go`
+- [x] T006 [P] Update Decision Memory service in `backend/src/services/decision_memory.go` to handle `ComparisonWorkspace` persistence
+- [x] T007 Configure error mapping for Decision Memory failures in `backend/src/api/errors.go`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -52,14 +52,14 @@
 
 ### Implementation for User Story 1
 
-- [ ] T008 [US1] Implement Backend category validation and 4-product limit in `backend/src/services/comparison_service.go`
-- [ ] T009 [US1] Implement Backend 5th product handling to trigger `PENDING_REPLACEMENT` in `backend/src/services/comparison_service.go`
-- [ ] T010 [US1] Implement Backend event handler for `ADD_TO_COMPARISON` in `backend/src/api/events/add_to_comparison.go`
-- [ ] T011 [US1] Implement Backend event handler for `REPLACE_PRODUCT` in `backend/src/api/events/replace_product.go`
-- [ ] T012 [US1] Implement Backend event handler for `REMOVE_PRODUCT` in `backend/src/api/events/remove_product.go`
-- [ ] T013 [US1] Implement Backend logic to compute `HighlightType` differences in `backend/src/services/comparison_service.go`
-- [ ] T014 [P] [US1] Create frontend `ComparisonWorkspace` Dynamic UI renderer in `frontend/src/components/ComparisonWorkspace.tsx`
-- [ ] T015 [P] [US1] Create frontend `ErrorState` dialog component for cross-category errors in `frontend/src/components/ErrorState.tsx`
+- [x] T008 [US1] Implement Backend category validation and 4-product limit in `services/main-backend/internal/decision_memory/usecase/comparison_usecase.go`
+- [x] T009 [US1] Implement Backend 5th product handling to trigger `PENDING_REPLACEMENT` in `services/main-backend/internal/decision_memory/usecase/comparison_usecase.go`
+- [x] T010 [US1] Implement Backend event handler for `ADD_TO_COMPARISON` in `services/main-backend/api/compare.go`
+- [x] T011 [US1] Implement Backend event handler for `REPLACE_PRODUCT` in `services/main-backend/api/compare.go`
+- [x] T012 [US1] Implement Backend event handler for `REMOVE_PRODUCT` in `services/main-backend/api/compare.go`
+- [x] T013 [US1] Implement Backend logic to compute `HighlightType` differences in `services/main-backend/internal/decision_memory/usecase/comparison_usecase.go`
+- [x] T014 [P] [US1] Create frontend `ComparisonWorkspace` Dynamic UI renderer in `apps/web/src/components/ComparisonWorkspace.tsx`
+- [x] T015 [P] [US1] Create frontend `ErrorState` dialog component for cross-category errors in `apps/web/src/components/ErrorState.tsx`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -73,10 +73,10 @@
 
 ### Implementation for User Story 2
 
-- [ ] T016 [US2] Implement backend endpoint to serve Tool Protocol `fetch_comparison_data` requests in `backend/src/api/tools/comparison_data.go`
-- [ ] T017 [P] [US2] Implement `fetch_comparison_data` Tool in AI Runtime `ai-runtime/src/tools/fetch_comparison_data.py`
-- [ ] T018 [US2] Create system prompt context builder for comparison reasoning in `ai-runtime/src/prompts/comparison_reasoning.py`
-- [ ] T019 [US2] Integrate Tool execution and streaming in AI reasoning flow in `ai-runtime/src/graph/workflow.py`
+- [x] T016 [US2] Implement backend endpoint to serve Tool Protocol `fetch_comparison_data` requests in `backend/src/api/tools/comparison_data.go`
+- [x] T017 [P] [US2] Implement `fetch_comparison_data` Tool in AI Runtime `ai-runtime/src/tools/fetch_comparison_data.py`
+- [x] T018 [US2] Create system prompt context builder for comparison reasoning in `ai-runtime/src/prompts/comparison_reasoning.py`
+- [x] T019 [US2] Integrate Tool execution and streaming in AI reasoning flow in `ai-runtime/src/graph/workflow.py`
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
 
@@ -90,8 +90,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T020 [US3] Implement Backend event handler for transitioning product to Checkout Readiness in `backend/src/api/events/checkout_readiness.go`
-- [ ] T021 [US3] Update frontend workspace component to dispatch `CHECKOUT_READY` event in `frontend/src/components/ComparisonWorkspace.tsx`
+- [x] T020 [US3] Implement Backend event handler for transitioning product to Checkout Readiness in `backend/src/api/events/checkout_readiness.go`
+- [x] T021 [US3] Update frontend workspace component to dispatch `CHECKOUT_READY` event in `apps/web/src/components/ComparisonWorkspace.tsx`
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -101,9 +101,9 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T022 Run end-to-end `quickstart.md` validations to ensure complete integration
-- [ ] T023 Code cleanup and review against the Ultracite Code Standards
-- [ ] T024 Security hardening and privacy review (ensuring no unauthorized cross-tenant data access in comparisons)
+- [x] T022 Run end-to-end `quickstart.md` validations to ensure complete integration
+- [x] T023 Code cleanup and review against the Ultracite Code Standards
+- [x] T024 Security hardening and privacy review (ensuring no unauthorized cross-tenant data access in comparisons)
 
 ---
 
