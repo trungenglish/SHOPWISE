@@ -28,7 +28,7 @@ export function AccountStatusStep({ onSelect }: AccountStatusStepProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 px-8 pb-8">
-        <Button
+        {/* <Button
           variant="outline"
           size="lg"
           className="h-16 justify-start gap-4 text-left font-normal hover:bg-primary/5 hover:border-primary/30 transition-all"
@@ -44,7 +44,7 @@ export function AccountStatusStep({ onSelect }: AccountStatusStepProps) {
             </div>
           </div>
           <ArrowRight className="text-muted-foreground h-4 w-4" />
-        </Button>
+        </Button> */}
 
         <Button
           variant="outline"
@@ -57,7 +57,7 @@ export function AccountStatusStep({ onSelect }: AccountStatusStepProps) {
           </div>
           <div className="flex-1">
             <div className="text-foreground font-medium">
-              No, create my profile
+              Let's create my profile
             </div>
             <div className="text-muted-foreground text-xs">
               I am new to ShopWise
