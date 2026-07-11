@@ -1,24 +1,26 @@
 # Data Model: Marketing Landing Page
 
-**Feature**: specs/001-marketing-landing-page
-**Created**: 2026-07-10
+**Feature**: specs/001-marketing-landing-page **Created**: 2026-07-10 **Last Updated**: 2026-07-11
 
-> This page is entirely static/content-driven. There are no server-fetched entities
-> or user state mutations. All entities below describe the TypeScript data structures
-> that hold static content for each landing section.
+> This page is entirely static/content-driven. There are no server-fetched entities or user state mutations. All entities below describe the TypeScript data structures that hold static content for each landing section.
 
 ---
 
 ## Entity: NavLink
 
-**File**: `apps/web/src/features/landing/data/` (inline in `LandingNavbar`)
+**File**: `apps/web/src/features/landing/components/navbar/LandingNavbar.tsx` (inline in component)
 
 ```ts
 type NavLink = {
-  label: string;       // Display text, e.g. "Features"
-  href: string;        // Anchor href, e.g. "#features"
+  label: string; // e.g. "Problem", "Workspace"
+  id: string; // e.g. "problem", "workspace"
+  href: string; // e.g. "#problem", "#workspace"
 };
 ```
+
+**Valid values**:
+
+- Target list: Problem (`#problem`), Workspace (`#workspace`), Intelligence (`#intelligence`), Confidence (`#confidence`), Contact (`#contact`).
 
 ---
 
@@ -28,144 +30,85 @@ type NavLink = {
 
 ```ts
 type TrustedByLogo = {
-  id: string;           // Unique slug, e.g. "acme-corp"
-  name: string;         // Company name for alt text
-  src: string;          // Path to logo SVG/PNG asset
-  width: number;        // Intrinsic width (px) for <img> sizing
-  height: number;       // Intrinsic height (px)
+  id: string; // Unique slug, e.g. "acme-corp"
+  name: string; // Company name for alt text
+  src: string; // Path to logo SVG/PNG asset
+  width: number; // Intrinsic width (px) for <img> sizing
+  height: number; // Intrinsic height (px)
 };
 ```
 
 **Validation rules**:
+
 - `name` must be non-empty (used as `alt` text — accessibility requirement).
 - `src` must resolve to a valid asset path.
-- 6–8 items for the initial implementation.
+- In production, this array defaults to empty (`[]`), causing the section to return `null`. It is populated only when verified, brand-approved logos are supplied.
 
 ---
 
-## Entity: FeatureItem
+## Entity: FeatureItem (Workspace Capabilities)
 
 **File**: `apps/web/src/features/landing/data/features.ts`
 
 ```ts
 type FeatureItem = {
-  id: string;           // Unique slug, e.g. "ai-vendor-scoring"
-  icon: LucideIcon;     // Lucide icon component reference
-  title: string;        // ≤ 5 words
-  description: string;  // ≤ 25 words
+  id: string; // Unique slug, e.g. "canvas"
+  icon: LucideIcon; // Lucide icon component reference
+  title: string; // ≤ 5 words
+  description: string; // ≤ 25 words
 };
 ```
 
 **Validation rules**:
+
 - `title.split(' ').length <= 5`
 - `description` word count ≤ 25
-- 4–8 items
+- Exactly 6 items representing the workspace capabilities defined in spec section 6:
+  1. Product and Supplier Canvas
+  2. Requirement Matching
+  3. Trust and Evidence Centre
+  4. Audit Trail
+  5. Team Collaboration
+  6. Enterprise Integrations
 
 ---
 
-## Entity: WorkflowStep
+## Entity: WorkflowStep (Intelligence Layer Stages)
 
 **File**: `apps/web/src/features/landing/data/workflow-steps.ts`
 
 ```ts
 type WorkflowStep = {
-  step: number;         // 1-based step number (rendered in badge)
-  title: string;        // ≤ 5 words
-  description: string;  // ≤ 20 words
+  step: number; // 1-based step number (1 to 7)
+  title: string; // ≤ 4 words
+  description: string; // ≤ 15 words
 };
 ```
 
 **Validation rules**:
+
 - `step` values are consecutive integers starting at 1.
-- 3–5 items.
+- Exactly 7 items representing the intelligence pipeline stages defined in spec section 8:
+  1. Business Goal
+  2. Planning
+  3. Data and Evidence
+  4. Specialist Analysis
+  5. Comparison Logic
+  6. Recommendation
+  7. Human Approval
 
 ---
 
-## Entity: Testimonial
+## Entity: DecisionConfidenceSignal (Decision Confidence Panel)
 
-**File**: `apps/web/src/features/landing/data/testimonials.ts`
-
-```ts
-type Testimonial = {
-  id: string;           // Unique slug
-  quote: string;        // ≤ 40 words
-  author: string;       // Full name
-  role: string;         // Job title
-  company: string;      // Company name
-  avatarSrc?: string;   // Optional avatar image path
-  avatarAlt?: string;   // Required if avatarSrc is present
-};
-```
-
-**Validation rules**:
-- `quote` word count ≤ 40.
-- If `avatarSrc` is present, `avatarAlt` must also be present.
-- 3–6 items.
-
----
-
-## Entity: PricingTier
-
-**File**: `apps/web/src/features/landing/data/pricing.ts`
+**File**: `apps/web/src/features/landing/components/confidence/DecisionConfidenceSection.tsx` (or inline in visual component)
 
 ```ts
-type PricingTier = {
-  id: string;                    // Unique slug, e.g. "pro"
-  name: string;                  // Plan name
-  subtitle?: string;             // Optional tagline
-  monthlyPrice: number | null;   // null = contact sales
-  annualPrice: number | null;    // null = contact sales
-  features: string[];            // 4–6 feature bullet strings
-  cta: string;                   // CTA button label
-  ctaHref: string;               // Navigation target
-  highlighted: boolean;          // true = recommended tier
-  badge?: string;                // e.g. "Most Popular"
-};
-```
-
-**Validation rules**:
-- Exactly one tier has `highlighted: true`.
-- `features.length` is between 4 and 6.
-- If `monthlyPrice` is null, `annualPrice` must also be null.
-- 2–4 tiers total.
-
-**State transitions**:
-The `BillingToggle` component maintains `billingPeriod: 'monthly' | 'annual'` in local React state. Components display `monthlyPrice` or `annualPrice` accordingly. No server interaction.
-
----
-
-## Entity: FaqItem
-
-**File**: `apps/web/src/features/landing/data/faq.ts`
-
-```ts
-type FaqItem = {
-  id: string;           // Unique slug (used as DOM id for aria-controls)
-  question: string;
-  answer: string;       // Plain text; may contain simple markdown-style formatting
-};
-```
-
-**Validation rules**:
-- `id` must be URL-safe (no spaces, lowercase).
-- 5–10 items.
-
----
-
-## Entity: FooterLinkGroup
-
-**Inline in `LandingFooter`** (not a data file — small enough to be inline):
-
-```ts
-type FooterLink = {
-  label: string;
-  href: string;
-  external?: boolean;  // true → target="_blank" + rel="noopener noreferrer"
-};
-
-type FooterLinkGroup = {
-  heading: string;
-  links: FooterLink[];
+type DecisionConfidenceSignal = {
+  label: string; // e.g. "Evidence status", "Confidence indicator"
+  value: string; // e.g. "12 sources verified — 3 flagged for review"
+  icon: LucideIcon; // Visual decorator icon
+  status?: "success" | "warning" | "info" | "error"; // Signal severity/color styling
 };
 ```
 
@@ -174,16 +117,22 @@ type FooterLinkGroup = {
 ## Local UI State (not persisted)
 
 | Component | State | Type | Description |
-|---|---|---|---|
-| `BillingToggle` | `billingPeriod` | `'monthly' \| 'annual'` | Controls which price column is shown |
-| `FaqItem` | `isOpen` | `boolean` | Accordion open/close (via Collapsible) |
+| --- | --- | --- | --- |
 | `LandingNavbar` | `isScrolled` | `boolean` | Triggers sticky blur effect after 100 px |
 | `LandingNavbar` | `isMobileMenuOpen` | `boolean` | Controls Sheet open state |
-| `TestimonialsSection` | `activeIndex` | `number` | Carousel current slide (managed by @shopwise/ui Carousel) |
+
+---
+
+## Removed Entities
+
+The following entities from v1.0.0 are **removed** and no longer exist in the codebase:
+
+- `Testimonial` (formerly in `testimonials.ts`)
+- `PricingTier` (formerly in `pricing.ts`)
+- `FaqItem` (formerly in `faq.ts`)
 
 ---
 
 ## No Server Entities
 
-This feature has no API calls, no database models, and no authentication-gated content.
-All data is statically imported at build time from the `data/` files listed above.
+This feature has no API calls, no database models, and no authentication-gated dynamic content. All data is statically imported at build time.

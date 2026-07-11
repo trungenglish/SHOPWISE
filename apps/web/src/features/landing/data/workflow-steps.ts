@@ -10,26 +10,41 @@ export type WorkflowStep = {
 export const WORKFLOW_STEPS: WorkflowStep[] = [
   {
     step: 1,
-    title: "Connect Your Data",
-    description:
-      "Link your ERP, procurement system, or supplier database in minutes with no-code connectors.",
+    title: "Business Goal",
+    description: "The team defines what they need to buy and why.",
   },
   {
     step: 2,
-    title: "Define Your Goals",
+    title: "Planning",
     description:
-      "Tell the AI your priorities — cost, quality, speed, or sustainability — and set scoring weights.",
+      "ShopWise structures the decision: criteria, constraints, and stakeholders.",
   },
   {
     step: 3,
-    title: "Run AI Analysis",
+    title: "Data and Evidence",
     description:
-      "The AI surfaces ranked recommendations with full reasoning, sourced from your live data.",
+      "The platform gathers and verifies supplier data, documents, and market signals.",
   },
   {
     step: 4,
-    title: "Decide with Confidence",
+    title: "Specialist Analysis",
+    description: "AI agents evaluate each option against the defined criteria.",
+  },
+  {
+    step: 5,
+    title: "Comparison Logic",
+    description: "Options are ranked with full reasoning and evidence links.",
+  },
+  {
+    step: 6,
+    title: "Recommendation",
     description:
-      "Approve, adjust, or escalate decisions with a complete audit trail for compliance.",
+      "A confident, explainable recommendation is surfaced to the team.",
+  },
+  {
+    step: 7,
+    title: "Human Approval",
+    description:
+      "The team reviews, adjusts, and approves — creating the audit record.",
   },
 ];

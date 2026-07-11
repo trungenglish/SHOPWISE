@@ -4,9 +4,9 @@ import { Button } from "@shopwise/ui/components/button";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
 import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
-import { AiDecisionPanel } from "./AiDecisionPanel";
+import { DecisionConfidencePanel } from "./DecisionConfidencePanel";
 
-export function AiDecisionSection() {
+export function DecisionConfidenceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -16,7 +16,7 @@ export function AiDecisionSection() {
         return;
       }
 
-      gsap.from(".gsap-decision-reveal", {
+      gsap.from(".gsap-confidence-reveal", {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 75%",
@@ -34,33 +34,33 @@ export function AiDecisionSection() {
 
   return (
     <section
-      id="workspace"
+      id="confidence"
       ref={sectionRef}
       className="bg-background border-border/20 relative border-b py-20 lg:py-32"
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Left Column: Copy Section */}
-          <div className="flex flex-col items-start space-y-6 lg:col-span-7">
-            <span className="gsap-decision-reveal font-heading text-xs font-semibold tracking-wider text-[var(--landing-gradient-accent)] uppercase">
-              AI Decision Workspace
+          <div className="flex flex-col items-start space-y-6 lg:col-span-6">
+            <span className="gsap-confidence-reveal font-heading text-xs font-semibold tracking-wider text-[var(--landing-gradient-accent)] uppercase">
+              Decision Confidence
             </span>
 
-            <h2 className="gsap-decision-reveal font-heading text-foreground max-w-xl text-3xl leading-[1.15] font-bold tracking-tight sm:text-4xl lg:text-5xl">
-              One Workspace.{" "}
+            <h2 className="gsap-confidence-reveal font-heading text-foreground max-w-xl text-3xl leading-[1.15] font-bold tracking-tight sm:text-4xl lg:text-5xl">
+              Decide with{" "}
               <span className="bg-gradient-to-r from-[var(--landing-gradient-accent)] to-indigo-300 bg-clip-text text-transparent">
-                Every Signal. One Decision.
+                Absolute Certainty.
               </span>
             </h2>
 
-            <p className="gsap-decision-reveal text-muted-foreground max-w-lg text-base leading-relaxed sm:text-lg">
-              ShopWise unifies requirement matching, vendor scoring, and
-              evidence verification into a single, collaborative decision
-              environment. Let your category team evaluate suppliers with total
-              visibility.
+            <p className="gsap-confidence-reveal text-muted-foreground max-w-lg text-base leading-relaxed sm:text-lg">
+              Verify evidence and analyze supplier risk before signing off on
+              purchase recommendations. ShopWise ensures that every choice is
+              backed by a fully traceable audit log, giving category leaders
+              complete justification clarity.
             </p>
 
-            <div className="gsap-decision-reveal pt-2">
+            <div className="gsap-confidence-reveal pt-2">
               <Button
                 asChild
                 size="lg"
@@ -72,16 +72,15 @@ export function AiDecisionSection() {
           </div>
 
           {/* Right Column: Visual Mockup */}
-          <div className="flex justify-center lg:col-span-5 lg:justify-end">
+          <div className="flex justify-center lg:col-span-6 lg:justify-end">
             <span className="sr-only">
-              Simulated demonstration of the ShopWise AI Decision Workspace:
-              evaluates and ranks suppliers based on requirement matches,
-              evidence checks, and risk analysis. In this demonstration, Vertex
-              Solutions receives a 96% fit rating, Zenith Enterprises shows 88%
-              verification with no risk flags, and Orion Corp has a 74% rating
-              due to unverified documentation.
+              Simulated demonstration of the ShopWise Decision Confidence
+              dashboard: displays 100% verified evidence status across all
+              specification sheets, a 96% high confidence level, low risk status
+              showing no anomalous spikes or warnings, and a fully traceable
+              history trail with version-controlled decision logs.
             </span>
-            <AiDecisionPanel />
+            <DecisionConfidencePanel />
           </div>
         </div>
       </div>

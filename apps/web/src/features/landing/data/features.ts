@@ -1,5 +1,12 @@
 import type { LucideIcon } from "lucide-react";
-import { Bot, TrendingUp, Zap, BarChart3, Users, Plug } from "lucide-react";
+import {
+  Layout,
+  ListTodo,
+  ShieldCheck,
+  History,
+  Users,
+  Plug,
+} from "lucide-react";
 
 export type FeatureItem = {
   id: string;
@@ -12,45 +19,45 @@ export type FeatureItem = {
 
 export const FEATURES: FeatureItem[] = [
   {
-    id: "ai-vendor-scoring",
-    icon: Bot,
-    title: "AI Vendor Scoring",
+    id: "canvas",
+    icon: Layout,
+    title: "Product & Supplier Canvas",
     description:
-      "Automatically rank vendors by quality, price, and reliability signals using real-time AI analysis.",
+      "A unified view of all options, structured for direct comparison.",
   },
   {
-    id: "market-intelligence",
-    icon: TrendingUp,
-    title: "Real-Time Market Intelligence",
+    id: "requirement-matching",
+    icon: ListTodo,
+    title: "Requirement Matching",
     description:
-      "Access live pricing benchmarks and supply-chain alerts to stay ahead of market shifts.",
+      "Automatically map business requirements to each supplier or product.",
   },
   {
-    id: "workflow-automation",
-    icon: Zap,
-    title: "Procurement Workflow Automation",
+    id: "trust-evidence",
+    icon: ShieldCheck,
+    title: "Trust & Evidence Centre",
     description:
-      "Automate approvals, purchase orders, and audit trails — removing manual bottlenecks.",
+      "Verify claims, documents, and supplier credentials in one place.",
   },
   {
-    id: "spend-analytics",
-    icon: BarChart3,
-    title: "Spend Analytics",
+    id: "audit-trail",
+    icon: History,
+    title: "Audit Trail",
     description:
-      "Visual dashboards that surface category spend, savings opportunities, and budget tracking.",
+      "A full, traceable record of every decision step and approval action.",
   },
   {
-    id: "decision-workspace",
+    id: "collaboration",
     icon: Users,
-    title: "Collaborative Decision Workspace",
+    title: "Team Collaboration",
     description:
-      "Team-based review, threaded comments, and structured final-approval flows in one place.",
+      "Assign reviewers, gather comments, and reach consensus in the workspace.",
   },
   {
-    id: "enterprise-integrations",
+    id: "integrations",
     icon: Plug,
     title: "Enterprise Integrations",
     description:
-      "Native connectors for SAP, Oracle, and Salesforce keep ShopWise in sync with your existing stack.",
+      "Connect to ERP, procurement, and supplier management systems.",
   },
 ];

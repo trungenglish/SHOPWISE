@@ -1,2 +1,2 @@
-export * from './font-provider'
-export * from './theme-provider'
+export * from "./font-provider";
+export * from "./theme-provider";

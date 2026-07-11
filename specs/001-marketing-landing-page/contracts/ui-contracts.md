@@ -1,18 +1,14 @@
 # UI Contracts: Marketing Landing Page
 
-**Feature**: specs/001-marketing-landing-page
-**Created**: 2026-07-10
+**Feature**: specs/001-marketing-landing-page **Created**: 2026-07-10 **Last Updated**: 2026-07-11
 
-> These contracts define the public interface (props) of each custom component built
-> for this feature. They are the implementation contract between the page assembly
-> (`LandingPage.tsx`) and the individual section components. All components live in
-> `apps/web/src/features/landing/components/`.
+> These contracts define the public interface (props) of each custom component built for this feature. They are the implementation contract between the page assembly (`LandingPage.tsx`) and the individual section components. All components live in `apps/web/src/features/landing/components/`.
 
 ---
 
 ## `LandingPage`
 
-**File**: `apps/web/src/features/landing/LandingPage.tsx`
+**File**: `apps/web/src/features/landing/LandingPage.tsx`  
 **Role**: Page root — composes all sections in order. Mounted by the index route.
 
 ```ts
@@ -21,19 +17,17 @@ type LandingPageProps = Record<string, never>;
 ```
 
 **Composition order**:
+
 1. `<LandingNavbar />`
 2. `<HeroSection />`
-3. `<TrustedBySection />`
-4. `<AiDecisionSection />`
-5. `<FeaturesSection />`
-6. `<WorkflowSection />`
-7. `<TestimonialsSection />`
-8. `<PricingSection />`
-9. `<FaqSection />`
-10. `<FinalCtaSection />`
-11. `<LandingFooter />`
-
-**Lenis**: `<ReactLenis root>` wraps the entire `LandingPage` output.
+3. `<TrustedBySection />` (Optional)
+4. `<ProblemStatementSection />` [NEW]
+5. `<AiDecisionSection />` (Refactored to "AI Decision Workspace")
+6. `<FeaturesSection />` (Refactored to "Meet the Workspace")
+7. `<WorkflowSection />` (Refactored to "Intelligence Layer")
+8. `<DecisionConfidenceSection />` [NEW]
+9. `<FinalCtaSection />` (Refactored to "Enterprise CTA")
+10. `<LandingFooter />`
 
 ---
 
@@ -42,13 +36,18 @@ type LandingPageProps = Record<string, never>;
 **File**: `components/navbar/LandingNavbar.tsx`
 
 ```ts
-// No external props — reads scroll position internally
+// No external props
 type LandingNavbarProps = Record<string, never>;
 ```
 
-**Internal state**: `isScrolled: boolean`, `isMobileMenuOpen: boolean`
-**Children rendered**: `MobileNavDrawer` (when mobile menu is open)
-**@shopwise/ui used**: `Button`, `Sheet` (for mobile drawer)
+**Internal state**: `isScrolled: boolean`, `isMobileMenuOpen: boolean`  
+**Updates**: Nav links are updated to:
+
+- Problem (`#problem`)
+- Workspace (`#workspace`)
+- Intelligence (`#intelligence`)
+- Confidence (`#confidence`)
+- Contact (`#contact` - scrolls to Final CTA section) Active section is tracked via `useScrollSpy` with `sectionIds: ["problem", "workspace", "intelligence", "confidence", "contact"]`.
 
 ---
 
@@ -63,7 +62,7 @@ type MobileNavDrawerProps = {
 };
 ```
 
-**@shopwise/ui used**: `Sheet`, `SheetContent`, `Button`
+**Updates**: Links are updated to map the new navbar anchors.
 
 ---
 
@@ -72,27 +71,15 @@ type MobileNavDrawerProps = {
 **File**: `components/hero/HeroSection.tsx`
 
 ```ts
-// No external props — all content is internal/static
+// No external props
 type HeroSectionProps = Record<string, never>;
 ```
 
-**Children rendered**: `HeroVisual`
-**@shopwise/ui used**: `Button`, `Badge`
-**Animation**: GSAP timeline via `useGSAP` (guarded by `useReducedMotion`)
+**Updates**:
 
----
-
-## `HeroVisual`
-
-**File**: `components/hero/HeroVisual.tsx`
-
-```ts
-// No props — purely presentational animated graphic
-type HeroVisualProps = Record<string, never>;
-```
-
-**Animation**: GSAP or CSS keyframe animation (floating/pulsing abstract graphic)
-**Accessibility**: `aria-hidden="true"` — purely decorative
+- Headline communicates positioning: "From Fragmented Research to Confident Purchasing Decisions."
+- Primary CTA: "Launch Decision Workspace" (navigates to `/auth`).
+- Secondary CTA: "See How ShopWise Reasons" (scrolls to `#problem` or `#intelligence`).
 
 ---
 
@@ -101,29 +88,32 @@ type HeroVisualProps = Record<string, never>;
 **File**: `components/trusted-by/TrustedBySection.tsx`
 
 ```ts
-// No external props — consumes data from trusted-by.ts
+// No external props
 type TrustedBySectionProps = Record<string, never>;
 ```
 
-**Children rendered**: `LogoMarquee`
-**Animation**: CSS marquee (desktop), static grid (mobile / reduced-motion)
+**Updates**:
+
+- Reads `TRUSTED_BY_LOGOS`.
+- If `TRUSTED_BY_LOGOS` is empty (`[]`), returns `null` immediately.
 
 ---
 
-## `LogoMarquee`
+## `ProblemStatementSection` [NEW]
 
-**File**: `components/trusted-by/LogoMarquee.tsx`
+**File**: `components/problem/ProblemStatementSection.tsx`
 
 ```ts
-type LogoMarqueeProps = {
-  logos: TrustedByLogo[];
-  pauseOnHover?: boolean;   // default: true
-};
+// No external props
+type ProblemStatementSectionProps = Record<string, never>;
 ```
+
+**Role**: Implements "The Search Crisis" (section 4 of spec). Displays two columns (Legacy approach vs ShopWise approach) plus the merged chatbot/search engine differentiation statement.  
+**Layout**: Two columns on desktop, single-column vertical stack on mobile.
 
 ---
 
-## `AiDecisionSection`
+## `AiDecisionSection` (AI Decision Workspace)
 
 **File**: `components/ai-viz/AiDecisionSection.tsx`
 
@@ -132,9 +122,11 @@ type LogoMarqueeProps = {
 type AiDecisionSectionProps = Record<string, never>;
 ```
 
-**Children rendered**: `AiDecisionPanel`
-**@shopwise/ui used**: `Button`
-**Animation**: GSAP ScrollTrigger on panel reveal
+**Updates**:
+
+- Renamed internally/refactored to "AI Decision Workspace" section.
+- Section ID updated to `id="workspace"`.
+- Headline: "One Workspace. Every Signal. One Decision."
 
 ---
 
@@ -143,54 +135,49 @@ type AiDecisionSectionProps = Record<string, never>;
 **File**: `components/ai-viz/AiDecisionPanel.tsx`
 
 ```ts
-// No external props — self-animating demo panel
+// No external props
 type AiDecisionPanelProps = Record<string, never>;
 ```
 
-**Accessibility**: `aria-hidden="true"` + companion `<p class="sr-only">` in parent section
-**Animation**: sequential token reveal / score animation via `useGSAP`
+**Updates**:
+
+- Purely decorative simulation.
+- Pulsing live analysis indicator and score bars animating width 0 → final value on scroll trigger.
+- Click events are fully disabled. No mock state machine.
 
 ---
 
-## `FeaturesSection`
+## `FeaturesSection` (Meet the Workspace)
 
 **File**: `components/features/FeaturesSection.tsx`
 
 ```ts
-// No external props — consumes data from features.ts
+// No external props
 type FeaturesSectionProps = Record<string, never>;
 ```
 
-**Children rendered**: `FeatureCard[]` (mapped from data)
+**Updates**:
+
+- Renamed internally/refactored to "Meet the Workspace".
+- Headline: "Meet the Workspace" + capability cards mapped from features list.
+- Component ID: `id="features"`.
 
 ---
 
-## `FeatureCard`
-
-**File**: `components/features/FeatureCard.tsx`
-
-```ts
-type FeatureCardProps = {
-  item: FeatureItem;
-};
-```
-
-**@shopwise/ui used**: `Card`, `CardContent`
-**Animation**: CSS transition on hover (border glow / icon color shift)
-**Scroll reveal**: GSAP stagger or CSS `animation-delay` on `FeaturesSection`
-
----
-
-## `WorkflowSection`
+## `WorkflowSection` (Intelligence Layer)
 
 **File**: `components/workflow/WorkflowSection.tsx`
 
 ```ts
-// No external props — consumes data from workflow-steps.ts
+// No external props
 type WorkflowSectionProps = Record<string, never>;
 ```
 
-**Children rendered**: `WorkflowTimeline`
+**Updates**:
+
+- Renamed internally/refactored to "Intelligence Layer".
+- Section ID updated to `id="intelligence"`.
+- Headline: "Intelligence Layer" + sequential timeline.
 
 ---
 
@@ -204,99 +191,42 @@ type WorkflowTimelineProps = {
 };
 ```
 
-**Animation**: GSAP ScrollTrigger draws connector line; steps stagger in
-**Layout**: horizontal on ≥ 1024 px, vertical on < 1024 px
+**Updates**:
+
+- Renders exactly 7 stages (Business Goal, Planning, Data and Evidence, Specialist Analysis, Comparison Logic, Recommendation, Human Approval).
+- Animates connecting lines and step badges on scroll entry.
 
 ---
 
-## `TestimonialsSection`
+## `DecisionConfidenceSection` [NEW]
 
-**File**: `components/testimonials/TestimonialsSection.tsx`
+**File**: `components/confidence/DecisionConfidenceSection.tsx`
 
 ```ts
-// No external props — consumes data from testimonials.ts
-type TestimonialsSectionProps = Record<string, never>;
+// No external props
+type DecisionConfidenceSectionProps = Record<string, never>;
 ```
 
-**@shopwise/ui used**: `Carousel`, `CarouselContent`, `CarouselItem`, `CarouselPrevious`, `CarouselNext`, `Avatar`, `AvatarImage`, `AvatarFallback`
-**Accessibility**: `aria-live="polite"` on carousel viewport; prev/next have `aria-label`
+**Role**: Implements "Decision Confidence" (section 8 of spec). Focuses on secondary executive audience (audit trail, governance, ROI). Renders `<DecisionConfidencePanel />`.  
+**Layout**: Two columns on desktop, single-column stack on mobile. Section ID: `id="confidence"`.
 
 ---
 
-## `PricingSection`
+## `DecisionConfidencePanel` [NEW]
 
-**File**: `components/pricing/PricingSection.tsx`
+**File**: `components/confidence/DecisionConfidencePanel.tsx`
 
 ```ts
-// No external props — manages billingPeriod state internally
-type PricingSectionProps = Record<string, never>;
+// No external props
+type DecisionConfidencePanelProps = Record<string, never>;
 ```
 
-**Children rendered**: `BillingToggle`, `PricingCard[]`
+**Role**: Illustrates a confident explainable recommendation with 4 signals: Evidence Status, Confidence Indicator, Risk Status, and Auditability Signal.  
+**UX Behaviour**: GSAP ScrollTrigger timeline animates each signal sequentially. No interactivity. Under prefers-reduced-motion, snaps immediately to final state.
 
 ---
 
-## `BillingToggle`
-
-**File**: `components/pricing/BillingToggle.tsx`
-
-```ts
-type BillingToggleProps = {
-  value: 'monthly' | 'annual';
-  onChange: (value: 'monthly' | 'annual') => void;
-};
-```
-
-**@shopwise/ui used**: `Toggle` or `Switch` for the toggle affordance
-**Accessibility**: `role="switch"`, `aria-checked`
-
----
-
-## `PricingCard`
-
-**File**: `components/pricing/PricingCard.tsx`
-
-```ts
-type PricingCardProps = {
-  tier: PricingTier;
-  billingPeriod: 'monthly' | 'annual';
-};
-```
-
-**@shopwise/ui used**: `Card`, `CardHeader`, `CardContent`, `CardFooter`, `Badge`, `Button`, `Separator`
-
----
-
-## `FaqSection`
-
-**File**: `components/faq/FaqSection.tsx`
-
-```ts
-// No external props — consumes data from faq.ts
-type FaqSectionProps = Record<string, never>;
-```
-
-**Children rendered**: `FaqItem[]`
-
----
-
-## `FaqItem`
-
-**File**: `components/faq/FaqItem.tsx`
-
-```ts
-type FaqItemProps = {
-  item: FaqItem;
-};
-```
-
-**@shopwise/ui used**: `Collapsible`, `CollapsibleTrigger`, `CollapsibleContent`
-**Animation**: CSS `max-height` transition (removed under `prefers-reduced-motion`)
-**Accessibility**: `aria-expanded`, `aria-controls`, `role="region"`
-
----
-
-## `FinalCtaSection`
+## `FinalCtaSection` (Enterprise CTA)
 
 **File**: `components/final-cta/FinalCtaSection.tsx`
 
@@ -305,8 +235,14 @@ type FaqItemProps = {
 type FinalCtaSectionProps = Record<string, never>;
 ```
 
-**@shopwise/ui used**: `Button`
-**Animation**: GSAP scroll-entry fade + CTA pulse (CSS, paused under reduced-motion)
+**Updates**:
+
+- Renamed internally/refactored to "Enterprise CTA".
+- Section ID updated to `id="contact"`.
+- Headline: "Start Making Confident Purchasing Decisions."
+- Primary CTA: "Launch Decision Workspace" (navigates to `/auth`).
+- Secondary CTA: "Request Enterprise Demo" / "Talk to Sales" (mailto link or anchor).
+- Pricing/trial terms removed.
 
 ---
 
@@ -319,55 +255,17 @@ type FinalCtaSectionProps = Record<string, never>;
 type LandingFooterProps = Record<string, never>;
 ```
 
-**@shopwise/ui used**: `Separator`
+**Updates**:
+
+- Updates platform links to match new section anchors.
+- Updates copyright notice.
 
 ---
 
-## Custom Hooks
+## Removed Components
 
-### `useReducedMotion`
+The following components are **fully removed** from the codebase:
 
-**File**: `apps/web/src/features/landing/hooks/useReducedMotion.ts`
-
-```ts
-// Returns true if prefers-reduced-motion: reduce is active
-function useReducedMotion(): boolean;
-```
-
-**Implementation**: Wraps `window.matchMedia('(prefers-reduced-motion: reduce)')` with
-a `useEffect` listener for runtime changes.
-
----
-
-### `useScrollSpy`
-
-**File**: `apps/web/src/features/landing/hooks/useScrollSpy.ts`
-
-```ts
-type UseScrollSpyOptions = {
-  sectionIds: string[];
-  offset?: number;  // px from top of viewport to trigger active state (default: 100)
-};
-
-function useScrollSpy(options: UseScrollSpyOptions): string | null;
-// Returns the id of the currently active section, or null if none
-```
-
-**Used by**: `LandingNavbar` to highlight the active nav link.
-
----
-
-## GSAP Configuration
-
-**File**: `apps/web/src/lib/gsap-config.ts`
-
-```ts
-// Registers ScrollTrigger plugin once.
-// All GSAP-using components import from this file instead of gsap directly.
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
-
-export { gsap, ScrollTrigger };
-```
+- `TestimonialsSection.tsx` (`components/testimonials/`)
+- `PricingSection.tsx`, `PricingCard.tsx`, `BillingToggle.tsx` (`components/pricing/`)
+- `FaqSection.tsx`, `FaqItem.tsx` (`components/faq/`)

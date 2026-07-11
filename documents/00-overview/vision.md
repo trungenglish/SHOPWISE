@@ -1,7 +1,6 @@
 # Vision
 
-Version: 1.0
-Status: Draft
+Version: 1.0 Status: Draft
 
 ---
 

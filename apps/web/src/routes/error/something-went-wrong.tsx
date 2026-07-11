@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/error/something-went-wrong')({
+export const Route = createFileRoute("/error/something-went-wrong")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/error/something-went-wrong"!</div>
+  return <div>Hello "/error/something-went-wrong"!</div>;
 }

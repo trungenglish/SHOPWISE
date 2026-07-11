@@ -3,10 +3,11 @@ import { Separator } from "@shopwise/ui/components/separator";
 
 export function LandingFooter() {
   const productLinks = [
-    { label: "Features", href: "#features" },
-    { label: "Workflow", href: "#workflow" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Problem", href: "#problem" },
+    { label: "Workspace", href: "#workspace" },
+    { label: "Intelligence", href: "#intelligence" },
+    { label: "Confidence", href: "#confidence" },
+    { label: "Contact", href: "#contact" },
   ];
 
   const companyLinks = [
@@ -23,19 +24,19 @@ export function LandingFooter() {
   ];
 
   return (
-    <footer className="bg-background border-t border-border/40 text-muted-foreground">
-      <div className="container mx-auto px-4 md:px-6 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
+    <footer className="bg-background border-border/40 text-muted-foreground border-t">
+      <div className="container mx-auto px-4 py-12 md:px-6 md:py-16">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5 lg:gap-12">
           {/* Brand Column */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="space-y-4 lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-xl font-heading font-bold tracking-tight text-foreground">
+              <span className="font-heading text-foreground text-xl font-bold tracking-tight">
                 ShopWise
               </span>
             </Link>
-            <p className="text-sm max-w-sm">
-              AI-powered procurement intelligence for modern enterprises. Make
-              smarter buying decisions and automate your category workflows.
+            <p className="max-w-sm text-sm">
+              AI Decision Intelligence for Enterprise Procurement. Make smarter
+              buying decisions and automate your category workflows.
             </p>
             <div className="flex space-x-4">
               <a
@@ -87,7 +88,7 @@ export function LandingFooter() {
 
           {/* Product Links */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-foreground">Product</h4>
+            <h4 className="text-foreground text-sm font-semibold">Product</h4>
             <ul className="space-y-2 text-sm">
               {productLinks.map((link) => (
                 <li key={link.label}>
@@ -104,7 +105,7 @@ export function LandingFooter() {
 
           {/* Company Links */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-foreground">Company</h4>
+            <h4 className="text-foreground text-sm font-semibold">Company</h4>
             <ul className="space-y-2 text-sm">
               {companyLinks.map((link) => (
                 <li key={link.label}>
@@ -130,7 +131,7 @@ export function LandingFooter() {
 
           {/* Legal Links */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-foreground">Legal</h4>
+            <h4 className="text-foreground text-sm font-semibold">Legal</h4>
             <ul className="space-y-2 text-sm">
               {legalLinks.map((link) => (
                 <li key={link.label}>
@@ -148,10 +149,11 @@ export function LandingFooter() {
 
         <Separator className="my-8 md:my-10" />
 
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 text-xs">
+        <div className="flex flex-col items-center justify-between gap-4 text-xs lg:flex-row">
           <p>© {new Date().getFullYear()} ShopWise. All rights reserved.</p>
           <p>
-            Designed for secure, SOC 2 compliant enterprise procurement workflows.
+            Designed for secure, SOC 2 compliant enterprise procurement
+            workflows.
           </p>
         </div>
       </div>

@@ -9,35 +9,48 @@ type MobileNavDrawerProps = {
 
 export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
   const navLinks = [
-    { label: "Features", href: "#features" },
-    { label: "Workflow", href: "#workflow" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Problem", href: "#problem" },
+    { label: "Workspace", href: "#workspace" },
+    { label: "Intelligence", href: "#intelligence" },
+    { label: "Confidence", href: "#confidence" },
+    { label: "Contact", href: "#contact" },
   ];
 
   return (
-    <Sheet open={isOpen} onOpenChange={(open) => { if (!open) onClose(); }}>
-      <SheetContent side="right" className="flex flex-col p-6 w-80">
-        <div className="flex flex-col gap-6 mt-8 flex-grow">
-          <nav id="mobile-nav" className="flex flex-col gap-4 text-base font-medium">
+    <Sheet
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
+    >
+      <SheetContent side="right" className="flex w-80 flex-col p-6">
+        <div className="mt-8 flex flex-grow flex-col gap-6">
+          <nav
+            id="mobile-nav"
+            className="flex flex-col gap-4 text-base font-medium"
+          >
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={onClose}
-                className="text-muted-foreground hover:text-foreground transition-colors py-2 border-b border-border/20"
+                className="text-muted-foreground hover:text-foreground border-border/20 border-b py-2 transition-colors"
               >
                 {link.label}
               </a>
             ))}
           </nav>
         </div>
-        <div className="flex flex-col gap-3 mt-auto">
+        <div className="mt-auto flex flex-col gap-3">
           <Button asChild variant="ghost" className="w-full">
-            <Link to="/auth" onClick={onClose}>Sign In</Link>
+            <Link to="/auth" onClick={onClose}>
+              Sign In
+            </Link>
           </Button>
           <Button asChild className="w-full">
-            <Link to="/auth" onClick={onClose}>Get Started</Link>
+            <Link to="/auth" onClick={onClose}>
+              Get Started
+            </Link>
           </Button>
         </div>
       </SheetContent>

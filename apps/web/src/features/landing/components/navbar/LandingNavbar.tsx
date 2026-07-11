@@ -10,7 +10,13 @@ export function LandingNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const activeSection = useScrollSpy({
-    sectionIds: ["features", "workflow", "pricing", "faq"],
+    sectionIds: [
+      "problem",
+      "workspace",
+      "intelligence",
+      "confidence",
+      "contact",
+    ],
     offset: 100,
   });
 
@@ -26,24 +32,25 @@ export function LandingNavbar() {
   }, []);
 
   const navLinks = [
-    { label: "Features", id: "features", href: "#features" },
-    { label: "Workflow", id: "workflow", href: "#workflow" },
-    { label: "Pricing", id: "pricing", href: "#pricing" },
-    { label: "FAQ", id: "faq", href: "#faq" },
+    { label: "Problem", id: "problem", href: "#problem" },
+    { label: "Workspace", id: "workspace", href: "#workspace" },
+    { label: "Intelligence", id: "intelligence", href: "#intelligence" },
+    { label: "Confidence", id: "confidence", href: "#confidence" },
+    { label: "Contact", id: "contact", href: "#contact" },
   ];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      className={`fixed top-0 right-0 left-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border/40 py-3"
+          ? "bg-background/80 border-border/40 border-b py-3 backdrop-blur-md"
           : "bg-transparent py-5"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
         {/* Left: ShopWise Wordmark */}
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-xl font-heading font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">
+          <span className="font-heading from-foreground to-foreground/80 bg-gradient-to-r bg-clip-text text-xl font-bold tracking-tight text-transparent">
             ShopWise
           </span>
         </Link>
@@ -51,7 +58,7 @@ export function LandingNavbar() {
         {/* Center: Desktop Navigation Links */}
         <nav
           aria-label="Main navigation"
-          className="hidden md:flex items-center space-x-8"
+          className="hidden items-center space-x-8 md:flex"
         >
           {navLinks.map((link) => {
             const isActive = activeSection === link.id;
@@ -59,13 +66,13 @@ export function LandingNavbar() {
               <a
                 key={link.id}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-foreground relative py-1 ${
+                className={`hover:text-foreground relative py-1 text-sm font-medium transition-colors ${
                   isActive ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
                 {link.label}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--landing-gradient-accent)] rounded-full" />
+                  <span className="absolute right-0 bottom-0 left-0 h-0.5 rounded-full bg-[var(--landing-gradient-accent)]" />
                 )}
               </a>
             );
@@ -73,7 +80,7 @@ export function LandingNavbar() {
         </nav>
 
         {/* Right: Actions */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden items-center space-x-4 md:flex">
           <Button asChild variant="ghost" size="sm">
             <Link to="/auth">Sign In</Link>
           </Button>

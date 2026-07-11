@@ -12,7 +12,7 @@ export function useReducedMotion(): boolean {
     () =>
       typeof window !== "undefined"
         ? window.matchMedia(REDUCED_MOTION_QUERY).matches
-        : false,
+        : false
   );
 
   useEffect(() => {

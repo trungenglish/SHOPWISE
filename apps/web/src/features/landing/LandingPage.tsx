@@ -1,19 +1,27 @@
-import { ReactLenis } from "lenis/react";
+import { ReactLenis, useLenis } from "lenis/react";
+import { ScrollTrigger } from "@/lib/gsap-config";
 import { LandingNavbar } from "./components/navbar/LandingNavbar";
 import { HeroSection } from "./components/hero/HeroSection";
 import { TrustedBySection } from "./components/trusted-by/TrustedBySection";
+import { ProblemStatementSection } from "./components/problem/ProblemStatementSection";
 import { AiDecisionSection } from "./components/ai-viz/AiDecisionSection";
 import { FeaturesSection } from "./components/features/FeaturesSection";
 import { WorkflowSection } from "./components/workflow/WorkflowSection";
-import { TestimonialsSection } from "./components/testimonials/TestimonialsSection";
-import { PricingSection } from "./components/pricing/PricingSection";
-import { FaqSection } from "./components/faq/FaqSection";
+import { DecisionConfidenceSection } from "./components/confidence/DecisionConfidenceSection";
 import { FinalCtaSection } from "./components/final-cta/FinalCtaSection";
 import { LandingFooter } from "./components/footer/LandingFooter";
+
+function ScrollTriggerSync() {
+  useLenis(() => {
+    ScrollTrigger.update();
+  });
+  return null;
+}
 
 export function LandingPage() {
   return (
     <ReactLenis root>
+      <ScrollTriggerSync />
       <div className="flex min-h-screen flex-col">
         {/* Navigation Bar */}
         <LandingNavbar />
@@ -25,6 +33,9 @@ export function LandingPage() {
           {/* Trusted By Brand Logos */}
           <TrustedBySection />
 
+          {/* Problem Statement Section */}
+          <ProblemStatementSection />
+
           {/* AI Decision Tool Visualisation */}
           <AiDecisionSection />
 
@@ -34,20 +45,14 @@ export function LandingPage() {
           {/* How It Works Workflow Steps */}
           <WorkflowSection />
 
-          {/* Customer Testimonials Carousel */}
-          <TestimonialsSection />
-
-          {/* Transparent Pricing Table */}
-          <PricingSection />
-
-          {/* Frequently Asked Questions */}
-          <FaqSection />
+          {/* Decision Confidence Section */}
+          <DecisionConfidenceSection />
 
           {/* Final Call To Action */}
           <FinalCtaSection />
         </main>
 
-        {/* Global Landing Footer */}
+        {/* Brand Footer */}
         <LandingFooter />
       </div>
     </ReactLenis>

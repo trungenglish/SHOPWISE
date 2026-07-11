@@ -35,7 +35,7 @@ export function useScrollSpy({
       {
         rootMargin: `${rootMarginTop} 0px -50% 0px`,
         threshold: 0,
-      },
+      }
     );
 
     for (const id of sectionIds) {
