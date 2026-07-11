@@ -8,38 +8,38 @@ export function AiDecisionPanel() {
   const panelRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
-  const vendors = [
+  const products = [
     {
-      name: "Vertex Solutions",
+      name: "ASUS TUF A15",
       score: "96%",
       width: "96%",
       color: "bg-[var(--landing-gradient-accent)]",
       matches: "12/12 matched",
-      evidence: "Verified",
-      risk: "Low Risk",
-      riskColor: "text-emerald-400",
+      stock: "In Stock",
+      promo: "10% Off",
+      promoColor: "text-emerald-400",
       hasAlert: false,
     },
     {
-      name: "Zenith Enterprises",
+      name: "Lenovo LOQ",
       score: "88%",
       width: "88%",
       color: "bg-indigo-400",
       matches: "10/12 matched",
-      evidence: "Verified",
-      risk: "Low Risk",
-      riskColor: "text-emerald-400",
+      stock: "In Stock",
+      promo: "Free Gift",
+      promoColor: "text-emerald-400",
       hasAlert: false,
     },
     {
-      name: "Orion Corp",
+      name: "Acer Nitro V",
       score: "74%",
       width: "74%",
       color: "bg-indigo-500",
       matches: "8/12 matched",
-      evidence: "2 Flagged",
-      risk: "Medium Risk",
-      riskColor: "text-amber-400",
+      stock: "1 Left",
+      promo: "No Promo",
+      promoColor: "text-amber-400",
       hasAlert: true,
     },
   ];
@@ -108,7 +108,7 @@ export function AiDecisionPanel() {
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
           </div>
           <span className="text-muted-foreground/60 font-heading text-[10px] font-bold tracking-wider uppercase">
-            ShopWise AI Workspace
+            ShopWise AI Shopping Assistant
           </span>
         </div>
         <span className="text-muted-foreground/40 font-mono text-[10px]">
@@ -119,7 +119,7 @@ export function AiDecisionPanel() {
       {/* Query Search Input mockup */}
       <div className="gsap-panel-input bg-background/50 border-border/20 mb-4 flex items-center justify-between rounded-lg border p-3">
         <span className="text-foreground font-heading text-xs font-medium">
-          Compare: Enterprise ERP Suppliers Q3
+          Compare: Gaming laptop under 30 million VND
         </span>
         <div className="gsap-panel-loading flex items-center space-x-2">
           <style>{`
@@ -146,45 +146,45 @@ export function AiDecisionPanel() {
 
       {/* Scored Results List */}
       <div className="space-y-5">
-        {vendors.map((vendor) => (
+        {products.map((p) => (
           <div
-            key={vendor.name}
-            className="gsap-vendor-row border-border/10 flex flex-col space-y-2 border-b pb-4 last:border-0 last:pb-0"
+            key={p.name}
+            className="gsap-vendor-row flex flex-col space-y-2 border-b border-border/10 pb-4 last:border-0 last:pb-0"
           >
             {/* Header: Name and Score */}
             <div className="flex items-center justify-between text-xs">
               <span className="text-foreground font-semibold">
-                {vendor.name}
+                {p.name}
               </span>
               <span className="text-muted-foreground font-mono font-semibold">
-                {vendor.score}
+                {p.score}
               </span>
             </div>
 
             {/* Score Bar */}
             <div className="bg-muted/20 h-2 w-full overflow-hidden rounded-full">
               <div
-                style={{ width: vendor.width }}
-                className={`gsap-score-bar ${vendor.color} h-full rounded-full`}
+                style={{ width: p.width }}
+                className={`gsap-score-bar ${p.color} h-full rounded-full`}
               />
             </div>
 
-            {/* Sub-row: Metadata (Matches, Evidence, Risk) */}
-            <div className="gsap-vendor-meta text-muted-foreground/80 flex items-center justify-between text-[10px]">
+            {/* Sub-row: Metadata (Matches, Stock, Promo) */}
+            <div className="gsap-vendor-meta flex items-center justify-between text-[10px] text-muted-foreground/80">
               <span className="flex items-center gap-1">
-                <CheckSquare className="h-3 w-3 shrink-0 text-indigo-400" />
-                {vendor.matches}
+                <CheckSquare className="h-3 w-3 text-indigo-400 shrink-0" />
+                {p.matches}
               </span>
               <span className="flex items-center gap-1">
-                {vendor.hasAlert ? (
-                  <ShieldAlert className="h-3 w-3 shrink-0 text-amber-400" />
+                {p.hasAlert ? (
+                  <ShieldAlert className="h-3 w-3 text-amber-400 shrink-0" />
                 ) : (
-                  <ShieldCheck className="h-3 w-3 shrink-0 text-emerald-400" />
+                  <ShieldCheck className="h-3 w-3 text-emerald-400 shrink-0" />
                 )}
-                {vendor.evidence}
+                {p.stock}
               </span>
-              <span className={`font-semibold ${vendor.riskColor}`}>
-                {vendor.risk}
+              <span className={`font-semibold ${p.promoColor}`}>
+                {p.promo}
               </span>
             </div>
           </div>

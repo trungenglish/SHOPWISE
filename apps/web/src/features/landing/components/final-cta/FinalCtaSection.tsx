@@ -63,17 +63,15 @@ export function FinalCtaSection() {
       <div className="relative z-10 container mx-auto flex flex-col items-center px-4 text-center md:px-6">
         {/* Centered Copy */}
         <span className="gsap-cta-reveal font-heading mb-4 text-xs font-semibold tracking-wider text-[var(--landing-gradient-accent)] uppercase">
-          Decision Intelligence Platform
+          AI Sales Agent
         </span>
 
         <h2 className="gsap-cta-reveal font-heading text-foreground mb-6 max-w-2xl text-3xl leading-[1.15] font-bold tracking-tight sm:text-4xl lg:text-5xl">
-          Ready to Unify Your Procurement Decisions?
+          Ready to Transform Online Shopping?
         </h2>
 
         <p className="gsap-cta-reveal text-muted-foreground mb-10 max-w-lg text-sm leading-relaxed sm:text-base">
-          Empower category managers, category specialists, and procurement
-          leaders with a persistent environment for supplier comparison and
-          traceable audit logs.
+          Bring conversational AI to your e-commerce platform and help customers discover the right products faster.
         </p>
 
         {/* Call to Actions */}
@@ -83,7 +81,7 @@ export function FinalCtaSection() {
             size="lg"
             className="cta-pulse-button transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
           >
-            <Link to="/auth">Launch Decision Workspace</Link>
+            <Link to="/auth">Try AI Sales Agent</Link>
           </Button>
           <Button
             asChild
@@ -92,7 +90,7 @@ export function FinalCtaSection() {
             className="hover:bg-muted/40 border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] transition-colors"
           >
             <a href="mailto:sales@shopwise.io" rel="noopener noreferrer">
-              Request Enterprise Demo
+              Request Demo
             </a>
           </Button>
         </div>

@@ -41,15 +41,13 @@ export function FeaturesSection() {
         {/* Header Block */}
         <div className="mb-12 flex flex-col items-center space-y-4 text-center lg:mb-20">
           <span className="gsap-feature-reveal font-heading text-xs font-semibold tracking-wider text-[var(--landing-gradient-accent)] uppercase">
-            Meet the Workspace
+            AI Sales Agent
           </span>
           <h2 className="gsap-feature-reveal font-heading text-foreground max-w-2xl text-3xl leading-[1.15] font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            A Unified Workspace for Procurement Decisions
+            AI Sales Agent Capabilities
           </h2>
           <p className="gsap-feature-reveal text-muted-foreground max-w-lg text-sm sm:text-base">
-            ShopWise centralizes the tools required for enterprise product and
-            supplier decisions, from initial criteria definition to final human
-            sign-off.
+            ShopWise centralizes the tools required to assist, convert, and retain e-commerce customers.
           </p>
         </div>
 

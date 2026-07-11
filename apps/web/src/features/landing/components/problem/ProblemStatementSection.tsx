@@ -1,11 +1,5 @@
 import { useRef } from "react";
-import {
-  AlertCircle,
-  CheckCircle2,
-  Search,
-  MessageSquare,
-  ShieldAlert,
-} from "lucide-react";
+import { AlertCircle, CheckCircle2, Search, MessageSquare, ShieldAlert } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
 import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
@@ -37,21 +31,21 @@ export function ProblemStatementSection() {
   );
 
   const painPoints = [
-    "Comparing suppliers across dozens of browser tabs with no single source of truth.",
-    "Conflicting technical claims and quotation terms with no verification layer.",
-    "Spreadsheet comparisons that become stale as soon as vendor data updates.",
-    "Product catalogues, technical documents, and quotations scattered in separate tools.",
-    "Purchasing decisions with no structured evidence trail or history records.",
-    "Low confidence, slow approval cycles, and hard-to-justify recommendations.",
+    "Too many products makes choosing overwhelming for customers.",
+    "Hard to compare specifications across different brands and models.",
+    "Live stock uncertainty causes cart abandonment and customer drop-off.",
+    "Promotions and campaign discounts are difficult to find and apply.",
+    "Human support is unavailable during peak hours or late nights.",
+    "Customers leave the site without purchasing due to unanswered questions.",
   ];
 
   const outcomes = [
-    "One unified decision workspace with all suppliers, products, and evidence in one place.",
-    "Verified evidence and structured data — supplier claims checked against source files.",
-    "AI-powered comparison of options that updates automatically as data changes.",
-    "All specification sheets, quotations, and documentation integrated into the workspace.",
-    "Full decision audit trail — every step, source, and approval recorded and traceable.",
-    "Confident, explainable recommendations that the whole organization can stand behind.",
+    "AI answers instantly, helping shoppers make immediate choices.",
+    "Smart recommendations tailored to budget and technical requirements.",
+    "Live inventory queries fetch real-time warehouse data instantly.",
+    "Product comparison highlights key differences side-by-side.",
+    "Promotion lookup automatically finds the best coupons and vouchers.",
+    "Guided checkout directs the customer directly to purchase completion.",
   ];
 
   return (
@@ -64,15 +58,13 @@ export function ProblemStatementSection() {
         {/* Section Header */}
         <div className="gsap-problem-reveal mx-auto mb-16 max-w-3xl text-center">
           <span className="font-heading text-xs font-semibold tracking-wider text-[var(--landing-gradient-accent)] uppercase">
-            The Search Crisis
+            The Product Discovery Problem
           </span>
           <h2 className="font-heading text-foreground mt-3 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            Enterprise Procurement is Broken.
+            The Product Discovery Problem
           </h2>
           <p className="text-muted-foreground mt-4 text-base sm:text-lg">
-            Fragmented research across tabs and spreadsheets breeds uncertainty.
-            Procurement teams need a structured decision environment, not a
-            search box.
+            Online shoppers face overwhelming options and stale inventory. AI Sales Agent bridges the gap between searching and purchasing.
           </p>
         </div>
 
@@ -88,20 +80,16 @@ export function ProblemStatementSection() {
               id="legacy-title"
               className="font-heading text-muted-foreground/80 flex items-center gap-2 text-lg font-bold sm:text-xl"
             >
-              <AlertCircle className="text-muted-foreground/60 h-5 w-5" />
-              How teams buy today
+              <AlertCircle className="h-5 w-5 text-muted-foreground/60" />
+              How customers buy today
             </h3>
             <p className="text-muted-foreground/60 mt-2 text-sm">
-              The legacy fragmented research process is manual, slow, and prone
-              to risk.
+              The legacy search and browse process leads to shopper fatigue and dropped carts.
             </p>
             <ul className="mt-6 flex-grow space-y-4">
               {painPoints.map((pain, idx) => (
-                <li
-                  key={idx}
-                  className="text-muted-foreground/70 flex items-start gap-3 text-sm"
-                >
-                  <span className="bg-muted-foreground/30 mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full" />
+                <li key={idx} className="flex items-start gap-3 text-sm text-muted-foreground/70">
+                  <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/30" />
                   <span>{pain}</span>
                 </li>
               ))}
@@ -124,15 +112,11 @@ export function ProblemStatementSection() {
               How ShopWise works
             </h3>
             <p className="text-muted-foreground mt-2 text-sm">
-              A structured AI reasoning workspace that turns comparison into
-              evidence-based action.
+              A conversational sales assistant that converts queries into e-commerce checkouts.
             </p>
             <ul className="mt-6 flex-grow space-y-4">
               {outcomes.map((outcome, idx) => (
-                <li
-                  key={idx}
-                  className="text-foreground/90 flex items-start gap-3 text-sm"
-                >
+                <li key={idx} className="flex items-start gap-3 text-sm text-foreground/90">
                   <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--landing-gradient-accent)]" />
                   <span>{outcome}</span>
                 </li>
@@ -152,29 +136,17 @@ export function ProblemStatementSection() {
             </div>
             <div className="lg:col-span-8">
               <p className="text-muted-foreground text-sm leading-relaxed">
-                ShopWise is{" "}
-                <strong className="text-foreground">
-                  not another search engine
-                </strong>
-                , <strong className="text-foreground">not a chatbot</strong>,
-                and{" "}
-                <strong className="text-foreground">
-                  not a procurement marketplace
-                </strong>
-                . It is an AI Decision Intelligence Platform — a persistent,
-                collaborative decision environment that maintains complete
-                context, evidence, logic workflows, and decision history across
-                the entire purchasing lifecycle.
+                ShopWise is <strong className="text-foreground">not another search engine</strong>, <strong className="text-foreground">not a generic chatbot</strong>, and <strong className="text-foreground">not a procurement marketplace</strong>. It is an AI Sales Agent — a persistent, conversational commerce environment that maintains shopping context, product specifications, inventory state, and cart history across the entire customer journey.
               </p>
-              <div className="text-muted-foreground/60 mt-4 flex flex-wrap gap-4 text-xs">
+              <div className="mt-4 flex flex-wrap gap-4 text-xs text-muted-foreground/60">
                 <span className="flex items-center gap-1">
-                  <Search className="h-3 w-3" /> No chat search boxes
+                  <Search className="h-3 w-3" /> No standard search queries
                 </span>
                 <span className="flex items-center gap-1">
                   <MessageSquare className="h-3 w-3" /> No generic conversations
                 </span>
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="h-3 w-3" /> Persistent decision state
+                  <CheckCircle2 className="h-3 w-3" /> Live catalog sync
                 </span>
               </div>
             </div>

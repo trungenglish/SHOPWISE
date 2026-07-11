@@ -10,41 +10,37 @@ export type WorkflowStep = {
 export const WORKFLOW_STEPS: WorkflowStep[] = [
   {
     step: 1,
-    title: "Business Goal",
-    description: "The team defines what they need to buy and why.",
+    title: "Customer Query",
+    description: "Customer asks a question about a product type or model.",
   },
   {
     step: 2,
-    title: "Planning",
-    description:
-      "ShopWise structures the decision: criteria, constraints, and stakeholders.",
+    title: "Intent Analysis",
+    description: "AI understands intent and extracts search criteria.",
   },
   {
     step: 3,
-    title: "Data and Evidence",
-    description:
-      "The platform gathers and verifies supplier data, documents, and market signals.",
+    title: "Product Search",
+    description: "Searches the Phong Vu catalogue for matching options.",
   },
   {
     step: 4,
-    title: "Specialist Analysis",
-    description: "AI agents evaluate each option against the defined criteria.",
+    title: "Inventory Check",
+    description: "Retrieves live stock status, pricing, and active promos.",
   },
   {
     step: 5,
     title: "Comparison Logic",
-    description: "Options are ranked with full reasoning and evidence links.",
+    description: "Compares product specs and matches user requirements.",
   },
   {
     step: 6,
     title: "Recommendation",
-    description:
-      "A confident, explainable recommendation is surfaced to the team.",
+    description: "Recommends the best product fit with explainable details.",
   },
   {
     step: 7,
-    title: "Human Approval",
-    description:
-      "The team reviews, adjusts, and approves — creating the audit record.",
+    title: "Guided Checkout",
+    description: "Guides the customer directly to purchase completion.",
   },
 ];

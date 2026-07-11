@@ -41,14 +41,13 @@ export function WorkflowSection() {
         {/* Header Block */}
         <div className="mb-16 flex flex-col items-center space-y-4 text-center lg:mb-24">
           <span className="gsap-workflow-reveal font-heading text-xs font-semibold tracking-wider text-[var(--landing-gradient-accent)] uppercase">
-            Intelligence Layer
+            How ShopWise Works
           </span>
           <h2 className="gsap-workflow-reveal font-heading text-foreground max-w-2xl text-3xl leading-[1.15] font-bold tracking-tight sm:text-4xl lg:text-5xl">
-            The AI Reasoning Pipeline
+            How ShopWise Works
           </h2>
           <p className="gsap-workflow-reveal text-muted-foreground max-w-lg text-sm sm:text-base">
-            See how ShopWise transforms specifications, documents, and business
-            goals into an explainable decision with full human sign-off.
+            See how ShopWise handles user requests, retrieves product specifications, and delivers verified recommendations.
           </p>
         </div>
 

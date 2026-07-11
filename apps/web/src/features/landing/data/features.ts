@@ -1,12 +1,5 @@
+import { Search, Sparkles, Layout, Database, Tag, ShoppingBag } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import {
-  Layout,
-  ListTodo,
-  ShieldCheck,
-  History,
-  Users,
-  Plug,
-} from "lucide-react";
 
 export type FeatureItem = {
   id: string;
@@ -19,45 +12,39 @@ export type FeatureItem = {
 
 export const FEATURES: FeatureItem[] = [
   {
-    id: "canvas",
+    id: "product-search",
+    icon: Search,
+    title: "AI Product Search",
+    description: "Find products on Phong Vu using natural language and semantic queries.",
+  },
+  {
+    id: "product-recommendation",
+    icon: Sparkles,
+    title: "Product Recommendation",
+    description: "Recommend products customized to buyer preferences and budget limits.",
+  },
+  {
+    id: "product-comparison",
     icon: Layout,
-    title: "Product & Supplier Canvas",
-    description:
-      "A unified view of all options, structured for direct comparison.",
+    title: "Product Comparison",
+    description: "Compare technical specs, key features, and price tags side-by-side.",
   },
   {
-    id: "requirement-matching",
-    icon: ListTodo,
-    title: "Requirement Matching",
-    description:
-      "Automatically map business requirements to each supplier or product.",
+    id: "inventory-lookup",
+    icon: Database,
+    title: "Live Inventory Lookup",
+    description: "Retrieve real-time pricing and stock status directly from warehouses.",
   },
   {
-    id: "trust-evidence",
-    icon: ShieldCheck,
-    title: "Trust & Evidence Centre",
-    description:
-      "Verify claims, documents, and supplier credentials in one place.",
+    id: "promotion-finder",
+    icon: Tag,
+    title: "Promotion Finder",
+    description: "Locate active discount vouchers, bank coupons, and bundle deals.",
   },
   {
-    id: "audit-trail",
-    icon: History,
-    title: "Audit Trail",
-    description:
-      "A full, traceable record of every decision step and approval action.",
-  },
-  {
-    id: "collaboration",
-    icon: Users,
-    title: "Team Collaboration",
-    description:
-      "Assign reviewers, gather comments, and reach consensus in the workspace.",
-  },
-  {
-    id: "integrations",
-    icon: Plug,
-    title: "Enterprise Integrations",
-    description:
-      "Connect to ERP, procurement, and supplier management systems.",
+    id: "checkout-guidance",
+    icon: ShoppingBag,
+    title: "Checkout Guidance",
+    description: "Guide customers directly to the shopping cart for simplified checkout.",
   },
 ];

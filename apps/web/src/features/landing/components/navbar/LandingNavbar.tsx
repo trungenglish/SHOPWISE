@@ -49,9 +49,25 @@ export function LandingNavbar() {
     >
       <div className="container mx-auto flex items-center justify-between px-4 md:px-6">
         {/* Left: ShopWise Wordmark */}
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="font-heading from-foreground to-foreground/80 bg-gradient-to-r bg-clip-text text-xl font-bold tracking-tight text-transparent">
-            ShopWise
+        <Link to="/" className="flex items-center space-x-2 select-none">
+          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-blue-500 text-background">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="12" cy="12" r="3" fill="currentColor" />
+              <path d="M12 2v4M12 18v4M2 12h4M18 12h4" />
+            </svg>
+          </div>
+          <span className="font-heading text-foreground text-sm font-black tracking-widest uppercase">
+            SHOPWISE
           </span>
         </Link>
 
