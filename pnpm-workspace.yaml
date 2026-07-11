@@ -1,6 +1,11 @@
 packages:
   - apps/*
   - packages/*
+  - services/*
+  - conformance/*
+  - deploy
+  - infra
+  - scripts
 
 allowBuilds:
   esbuild: true

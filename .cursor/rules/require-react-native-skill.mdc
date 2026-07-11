@@ -1,7 +1,7 @@
 ---
 description: React Native / Expo — route to the matching skill in .agents/skills before implementing
 globs:
-  - "apps/native/**/*.{tsx,ts,jsx,js}"
+  - "apps/mobile/**/*.{tsx,ts,jsx,js}"
   - "packages/**/*native*/*.{tsx,ts,jsx,js}"
 alwaysApply: false
 ---

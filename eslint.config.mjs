@@ -17,9 +17,10 @@ export default defineConfig([
       ".gemini",
       ".ultracite",
       "prettier.config.mjs",
-      "apps/native/**",
+      "apps/mobile/**",
       "apps/web/.alchemy/**",
       "apps/web/vitest.config.ts",
+      "documents/**",
     ],
   },
   {
@@ -70,7 +71,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["apps/server/scripts/**/*.mjs"],
+    files: ["apps/retail/scripts/**/*.mjs"],
     rules: {
       "import-x/no-nodejs-modules": "off",
       "n/no-process-exit": "off",

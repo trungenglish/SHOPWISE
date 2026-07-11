@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schema/layout-components.json",
+  "title": "Layout Components",
+  "description": "Schemas for Layout Components",
+  "$defs": {
+    "PageProps": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" }
+      }
+    },
+    "SectionProps": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" }
+      }
+    },
+    "CardProps": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "padding": { "type": "string", "enum": ["none", "small", "medium", "large"] }
+      }
+    },
+    "GridProps": {
+      "type": "object",
+      "properties": {
+        "columns": { "type": "integer", "minimum": 1 },
+        "gap": { "type": "string", "enum": ["none", "small", "medium", "large"] }
+      }
+    },
+    "TabsProps": {
+      "type": "object",
+      "properties": {
+        "defaultActiveTab": { "type": "string" }
+      }
+    },
+    "ModalProps": {
+      "type": "object",
+      "properties": {
+        "isOpen": { "type": "boolean" },
+        "title": { "type": "string" },
+        "onCloseAction": { "type": "string" }
+      }
+    },
+    "DrawerProps": {
+      "type": "object",
+      "properties": {
+        "isOpen": { "type": "boolean" },
+        "title": { "type": "string" },
+        "position": { "type": "string", "enum": ["left", "right", "bottom", "top"] }
+      }
+    },
+    "TimelineProps": {
+      "type": "object",
+      "properties": {
+        "direction": { "type": "string", "enum": ["vertical", "horizontal"] }
+      }
+    }
+  },
+  "type": "object"
+}

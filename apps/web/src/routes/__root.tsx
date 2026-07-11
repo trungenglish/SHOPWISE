@@ -28,8 +28,9 @@ const RootComponent = () => {
       <ThemeProvider
         attribute="class"
         defaultTheme="dark"
+        forcedTheme="dark"
+        enableSystem={false}
         disableTransitionOnChange
-        storageKey="vite-ui-theme"
       >
         <Outlet />
         <Toaster richColors duration={5000} />
@@ -40,7 +41,6 @@ const RootComponent = () => {
           </>
         )}
       </ThemeProvider>
-      <TanStackRouterDevtools position="bottom-left" />
     </TooltipProvider>
   );
 };

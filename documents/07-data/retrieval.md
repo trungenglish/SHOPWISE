@@ -54,7 +54,7 @@ Requirements
 
 SQL Search
 
-+
+-
 
 Vector Search
 

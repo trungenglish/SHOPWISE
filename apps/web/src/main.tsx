@@ -6,7 +6,7 @@ import Loader from "./components/loader";
 import { routeTree } from "./routeTree.gen";
 import { StrictMode } from "react";
 import { ThemeProvider } from "./components/theme-provider";
-import { FontProvider } from "@shopwise/ui/contexts/font-provider"
+import { FontProvider } from "@shopwise/ui/contexts/font-provider";
 
 const queryClient = new QueryClient();
 
@@ -37,12 +37,17 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          forcedTheme="dark"
+          enableSystem={false}
+        >
           <FontProvider>
             <RouterProvider router={router} />
           </FontProvider>
         </ThemeProvider>
       </QueryClientProvider>
-    </StrictMode>,
+    </StrictMode>
   );
 }

@@ -1,0 +1,13 @@
+{
+  "name": "@shopwise/ui-protocol",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./schemas/*": "./src/schemas/*.json",
+    "./types/*": "./src/types/*.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  }
+}
