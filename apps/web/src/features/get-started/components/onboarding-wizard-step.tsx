@@ -43,7 +43,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
     register,
     handleSubmit,
     trigger,
-    getValues,
+    watch,
     formState: { errors },
   } = useFormContext<OnboardingFormData>();
 
@@ -73,8 +73,9 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
       setIsSubmitting(true);
       await mockSubmitOnboarding(data);
       toast.success("Profile created successfully!");
-      // @ts-expect-error /dashboard route is in another branch
-      navigate({ to: "/dashboard" });
+      // MOCKED FLOW: Bypass real authentication and navigate directly to dashboard
+      // Note: We use replace: true to prevent navigating back to the onboarding step
+      navigate({ to: "/dashboard", replace: true });
     } catch (error) {
       toast.error("Failed to create profile. Please try again.");
     } finally {
@@ -82,7 +83,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
     }
   };
 
-  const formValues = getValues();
+  const formValues = watch();
 
   return (
     <Card className="animate-in slide-in-from-right-4 fade-in w-full duration-300">
@@ -234,21 +235,34 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           ) : (
-            <Button
-              type="submit"
-              className="w-full"
-              size="lg"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                <CheckCircle2 className="mr-2 h-4 w-4" />
-              )}
-              {isSubmitting
-                ? "Creating profile..."
-                : "Confirm & Create Profile"}
-            </Button>
+            <div className="w-full flex flex-col gap-2">
+              <Button
+                type="submit"
+                className="w-full"
+                size="lg"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <CheckCircle2 className="mr-2 h-4 w-4" />
+                )}
+                <span aria-live="polite">
+                  {isSubmitting
+                    ? "Creating profile..."
+                    : "Create Profile"}
+                </span>
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                disabled={isSubmitting}
+                onClick={() => setStep(3)}
+              >
+                Edit Information
+              </Button>
+            </div>
           )}
         </CardFooter>
       </form>
