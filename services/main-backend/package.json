@@ -1,5 +1,5 @@
 {
-  "name": "@shopwise/retail",
+  "name": "@shopwise/main-backend",
   "version": "0.0.0",
   "private": true,
   "scripts": {

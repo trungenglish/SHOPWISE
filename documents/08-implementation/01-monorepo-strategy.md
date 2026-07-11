@@ -1,14 +1,14 @@
 # Polyglot Monorepo Strategy (Turborepo)
 
-The SHOPWISE project uses [Turborepo](https://turbo.build/) to orchestrate a polyglot monorepo containing Node.js apps and packages, Go and Python microservices, conformance tests, and infrastructure tools.
+The SHOPWISE project uses [Turborepo](https://turbo.build/) to orchestrate a polyglot monolithic monorepo containing Node.js apps and packages, Go and Python services, conformance tests, and infrastructure tools.
 
 ## Workspace Structure
 
 The project root is configured via `pnpm-workspace.yaml` and includes the following directories as native workspace packages:
 
-- `apps/*`: User-facing applications and UI (e.g. Next.js, Expo, server).
+- `apps/*`: Core applications including frontends (React-Vite, Expo).
 - `packages/*`: Shared libraries, SDKs, UI components, and internal config (TypeScript/Node.js).
-- `services/*`: Core backend microservices built primarily in non-Node languages (e.g., Go `gateway`, Python `ai-runtime`, Go `retail`).
+- `services/*`: Core backend domains and internal services (e.g., Python `agentic`, Go `main-backend`).
 - `conformance/*`: Language-agnostic test suites and SDK bindings verification.
 - `infra`: Root-level infrastructure configurations.
 - `deploy`: Scripts and definitions for deployment.
