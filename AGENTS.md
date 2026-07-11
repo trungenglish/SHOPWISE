@@ -254,15 +254,17 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/003-ai-shopping-conversation/plan.md
+For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/005-decision-memory/plan.md
 
-Active feature: AI Shopping Conversation (003-ai-shopping-conversation)
+Active feature: Decision Memory (005-decision-memory)
 
-- Spec: specs/003-ai-shopping-conversation/spec.md
-- Data model: specs/003-ai-shopping-conversation/data-model.md
-- UI contracts: specs/003-ai-shopping-conversation/contracts/ui-contracts.md
-- Quickstart: specs/003-ai-shopping-conversation/quickstart.md
-- Research: specs/003-ai-shopping-conversation/research.md
+- Spec: specs/005-decision-memory/spec.md
+- Plan: specs/005-decision-memory/plan.md
+- Data model: specs/005-decision-memory/data-model.md
+- API contracts: specs/005-decision-memory/contracts/api-contracts.md
+- UI contracts: specs/005-decision-memory/contracts/ui-contracts.md
+- Quickstart: specs/005-decision-memory/quickstart.md
+- Research: specs/005-decision-memory/research.md
 - Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 

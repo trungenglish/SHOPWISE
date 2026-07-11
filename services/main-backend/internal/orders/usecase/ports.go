@@ -10,6 +10,7 @@ import (
 
 type OrderRepository interface {
 	Create(ctx context.Context, order *domain.Order) error
+	ListByCustomer(ctx context.Context, customerID uuid.UUID, limit, offset int) ([]domain.Order, error)
 }
 
 type CustomerReader interface {

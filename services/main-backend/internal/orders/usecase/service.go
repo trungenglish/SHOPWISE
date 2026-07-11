@@ -13,6 +13,11 @@ import (
 	"github.com/google/uuid"
 )
 
+const (
+	defaultListLimit = 20
+	maximumListLimit = 100
+)
+
 type Service struct {
 	orders     OrderRepository
 	customers  CustomerReader
@@ -46,6 +51,46 @@ type CreateInput struct {
 	FulfillmentMethod       string
 	ShippingAddress         string
 	CouponCode              string
+}
+
+type ListInput struct {
+	AuthenticatedCustomerID uuid.UUID
+	CustomerID              uuid.UUID
+	Limit                   int
+	Offset                  int
+}
+
+type ListResult struct {
+	Orders []domain.Order
+	Limit  int
+	Offset int
+}
+
+func (service *Service) List(ctx context.Context, input ListInput) (*ListResult, error) {
+	if input.AuthenticatedCustomerID == uuid.Nil || input.CustomerID == uuid.Nil {
+		return nil, apperror.Validation("customer id is required", nil)
+	}
+	if input.AuthenticatedCustomerID != input.CustomerID {
+		return nil, apperror.Forbidden("customer id does not match the authenticated user", nil)
+	}
+
+	limit := input.Limit
+	if limit <= 0 {
+		limit = defaultListLimit
+	}
+	if limit > maximumListLimit {
+		limit = maximumListLimit
+	}
+	offset := input.Offset
+	if offset < 0 {
+		offset = 0
+	}
+
+	orders, err := service.orders.ListByCustomer(ctx, input.CustomerID, limit, offset)
+	if err != nil {
+		return nil, apperror.Internal("failed to list orders", err)
+	}
+	return &ListResult{Orders: orders, Limit: limit, Offset: offset}, nil
 }
 
 func (service *Service) Create(ctx context.Context, input CreateInput) (*domain.Order, error) {

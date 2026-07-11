@@ -44,6 +44,12 @@ type OrderResponse struct {
 	CreatedAt         time.Time           `json:"created_at" swaggertype:"string" format:"date-time"`
 }
 
+type OrderListResponse struct {
+	Items  []OrderResponse `json:"items"`
+	Limit  int             `json:"limit"`
+	Offset int             `json:"offset"`
+}
+
 type ErrorResponse struct {
 	Type     string `json:"type"`
 	Title    string `json:"title"`

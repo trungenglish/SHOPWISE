@@ -114,3 +114,50 @@ func TestRepositoryCreateRollsBackOrderWhenAnItemFails(t *testing.T) {
 		t.Fatalf("order count after rollback = %d, want 0", orderCount)
 	}
 }
+
+func TestRepositoryListByCustomerReturnsNewestOrdersWithItems(t *testing.T) {
+	database, cleanup := integration.SetupIntegrationDB(t)
+	defer cleanup()
+
+	repository := orderpostgres.NewRepository(database)
+	customerID := uuid.New()
+	older := integrationOrder(customerID, time.Now().UTC().Add(-time.Hour))
+	newer := integrationOrder(customerID, time.Now().UTC())
+	otherCustomer := integrationOrder(uuid.New(), time.Now().UTC().Add(time.Hour))
+	for _, order := range []*domain.Order{older, newer, otherCustomer} {
+		if err := repository.Create(context.Background(), order); err != nil {
+			t.Fatalf("Create() error = %v", err)
+		}
+	}
+
+	orders, err := repository.ListByCustomer(context.Background(), customerID, 20, 0)
+	if err != nil {
+		t.Fatalf("ListByCustomer() error = %v", err)
+	}
+	if len(orders) != 2 {
+		t.Fatalf("len(orders) = %d, want 2", len(orders))
+	}
+	if orders[0].ID != newer.ID || orders[1].ID != older.ID {
+		t.Fatalf("order IDs = %s/%s, want newest first", orders[0].ID, orders[1].ID)
+	}
+	if len(orders[0].Items) != 1 {
+		t.Fatalf("len(newest.Items) = %d, want 1", len(orders[0].Items))
+	}
+}
+
+func integrationOrder(customerID uuid.UUID, createdAt time.Time) *domain.Order {
+	return &domain.Order{
+		ID:                uuid.New(),
+		CustomerID:        customerID,
+		CustomerName:      "Nguyen Van A",
+		CustomerEmail:     "customer@example.com",
+		CustomerPhone:     "0912345678",
+		FulfillmentMethod: domain.FulfillmentStorePickup,
+		SubtotalAmount:    100,
+		TaxAmount:         8,
+		TotalAmount:       108,
+		Status:            domain.StatusPending,
+		CreatedAt:         createdAt,
+		Items:             []domain.Item{{ProductID: uuid.New(), Quantity: 1, UnitPrice: 100}},
+	}
+}

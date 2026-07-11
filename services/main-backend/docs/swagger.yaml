@@ -88,6 +88,17 @@ definitions:
       unit_price:
         type: integer
     type: object
+  handler.OrderListResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/handler.OrderResponse'
+        type: array
+      limit:
+        type: integer
+      offset:
+        type: integer
+    type: object
   handler.OrderResponse:
     properties:
       coupon_code:
@@ -547,6 +558,53 @@ paths:
       summary: Verify email with token
       tags:
       - identity
+  /orders:
+    get:
+      parameters:
+      - description: Customer ID (required only in debug auth bypass)
+        format: uuid
+        in: query
+        name: customer_id
+        type: string
+      - default: 20
+        description: Page size
+        in: query
+        maximum: 100
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.OrderListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List customer orders
+      tags:
+      - orders
   /users:
     get:
       parameters:

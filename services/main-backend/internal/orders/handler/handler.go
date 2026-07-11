@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 
 	"shopwise/retail/internal/orders/usecase"
 	"shopwise/retail/internal/platform/apperror"
@@ -89,6 +90,86 @@ func (handler *Handler) Create(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, toOrderResponse(order))
 }
 
+// List godoc
+//
+//	@Summary	List customer orders
+//	@Tags		orders
+//	@Produce	json
+//	@Security	BearerAuth
+//	@Param		customer_id	query		string	false	"Customer ID (required only in debug auth bypass)"	format(uuid)
+//	@Param		limit		query		int		false	"Page size"											default(20)	maximum(100)
+//	@Param		offset		query		int		false	"Offset"											default(0)
+//	@Success	200			{object}	OrderListResponse
+//	@Failure	400			{object}	ErrorResponse
+//	@Failure	401			{object}	ErrorResponse
+//	@Failure	403			{object}	ErrorResponse
+//	@Failure	500			{object}	ErrorResponse
+//	@Router		/orders [get]
+func (handler *Handler) List(ctx *gin.Context) {
+	authenticatedCustomerID, authenticated := middleware.UserID(ctx)
+	if !authenticated && !handler.developmentAuthBypass {
+		_ = ctx.Error(apperror.Unauthorized("authenticated user is required", nil))
+		return
+	}
+
+	requestedCustomerID := authenticatedCustomerID
+	customerIDQuery := ctx.Query("customer_id")
+	if customerIDQuery != "" {
+		customerID, err := uuid.Parse(customerIDQuery)
+		if err != nil {
+			_ = ctx.Error(apperror.Validation("customer_id must be a valid UUID", err))
+			return
+		}
+		requestedCustomerID = customerID
+	} else if !authenticated {
+		_ = ctx.Error(apperror.Validation("customer_id is required when checkout auth bypass is enabled", nil))
+		return
+	}
+	if !authenticated {
+		authenticatedCustomerID = requestedCustomerID
+	}
+
+	limit, err := parseIntegerQuery(ctx, "limit", 20)
+	if err != nil {
+		_ = ctx.Error(err)
+		return
+	}
+	offset, err := parseIntegerQuery(ctx, "offset", 0)
+	if err != nil {
+		_ = ctx.Error(err)
+		return
+	}
+
+	result, err := handler.service.List(ctx.Request.Context(), usecase.ListInput{
+		AuthenticatedCustomerID: authenticatedCustomerID,
+		CustomerID:              requestedCustomerID,
+		Limit:                   limit,
+		Offset:                  offset,
+	})
+	if err != nil {
+		_ = ctx.Error(err)
+		return
+	}
+
+	items := make([]OrderResponse, 0, len(result.Orders))
+	for index := range result.Orders {
+		items = append(items, toOrderResponse(&result.Orders[index]))
+	}
+	ctx.JSON(http.StatusOK, OrderListResponse{Items: items, Limit: result.Limit, Offset: result.Offset})
+}
+
+func parseIntegerQuery(ctx *gin.Context, name string, defaultValue int) (int, error) {
+	value := ctx.Query(name)
+	if value == "" {
+		return defaultValue, nil
+	}
+	parsed, err := strconv.Atoi(value)
+	if err != nil {
+		return 0, apperror.Validation(name+" must be an integer", err)
+	}
+	return parsed, nil
+}
+
 func decodeCheckoutRequest(ctx *gin.Context, request *CheckoutRequest) error {
 	decoder := json.NewDecoder(ctx.Request.Body)
 	decoder.DisallowUnknownFields()
@@ -112,4 +193,11 @@ func RegisterRoutes(group *gin.RouterGroup, handler *Handler, verifier middlewar
 		group.Use(middleware.Auth(verifier))
 	}
 	group.POST("", handler.Create)
+}
+
+func RegisterListRoutes(group *gin.RouterGroup, handler *Handler, verifier middleware.TokenVerifier) {
+	if !handler.developmentAuthBypass {
+		group.Use(middleware.Auth(verifier))
+	}
+	group.GET("", handler.List)
 }
