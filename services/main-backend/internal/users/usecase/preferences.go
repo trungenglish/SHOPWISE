@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"errors"
+	"regexp"
 	"slices"
 	"strings"
 
@@ -15,9 +16,11 @@ import (
 var validBudget = []string{domain.BudgetLow, domain.BudgetMedium, domain.BudgetHigh}
 var validBrand = []string{domain.BrandLoyal, domain.BrandFlexible, domain.BrandAgnostic}
 var validCategories = []string{"laptop", "monitor"}
+var phonePattern = regexp.MustCompile(`^\+?[0-9]{8,15}$`)
 
 type UpdateProfileInput struct {
 	Name                *string
+	Phone               *string
 	BudgetSensitivity   *string
 	PreferredCategories *[]string
 	BrandOpenness       *string
@@ -56,6 +59,19 @@ func (s *Service) UpdateProfile(ctx context.Context, userID uuid.UUID, input Upd
 			return nil, apperror.Internal("failed to update profile", err)
 		}
 		profile.Name = name
+	}
+	if input.Phone != nil {
+		phone := strings.TrimSpace(*input.Phone)
+		if !phonePattern.MatchString(phone) {
+			return nil, apperror.Validation("phone must contain 8 to 15 digits with an optional leading plus", nil)
+		}
+		profile.Phone = phone
+		if err := s.repo.Update(ctx, &profile.User); err != nil {
+			if errors.Is(err, domain.ErrNotFound) {
+				return nil, apperror.NotFound("user not found", err)
+			}
+			return nil, apperror.Internal("failed to update profile phone", err)
+		}
 	}
 
 	prefs := profile.Preferences

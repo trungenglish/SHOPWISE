@@ -23,12 +23,14 @@ type MeResponse struct {
 	ID              string                  `json:"id"`
 	Email           string                  `json:"email"`
 	Name            string                  `json:"name"`
+	Phone           string                  `json:"phone"`
 	EmailVerifiedAt *time.Time              `json:"emailVerifiedAt"`
 	Preferences     UserPreferencesResponse `json:"preferences"`
 }
 
 type UpdateMeRequest struct {
 	Name                *string   `json:"name,omitempty"`
+	Phone               *string   `json:"phone,omitempty"`
 	BudgetSensitivity   *string   `json:"budgetSensitivity,omitempty"`
 	PreferredCategories *[]string `json:"preferredCategories,omitempty"`
 	BrandOpenness       *string   `json:"brandOpenness,omitempty"`
@@ -82,6 +84,7 @@ func (h *Handler) PatchMe(c *gin.Context) {
 	}
 	profile, err := h.svc.UpdateProfile(c.Request.Context(), userID, usecase.UpdateProfileInput{
 		Name:                req.Name,
+		Phone:               req.Phone,
 		BudgetSensitivity:   req.BudgetSensitivity,
 		PreferredCategories: req.PreferredCategories,
 		BrandOpenness:       req.BrandOpenness,
@@ -99,6 +102,7 @@ func toMeResponse(profile *domain.UserProfile) MeResponse {
 		ID:              profile.ID.String(),
 		Email:           profile.Email,
 		Name:            profile.Name,
+		Phone:           profile.Phone,
 		EmailVerifiedAt: profile.EmailVerifiedAt,
 		Preferences: UserPreferencesResponse{
 			BudgetSensitivity:   profile.Preferences.BudgetSensitivity,

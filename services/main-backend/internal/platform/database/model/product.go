@@ -11,11 +11,11 @@ type Product struct {
 	Name           string         `gorm:"type:varchar(255);not null"`
 	Brand          string         `gorm:"type:varchar(100);index"`
 	Category       string         `gorm:"type:varchar(100);index"`
-	Price          float64        `gorm:"type:decimal(10,2);index"`
+	Price          int64          `gorm:"type:bigint;index;not null;check:price >= 0"`
 	Specifications datatypes.JSON `gorm:"type:jsonb"`
 	Metadata       datatypes.JSON `gorm:"type:jsonb"`
 
-	Inventory      *Inventory     `gorm:"foreignKey:ProductID"`
+	Inventory *Inventory `gorm:"foreignKey:ProductID"`
 }
 
 type Inventory struct {

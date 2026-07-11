@@ -37,6 +37,9 @@ func Connect(databaseURL string, ginMode string) (*gorm.DB, error) {
 	if err := db.Exec("CREATE EXTENSION IF NOT EXISTS vector;").Error; err != nil {
 		return nil, fmt.Errorf("create vector extension: %w", err)
 	}
+	if err := migrateCommerceMoney(db); err != nil {
+		return nil, err
+	}
 
 	if err := db.AutoMigrate(
 		&model.AppMetadata{},
@@ -45,7 +48,6 @@ func Connect(databaseURL string, ginMode string) (*gorm.DB, error) {
 		&model.Product{},
 		&model.Inventory{},
 		&model.Promotion{},
-		&model.Order{},
 		&model.KnowledgeBase{},
 		&model.ProductInsight{},
 	); err != nil {

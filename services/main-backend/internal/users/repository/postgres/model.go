@@ -11,6 +11,7 @@ type UserModel struct {
 	ID              uuid.UUID  `gorm:"type:uuid;primaryKey"`
 	Email           string     `gorm:"size:255;uniqueIndex;not null"`
 	Name            string     `gorm:"size:255;not null"`
+	Phone           string     `gorm:"size:32;not null;default:''"`
 	EmailVerifiedAt *time.Time `gorm:"type:timestamptz"`
 	PasswordHash    *string    `gorm:"size:255"`
 	CreatedAt       time.Time

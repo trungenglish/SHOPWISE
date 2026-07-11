@@ -23,7 +23,7 @@ export function GetStartedFlow() {
 
   return (
     <div className="bg-background flex min-h-svh flex-col items-center justify-start pt-12 md:justify-center md:p-10 p-6">
-      <div className="w-full max-w-sm md:max-w-md">
+      <div className="w-full max-w-sm md:max-w-[480px]">
         {flowState === "choice" && (
           <AccountStatusStep onSelect={setFlowState} />
         )}

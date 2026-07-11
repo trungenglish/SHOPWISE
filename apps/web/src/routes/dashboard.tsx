@@ -11,6 +11,7 @@ import ReasoningModal from "@/features/dashboard/components/ReasoningModal";
 import RetailModal from "@/features/dashboard/components/RetailModal";
 import CheckoutModal from "@/features/dashboard/components/CheckoutModal";
 import PriceAlertModal from "@/features/dashboard/components/PriceAlertModal";
+import { OrderHistoryPage } from "@/features/orders/components/OrderHistoryPage";
 import {
   Laptop,
   AuditLog,
@@ -428,6 +429,8 @@ function DashboardPage() {
               </div>
             )}
           </div>
+        ) : activeTab === "orders" ? (
+          <OrderHistoryPage onContinueShopping={() => setActiveTab("sessions")} />
         ) : (
           /* MAIN SPATIAL DECISION OS WORKSPACE */
           <>

@@ -67,6 +67,7 @@ func (r *Repository) Update(ctx context.Context, user *domain.User) error {
 		Updates(map[string]any{
 			"email": model.Email,
 			"name":  model.Name,
+			"phone": model.Phone,
 		})
 	if result.Error != nil {
 		if isDuplicateKey(result.Error) {
@@ -96,6 +97,7 @@ func toModel(user *domain.User) *UserModel {
 		ID:              user.ID,
 		Email:           user.Email,
 		Name:            user.Name,
+		Phone:           user.Phone,
 		EmailVerifiedAt: user.EmailVerifiedAt,
 		CreatedAt:       user.CreatedAt,
 		UpdatedAt:       user.UpdatedAt,
@@ -107,6 +109,7 @@ func toDomain(model *UserModel) *domain.User {
 		ID:              model.ID,
 		Email:           model.Email,
 		Name:            model.Name,
+		Phone:           model.Phone,
 		EmailVerifiedAt: model.EmailVerifiedAt,
 		CreatedAt:       model.CreatedAt,
 		UpdatedAt:       model.UpdatedAt,

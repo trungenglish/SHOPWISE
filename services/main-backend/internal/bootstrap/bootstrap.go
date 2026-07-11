@@ -19,6 +19,9 @@ import (
 	identityhandler "shopwise/retail/internal/identity/handler"
 	identitypostgres "shopwise/retail/internal/identity/repository/postgres"
 	identityusecase "shopwise/retail/internal/identity/usecase"
+	ordershandler "shopwise/retail/internal/orders/handler"
+	orderspostgres "shopwise/retail/internal/orders/repository/postgres"
+	ordersusecase "shopwise/retail/internal/orders/usecase"
 	"shopwise/retail/internal/platform/cache"
 	"shopwise/retail/internal/platform/config"
 	"shopwise/retail/internal/platform/database"
@@ -60,6 +63,7 @@ func Run() error {
 
 	userRepo := userpostgres.NewRepository(db)
 	identityRepo := identitypostgres.NewRepository(db)
+	orderRepo := orderspostgres.NewRepository(db)
 
 	jwtSvc := identityusecase.NewJWTService(cfg.JWTSecret, cfg.JWTAccessTTL)
 	googleSvc := identityusecase.NewGoogleOAuthService(cfg)
@@ -97,6 +101,7 @@ func Run() error {
 		Storage:  fileStorage,
 	})
 	userH := usershandler.NewHandler(userSvc)
+	orderH := ordershandler.NewHandler(ordersusecase.NewService(orderRepo, orderRepo, orderRepo, orderRepo))
 
 	healthH := health.NewHandler(db, redisClient)
 	filesH := fileshandler.NewHandler(filesusecase.NewService())
@@ -111,14 +116,15 @@ func Run() error {
 	engine.GET("/health", healthH.Health)
 
 	v1 := engine.Group("/api/v1")
-	
+
 	identityGroup := v1.Group("/identity")
 	identityhandler.RegisterRoutes(identityGroup, identityH)
 	identityhandler.RegisterGoogleRoutes(identityGroup, identityH, cfg.WebAppURL)
-	
+
 	usershandler.RegisterRoutes(v1.Group("/users"), userH, jwtSvc)
+	ordershandler.RegisterRoutes(v1.Group("/checkout"), orderH, jwtSvc)
 	fileshandler.RegisterRoutes(v1.Group("/files"), filesH)
-	
+
 	adminGroup := v1.Group("/admin")
 	adminGroup.Use(guestRateLimit)
 	adminhandler.RegisterRoutes(adminGroup, adminH)
@@ -192,6 +198,11 @@ func Migrate() error {
 	log.Info("running identity migrations")
 	if err := identitypostgres.Migrate(db); err != nil {
 		return fmt.Errorf("failed to migrate identity: %w", err)
+	}
+
+	log.Info("running order migrations")
+	if err := orderspostgres.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate orders: %w", err)
 	}
 
 	log.Info("migrations completed successfully")
