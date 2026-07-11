@@ -41,7 +41,6 @@ const RootComponent = () => {
           </>
         )}
       </ThemeProvider>
-      <TanStackRouterDevtools position="bottom-left" />
     </TooltipProvider>
   );
 };
