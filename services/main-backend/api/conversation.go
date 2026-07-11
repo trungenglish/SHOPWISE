@@ -49,4 +49,3 @@ func (api *ConversationAPI) SendMessage(c *gin.Context) {
 		},
 	})
 }
-

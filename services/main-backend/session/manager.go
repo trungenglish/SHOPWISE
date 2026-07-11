@@ -63,4 +63,3 @@ func (m *Manager) UpdateSession(id string, fn func(*CustomerSession)) error {
 	}
 	return ErrSessionNotFound
 }
-

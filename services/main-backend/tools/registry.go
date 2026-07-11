@@ -35,4 +35,3 @@ func (r *Registry) Execute(ctx context.Context, name string, args map[string]int
 	}
 	return handler(ctx, args)
 }
-

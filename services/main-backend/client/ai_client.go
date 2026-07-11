@@ -12,4 +12,3 @@ func (c *AIClient) SendMessage(sessionID, message string) error {
 	// TODO: Send HTTP POST to AI Runtime
 	return nil
 }
-

@@ -22,6 +22,9 @@ import (
 	ordershandler "shopwise/retail/internal/orders/handler"
 	orderspostgres "shopwise/retail/internal/orders/repository/postgres"
 	ordersusecase "shopwise/retail/internal/orders/usecase"
+	decisionmemoryhandler "shopwise/retail/internal/decision_memory/handler"
+	decisionmemorypostgres "shopwise/retail/internal/decision_memory/repository/postgres"
+	decisionmemoryusecase "shopwise/retail/internal/decision_memory/usecase"
 	"shopwise/retail/internal/platform/cache"
 	"shopwise/retail/internal/platform/config"
 	"shopwise/retail/internal/platform/database"
@@ -64,6 +67,7 @@ func Run() error {
 	userRepo := userpostgres.NewRepository(db)
 	identityRepo := identitypostgres.NewRepository(db)
 	orderRepo := orderspostgres.NewRepository(db)
+	decisionRepo := decisionmemorypostgres.NewRepository(db)
 
 	jwtSvc := identityusecase.NewJWTService(cfg.JWTSecret, cfg.JWTAccessTTL)
 	googleSvc := identityusecase.NewGoogleOAuthService(cfg)
@@ -109,6 +113,9 @@ func Run() error {
 	healthH := health.NewHandler(db, redisClient)
 	filesH := fileshandler.NewHandler(filesusecase.NewService())
 	adminH := adminhandler.NewHandler(adminusecase.NewService(log))
+	
+	decisionSvc := decisionmemoryusecase.NewService(decisionRepo)
+	decisionH := decisionmemoryhandler.NewHandler(decisionSvc)
 
 	engine := router.New(router.Dependencies{
 		Config: cfg,
@@ -126,7 +133,9 @@ func Run() error {
 
 	usershandler.RegisterRoutes(v1.Group("/users"), userH, jwtSvc)
 	ordershandler.RegisterRoutes(v1.Group("/checkout"), orderH, jwtSvc)
+	ordershandler.RegisterListRoutes(v1.Group("/orders"), orderH, jwtSvc)
 	fileshandler.RegisterRoutes(v1.Group("/files"), filesH)
+	decisionmemoryhandler.RegisterRoutes(v1.Group("/sessions"), decisionH, jwtSvc)
 
 	adminGroup := v1.Group("/admin")
 	adminGroup.Use(guestRateLimit)
@@ -206,6 +215,11 @@ func Migrate() error {
 	log.Info("running order migrations")
 	if err := orderspostgres.Migrate(db); err != nil {
 		return fmt.Errorf("failed to migrate orders: %w", err)
+	}
+
+	log.Info("running decision memory migrations")
+	if err := decisionmemorypostgres.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate decision memory: %w", err)
 	}
 
 	log.Info("migrations completed successfully")

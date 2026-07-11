@@ -15,14 +15,19 @@ import (
 )
 
 type checkoutRepositoryStub struct {
-	customer     *domain.CustomerSnapshot
-	products     map[uuid.UUID]domain.ProductQuote
-	promotion    *domain.Promotion
-	customerErr  error
-	productsErr  error
-	promotionErr error
-	createErr    error
-	persisted    *domain.Order
+	customer         *domain.CustomerSnapshot
+	products         map[uuid.UUID]domain.ProductQuote
+	promotion        *domain.Promotion
+	customerErr      error
+	productsErr      error
+	promotionErr     error
+	createErr        error
+	persisted        *domain.Order
+	listed           []domain.Order
+	listErr          error
+	listedCustomerID uuid.UUID
+	listedLimit      int
+	listedOffset     int
 }
 
 func (stub *checkoutRepositoryStub) Create(_ context.Context, order *domain.Order) error {
@@ -33,6 +38,17 @@ func (stub *checkoutRepositoryStub) Create(_ context.Context, order *domain.Orde
 	copyOrder.Items = append([]domain.Item(nil), order.Items...)
 	stub.persisted = &copyOrder
 	return nil
+}
+
+func (stub *checkoutRepositoryStub) ListByCustomer(
+	_ context.Context,
+	customerID uuid.UUID,
+	limit, offset int,
+) ([]domain.Order, error) {
+	stub.listedCustomerID = customerID
+	stub.listedLimit = limit
+	stub.listedOffset = offset
+	return stub.listed, stub.listErr
 }
 
 func (stub *checkoutRepositoryStub) GetCustomer(context.Context, uuid.UUID) (*domain.CustomerSnapshot, error) {
@@ -348,6 +364,55 @@ func TestCreateMapsRepositoryFailureToInternalError(t *testing.T) {
 	repository.createErr = errors.New("database unavailable")
 
 	_, err := newService(repository).Create(context.Background(), validInput(customerID, productID))
+	assertAppErrorCode(t, err, "INTERNAL_ERROR")
+}
+
+func TestListReturnsCustomerOrdersWithNormalizedPagination(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	repository := &checkoutRepositoryStub{listed: []domain.Order{{ID: uuid.New(), CustomerID: customerID}}}
+	service := newService(repository)
+
+	result, err := service.List(context.Background(), usecase.ListInput{
+		AuthenticatedCustomerID: customerID,
+		CustomerID:              customerID,
+		Limit:                   500,
+		Offset:                  -10,
+	})
+	if err != nil {
+		t.Fatalf("List() error = %v", err)
+	}
+	if len(result.Orders) != 1 || result.Limit != 100 || result.Offset != 0 {
+		t.Fatalf("result orders/limit/offset = %d/%d/%d", len(result.Orders), result.Limit, result.Offset)
+	}
+	if repository.listedCustomerID != customerID || repository.listedLimit != 100 || repository.listedOffset != 0 {
+		t.Fatalf("repository args = %s/%d/%d", repository.listedCustomerID, repository.listedLimit, repository.listedOffset)
+	}
+}
+
+func TestListRejectsCustomerMismatch(t *testing.T) {
+	t.Parallel()
+
+	repository := &checkoutRepositoryStub{}
+	_, err := newService(repository).List(context.Background(), usecase.ListInput{
+		AuthenticatedCustomerID: uuid.New(),
+		CustomerID:              uuid.New(),
+		Limit:                   20,
+	})
+	assertAppErrorCode(t, err, "FORBIDDEN")
+}
+
+func TestListMapsRepositoryFailure(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	repository := &checkoutRepositoryStub{listErr: errors.New("database unavailable")}
+	_, err := newService(repository).List(context.Background(), usecase.ListInput{
+		AuthenticatedCustomerID: customerID,
+		CustomerID:              customerID,
+		Limit:                   20,
+	})
 	assertAppErrorCode(t, err, "INTERNAL_ERROR")
 }
 

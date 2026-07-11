@@ -29,4 +29,3 @@ func (api *CompareAPI) Compare(c *gin.Context) {
 	results := api.provider.GetProducts(req.ProductIDs)
 	c.JSON(http.StatusOK, gin.H{"success": true, "data": results})
 }
-

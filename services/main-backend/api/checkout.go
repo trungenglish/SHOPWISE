@@ -26,7 +26,7 @@ func (api *CheckoutAPI) Prepare(c *gin.Context) {
 
 	// Mock checkout response
 	checkoutID := fmt.Sprintf("chk_%d", len(req.Items))
-	
+
 	data := map[string]interface{}{
 		"checkoutId": checkoutID,
 		"items":      req.Items,
@@ -36,4 +36,3 @@ func (api *CheckoutAPI) Prepare(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"success": true, "data": data})
 }
-
