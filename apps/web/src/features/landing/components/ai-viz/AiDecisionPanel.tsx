@@ -149,13 +149,11 @@ export function AiDecisionPanel() {
         {products.map((p) => (
           <div
             key={p.name}
-            className="gsap-vendor-row flex flex-col space-y-2 border-b border-border/10 pb-4 last:border-0 last:pb-0"
+            className="gsap-vendor-row border-border/10 flex flex-col space-y-2 border-b pb-4 last:border-0 last:pb-0"
           >
             {/* Header: Name and Score */}
             <div className="flex items-center justify-between text-xs">
-              <span className="text-foreground font-semibold">
-                {p.name}
-              </span>
+              <span className="text-foreground font-semibold">{p.name}</span>
               <span className="text-muted-foreground font-mono font-semibold">
                 {p.score}
               </span>
@@ -170,22 +168,20 @@ export function AiDecisionPanel() {
             </div>
 
             {/* Sub-row: Metadata (Matches, Stock, Promo) */}
-            <div className="gsap-vendor-meta flex items-center justify-between text-[10px] text-muted-foreground/80">
+            <div className="gsap-vendor-meta text-muted-foreground/80 flex items-center justify-between text-[10px]">
               <span className="flex items-center gap-1">
-                <CheckSquare className="h-3 w-3 text-indigo-400 shrink-0" />
+                <CheckSquare className="h-3 w-3 shrink-0 text-indigo-400" />
                 {p.matches}
               </span>
               <span className="flex items-center gap-1">
                 {p.hasAlert ? (
-                  <ShieldAlert className="h-3 w-3 text-amber-400 shrink-0" />
+                  <ShieldAlert className="h-3 w-3 shrink-0 text-amber-400" />
                 ) : (
-                  <ShieldCheck className="h-3 w-3 text-emerald-400 shrink-0" />
+                  <ShieldCheck className="h-3 w-3 shrink-0 text-emerald-400" />
                 )}
                 {p.stock}
               </span>
-              <span className={`font-semibold ${p.promoColor}`}>
-                {p.promo}
-              </span>
+              <span className={`font-semibold ${p.promoColor}`}>{p.promo}</span>
             </div>
           </div>
         ))}

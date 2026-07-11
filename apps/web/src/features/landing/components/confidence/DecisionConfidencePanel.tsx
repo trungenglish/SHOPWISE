@@ -28,12 +28,11 @@ export function DecisionConfidencePanel() {
         y: 20,
         duration: 0.6,
         ease: "power2.out",
-      })
-        .from(
-          ".gsap-rec-item",
-          { opacity: 0, y: 10, stagger: 0.1, duration: 0.4 },
-          "-=0.3"
-        );
+      }).from(
+        ".gsap-rec-item",
+        { opacity: 0, y: 10, stagger: 0.1, duration: 0.4 },
+        "-=0.3"
+      );
     },
     { scope: panelRef }
   );
@@ -51,39 +50,39 @@ export function DecisionConfidencePanel() {
     <div
       ref={panelRef}
       aria-hidden="true"
-      className="gsap-rec-card relative w-full max-w-md rounded-xl border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] p-6 shadow-2xl backdrop-blur-md text-left select-none"
+      className="gsap-rec-card relative w-full max-w-md rounded-xl border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] p-6 text-left shadow-2xl backdrop-blur-md select-none"
     >
       {/* Decorative background glow behind the panel */}
       <div className="pointer-events-none absolute -inset-2 -z-10 rounded-2xl bg-gradient-to-r from-[var(--landing-gradient-accent)]/10 to-indigo-500/10 opacity-50 blur-xl" />
 
       {/* Section 1: Customer Request */}
-      <div className="gsap-rec-item mb-5 border-b border-border/10 pb-4">
-        <span className="text-muted-foreground/60 font-heading text-[9px] font-bold tracking-wider uppercase block mb-2.5">
+      <div className="gsap-rec-item border-border/10 mb-5 border-b pb-4">
+        <span className="text-muted-foreground/60 font-heading mb-2.5 block text-[9px] font-bold tracking-wider uppercase">
           Customer Request
         </span>
         <div className="flex flex-wrap gap-2">
-          <span className="rounded-full border border-border/10 bg-muted/5 px-2.5 py-1 text-[11px] font-medium text-foreground">
+          <span className="border-border/10 bg-muted/5 text-foreground rounded-full border px-2.5 py-1 text-[11px] font-medium">
             Gaming laptop
           </span>
           <span className="rounded-full border border-blue-500/20 bg-blue-500/10 px-2.5 py-1 text-[11px] font-medium text-blue-400">
             RTX 4060
           </span>
-          <span className="rounded-full border border-border/10 bg-muted/5 px-2.5 py-1 text-[11px] font-medium text-foreground">
+          <span className="border-border/10 bg-muted/5 text-foreground rounded-full border px-2.5 py-1 text-[11px] font-medium">
             Under 30M VND
           </span>
         </div>
       </div>
 
       {/* Section 2: Recommended Product */}
-      <div className="gsap-rec-item mb-5 border-b border-border/10 pb-4">
-        <span className="text-muted-foreground/60 font-heading text-[9px] font-bold tracking-wider uppercase block mb-1.5">
+      <div className="gsap-rec-item border-border/10 mb-5 border-b pb-4">
+        <span className="text-muted-foreground/60 font-heading mb-1.5 block text-[9px] font-bold tracking-wider uppercase">
           Recommended Product
         </span>
         <div className="flex items-center justify-between">
           <h4 className="text-foreground text-lg font-black tracking-tight">
             Lenovo LOQ 15IRX9
           </h4>
-          <span className="rounded bg-[var(--landing-gradient-accent)]/10 px-2 py-0.5 text-[10px] font-extrabold text-[var(--landing-gradient-accent)] border border-[var(--landing-gradient-accent)]/20 animate-pulse">
+          <span className="animate-pulse rounded border border-[var(--landing-gradient-accent)]/20 bg-[var(--landing-gradient-accent)]/10 px-2 py-0.5 text-[10px] font-extrabold text-[var(--landing-gradient-accent)]">
             Best Match
           </span>
         </div>
@@ -91,7 +90,7 @@ export function DecisionConfidencePanel() {
 
       {/* Section 3: Why this recommendation */}
       <div className="gsap-rec-item mb-6">
-        <span className="text-muted-foreground/60 font-heading text-[9px] font-bold tracking-wider uppercase block mb-3">
+        <span className="text-muted-foreground/60 font-heading mb-3 block text-[9px] font-bold tracking-wider uppercase">
           Why this recommendation
         </span>
         <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
@@ -111,7 +110,7 @@ export function DecisionConfidencePanel() {
         <button
           type="button"
           tabIndex={-1}
-          className="w-full rounded-lg bg-[var(--landing-gradient-accent)] hover:opacity-90 py-2.5 text-center text-xs font-bold text-background transition-opacity flex items-center justify-center gap-1.5 cursor-default"
+          className="text-background flex w-full cursor-default items-center justify-center gap-1.5 rounded-lg bg-[var(--landing-gradient-accent)] py-2.5 text-center text-xs font-bold transition-opacity hover:opacity-90"
         >
           View Details
           <ArrowRight className="h-3.5 w-3.5" />
@@ -119,7 +118,7 @@ export function DecisionConfidencePanel() {
         <button
           type="button"
           tabIndex={-1}
-          className="w-full rounded-lg border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] hover:bg-muted/10 py-2.5 text-center text-xs font-semibold text-foreground transition-colors flex items-center justify-center gap-1.5 cursor-default"
+          className="hover:bg-muted/10 text-foreground flex w-full cursor-default items-center justify-center gap-1.5 rounded-lg border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] py-2.5 text-center text-xs font-semibold transition-colors"
         >
           <Info className="h-3.5 w-3.5" />
           Compare Similar Products

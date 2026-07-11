@@ -1,5 +1,11 @@
 import { useRef } from "react";
-import { AlertCircle, CheckCircle2, Search, MessageSquare, ShieldAlert } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Search,
+  MessageSquare,
+  ShieldAlert,
+} from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
 import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
@@ -64,7 +70,8 @@ export function ProblemStatementSection() {
             The Product Discovery Problem
           </h2>
           <p className="text-muted-foreground mt-4 text-base sm:text-lg">
-            Online shoppers face overwhelming options and stale inventory. AI Sales Agent bridges the gap between searching and purchasing.
+            Online shoppers face overwhelming options and stale inventory. AI
+            Sales Agent bridges the gap between searching and purchasing.
           </p>
         </div>
 
@@ -80,16 +87,20 @@ export function ProblemStatementSection() {
               id="legacy-title"
               className="font-heading text-muted-foreground/80 flex items-center gap-2 text-lg font-bold sm:text-xl"
             >
-              <AlertCircle className="h-5 w-5 text-muted-foreground/60" />
+              <AlertCircle className="text-muted-foreground/60 h-5 w-5" />
               How customers buy today
             </h3>
             <p className="text-muted-foreground/60 mt-2 text-sm">
-              The legacy search and browse process leads to shopper fatigue and dropped carts.
+              The legacy search and browse process leads to shopper fatigue and
+              dropped carts.
             </p>
             <ul className="mt-6 flex-grow space-y-4">
               {painPoints.map((pain, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-muted-foreground/70">
-                  <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/30" />
+                <li
+                  key={idx}
+                  className="text-muted-foreground/70 flex items-start gap-3 text-sm"
+                >
+                  <span className="bg-muted-foreground/30 mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full" />
                   <span>{pain}</span>
                 </li>
               ))}
@@ -112,11 +123,15 @@ export function ProblemStatementSection() {
               How ShopWise works
             </h3>
             <p className="text-muted-foreground mt-2 text-sm">
-              A conversational sales assistant that converts queries into e-commerce checkouts.
+              A conversational sales assistant that converts queries into
+              e-commerce checkouts.
             </p>
             <ul className="mt-6 flex-grow space-y-4">
               {outcomes.map((outcome, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-foreground/90">
+                <li
+                  key={idx}
+                  className="text-foreground/90 flex items-start gap-3 text-sm"
+                >
                   <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--landing-gradient-accent)]" />
                   <span>{outcome}</span>
                 </li>
@@ -136,9 +151,24 @@ export function ProblemStatementSection() {
             </div>
             <div className="lg:col-span-8">
               <p className="text-muted-foreground text-sm leading-relaxed">
-                ShopWise is <strong className="text-foreground">not another search engine</strong>, <strong className="text-foreground">not a generic chatbot</strong>, and <strong className="text-foreground">not a procurement marketplace</strong>. It is an AI Sales Agent — a persistent, conversational commerce environment that maintains shopping context, product specifications, inventory state, and cart history across the entire customer journey.
+                ShopWise is{" "}
+                <strong className="text-foreground">
+                  not another search engine
+                </strong>
+                ,{" "}
+                <strong className="text-foreground">
+                  not a generic chatbot
+                </strong>
+                , and{" "}
+                <strong className="text-foreground">
+                  not a procurement marketplace
+                </strong>
+                . It is an AI Sales Agent — a persistent, conversational
+                commerce environment that maintains shopping context, product
+                specifications, inventory state, and cart history across the
+                entire customer journey.
               </p>
-              <div className="mt-4 flex flex-wrap gap-4 text-xs text-muted-foreground/60">
+              <div className="text-muted-foreground/60 mt-4 flex flex-wrap gap-4 text-xs">
                 <span className="flex items-center gap-1">
                   <Search className="h-3 w-3" /> No standard search queries
                 </span>
