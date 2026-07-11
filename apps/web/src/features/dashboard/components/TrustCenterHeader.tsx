@@ -16,7 +16,7 @@ export default function TrustCenterHeader({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="pointer-events-none absolute top-4 right-6 z-50 flex flex-col items-end">
+    <div className="pointer-events-none absolute top-6 right-6 z-50 flex flex-col items-end">
       {/* Header Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}

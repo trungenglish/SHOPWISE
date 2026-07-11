@@ -541,7 +541,7 @@ function DashboardPage() {
       {!isSidebarOpen && (
         <button
           onClick={() => setIsSidebarOpen(true)}
-          className="border-outline-variant/20 bg-surface-high text-on-surface-variant hover:bg-surface-highest hover:text-on-surface absolute top-4 left-4 z-50 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border shadow-lg transition-colors"
+          className="border-outline-variant/20 bg-surface-high text-on-surface-variant hover:bg-surface-highest hover:text-on-surface absolute top-6 left-5 z-50 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border shadow-lg transition-colors"
         >
           <Menu size={20} />
         </button>
@@ -635,6 +635,7 @@ function DashboardPage() {
                 onInjectConstraint={handleQueryEvaluation}
                 isLoading={isSimulating}
                 onReplay={handleReplay}
+                hasMenuButton={!isSidebarOpen}
                 suggestions={
                   conversationStep === "asked_aaa"
                     ? ["Yes", "No (esports/indie)"]
