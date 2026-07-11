@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { checkout } from "../../../api/checkout";
 import {
   X,
   ShoppingBag,
@@ -14,6 +16,7 @@ import {
   Search,
   MapPin
 } from "lucide-react";
+import { toast } from "sonner";
 import { Laptop } from "../types";
 
 import { Button } from "@shopwise/ui/components/button";
@@ -35,6 +38,7 @@ interface CheckoutModalProps {
   onClose: () => void;
   product: Laptop | null;
   discountRate: number; // calculated from connected retail accounts
+  onSuccess?: () => void;
 }
 
 const checkoutSchema = z
@@ -59,7 +63,7 @@ const checkoutSchema = z
   .superRefine((data, ctx) => {
     if (
       data.deliveryMethod === "delivery" &&
-      (!data.address || data.address.trim() === "")
+      (!data.address || data.address.trim().length === 0)
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -69,11 +73,11 @@ const checkoutSchema = z
     }
     if (
       data.deliveryMethod === "pickup" &&
-      (!data.storeId || data.storeId.trim() === "")
+      (!data.storeId || data.storeId.trim().length === 0)
     ) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "Vui lòng chọn một cửa hàng",
+        message: "Vui lòng chọn cửa hàng",
         path: ["storeId"],
       });
     }
@@ -102,41 +106,50 @@ export default function CheckoutModal({
   onClose,
   product,
   discountRate,
+  onSuccess,
 }: CheckoutModalProps) {
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [isSubmittingManual, setIsSubmittingManual] = useState(false);
-  const [storeSearch, setStoreSearch] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredStores = MOCK_STORES.filter(s => 
-    s.name.toLowerCase().includes(storeSearch.toLowerCase()) || 
-    s.address.toLowerCase().includes(storeSearch.toLowerCase())
-  );
+  const queryClient = useQueryClient();
+
+  const checkoutMutation = useMutation({
+    mutationFn: checkout,
+    onSuccess: () => {
+      setPaymentSuccess(true);
+      toast.success("Đặt hàng thành công!");
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+    },
+    onError: (error: Error) => {
+      toast.error(error.message || "Đã xảy ra lỗi khi đặt hàng.");
+    },
+  });
+
+  const isSubmittingManual = checkoutMutation.isPending;
 
   const {
     register,
     handleSubmit,
-    watch,
     control,
+    watch,
     formState: { errors },
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      fullName: "",
-      phoneNumber: "",
-      email: "",
       deliveryMethod: "delivery",
-      address: "",
-      storeId: "",
     },
-    mode: "onTouched",
   });
+
+  const filteredStores = MOCK_STORES.filter(s => 
+    s.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    s.address.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const deliveryMethod = watch("deliveryMethod");
 
-  if (!isOpen) return null;
-  if (!product) return null;
+  if (!isOpen || !product) return null;
 
   const basePrice = product.price;
   const retailDiscount = basePrice * discountRate;
@@ -155,12 +168,26 @@ export default function CheckoutModal({
     }
   };
 
-  const handlePayment = async (data: CheckoutFormData) => {
-    setIsSubmittingManual(true);
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setPaymentSuccess(true);
-    setIsSubmittingManual(false);
+  const handlePayment = (data: CheckoutFormData) => {
+    checkoutMutation.mutate({
+      customer_id: crypto.randomUUID(), // Mocking customer id for now
+      items: [
+        {
+          product_id: product.id.length === 36 ? product.id : crypto.randomUUID(),
+          quantity: 1,
+        },
+      ],
+      fulfillment_method: data.deliveryMethod === "delivery" ? "DELIVERY" : "STORE_PICKUP",
+      shipping_address: data.deliveryMethod === "delivery" ? data.address : undefined,
+      coupon_code: promoApplied ? "SHOPWISE5" : undefined,
+    });
+  };
+
+  const handleCloseSuccess = () => {
+    onClose();
+    if (onSuccess) {
+      onSuccess();
+    }
   };
 
   return (
@@ -208,13 +235,10 @@ export default function CheckoutModal({
                 </p>
               </div>
               <Button
-                onClick={() => {
-                  setPaymentSuccess(false);
-                  onClose();
-                }}
+                onClick={handleCloseSuccess}
                 className="mt-6 px-8"
               >
-                Đóng
+                Xem đơn hàng
               </Button>
             </div>
           ) : (
@@ -344,8 +368,8 @@ export default function CheckoutModal({
                         <Search className="text-on-surface-variant absolute top-1/2 left-3 -translate-y-1/2" size={16} />
                         <Input
                           placeholder="Tìm kiếm cửa hàng theo tên hoặc địa chỉ..."
-                          value={storeSearch}
-                          onChange={(e) => setStoreSearch(e.target.value)}
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
                           className="pl-9"
                           disabled={isSubmittingManual}
                         />

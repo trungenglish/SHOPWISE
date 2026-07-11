@@ -710,6 +710,7 @@ function DashboardPage() {
         onClose={() => setIsCheckoutOpen(false)}
         product={activeProduct}
         discountRate={connectedDiscount}
+        onSuccess={() => setActiveTab("orders")}
       />
 
       <PriceAlertModal

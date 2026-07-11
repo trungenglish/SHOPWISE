@@ -116,6 +116,7 @@ export async function autoSaveSession(id: string, clientTimestamp: string, pinne
     }
     throw new Error('Failed to autosave session');
   }
+  return res.json();
 }
 
 export interface UserPreference {

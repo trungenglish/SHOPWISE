@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { listSessions, DecisionSession, deleteSession, renameSession } from '../api/decisionMemory';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { Button } from '@shopwise/ui/components/button';
+import { Input } from '@shopwise/ui/components/input';
 import { Search, Trash, Edit2, Archive, MessageSquare } from 'lucide-react';
 
 export function SessionHistorySidebar({ onSelectSession }: { onSelectSession: (id: string) => void }) {
@@ -56,7 +56,7 @@ export function SessionHistorySidebar({ onSelectSession }: { onSelectSession: (i
           <Input 
             placeholder="Search sessions..." 
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             className="pl-8"
           />
         </div>
@@ -69,11 +69,11 @@ export function SessionHistorySidebar({ onSelectSession }: { onSelectSession: (i
               <Input
                 autoFocus
                 value={editTitle}
-                onChange={e => setEditTitle(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditTitle(e.target.value)}
                 onBlur={() => handleRename(s.ID)}
-                onKeyDown={e => e.key === 'Enter' && handleRename(s.ID)}
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && handleRename(s.ID)}
                 className="h-7 text-xs"
-                onClick={e => e.stopPropagation()}
+                onClick={(e: React.MouseEvent<HTMLInputElement>) => e.stopPropagation()}
               />
             ) : (
               <div className="flex items-center gap-2 overflow-hidden">
