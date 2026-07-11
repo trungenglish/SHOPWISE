@@ -10,8 +10,7 @@ Accepted
 
 Context
 
-The backend is responsible for business logic, authentication,
-retail integrations and APIs.
+The backend is responsible for business logic, authentication, retail integrations and APIs.
 
 Decision
 
