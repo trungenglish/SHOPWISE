@@ -71,7 +71,8 @@ export function FinalCtaSection() {
         </h2>
 
         <p className="gsap-cta-reveal text-muted-foreground mb-10 max-w-lg text-sm leading-relaxed sm:text-base">
-          Bring conversational AI to your e-commerce platform and help customers discover the right products faster.
+          Bring conversational AI to your e-commerce platform and help customers
+          discover the right products faster.
         </p>
 
         {/* Call to Actions */}

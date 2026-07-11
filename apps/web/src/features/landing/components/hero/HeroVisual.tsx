@@ -17,8 +17,16 @@ export function HeroVisual() {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
 
       tl.from(".gsap-radar", { scale: 0.8, opacity: 0, duration: 0.8 })
-        .from(".gsap-floating-node", { opacity: 0, y: 15, stagger: 0.15, duration: 0.5 }, "-=0.3")
-        .from(".gsap-audit-trail", { opacity: 0, x: 20, duration: 0.6 }, "-=0.4");
+        .from(
+          ".gsap-floating-node",
+          { opacity: 0, y: 15, stagger: 0.15, duration: 0.5 },
+          "-=0.3"
+        )
+        .from(
+          ".gsap-audit-trail",
+          { opacity: 0, x: 20, duration: 0.6 },
+          "-=0.4"
+        );
     },
     { scope: containerRef }
   );
@@ -27,7 +35,7 @@ export function HeroVisual() {
     <div
       ref={containerRef}
       aria-hidden="true"
-      className="relative flex h-[350px] sm:h-[400px] lg:h-[500px] w-full items-center justify-center overflow-hidden"
+      className="relative flex h-[350px] w-full items-center justify-center overflow-hidden sm:h-[400px] lg:h-[500px]"
     >
       <style>{`
         @keyframes float-slow {
@@ -73,8 +81,10 @@ export function HeroVisual() {
         <div className="absolute h-40 w-40 rounded-full border border-blue-500/10" />
 
         {/* Central Core Circle */}
-        <div className="relative z-10 flex h-32 w-32 flex-col items-center justify-center rounded-full border border-blue-500/30 bg-background/80 shadow-2xl backdrop-blur-xs">
-          <span className="text-foreground text-3xl font-extrabold tracking-tight">94%</span>
+        <div className="bg-background/80 relative z-10 flex h-32 w-32 flex-col items-center justify-center rounded-full border border-blue-500/30 shadow-2xl backdrop-blur-xs">
+          <span className="text-foreground text-3xl font-extrabold tracking-tight">
+            94%
+          </span>
           <span className="text-muted-foreground mt-0.5 text-[9px] font-bold tracking-widest uppercase">
             Confidence
           </span>
@@ -85,7 +95,7 @@ export function HeroVisual() {
       </div>
 
       {/* Top Left Node: LAPTOPS Verified */}
-      <div className="gsap-floating-node anim-float absolute top-12 left-6 sm:left-12 z-20 flex items-center space-x-2.5 rounded-full border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] px-3.5 py-2 shadow-lg backdrop-blur-md">
+      <div className="gsap-floating-node anim-float absolute top-12 left-6 z-20 flex items-center space-x-2.5 rounded-full border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] px-3.5 py-2 shadow-lg backdrop-blur-md sm:left-12">
         <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500/10 text-blue-400">
           <Cpu className="h-4 w-4" />
         </div>
@@ -98,7 +108,7 @@ export function HeroVisual() {
       </div>
 
       {/* Top Right Node: LIVE STOCK Verified */}
-      <div className="gsap-floating-node anim-float-delayed absolute top-8 right-6 sm:right-16 z-20 flex items-center space-x-2.5 rounded-full border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] px-3.5 py-2 shadow-lg backdrop-blur-md">
+      <div className="gsap-floating-node anim-float-delayed absolute top-8 right-6 z-20 flex items-center space-x-2.5 rounded-full border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] px-3.5 py-2 shadow-lg backdrop-blur-md sm:right-16">
         <div className="flex h-7 w-7 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">
           <Truck className="h-4 w-4" />
         </div>
@@ -111,30 +121,38 @@ export function HeroVisual() {
       </div>
 
       {/* Bottom Left Card: ASUS TUF A15 */}
-      <div className="gsap-floating-node anim-float-delayed absolute bottom-10 left-6 sm:left-10 z-20 flex w-36 flex-col justify-between rounded-xl border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] p-3.5 shadow-xl backdrop-blur-md">
+      <div className="gsap-floating-node anim-float-delayed absolute bottom-10 left-6 z-20 flex w-36 flex-col justify-between rounded-xl border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] p-3.5 shadow-xl backdrop-blur-md sm:left-10">
         <div className="text-left">
-          <div className="text-foreground text-xs font-bold leading-none">ASUS TUF A15</div>
+          <div className="text-foreground text-xs leading-none font-bold">
+            ASUS TUF A15
+          </div>
           <div className="mt-2 flex items-center gap-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-emerald-400 text-[9px] font-semibold">Optimizing...</span>
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+            <span className="text-[9px] font-semibold text-emerald-400">
+              Optimizing...
+            </span>
           </div>
         </div>
       </div>
 
       {/* Bottom Right Card: Lenovo LOQ */}
-      <div className="gsap-floating-node anim-float absolute bottom-12 right-28 sm:right-36 z-20 flex w-40 flex-col justify-between rounded-xl border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] p-3.5 shadow-xl backdrop-blur-md">
+      <div className="gsap-floating-node anim-float absolute right-28 bottom-12 z-20 flex w-40 flex-col justify-between rounded-xl border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] p-3.5 shadow-xl backdrop-blur-md sm:right-36">
         <div className="text-left">
-          <div className="text-foreground text-xs font-bold leading-none">Lenovo LOQ</div>
+          <div className="text-foreground text-xs leading-none font-bold">
+            Lenovo LOQ
+          </div>
           <div className="mt-2 flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-            <span className="text-blue-400 text-[9px] font-semibold">Priority Match</span>
+            <span className="text-[9px] font-semibold text-blue-400">
+              Priority Match
+            </span>
           </div>
         </div>
       </div>
 
       {/* Floating Right Side Panel: LIVE AUDIT TRAIL */}
-      <div className="gsap-audit-trail absolute right-2 top-24 z-10 hidden w-44 rounded-lg border border-[var(--landing-glass-border)] bg-background/70 p-3.5 shadow-xl backdrop-blur-xs sm:block">
-        <div className="border-b border-border/10 mb-2 pb-1.5 text-left">
+      <div className="gsap-audit-trail bg-background/70 absolute top-24 right-2 z-10 hidden w-44 rounded-lg border border-[var(--landing-glass-border)] p-3.5 shadow-xl backdrop-blur-xs sm:block">
+        <div className="border-border/10 mb-2 border-b pb-1.5 text-left">
           <span className="text-muted-foreground/60 font-heading text-[8px] font-bold tracking-wider uppercase">
             Live Analysis
           </span>
@@ -145,7 +163,9 @@ export function HeroVisual() {
           <p className="truncate">&gt; Retrieving Phong Vu stock...</p>
           <p className="truncate">&gt; Cross-referencing specs.</p>
           <p className="truncate">&gt; Promotions applied.</p>
-          <p className="truncate text-blue-400 font-bold">&gt; ASUS TUF recommended (94%).</p>
+          <p className="truncate font-bold text-blue-400">
+            &gt; ASUS TUF recommended (94%).
+          </p>
         </div>
       </div>
 

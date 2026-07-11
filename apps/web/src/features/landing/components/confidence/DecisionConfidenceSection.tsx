@@ -54,7 +54,9 @@ export function DecisionConfidenceSection() {
             </h2>
 
             <p className="gsap-confidence-reveal text-muted-foreground max-w-lg text-base leading-relaxed sm:text-lg">
-              See how ShopWise combines product specifications, live inventory, pricing, promotions, and customer requirements into one explainable recommendation.
+              See how ShopWise combines product specifications, live inventory,
+              pricing, promotions, and customer requirements into one
+              explainable recommendation.
             </p>
 
             <div className="gsap-confidence-reveal flex flex-wrap gap-4 pt-2">
@@ -79,7 +81,11 @@ export function DecisionConfidenceSection() {
           {/* Right Column: Visual Mockup */}
           <div className="flex justify-center lg:col-span-6 lg:justify-end">
             <span className="sr-only">
-              Simulated demonstration of the ShopWise AI shopping recommendation outcome: customer requests a gaming laptop with RTX 4060 under 30 million VND. Lenovo LOQ 15IRX9 is recommended as the best match because it includes an RTX 4060 GPU, better cooling system, 24GB RAM, is in stock, and is eligible for a 10% coupon promo.
+              Simulated demonstration of the ShopWise AI shopping recommendation
+              outcome: customer requests a gaming laptop with RTX 4060 under 30
+              million VND. Lenovo LOQ 15IRX9 is recommended as the best match
+              because it includes an RTX 4060 GPU, better cooling system, 24GB
+              RAM, is in stock, and is eligible for a 10% coupon promo.
             </span>
             <DecisionConfidencePanel />
           </div>
