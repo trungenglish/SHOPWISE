@@ -1,43 +1,28 @@
 # AI Runtime
 
-`ai-runtime` is the AI orchestration service for the SHOPWISE platform, built with **FastAPI**, **LangGraph**, and **LangChain**. It provides AI-driven workflows and tools, such as the checkout workflow, to power intelligent features within the application.
+Python FastAPI service providing LLM integration for the SHOPWISE platform.
 
-## Prerequisites
+## Features
+- **Stateless design:** All conversation state comes from the client
+- **Pydantic Validation:** Strict request/response schemas
+- **Provider Abstraction:** Hot-swappable LLM providers
+- **LangGraph Orchestration:** Tools, reasoning, and self-correction
+- **Streaming:** Server-Sent Events (SSE) stream support
+- **Privacy:** PII-safe logging out of the box
 
-- **Python**: 3.11 or higher
-- **Dependency Manager**: [uv](https://github.com/astral-sh/uv)
+## Quickstart
 
-## Installation
+### Prerequisites
+- Python 3.11+
+- `uv` package manager
 
-This project uses `uv` for fast dependency management. To install the dependencies, run:
-
+### Run Server
 ```bash
-uv sync
+cd services/ai-runtime
+uv run uvicorn src.main:app --reload --port 8000
 ```
 
-## Running the Development Server
-
-To start the FastAPI development server, run:
-
+### Run Tests
 ```bash
-uv run uvicorn main:app --reload --host 0.0.0.0 --port 8000
+uv run pytest
 ```
-
-Alternatively, you can just run `main.py` directly:
-
-```bash
-uv run python main.py
-```
-
-The server will be available at `http://localhost:8000`.
-You can check its health at `http://localhost:8000/health`.
-
-## Project Structure
-
-- `main.py`: The entry point for the FastAPI application.
-- `graph/`: Contains LangGraph workflows (e.g., `checkout_workflow.py`, `workflow.py`).
-- `tools/`: Contains tools used by the AI workflows (e.g., `checkout_tools.py`, `fetch_comparison_data.py`).
-- `engine/`: Core execution logic and model orchestration.
-- `nodes/`: Custom LangGraph nodes used in the state graphs.
-- `prompts/`: System prompts and prompt templates for the LLMs.
-- `ui/`: Potential frontend components or test UI code.
