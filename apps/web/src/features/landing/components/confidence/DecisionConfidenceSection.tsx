@@ -34,7 +34,7 @@ export function DecisionConfidenceSection() {
 
   return (
     <section
-      id="confidence"
+      id="recommendation"
       ref={sectionRef}
       className="bg-background border-border/20 relative border-b py-20 lg:py-32"
     >
@@ -43,27 +43,35 @@ export function DecisionConfidenceSection() {
           {/* Left Column: Copy Section */}
           <div className="flex flex-col items-start space-y-6 lg:col-span-6">
             <span className="gsap-confidence-reveal font-heading text-xs font-semibold tracking-wider text-[var(--landing-gradient-accent)] uppercase">
-              E-commerce Signals
+              AI Shopping Outcome
             </span>
 
             <h2 className="gsap-confidence-reveal font-heading text-foreground max-w-xl text-3xl leading-[1.15] font-bold tracking-tight sm:text-4xl lg:text-5xl">
-              Shop with{" "}
+              Find the Right{" "}
               <span className="bg-gradient-to-r from-[var(--landing-gradient-accent)] to-indigo-300 bg-clip-text text-transparent">
-                Confidence.
+                Product Faster.
               </span>
             </h2>
 
             <p className="gsap-confidence-reveal text-muted-foreground max-w-lg text-base leading-relaxed sm:text-lg">
-              Enable customer trust by showing verified specifications, active discount vouchers, and live inventory directly within the shopping context. ShopWise provides transparent, explainable reasoning.
+              See how ShopWise combines product specifications, live inventory, pricing, promotions, and customer requirements into one explainable recommendation.
             </p>
 
-            <div className="gsap-confidence-reveal pt-2">
+            <div className="gsap-confidence-reveal flex flex-wrap gap-4 pt-2">
               <Button
                 asChild
                 size="lg"
-                className="hover:bg-muted/40 border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] shadow-lg transition-all transition-colors hover:shadow-xl"
+                className="shadow-[var(--landing-glow)] shadow-lg transition-all hover:shadow-[var(--landing-glow)] hover:shadow-xl"
               >
                 <Link to="/auth">Try AI Sales Agent</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="hover:bg-muted/40 border border-[var(--landing-glass-border)] bg-[var(--landing-glass-bg)] transition-colors"
+              >
+                <a href="#workspace">See Product Comparison</a>
               </Button>
             </div>
           </div>
@@ -71,7 +79,7 @@ export function DecisionConfidenceSection() {
           {/* Right Column: Visual Mockup */}
           <div className="flex justify-center lg:col-span-6 lg:justify-end">
             <span className="sr-only">
-              Simulated demonstration of the ShopWise Decision Confidence dashboard: displays live stock check, latest pricing synchronization matching Phong Vu catalog, technically verified specs, and active promotions applied.
+              Simulated demonstration of the ShopWise AI shopping recommendation outcome: customer requests a gaming laptop with RTX 4060 under 30 million VND. Lenovo LOQ 15IRX9 is recommended as the best match because it includes an RTX 4060 GPU, better cooling system, 24GB RAM, is in stock, and is eligible for a 10% coupon promo.
             </span>
             <DecisionConfidencePanel />
           </div>

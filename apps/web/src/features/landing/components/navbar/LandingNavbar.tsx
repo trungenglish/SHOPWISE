@@ -10,13 +10,7 @@ export function LandingNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const activeSection = useScrollSpy({
-    sectionIds: [
-      "problem",
-      "workspace",
-      "intelligence",
-      "confidence",
-      "contact",
-    ],
+    sectionIds: ["problem", "workspace", "intelligence", "recommendation"],
     offset: 100,
   });
 
@@ -35,8 +29,7 @@ export function LandingNavbar() {
     { label: "Problem", id: "problem", href: "#problem" },
     { label: "Workspace", id: "workspace", href: "#workspace" },
     { label: "Intelligence", id: "intelligence", href: "#intelligence" },
-    { label: "Confidence", id: "confidence", href: "#confidence" },
-    { label: "Contact", id: "contact", href: "#contact" },
+    { label: "Recommendation", id: "recommendation", href: "#recommendation" },
   ];
 
   return (

@@ -12,8 +12,7 @@ export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
     { label: "Problem", href: "#problem" },
     { label: "Workspace", href: "#workspace" },
     { label: "Intelligence", href: "#intelligence" },
-    { label: "Confidence", href: "#confidence" },
-    { label: "Contact", href: "#contact" },
+    { label: "Recommendation", href: "#recommendation" },
   ];
 
   return (
