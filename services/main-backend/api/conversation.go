@@ -28,9 +28,9 @@ func (api *ConversationAPI) SendMessage(c *gin.Context) {
 	}
 
 	// Fetch or create session
-	sess, err := api.manager.GetSession(req.SessionID)
+	_, err := api.manager.GetSession(req.SessionID)
 	if err != nil {
-		sess = api.manager.CreateSession(req.SessionID)
+		api.manager.CreateSession(req.SessionID)
 	}
 
 	api.manager.UpdateSession(req.SessionID, func(s *session.CustomerSession) {

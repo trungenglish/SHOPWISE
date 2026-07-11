@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schema/commerce-components.json",
+  "title": "Commerce Components",
+  "description": "Schemas for Shopping Components",
+  "$defs": {
+    "ProductCardProps": {
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "name": { "type": "string" },
+        "priceVND": { "type": "integer", "minimum": 0 },
+        "imageUrl": { "type": "string" },
+        "rating": { "type": "number" }
+      },
+      "required": ["productId", "name", "priceVND"]
+    },
+    "ProductCarouselProps": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" }
+      }
+    },
+    "ProductComparisonProps": {
+      "type": "object",
+      "properties": {
+        "productIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "features": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "SpecificationTableProps": {
+      "type": "object",
+      "properties": {
+        "specs": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "PromotionBannerProps": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "discountCode": { "type": "string" }
+      }
+    },
+    "WarrantyInformationProps": {
+      "type": "object",
+      "properties": {
+        "months": { "type": "integer" },
+        "details": { "type": "string" }
+      }
+    },
+    "InventoryStatusProps": {
+      "type": "object",
+      "properties": {
+        "inStock": { "type": "boolean" },
+        "quantity": { "type": "integer" },
+        "storeId": { "type": "string" }
+      }
+    },
+    "CheckoutSummaryProps": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": { "type": "string" },
+              "quantity": { "type": "integer" },
+              "priceVND": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "totalPriceVND": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "type": "object"
+}

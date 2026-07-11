@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schema/base-schema.json",
+  "title": "Dynamic UI Protocol Base",
+  "description": "Base definitions for the Dynamic UI Protocol",
+  "$defs": {
+    "ValidationRules": {
+      "type": "object",
+      "properties": {
+        "required": { "type": "boolean" },
+        "type": { "type": "string" },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "minLength": { "type": "integer" },
+        "maxLength": { "type": "integer" },
+        "pattern": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ActionDefinition": {
+      "type": "object",
+      "properties": {
+        "trigger": { "type": "string" },
+        "action": { "type": "string" },
+        "payloadSchema": { "type": "object" }
+      },
+      "required": ["trigger", "action"],
+      "additionalProperties": false
+    },
+    "ComponentNode": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "props": { "type": "object" },
+        "state": { "type": "object" },
+        "validation": { "$ref": "#/$defs/ValidationRules" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ComponentNode" }
+        },
+        "actions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ActionDefinition" }
+        }
+      },
+      "required": ["id", "type", "props"],
+      "additionalProperties": false
+    },
+    "DynamicUIDocument": {
+      "type": "object",
+      "properties": {
+        "protocol": { 
+          "type": "string",
+          "const": "dynamic-ui"
+        },
+        "schemaVersion": {
+          "type": "string",
+          "enum": ["1.0"]
+        },
+        "documentId": { "type": "string" },
+        "timestamp": { 
+          "type": "string",
+          "format": "date-time"
+        },
+        "operation": {
+          "type": "string",
+          "enum": ["replace", "append", "patch", "remove"]
+        },
+        "targetId": { "type": "string" },
+        "metadata": { "type": "object" },
+        "root": { "$ref": "#/$defs/ComponentNode" }
+      },
+      "required": ["protocol", "schemaVersion", "documentId", "timestamp", "operation", "root"],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/DynamicUIDocument" },
+    { "$ref": "#/$defs/ComponentNode" }
+  ]
+}
