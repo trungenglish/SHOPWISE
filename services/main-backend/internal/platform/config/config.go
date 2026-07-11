@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -41,6 +42,8 @@ type Config struct {
 	LangfusePublicKey string
 	LangfuseSecretKey string
 	LangfuseHost      string
+
+	CheckoutAuthBypass bool
 }
 
 func Load() (*Config, error) {
@@ -54,10 +57,15 @@ func Load() (*Config, error) {
 	if err != nil {
 		return nil, fmt.Errorf("JWT_REFRESH_TTL: %w", err)
 	}
+	checkoutAuthBypass, err := strconv.ParseBool(getEnv("CHECKOUT_AUTH_BYPASS", "false"))
+	if err != nil {
+		return nil, fmt.Errorf("CHECKOUT_AUTH_BYPASS: %w", err)
+	}
+	ginMode := getEnv("GIN_MODE", "debug")
 
 	cfg := &Config{
 		Port:           getEnv("PORT", "18080"),
-		GinMode:        getEnv("GIN_MODE", "debug"),
+		GinMode:        ginMode,
 		LogLevel:       getEnv("LOG_LEVEL", "info"),
 		AppName:        getEnv("APP_NAME", "server"),
 		DatabaseURL:    os.Getenv("DATABASE_URL"),
@@ -82,6 +90,8 @@ func Load() (*Config, error) {
 		LangfusePublicKey: os.Getenv("LANGFUSE_PUBLIC_KEY"),
 		LangfuseSecretKey: os.Getenv("LANGFUSE_SECRET_KEY"),
 		LangfuseHost:      getEnv("LANGFUSE_HOST", "https://cloud.langfuse.com"),
+
+		CheckoutAuthBypass: checkoutAuthBypass && strings.EqualFold(ginMode, "debug"),
 	}
 
 	origins := getEnv("ALLOWED_ORIGINS", "http://localhost:3001")

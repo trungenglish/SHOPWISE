@@ -102,6 +102,9 @@ func Run() error {
 	})
 	userH := usershandler.NewHandler(userSvc)
 	orderH := ordershandler.NewHandler(ordersusecase.NewService(orderRepo, orderRepo, orderRepo, orderRepo))
+	if cfg.CheckoutAuthBypass {
+		orderH.WithDevelopmentAuthBypass()
+	}
 
 	healthH := health.NewHandler(db, redisClient)
 	filesH := fileshandler.NewHandler(filesusecase.NewService())
