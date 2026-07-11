@@ -8,6 +8,15 @@
 
 **Input**: User description: "Define a declarative UI protocol that allows the AI Runtime to dynamically describe interactive user interfaces without generating frontend code..."
 
+## Clarifications
+
+### Session 2026-07-11
+
+- Q: Should the Dynamic UI Protocol define the specific transport mechanism for streaming and bidirectional communication, or should it remain strictly transport-agnostic? → A: Transport-agnostic. It defines only the structure, semantics, and lifecycle of UI schemas and interaction events. Transport mechanisms (e.g., SSE, WebSockets, HTTP, gRPC) are implementation concerns and may vary by platform without affecting protocol compatibility.
+- Q: How should schema versioning be handled in the protocol payloads? → A: Defined once at the root payload level. Each document MUST include a root-level schemaVersion field (e.g., "1.0") using Semantic Versioning. Minor versions are backward compatible; Major versions require compatibility checks; unsupported versions SHOULD render a graceful fallback UI.
+- Q: Should the protocol differentiate between AI-handled events and direct Backend Tool events? → A: No, routing is opaque to the frontend. Components declare semantic actions only and do not specify execution targets. The backend acts as the single orchestration layer for routing.
+- Q: Should form validation rules be defined declaratively within the UI Protocol schema, or should the frontend submit the raw state and let the backend/AI handle validation and return error states? → A: Hybrid approach. The UI Protocol should support declarative validation rules for immediate client-side feedback (e.g., required fields, data types). However, the backend remains the source of truth for all business validation. Backend validation failures MUST be returned as structured Error State UI schemas.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Structured Product Recommendation (Priority: P1)
@@ -74,13 +83,16 @@ As a user experiencing a network or backend issue during my shopping journey, I 
 - **FR-007**: Every interactive component schema MUST declare fields for: Component ID, Action, Payload, Event, and State.
 - **FR-008**: The protocol MUST allow the AI Runtime to specify whether a UI block should replace an existing block or be appended to the current conversation.
 - **FR-009**: The protocol MUST clearly distinguish between Conversation State, UI State, Component State, Loading State, and Error State.
+- **FR-010**: Components MUST declare semantic actions only; they MUST NOT specify execution targets. The frontend MUST NOT know whether an event is handled by the AI Runtime or a backend service. The backend acts as the single orchestration layer to route events.
+- **FR-011**: The protocol MUST support declarative validation rules (e.g., required fields, data types, ranges, string length, patterns) for immediate client-side feedback. The backend remains the authoritative source for business validation, and any backend validation failures MUST be returned as structured Error State UI schemas.
 
 ### Non-Functional Requirements
 - **NFR-001**: The schema MUST NOT contain any HTML, CSS, React Components, JavaScript, or Tailwind classes.
 - **NFR-002**: The protocol MUST remain frontend-framework independent.
 - **NFR-003**: The protocol MUST support streaming updates, partial UI replacement, and incremental rendering.
-- **NFR-004**: The protocol MUST support schema versioning and backward compatibility.
-- **NFR-005**: The protocol MUST be extensible to allow adding new components in the future.
+- **NFR-004**: The protocol MUST be strictly transport-agnostic. It defines only the structure, semantics, and lifecycle of UI schemas and interaction events. Transport mechanisms (e.g., SSE, WebSockets, HTTP, gRPC) are implementation concerns and may vary by platform without affecting protocol compatibility.
+- **NFR-005**: The protocol MUST support schema versioning and backward compatibility. Each Dynamic UI document MUST include a root-level schemaVersion field (e.g., "1.0"). Versioning MUST follow Semantic Versioning (MAJOR.MINOR). Minor versions (1.0 → 1.1) may add optional fields or new component types while remaining backward compatible. Major versions (1.x → 2.0) may introduce breaking changes and require frontend compatibility checks before rendering. Frontends encountering an unsupported schemaVersion SHOULD render a graceful fallback UI rather than failing completely.
+- **NFR-006**: The protocol MUST be extensible to allow adding new components in the future.
 
 ### Key Entities
 
