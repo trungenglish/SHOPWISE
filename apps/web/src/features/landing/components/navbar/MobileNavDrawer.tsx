@@ -47,7 +47,7 @@ export function MobileNavDrawer({ isOpen, onClose }: MobileNavDrawerProps) {
             </Link>
           </Button>
           <Button asChild className="w-full">
-            <Link to="/auth" onClick={onClose}>
+            <Link to="/get-started" onClick={onClose}>
               Get Started
             </Link>
           </Button>

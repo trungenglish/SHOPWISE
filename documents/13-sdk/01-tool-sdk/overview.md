@@ -4,8 +4,8 @@
 
 The core philosophy of the Tool SDK is that the **LLM never interacts with systems directly**.
 
-*   LLM **does not call REST APIs**.
-*   LLM **does not query Databases**.
+- LLM **does not call REST APIs**.
+- LLM **does not query Databases**.
 
 It only executes predefined Tools via the **Tool Protocol (JSON)**.
 

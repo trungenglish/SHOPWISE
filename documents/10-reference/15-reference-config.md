@@ -9,8 +9,7 @@ tools:
   enabled: true
 memory:
   enabled: true
-retrieval:
-  hybrid
+retrieval: hybrid
 ui:
   streaming: true
 ```

@@ -94,7 +94,7 @@ export function LandingNavbar() {
             <Link to="/auth">Sign In</Link>
           </Button>
           <Button asChild size="sm">
-            <Link to="/auth">Get Started</Link>
+            <Link to="/get-started">Get Started</Link>
           </Button>
         </div>
 

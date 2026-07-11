@@ -19,6 +19,7 @@ The project root is configured via `pnpm-workspace.yaml` and includes the follow
 To ensure Turborepo properly tracks and orchestrates tasks across non-JS components, a `package.json` is placed in **all** workspace directories (even for Go and Python). These `package.json` files act as "dummy" manifests that expose standardized task scripts (e.g., `"build": "go build ."`) which `turbo run build` can then execute.
 
 By managing the monorepo this way:
+
 1. Turborepo handles caching and dependency graphs for the entire project.
 2. Cross-language dependencies are synchronized natively via standard build steps.
 3. Commands like `pnpm dev` and `pnpm build` work uniformly across the entire repository.

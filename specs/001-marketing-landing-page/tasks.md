@@ -159,4 +159,160 @@ Phase 1 (Audit & Mapping)
 1. **Incremental Updates**: Update static data models (Phase 2) first, ensuring no code references break.
 2. **Sequential Refactoring**: Refactor sections one-by-one from top to bottom (Hero → Trusted By → Search Crisis → Workspace → Capabilities → Timeline → Confidence → CTA).
 3. **No Breakage**: Do not delete stubs or folders for testimonials, pricing, and FAQ until Phase 10, when the final page layouts are fully wired and stable.
-4. **Validation Gate**: Run linting, type-checks, and builds at the end of each phase checkpoint.
+4. **Validation Gate**: Run linting, type-checks, and builds at the end of each phase checkpoint. /speckit-specify
+
+Create a new feature specification for the ShopWise Get Started onboarding flow.
+
+Target application: apps/web
+
+Route:
+
+- /get-started
+
+Context
+
+The ShopWise dashboard already exists and is outside the scope of this feature.
+
+This feature only handles the entry flow before the user reaches the dashboard.
+
+Primary flow
+
+1. User navigates to /get-started.
+2. The page asks: "Do you already have an account?"
+3. If the user selects "Yes":
+   - Show the existing-user sign-in step.
+   - After successful sign-in or temporary mock completion, navigate to /dashboard.
+4. If the user selects "No":
+   - Guide the user through a short onboarding form:
+     - Full name
+     - Phone number
+     - Email address
+   - Validate each field.
+   - Submit the form.
+   - After successful submission or temporary mock completion, navigate to /dashboard.
+
+Scope
+
+Build only:
+
+- /get-started route
+- account-status choice step
+- existing-user sign-in step or placeholder
+- new-user onboarding form
+- client-side validation
+- loading state
+- error state
+- success redirect to /dashboard
+
+Out of scope
+
+- Dashboard implementation
+- Dashboard redesign
+- Backend authentication
+- OTP verification
+- Password reset
+- Social login
+- Database persistence
+- Email verification
+- Phone verification
+- Real session management
+
+Account Status Step
+
+Question: "Do you already have an account?"
+
+Actions:
+
+- "Yes, sign in"
+- "No, create my profile"
+
+Requirements:
+
+- Clear step heading
+- Accessible button labels
+- Keyboard navigation
+- Back navigation where applicable
+- Preserve entered form data when moving between steps if reasonable
+
+Existing User Step
+
+If the current project already has an authentication form or route:
+
+- Reuse it.
+- Do not duplicate authentication UI.
+
+If no authentication UI exists:
+
+- Provide a minimal placeholder step.
+- Include email or phone input only if required by the approved design.
+- Add a clearly marked temporary action that continues to /dashboard.
+- Do not present mock authentication as production-ready.
+
+New User Step
+
+Fields:
+
+- Full name
+- Phone number
+- Email address
+
+Validation:
+
+- Full name is required.
+- Phone number is required and must use a reasonable format.
+- Email is required and must be valid.
+- Show inline validation messages.
+- Disable duplicate submissions.
+- Preserve accessibility with labels, descriptions, aria-invalid, and error associations.
+
+Submission
+
+- Show a loading state.
+- Show a user-friendly error state if submission fails.
+- On success, navigate to /dashboard using TanStack Router.
+- Do not implement the dashboard.
+
+Responsive Design
+
+- Mobile-first
+- Single-column form
+- Comfortable input sizes
+- Minimum 44px interactive targets
+- Desktop layout may use a centered card or split layout
+- Avoid unnecessary multi-column complexity
+
+Visual Direction
+
+- Match the existing ShopWise dark-first design system
+- Premium
+- Minimal
+- Clear
+- Low cognitive load
+- Strong progress indication
+- Do not copy the landing page layout directly
+
+Architecture
+
+- React 19
+- Vite
+- TypeScript
+- TanStack Router
+- Tailwind CSS v4
+- @shopwise/ui
+- React Hook Form and Zod may be used because they already exist in the project
+- Feature code should live under: apps/web/src/features/get-started/
+
+Suggested structure:
+
+apps/web/src/features/get-started/ components/ schemas/ hooks/ GetStartedPage.tsx
+
+Success Criteria
+
+- /get-started renders correctly
+- User can choose existing or new account flow
+- New-user form validates name, phone, and email
+- Successful completion navigates to /dashboard
+- Dashboard code is not modified
+- Type checking passes
+
+Do not write implementation code. Create only the feature specification.

@@ -2,8 +2,8 @@
 
 To achieve total decoupling between the AI decision-making layer and the Retail Business Logic layer, SHOPWISE defines two strictly separated SDK contracts:
 
-*   **Tool SDK**: Used by the AI Runtime to interact with the backend.
-*   **Retail SDK**: Used by the backend to interact with Retailers (Shopee, PhongVu, Tiki, etc.).
+- **Tool SDK**: Used by the AI Runtime to interact with the backend.
+- **Retail SDK**: Used by the backend to interact with Retailers (Shopee, PhongVu, Tiki, etc.).
 
 ## Architecture
 
