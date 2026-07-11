@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:18.4-bookworm
+    image: pgvector/pgvector:pg16
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: app
