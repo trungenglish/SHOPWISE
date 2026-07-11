@@ -59,7 +59,7 @@ Open [http://localhost:3001](http://localhost:3001) in your browser to see the w
 For native development, copy the Expo environment file:
 
 ```bash
-cp apps/native/.env.example apps/native/.env
+cp apps/mobile/.env.example apps/mobile/.env
 ```
 
 ## UI Customization
@@ -101,13 +101,20 @@ For more details, see the guide on [Deploying to Cloudflare with Alchemy](https:
 
 ```
 shopwise/
-├── apps/
-│   ├── web/         # Frontend application (React + TanStack Router)
-│   ├── native/      # Mobile application (React Native, Expo)
-│   └── server/      # Backend API (Go Gin + GORM + Redis)
-├── packages/
+├── apps/            # Applications
+│   ├── web/         # Frontend web application (React + TanStack Router)
+│   └── mobile/      # Mobile application (React Native, Expo)
+├── packages/        # Shared libraries and internal configurations
 │   ├── ui/          # Shared shadcn/ui components and styles
-│   └── env/         # Shared environment validation
+│   ├── env/         # Shared environment validation
+│   └── ...          # Other internal packages (types, schemas, config)
+├── services/        # Core backend domains/engines (Go, Python)
+│   ├── main-backend/# Core retail engine
+│   └── agentic/     # AI reasoning and memory components
+├── conformance/     # Language-agnostic test suites and verification
+├── infra/           # Root-level infrastructure configurations
+├── deploy/          # Deployment definitions
+└── scripts/         # Developer utilities
 ```
 
 ## Web Environment Variables
