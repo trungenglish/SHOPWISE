@@ -17,11 +17,17 @@ import (
 )
 
 type Handler struct {
-	service *usecase.Service
+	service               *usecase.Service
+	developmentAuthBypass bool
 }
 
 func NewHandler(service *usecase.Service) *Handler {
 	return &Handler{service: service}
+}
+
+func (handler *Handler) WithDevelopmentAuthBypass() *Handler {
+	handler.developmentAuthBypass = true
+	return handler
 }
 
 // Create godoc
@@ -40,7 +46,7 @@ func NewHandler(service *usecase.Service) *Handler {
 //	@Router		/checkout [post]
 func (handler *Handler) Create(ctx *gin.Context) {
 	authenticatedCustomerID, exists := middleware.UserID(ctx)
-	if !exists {
+	if !exists && !handler.developmentAuthBypass {
 		_ = ctx.Error(apperror.Unauthorized("authenticated user is required", nil))
 		return
 	}
@@ -54,6 +60,9 @@ func (handler *Handler) Create(ctx *gin.Context) {
 	if err != nil {
 		_ = ctx.Error(apperror.Validation("customer_id must be a valid UUID", err))
 		return
+	}
+	if !exists {
+		authenticatedCustomerID = customerID
 	}
 
 	items := make([]usecase.CreateItemInput, 0, len(request.Items))
@@ -99,6 +108,8 @@ func decodeCheckoutRequest(ctx *gin.Context, request *CheckoutRequest) error {
 }
 
 func RegisterRoutes(group *gin.RouterGroup, handler *Handler, verifier middleware.TokenVerifier) {
-	group.Use(middleware.Auth(verifier))
+	if !handler.developmentAuthBypass {
+		group.Use(middleware.Auth(verifier))
+	}
 	group.POST("", handler.Create)
 }

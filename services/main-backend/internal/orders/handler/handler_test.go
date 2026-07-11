@@ -145,6 +145,36 @@ func TestCreateCheckoutRequiresAuthentication(t *testing.T) {
 	testutil.AssertStatus(t, recorder, http.StatusUnauthorized)
 }
 
+func TestCreateCheckoutAllowsDebugAuthBypass(t *testing.T) {
+	t.Parallel()
+
+	productID := uuid.New()
+	customerID := uuid.New()
+	repository := &checkoutRepositoryStub{
+		customer: &domain.CustomerSnapshot{
+			ID: customerID, Name: "Nguyen Van A", Email: "customer@example.com", Phone: "0912345678",
+		},
+		products: map[uuid.UUID]domain.ProductQuote{
+			productID: {ID: productID, UnitPrice: 100_000, Available: true, Stock: 5},
+		},
+	}
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	jwtService := identityusecase.NewJWTService("checkout-test-secret", 15*time.Minute)
+	router := testutil.NewTestRouter()
+	router.Use(middleware.ErrorHandler(logger, false))
+	service := usecase.NewService(repository, repository, repository, repository)
+	checkoutHandler := handler.NewHandler(service).WithDevelopmentAuthBypass()
+	handler.RegisterRoutes(router.Group("/api/v1/checkout"), checkoutHandler, jwtService)
+
+	recorder := testutil.PerformRequest(t, router, http.MethodPost, "/api/v1/checkout", map[string]any{
+		"customer_id":        customerID.String(),
+		"items":              []map[string]any{{"product_id": productID.String(), "quantity": 1}},
+		"fulfillment_method": "STORE_PICKUP",
+	}, nil)
+
+	testutil.AssertStatus(t, recorder, http.StatusCreated)
+}
+
 func TestCreateCheckoutMapsRepositoryFailure(t *testing.T) {
 	t.Parallel()
 
