@@ -1,3 +1,5 @@
+//go:build integration
+
 package postgres_test
 
 import (
@@ -7,7 +9,7 @@ import (
 
 	"shopwise/retail/internal/decision_memory/domain"
 	"shopwise/retail/internal/decision_memory/repository/postgres"
-	"shopwise/retail/internal/platform/testutil" // Assuming this exists or similar
+	"shopwise/retail/internal/platform/testutil/integration"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
@@ -18,10 +20,8 @@ import (
 // setupDB initializes a test database connection. Note: Adjust based on real project setup.
 // Assuming a generic mock or in-memory sqlite/postgres setup is available in the workspace.
 func setupDB(t *testing.T) *gorm.DB {
-	db, err := testutil.SetupPostgresDB() // or whatever the project uses
-	if err != nil {
-		t.Skip("Skipping db tests due to missing setup")
-	}
+	db, cleanup := integration.SetupIntegrationDB(t)
+	t.Cleanup(cleanup)
 	db.AutoMigrate(&postgres.DecisionSession{}, &postgres.SessionMessage{}, &postgres.ExtractedPreference{})
 	return db
 }
