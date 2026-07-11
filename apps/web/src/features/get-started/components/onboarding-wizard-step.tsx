@@ -85,32 +85,36 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
   const formValues = watch();
 
   return (
-    <Card className="animate-in slide-in-from-right-4 fade-in w-full duration-300">
-      <CardHeader>
+    <Card className="animate-in fade-in slide-in-from-right-4 w-full duration-200 border-outline-variant/20 bg-surface-low shadow-xl">
+      <CardHeader className="p-8 pb-6">
         <div className="mb-2 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-muted-foreground hover:text-foreground -ml-2 min-h-[44px] min-w-[44px]"
-              onClick={prevStep}
-              disabled={isSubmitting}
-              aria-label="Go back"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <CardTitle className="text-xl font-bold">
-              {step === 1 && "What's your name?"}
-              {step === 2 && "Your phone number"}
-              {step === 3 && "Your email address"}
-              {step === 4 && "Review your profile"}
-            </CardTitle>
-          </div>
-          <div className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold">
-            {step}/{totalSteps}
+          <Button
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground -ml-4 w-fit px-4"
+            onClick={prevStep}
+            disabled={isSubmitting}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back
+          </Button>
+          <div className="flex items-center gap-1.5">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className={`h-1.5 w-1.5 rounded-full transition-colors ${
+                  step === i ? "bg-primary" : "bg-primary/20"
+                }`}
+              />
+            ))}
           </div>
         </div>
-        <CardDescription>
+        <CardTitle className="text-foreground text-2xl font-bold tracking-tight">
+          {step === 1 && "What's your name?"}
+          {step === 2 && "Your phone number"}
+          {step === 3 && "Your email address"}
+          {step === 4 && "Review your profile"}
+        </CardTitle>
+        <CardDescription className="text-muted-foreground mt-1">
           {step === 1 && "We'll use this to personalize your experience."}
           {step === 2 && "Required for delivery and order updates."}
           {step === 3 && "For receipts and important communications."}
@@ -128,10 +132,10 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
           }
         }}
       >
-        <CardContent className="flex flex-col gap-4">
+        <CardContent className="flex flex-col gap-5 px-8 pb-6">
           <div
             className={
-              step === 1 ? "animate-in fade-in zoom-in-95 block" : "hidden"
+              step === 1 ? "animate-in fade-in slide-in-from-right-2 duration-200 block" : "hidden"
             }
           >
             <Field data-invalid={!!errors.fullName}>
@@ -144,6 +148,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
                   disabled={isSubmitting}
                   {...register("fullName")}
                   aria-invalid={!!errors.fullName}
+                  className="h-12"
                 />
                 <FieldError errors={[errors.fullName]} />
               </FieldContent>
@@ -152,7 +157,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
 
           <div
             className={
-              step === 2 ? "animate-in fade-in zoom-in-95 block" : "hidden"
+              step === 2 ? "animate-in fade-in slide-in-from-right-2 duration-200 block" : "hidden"
             }
           >
             <Field data-invalid={!!errors.phoneNumber}>
@@ -166,6 +171,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
                   disabled={isSubmitting}
                   {...register("phoneNumber")}
                   aria-invalid={!!errors.phoneNumber}
+                  className="h-12"
                 />
                 <FieldError errors={[errors.phoneNumber]} />
               </FieldContent>
@@ -174,7 +180,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
 
           <div
             className={
-              step === 3 ? "animate-in fade-in zoom-in-95 block" : "hidden"
+              step === 3 ? "animate-in fade-in slide-in-from-right-2 duration-200 block" : "hidden"
             }
           >
             <Field data-invalid={!!errors.email}>
@@ -188,6 +194,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
                   disabled={isSubmitting}
                   {...register("email")}
                   aria-invalid={!!errors.email}
+                  className="h-12"
                 />
                 <FieldError errors={[errors.email]} />
               </FieldContent>
@@ -196,23 +203,23 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
 
           <div
             className={
-              step === 4 ? "animate-in fade-in zoom-in-95 block" : "hidden"
+              step === 4 ? "animate-in fade-in slide-in-from-right-2 duration-200 block" : "hidden"
             }
           >
-            <div className="bg-muted/50 space-y-4 rounded-lg border p-4 text-sm">
-              <div className="flex justify-between border-b pb-2">
-                <span className="text-muted-foreground">Full Name</span>
+            <div className="flex flex-col text-sm border-y border-outline-variant/30 py-2">
+              <div className="flex justify-between py-3 border-b border-outline-variant/10 last:border-0">
+                <span className="text-muted-foreground">Name</span>
                 <span className="text-foreground font-medium">
                   {formValues.fullName || "-"}
                 </span>
               </div>
-              <div className="flex justify-between border-b pb-2">
+              <div className="flex justify-between py-3 border-b border-outline-variant/10 last:border-0">
                 <span className="text-muted-foreground">Phone</span>
                 <span className="text-foreground font-medium">
                   {formValues.phoneNumber || "-"}
                 </span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between py-3 border-b border-outline-variant/10 last:border-0">
                 <span className="text-muted-foreground">Email</span>
                 <span className="text-foreground font-medium">
                   {formValues.email || "-"}
@@ -222,12 +229,11 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
           </div>
         </CardContent>
 
-        <CardFooter>
+        <CardFooter className="px-8 pb-8">
           {step < totalSteps ? (
             <Button
               type="button"
-              className="w-full"
-              size="lg"
+              className="w-full h-12"
               onClick={nextStep}
             >
               Continue
@@ -237,8 +243,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
             <div className="flex w-full flex-col gap-2">
               <Button
                 type="submit"
-                className="w-full"
-                size="lg"
+                className="w-full h-12"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -253,7 +258,7 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full"
+                className="w-full h-12"
                 disabled={isSubmitting}
                 onClick={() => setStep(3)}
               >

@@ -1,8 +1,8 @@
-// @title		Server API
+// @title			Server API
 // @version		1.0
 // @description	Modular monolith REST API for React web and native clients.
-// @host		localhost:18080
-// @BasePath	/api/v1
+// @host			localhost:18080
+// @BasePath		/api/v1
 // @schemes		http
 package main
 

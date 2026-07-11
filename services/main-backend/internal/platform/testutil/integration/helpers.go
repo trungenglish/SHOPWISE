@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	identitypostgres "shopwise/retail/internal/identity/repository/postgres"
+	orderpostgres "shopwise/retail/internal/orders/repository/postgres"
 	userpostgres "shopwise/retail/internal/users/repository/postgres"
 
 	"github.com/testcontainers/testcontainers-go"
@@ -50,6 +51,7 @@ func SetupIntegrationDB(t *testing.T) (*gorm.DB, func()) {
 	migrations := []func(*gorm.DB) error{
 		userpostgres.Migrate,
 		identitypostgres.Migrate,
+		orderpostgres.Migrate,
 	}
 	for _, migrate := range migrations {
 		if err := migrate(db); err != nil {

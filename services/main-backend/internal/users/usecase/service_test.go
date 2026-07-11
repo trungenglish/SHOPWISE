@@ -164,3 +164,52 @@ func TestServiceGetByIDNotFound(t *testing.T) {
 		t.Fatalf("expected NOT_FOUND, got %v", err)
 	}
 }
+
+func TestUpdateProfileStoresNormalizedPhone(t *testing.T) {
+	t.Parallel()
+
+	repo := newMockRepo()
+	userID := uuid.New()
+	repo.users[userID] = &domain.User{
+		ID:    userID,
+		Email: "jane@example.com",
+		Name:  "Jane",
+	}
+	service := usecase.NewService(repo, &mockEnqueuer{}, slog.New(slog.NewTextHandler(os.Stdout, nil)))
+	phone := "0912345678"
+
+	profile, err := service.UpdateProfile(context.Background(), userID, usecase.UpdateProfileInput{
+		Phone: &phone,
+	})
+	if err != nil {
+		t.Fatalf("UpdateProfile() error = %v", err)
+	}
+	if profile.Phone != phone {
+		t.Fatalf("Phone = %q, want %q", profile.Phone, phone)
+	}
+	if repo.users[userID].Phone != phone {
+		t.Fatalf("stored phone = %q, want %q", repo.users[userID].Phone, phone)
+	}
+}
+
+func TestUpdateProfileRejectsInvalidPhone(t *testing.T) {
+	t.Parallel()
+
+	repo := newMockRepo()
+	userID := uuid.New()
+	repo.users[userID] = &domain.User{
+		ID:    userID,
+		Email: "jane@example.com",
+		Name:  "Jane",
+	}
+	service := usecase.NewService(repo, &mockEnqueuer{}, slog.New(slog.NewTextHandler(os.Stdout, nil)))
+	phone := "not-a-phone"
+
+	_, err := service.UpdateProfile(context.Background(), userID, usecase.UpdateProfileInput{
+		Phone: &phone,
+	})
+	var appError *apperror.AppError
+	if !errors.As(err, &appError) || appError.Code != "VALIDATION_FAILED" {
+		t.Fatalf("UpdateProfile() error = %v, want VALIDATION_FAILED", err)
+	}
+}

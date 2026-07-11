@@ -1,5 +1,43 @@
 basePath: /api/v1
 definitions:
+  handler.CheckoutItemRequest:
+    properties:
+      product_id:
+        format: uuid
+        type: string
+      quantity:
+        minimum: 1
+        type: integer
+    required:
+    - product_id
+    - quantity
+    type: object
+  handler.CheckoutRequest:
+    properties:
+      coupon_code:
+        maxLength: 50
+        type: string
+      customer_id:
+        format: uuid
+        type: string
+      fulfillment_method:
+        enum:
+        - DELIVERY
+        - STORE_PICKUP
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/handler.CheckoutItemRequest'
+        minItems: 1
+        type: array
+      shipping_address:
+        maxLength: 1000
+        type: string
+    required:
+    - customer_id
+    - fulfillment_method
+    - items
+    type: object
   handler.CreateUserRequest:
     properties:
       email:
@@ -12,28 +50,8 @@ definitions:
         minLength: 1
         type: string
     required:
-      - email
-      - name
-    type: object
-  handler.ErrorResponse:
-    properties:
-      code:
-        example: VALIDATION_FAILED
-        type: string
-      detail:
-        example: email and name are required
-        type: string
-      instance:
-        type: string
-      status:
-        example: 400
-        type: integer
-      title:
-        example: Bad Request
-        type: string
-      type:
-        example: about:blank
-        type: string
+    - email
+    - name
     type: object
   handler.LoginRequest:
     properties:
@@ -42,8 +60,8 @@ definitions:
       password:
         type: string
     required:
-      - email
-      - password
+    - email
+    - password
     type: object
   handler.MeResponse:
     properties:
@@ -55,15 +73,74 @@ definitions:
         type: string
       name:
         type: string
+      phone:
+        type: string
       preferences:
-        $ref: "#/definitions/handler.UserPreferencesResponse"
+        $ref: '#/definitions/handler.UserPreferencesResponse'
+    type: object
+  handler.OrderItemResponse:
+    properties:
+      product_id:
+        format: uuid
+        type: string
+      quantity:
+        type: integer
+      unit_price:
+        type: integer
+    type: object
+  handler.OrderResponse:
+    properties:
+      coupon_code:
+        type: string
+      created_at:
+        format: date-time
+        type: string
+      customer_email:
+        format: email
+        type: string
+      customer_id:
+        format: uuid
+        type: string
+      customer_name:
+        type: string
+      customer_phone:
+        type: string
+      discount_amount:
+        type: integer
+      fulfillment_method:
+        enum:
+        - DELIVERY
+        - STORE_PICKUP
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/handler.OrderItemResponse'
+        type: array
+      order_id:
+        format: uuid
+        type: string
+      shipping_address:
+        type: string
+      shipping_amount:
+        type: integer
+      status:
+        enum:
+        - PENDING
+        - PROCESSING
+        type: string
+      subtotal_amount:
+        type: integer
+      tax_amount:
+        type: integer
+      total_amount:
+        type: integer
     type: object
   handler.RefreshRequest:
     properties:
       refreshToken:
         type: string
     required:
-      - refreshToken
+    - refreshToken
     type: object
   handler.RegisterRequest:
     properties:
@@ -75,9 +152,9 @@ definitions:
         minLength: 8
         type: string
     required:
-      - email
-      - name
-      - password
+    - email
+    - name
+    - password
     type: object
   handler.TokenResponse:
     properties:
@@ -97,6 +174,8 @@ definitions:
       defaultCurrency:
         type: string
       name:
+        type: string
+      phone:
         type: string
       preferredCategories:
         items:
@@ -119,7 +198,7 @@ definitions:
     properties:
       items:
         items:
-          $ref: "#/definitions/handler.UserResponse"
+          $ref: '#/definitions/handler.UserResponse'
         type: array
       limit:
         example: 20
@@ -166,7 +245,7 @@ definitions:
       token:
         type: string
     required:
-      - token
+    - token
     type: object
   health.Response:
     properties:
@@ -204,6 +283,41 @@ definitions:
         example: ok
         type: string
     type: object
+  internal_orders_handler.ErrorResponse:
+    properties:
+      code:
+        type: string
+      detail:
+        type: string
+      instance:
+        type: string
+      status:
+        type: integer
+      title:
+        type: string
+      type:
+        type: string
+    type: object
+  internal_users_handler.ErrorResponse:
+    properties:
+      code:
+        example: VALIDATION_FAILED
+        type: string
+      detail:
+        example: email and name are required
+        type: string
+      instance:
+        type: string
+      status:
+        example: 400
+        type: integer
+      title:
+        example: Bad Request
+        type: string
+      type:
+        example: about:blank
+        type: string
+    type: object
   response.ProblemDetail:
     properties:
       code:
@@ -223,49 +337,88 @@ host: localhost:18080
 info:
   contact: {}
   description: Modular monolith REST API for React web and native clients.
-  title: Boilerplate Server API
+  title: Server API
   version: "1.0"
 paths:
   /admin/status:
     get:
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/internal_administration_handler.statusResponse"
+            $ref: '#/definitions/internal_administration_handler.statusResponse'
       summary: Administration module status
       tags:
-        - administration
+      - administration
+  /checkout:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Checkout items
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CheckoutRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/handler.OrderResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/internal_orders_handler.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a checkout order
+      tags:
+      - checkout
   /files/status:
     get:
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/internal_files_handler.statusResponse"
+            $ref: '#/definitions/internal_files_handler.statusResponse'
       summary: Files module status
       tags:
-        - files
+      - files
   /health:
     get:
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/health.Response"
+            $ref: '#/definitions/health.Response'
         "503":
           description: Service Unavailable
           schema:
-            $ref: "#/definitions/health.Response"
+            $ref: '#/definitions/health.Response'
       summary: Health check
       tags:
-        - platform
+      - platform
   /identity/google/callback:
     get:
       responses:
@@ -273,7 +426,7 @@ paths:
           description: Found
       summary: Google OAuth callback
       tags:
-        - identity
+      - identity
   /identity/google/start:
     get:
       responses:
@@ -281,269 +434,269 @@ paths:
           description: Found
       summary: Start Google OAuth flow
       tags:
-        - identity
+      - identity
   /identity/login:
     post:
       consumes:
-        - application/json
+      - application/json
       parameters:
-        - description: Login
-          in: body
-          name: body
-          required: true
-          schema:
-            $ref: "#/definitions/handler.LoginRequest"
+      - description: Login
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.LoginRequest'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/handler.TokenResponse"
+            $ref: '#/definitions/handler.TokenResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: "#/definitions/response.ProblemDetail"
+            $ref: '#/definitions/response.ProblemDetail'
       summary: Login with email and password
       tags:
-        - identity
+      - identity
   /identity/refresh:
     post:
       consumes:
-        - application/json
+      - application/json
       parameters:
-        - description: Refresh
-          in: body
-          name: body
-          required: true
-          schema:
-            $ref: "#/definitions/handler.RefreshRequest"
+      - description: Refresh
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RefreshRequest'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/handler.TokenResponse"
+            $ref: '#/definitions/handler.TokenResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: "#/definitions/response.ProblemDetail"
+            $ref: '#/definitions/response.ProblemDetail'
       summary: Refresh access token
       tags:
-        - identity
+      - identity
   /identity/register:
     post:
       consumes:
-        - application/json
+      - application/json
       parameters:
-        - description: Register
-          in: body
-          name: body
-          required: true
-          schema:
-            $ref: "#/definitions/handler.RegisterRequest"
+      - description: Register
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.RegisterRequest'
       produces:
-        - application/json
+      - application/json
       responses:
         "201":
           description: Created
         "400":
           description: Bad Request
           schema:
-            $ref: "#/definitions/response.ProblemDetail"
+            $ref: '#/definitions/response.ProblemDetail'
         "409":
           description: Conflict
           schema:
-            $ref: "#/definitions/response.ProblemDetail"
+            $ref: '#/definitions/response.ProblemDetail'
       summary: Register with email and password
       tags:
-        - identity
+      - identity
   /identity/status:
     get:
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/internal_identity_handler.statusResponse"
+            $ref: '#/definitions/internal_identity_handler.statusResponse'
       summary: Identity module status
       tags:
-        - identity
+      - identity
   /identity/verify-email:
     post:
       consumes:
-        - application/json
+      - application/json
       parameters:
-        - description: Verify email
-          in: body
-          name: body
-          required: true
-          schema:
-            $ref: "#/definitions/handler.VerifyEmailRequest"
+      - description: Verify email
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.VerifyEmailRequest'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
         "400":
           description: Bad Request
           schema:
-            $ref: "#/definitions/response.ProblemDetail"
+            $ref: '#/definitions/response.ProblemDetail'
       summary: Verify email with token
       tags:
-        - identity
+      - identity
   /users:
     get:
       parameters:
-        - default: 20
-          description: Page size
-          in: query
-          name: limit
-          type: integer
-        - default: 0
-          description: Offset
-          in: query
-          name: offset
-          type: integer
+      - default: 20
+        description: Page size
+        in: query
+        name: limit
+        type: integer
+      - default: 0
+        description: Offset
+        in: query
+        name: offset
+        type: integer
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/handler.UserListResponse"
+            $ref: '#/definitions/handler.UserListResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       summary: List users
       tags:
-        - users
+      - users
     post:
       consumes:
-        - application/json
+      - application/json
       parameters:
-        - description: Create user
-          in: body
-          name: body
-          required: true
-          schema:
-            $ref: "#/definitions/handler.CreateUserRequest"
+      - description: Create user
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.CreateUserRequest'
       produces:
-        - application/json
+      - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: "#/definitions/handler.UserResponse"
+            $ref: '#/definitions/handler.UserResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       summary: Create user
       tags:
-        - users
+      - users
   /users/{id}:
     delete:
       parameters:
-        - description: User ID
-          format: uuid
-          in: path
-          name: id
-          required: true
-          type: string
+      - description: User ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
       responses:
         "204":
           description: No Content
         "404":
           description: Not Found
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       summary: Delete user
       tags:
-        - users
+      - users
     get:
       parameters:
-        - description: User ID
-          format: uuid
-          in: path
-          name: id
-          required: true
-          type: string
+      - description: User ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/handler.UserResponse"
+            $ref: '#/definitions/handler.UserResponse'
         "404":
           description: Not Found
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       summary: Get user by ID
       tags:
-        - users
+      - users
     patch:
       consumes:
-        - application/json
+      - application/json
       parameters:
-        - description: User ID
-          format: uuid
-          in: path
-          name: id
-          required: true
-          type: string
-        - description: Update user
-          in: body
-          name: body
-          required: true
-          schema:
-            $ref: "#/definitions/handler.UpdateUserRequest"
+      - description: User ID
+        format: uuid
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update user
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateUserRequest'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/handler.UserResponse"
+            $ref: '#/definitions/handler.UserResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "409":
           description: Conflict
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       summary: Update user
       tags:
-        - users
+      - users
   /users/me:
     delete:
       responses:
@@ -552,63 +705,63 @@ paths:
         "401":
           description: Unauthorized
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       summary: Delete account and all user data (FR-037)
       tags:
-        - users
+      - users
     get:
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/handler.MeResponse"
+            $ref: '#/definitions/handler.MeResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       summary: Get current user profile
       tags:
-        - users
+      - users
     patch:
       consumes:
-        - application/json
+      - application/json
       parameters:
-        - description: Profile update
-          in: body
-          name: body
-          required: true
-          schema:
-            $ref: "#/definitions/handler.UpdateMeRequest"
+      - description: Profile update
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateMeRequest'
       produces:
-        - application/json
+      - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: "#/definitions/handler.MeResponse"
+            $ref: '#/definitions/handler.MeResponse'
         "401":
           description: Unauthorized
           schema:
-            $ref: "#/definitions/handler.ErrorResponse"
+            $ref: '#/definitions/internal_users_handler.ErrorResponse'
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       summary: Update profile and preferences
       tags:
-        - users
+      - users
 schemes:
-  - http
+- http
 swagger: "2.0"
