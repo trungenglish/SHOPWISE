@@ -5,6 +5,6 @@ class ToolCaller:
         self.base_url = base_url
 
     def call_tool(self, tool_name: str, args: dict):
-        # In a real implementation, this would make an HTTP request to the Go backend
-        pass
-
+        response = httpx.post(f"{self.base_url}/{tool_name}", json=args)
+        response.raise_for_status()
+        return response.json()

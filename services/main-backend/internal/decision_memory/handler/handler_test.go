@@ -20,7 +20,6 @@ func TestHandler_GenerateResumeToken_Contract(t *testing.T) {
 	router := gin.New()
 
 	// Create a stub handler manually for contract validation
-	h := &handler.Handler{} // Note: Normally would mock the service, but here we just test payload shape manually via mock if needed.
 	// We'll just define the route and hit it with a mock context if service isn't injected, but actually we can test request binding contract easily.
 	
 	router.POST("/sessions/:id/resume-token", func(c *gin.Context) {

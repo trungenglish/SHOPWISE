@@ -164,7 +164,7 @@ func (h *Handler) UpdateSession(c *gin.Context) {
 		return
 	}
 
-	clientTs, err := time.Parse(time.RFC33String, clientTsStr)
+	clientTs, err := time.Parse(time.RFC3339, clientTsStr)
 	if err != nil {
 		c.Error(apperror.Validation("invalid X-Client-Timestamp format", err))
 		return
