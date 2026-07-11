@@ -1,12 +1,9 @@
 {
-  "$id":"surface.schema",
-  "type":"object",
-  "properties":{
-      "id":{
-      },
-      "type":{
-      },
-      "actions":{
-      }
+  "$id": "surface.schema",
+  "type": "object",
+  "properties": {
+    "id": {},
+    "type": {},
+    "actions": {}
   }
 }

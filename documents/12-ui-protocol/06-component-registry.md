@@ -18,7 +18,7 @@ checkout.panel    ->  CheckoutPanel.tsx
 ```typescript
 function SAUPRenderer({ node }: { node: UINode }) {
     const Component = ComponentRegistry[node.type] || FallbackComponent;
-    
+
     return (
         <Component {...node.props} state={node.state}>
             {node.children.map(child => (

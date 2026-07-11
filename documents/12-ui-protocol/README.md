@@ -13,7 +13,7 @@ To support SHOPWISE's goal of becoming the AI-native Operating System for Retail
 1. **Decision Protocol (SDP)**: The AI reasoning layer where the agent decides on the intent, products, reasoning, and actions.
 2. **UI Protocol (SAUP)**: A UI Composer receives the Decision Protocol output and generates a UI AST (Abstract Syntax Tree) representing the view.
 
-The UI Protocol describes *what* UI components are displayed and *what* actions are available. The frontend decides *how* they are rendered, animated, and adapted to platforms (Web, Mobile, POS, Smart TV).
+The UI Protocol describes _what_ UI components are displayed and _what_ actions are available. The frontend decides _how_ they are rendered, animated, and adapted to platforms (Web, Mobile, POS, Smart TV).
 
 ---
 
@@ -59,7 +59,7 @@ The UI Protocol describes *what* UI components are displayed and *what* actions 
 1. `01-overview.md` - Philosophy and Architecture
 2. `02-decision-protocol.md` - SDP (Decision Protocol) details
 3. `03-ui-ast.md` - Core UI Tree Model
-4. `04-node-system.md` - Node Types 
+4. `04-node-system.md` - Node Types
 5. `05-layout-engine.md` - Layouts
 6. `06-component-registry.md` - Component mapping
 7. `07-actions.md` - Action handling

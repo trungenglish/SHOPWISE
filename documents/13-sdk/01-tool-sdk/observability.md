@@ -19,6 +19,7 @@ This makes the LLM's reasoning process significantly cheaper (fewer tokens) and 
 ## Telemetry
 
 Each Tool execution tracks standard metrics:
+
 ```text
 duration
   ↓

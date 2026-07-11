@@ -17,22 +17,25 @@ LLM
 ## Example
 
 **Shopee API:**
+
 ```json
 {
- "item_name": "Laptop",
- "item_price": "15000000"
+  "item_name": "Laptop",
+  "item_price": "15000000"
 }
 ```
 
 **Phong Vũ API:**
+
 ```json
 {
- "name": "Laptop",
- "salePrice": 15000000
+  "name": "Laptop",
+  "salePrice": 15000000
 }
 ```
 
 **Canonical Model (Go):**
+
 ```go
 type Product struct {
     Name  string

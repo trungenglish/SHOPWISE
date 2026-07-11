@@ -30,4 +30,3 @@ Be sure to write what inspired you, what you learned, how you built your project
 Math
 Inline: \\( x + y \\)
 Block: $$ x^2 $$ -->
- 

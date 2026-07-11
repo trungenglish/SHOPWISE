@@ -6,11 +6,11 @@ The `state` object controls the visual and interactive properties of a UINode.
 
 ```typescript
 interface UIState {
-    visible?: boolean;
-    loading?: boolean;
-    disabled?: boolean;
-    expanded?: boolean;
-    selected?: boolean;
+  visible?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
+  expanded?: boolean;
+  selected?: boolean;
 }
 ```
 
