@@ -16,6 +16,7 @@ interface AuditTrailProps {
   isLoading: boolean;
   onReplay: () => void;
   suggestions?: string[];
+  hasMenuButton?: boolean;
 }
 
 export default function AuditTrail({
@@ -25,6 +26,7 @@ export default function AuditTrail({
   isLoading,
   onReplay,
   suggestions,
+  hasMenuButton,
 }: AuditTrailProps) {
   const [inputValue, setInputValue] = useState("");
 
@@ -39,7 +41,7 @@ export default function AuditTrail({
   return (
     <section className="glass-panel border-outline-variant/15 flex h-screen w-[320px] shrink-0 flex-col border-r select-none">
       {/* Header */}
-      <div className="border-outline-variant/20 flex items-center justify-between border-b p-4">
+      <div className={`border-outline-variant/20 flex items-center justify-between border-b p-4 pt-6 ${hasMenuButton ? "pl-16" : ""}`}>
         <h2 className="font-display text-on-surface flex items-center gap-1.5 text-sm font-semibold tracking-wide uppercase">
           <Sparkles size={14} className="text-[#4F7CFF]" />
           Audit Trail

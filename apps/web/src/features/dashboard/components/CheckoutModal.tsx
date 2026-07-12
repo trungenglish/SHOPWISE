@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { checkout } from "../../../api/checkout";
+import { UserResponse } from "../../../api/users";
 import {
   X,
   ShoppingBag,
@@ -112,6 +113,7 @@ export default function CheckoutModal({
   const [promoApplied, setPromoApplied] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [guestUser, setGuestUser] = useState<UserResponse | null>(null);
 
   const queryClient = useQueryClient();
 
@@ -134,6 +136,7 @@ export default function CheckoutModal({
     handleSubmit,
     control,
     watch,
+    reset,
     formState: { errors },
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
@@ -141,6 +144,26 @@ export default function CheckoutModal({
       deliveryMethod: "delivery",
     },
   });
+
+  useEffect(() => {
+    if (isOpen) {
+      const storedGuestUser = localStorage.getItem("guestUser");
+      if (storedGuestUser) {
+        try {
+          const parsed = JSON.parse(storedGuestUser) as UserResponse;
+          setGuestUser(parsed);
+          reset({
+            fullName: parsed.name,
+            phoneNumber: parsed.phone || "",
+            email: parsed.email,
+            deliveryMethod: "delivery",
+          });
+        } catch (e) {
+          console.error("Failed to parse guestUser from local storage", e);
+        }
+      }
+    }
+  }, [isOpen, reset]);
 
   const filteredStores = MOCK_STORES.filter(s => 
     s.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -170,7 +193,7 @@ export default function CheckoutModal({
 
   const handlePayment = (data: CheckoutFormData) => {
     checkoutMutation.mutate({
-      customer_id: crypto.randomUUID(), // Mocking customer id for now
+      customer_id: guestUser?.id || crypto.randomUUID(),
       items: [
         {
           product_id: product.id.length === 36 ? product.id : crypto.randomUUID(),
