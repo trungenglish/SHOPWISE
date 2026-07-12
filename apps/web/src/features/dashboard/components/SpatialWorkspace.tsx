@@ -30,25 +30,25 @@ const nodeTypes = {
 };
 
 interface SpatialWorkspaceProps {
-  products: Laptop[];
-  activeProductId: string;
-  setActiveProductId: (id: string) => void;
-  savedIds: string[];
-  onToggleSave: (id: string, e: React.MouseEvent) => void;
-  trustScore: number;
-  trustFactors: TrustFactors;
-  graphNodes: string[];
-  onChipClick: (suggestion: string) => void;
-  onCompareAll: () => void;
-  onExplainReasoning: () => void;
-  onAccessories: () => void;
-  onCheckout: () => void;
-  discountRate: number;
-  priceAlerts: PriceAlert[];
-  onOpenPriceAlert: (laptop: Laptop) => void;
+  readonly products: Laptop[];
+  readonly activeProductId: string;
+  readonly setActiveProductId: (id: string) => void;
+  readonly savedIds: string[];
+  readonly onToggleSave: (id: string, e: React.MouseEvent) => void;
+  readonly trustScore: number;
+  readonly trustFactors: TrustFactors;
+  readonly graphNodes: string[];
+  readonly onChipClick: (suggestion: string) => void;
+  readonly onCompareAll: () => void;
+  readonly onExplainReasoning: () => void;
+  readonly onAccessories: () => void;
+  readonly onCheckout: () => void;
+  readonly discountRate: number;
+  readonly priceAlerts: PriceAlert[];
+  readonly onOpenPriceAlert: (laptop: Laptop) => void;
 }
 
-function SpatialWorkspaceContent({
+const SpatialWorkspace = ({
   products,
   activeProductId,
   setActiveProductId,
@@ -65,7 +65,7 @@ function SpatialWorkspaceContent({
   discountRate,
   priceAlerts,
   onOpenPriceAlert,
-}: SpatialWorkspaceProps) {
+}: SpatialWorkspaceProps) => {
 
   const { zoomIn, zoomOut, fitView } = useReactFlow();
 
@@ -166,15 +166,7 @@ function SpatialWorkspaceContent({
 
     setNodes(updatedNodes);
     setEdges(updatedEdges);
-  }, [
-    products,
-    activeProductId,
-    discountRate,
-    priceAlerts,
-    graphNodes,
-    setActiveProductId,
-    onOpenPriceAlert,
-  ]);
+  }, [products, activeProductId, discountRate, priceAlerts, graphNodes, setActiveProductId, onOpenPriceAlert, setNodes, setEdges, onToggleSave, savedIds, hoveredProductId]);
 
   const activeProduct =
     products.find((p) => p.id === activeProductId) || products[0];
@@ -184,7 +176,7 @@ function SpatialWorkspaceContent({
   const isSaved = displayProduct ? savedIds.includes(displayProduct.id) : false;
 
   return (
-    <main className="relative flex h-full flex-1 flex-col overflow-hidden bg-transparent p-6 select-none">
+    <main className="relative flex h-full flex-1 flex-col overflow-hidden bg-transparent p-4 select-none">
       {/* Title block */}
       <div className="relative z-10 mb-4 flex items-start justify-between">
         <div>
@@ -197,7 +189,7 @@ function SpatialWorkspaceContent({
         </div>
 
         {/* Zoom controls */}
-        <div className="bg-surface-lowest/60 border-outline-variant/15 flex gap-1.5 rounded-lg border p-1 backdrop-blur">
+        {/* <div className="bg-surface-lowest/60 border-outline-variant/15 flex gap-1.5 rounded-lg border p-1 backdrop-blur">
           <button
             onClick={() => zoomIn()}
             className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded p-1.5 transition-colors"
@@ -219,11 +211,11 @@ function SpatialWorkspaceContent({
           >
             FIT
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Main Canvas Area */}
-      <div className="border-outline-variant/15 relative h-full min-h-[480px] w-full flex-1 overflow-hidden rounded-2xl border bg-[#0e0e11]/30">
+      <div className="relative h-full min-h-[480px] w-full flex-1 overflow-hidden rounded-2xl">
         {/* React Flow Editor */}
         <ReactFlow
           nodes={nodes}
@@ -241,8 +233,7 @@ function SpatialWorkspaceContent({
         </ReactFlow>
 
         {/* Contextual Specs Side Panel */}
-        {displayProduct && (
-          <div className="glass-card border-outline-variant/15 absolute top-4 left-4 z-20 flex w-[300px] flex-col gap-4 rounded-2xl border p-5 shadow-[0_15px_40px_-10px_rgba(79,124,255,0.15)] transition-all">
+        {displayProduct ? <div className="glass-card border-outline-variant/15 absolute top-4 left-4 z-20 flex w-[300px] flex-col gap-4 rounded-2xl border p-5 shadow-[0_15px_40px_-10px_rgba(79,124,255,0.15)] transition-all">
             <div className="border-outline-variant/15 flex items-start justify-between border-b pb-3">
               <span className="font-display text-[11px] font-black tracking-wider text-[#4F7CFF]">
                 {hoveredProductId ? "PREVIEWING DETAILS" : "SELECTED PRODUCT"}
@@ -347,8 +338,7 @@ function SpatialWorkspaceContent({
             >
               {isSaved ? "Unpin from Board" : "Pin to Board"}
             </button>
-          </div>
-        )}
+          </div> : null}
 
 
       </div>
@@ -384,10 +374,4 @@ function SpatialWorkspaceContent({
   );
 }
 
-export default function SpatialWorkspace(props: SpatialWorkspaceProps) {
-  return (
-    <ReactFlowProvider>
-      <SpatialWorkspaceContent {...props} />
-    </ReactFlowProvider>
-  );
-}
+export default SpatialWorkspace;

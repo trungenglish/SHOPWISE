@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import React, { useState, useEffect } from "react";
+import { ReactFlowProvider } from "@xyflow/react";
 import { useMutation } from "@tanstack/react-query";
 import Sidebar from "@/features/dashboard/components/Sidebar";
 import AuditTrail from "@/features/dashboard/components/AuditTrail";
@@ -526,7 +527,8 @@ function DashboardPage() {
     products.find((p) => p.id === activeProductId) || products[0] || null;
 
   return (
-    <div className="relative flex h-screen w-full overflow-hidden bg-[#09090B]">
+    <ReactFlowProvider>
+      <div className="relative flex h-screen w-full overflow-hidden bg-[#09090B]">
       {/* Background radial overlays */}
       <div className="shader-bg" />
 
@@ -757,5 +759,6 @@ function DashboardPage() {
         </div>
       )}
     </div>
+    </ReactFlowProvider>
   );
 }

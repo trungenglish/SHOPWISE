@@ -1,44 +1,72 @@
 import React, { useState } from "react";
 import { TrustFactors } from "../types";
-import { ShieldCheck, CheckCircle2, Star, Loader2, X } from "lucide-react";
+import { ShieldCheck, CheckCircle2, Star, Loader2, X, ZoomOut, ZoomIn } from "lucide-react";
+import { useReactFlow } from "@xyflow/react";
 
 interface TrustCenterHeaderProps {
-  trustScore: number;
-  trustFactors: TrustFactors;
-  isSimulating: boolean;
+  readonly trustScore: number;
+  readonly trustFactors: TrustFactors;
+  readonly isSimulating: boolean;
 }
 
-export default function TrustCenterHeader({
+const TrustCenterHeader = ({
   trustScore,
   trustFactors,
   isSimulating,
-}: TrustCenterHeaderProps) {
+}: TrustCenterHeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { zoomIn, zoomOut, fitView } = useReactFlow();
   return (
     <div className="pointer-events-none absolute top-4 right-6 z-50 flex flex-col items-end">
-      {/* Header Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="bg-surface-high/80 hover:bg-surface-highest border-outline-variant/30 group pointer-events-auto flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 shadow-lg backdrop-blur-md transition-colors"
-      >
-        <div className="relative">
-          {isSimulating ? (
-            <Loader2 size={16} className="animate-spin text-[#4F7CFF]" />
-          ) : (
-            <ShieldCheck
-              size={16}
-              className="text-[#4F7CFF] transition-transform group-hover:scale-110"
-            />
-          )}
-          {isSimulating && (
-            <span className="absolute top-0 right-0 h-2 w-2 animate-ping rounded-full bg-[#4F7CFF]" />
-          )}
+      <div className="flex flex-row items-center gap-2">
+        <div className="bg-surface-lowest/60 border-outline-variant/15 flex gap-1.5 rounded-lg border p-1 backdrop-blur">
+          <button
+            type="button"
+            onClick={() => zoomIn()}
+            className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded p-1.5 transition-colors"
+            title="Zoom In"
+          >
+            <ZoomIn size={15} />
+          </button>
+          <button
+            type="button"
+            onClick={() => zoomOut()}
+            className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded p-1.5 transition-colors"
+            title="Zoom Out"
+          >
+            <ZoomOut size={15} />
+          </button>
+          <button
+            type="button"
+            onClick={() => fitView()}
+            className="bg-surface-low hover:bg-surface-highest text-on-surface-variant hover:text-primary cursor-pointer rounded px-2 py-1 font-mono text-[10px] font-bold transition-colors"
+            title="Fit View"
+          >
+            FIT
+          </button>
         </div>
-        <span className="font-display text-on-surface text-[11px] font-bold tracking-wide">
-          {isSimulating ? "VERIFYING" : "TRUST CENTER"}
-        </span>
-      </button>
+
+        {/* Header Button */}
+        <button
+          type="button"
+          onClick={() => setIsOpen(!isOpen)}
+          className="bg-surface-high/80 hover:bg-surface-highest border-outline-variant/30 group pointer-events-auto flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 shadow-lg backdrop-blur-md transition-colors"
+        >
+          <div className="relative">
+            {isSimulating ? (
+              <Loader2 size={16} className="animate-spin text-[#4F7CFF]" />
+            ) : (
+              <ShieldCheck
+                size={16}
+                className="text-[#4F7CFF] transition-transform group-hover:scale-110"
+              />
+            )}
+          </div>
+          <span className="font-display text-on-surface text-[11px] font-bold tracking-wide">
+            {isSimulating ? "VERIFYING" : "TRUST CENTER"}
+          </span>
+        </button>
+      </div>
 
       {/* Expandable Panel */}
       {isOpen && (
@@ -53,6 +81,7 @@ export default function TrustCenterHeader({
               </span>
               <CheckCircle2 size={13} className="text-[#4F7CFF]" />
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
                 className="text-on-surface-variant hover:text-on-surface ml-2 cursor-pointer transition-colors"
               >
@@ -124,4 +153,6 @@ export default function TrustCenterHeader({
       )}
     </div>
   );
-}
+};
+
+export default TrustCenterHeader;
