@@ -14,7 +14,7 @@ export const Route = createFileRoute('/resume')({
   },
 });
 
-export function ResumePage() {
+function ResumePage() {
   const { token } = Route.useSearch();
   const navigate = useNavigate();
   const queryClient = useQueryClient();

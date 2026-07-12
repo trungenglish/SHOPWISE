@@ -42,7 +42,7 @@ func (h *Handler) List(c *gin.Context) {
 
 	items := make([]UserResponse, 0, len(users))
 	for i := range users {
-		items = append(items, toUserResponse(users[i].ID, users[i].Email, users[i].Name, users[i].CreatedAt, users[i].UpdatedAt))
+		items = append(items, toUserResponse(users[i].ID, users[i].Email, users[i].Name, users[i].Phone, users[i].CreatedAt, users[i].UpdatedAt))
 	}
 
 	c.JSON(http.StatusOK, UserListResponse{
@@ -74,13 +74,14 @@ func (h *Handler) Create(c *gin.Context) {
 	user, err := h.svc.Create(c.Request.Context(), usecase.CreateInput{
 		Email: req.Email,
 		Name:  req.Name,
+		Phone: req.Phone,
 	})
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
 
-	c.JSON(http.StatusCreated, toUserResponse(user.ID, user.Email, user.Name, user.CreatedAt, user.UpdatedAt))
+	c.JSON(http.StatusCreated, toUserResponse(user.ID, user.Email, user.Name, user.Phone, user.CreatedAt, user.UpdatedAt))
 }
 
 // GetByID godoc
@@ -106,7 +107,7 @@ func (h *Handler) GetByID(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, toUserResponse(user.ID, user.Email, user.Name, user.CreatedAt, user.UpdatedAt))
+	c.JSON(http.StatusOK, toUserResponse(user.ID, user.Email, user.Name, user.Phone, user.CreatedAt, user.UpdatedAt))
 }
 
 // Update godoc
@@ -139,13 +140,14 @@ func (h *Handler) Update(c *gin.Context) {
 	user, err := h.svc.Update(c.Request.Context(), id, usecase.UpdateInput{
 		Email: req.Email,
 		Name:  req.Name,
+		Phone: req.Phone,
 	})
 	if err != nil {
 		_ = c.Error(err)
 		return
 	}
 
-	c.JSON(http.StatusOK, toUserResponse(user.ID, user.Email, user.Name, user.CreatedAt, user.UpdatedAt))
+	c.JSON(http.StatusOK, toUserResponse(user.ID, user.Email, user.Name, user.Phone, user.CreatedAt, user.UpdatedAt))
 }
 
 // Delete godoc
@@ -172,6 +174,37 @@ func (h *Handler) Delete(c *gin.Context) {
 	c.Status(http.StatusNoContent)
 }
 
+// UpsertGuest godoc
+//
+//	@Summary	Upsert guest user
+//	@Tags		users
+//	@Accept		json
+//	@Produce	json
+//	@Param		body	body		CreateUserRequest	true	"Upsert guest user"
+//	@Success	200		{object}	UserResponse
+//	@Failure	400		{object}	ErrorResponse
+//	@Failure	500		{object}	ErrorResponse
+//	@Router		/users/guest [post]
+func (h *Handler) UpsertGuest(c *gin.Context) {
+	var req CreateUserRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		_ = c.Error(apperror.Validation("invalid request body", err))
+		return
+	}
+
+	user, err := h.svc.UpsertGuestUser(c.Request.Context(), usecase.CreateInput{
+		Email: req.Email,
+		Name:  req.Name,
+		Phone: req.Phone,
+	})
+	if err != nil {
+		_ = c.Error(err)
+		return
+	}
+
+	c.JSON(http.StatusOK, toUserResponse(user.ID, user.Email, user.Name, user.Phone, user.CreatedAt, user.UpdatedAt))
+}
+
 // RegisterRoutes mounts user routes on the given group (prefix /users).
 func RegisterRoutes(rg *gin.RouterGroup, h *Handler, verifier middleware.TokenVerifier) {
 	authed := rg.Group("")
@@ -182,6 +215,7 @@ func RegisterRoutes(rg *gin.RouterGroup, h *Handler, verifier middleware.TokenVe
 
 	rg.GET("", h.List)
 	rg.POST("", h.Create)
+	rg.POST("/guest", h.UpsertGuest)
 	rg.GET("/:id", h.GetByID)
 	rg.PATCH("/:id", h.Update)
 	rg.DELETE("/:id", h.Delete)

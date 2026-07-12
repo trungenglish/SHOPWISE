@@ -22,7 +22,7 @@ import { Input } from "@shopwise/ui/components/input";
 import { toast } from "sonner";
 
 import type { OnboardingFormData } from "../schema";
-import { mockSubmitOnboarding } from "../services/mock-adapter";
+import { upsertGuestUser } from "../../../api/users";
 
 interface OnboardingWizardStepProps {
   onBack: () => void;
@@ -70,13 +70,18 @@ export function OnboardingWizardStep({ onBack }: OnboardingWizardStepProps) {
   const onSubmit = async (data: OnboardingFormData) => {
     try {
       setIsSubmitting(true);
-      await mockSubmitOnboarding(data);
+      const guestUser = await upsertGuestUser({
+        email: data.email,
+        name: data.fullName,
+        phone: data.phoneNumber,
+      });
+      localStorage.setItem("guestUser", JSON.stringify(guestUser));
       toast.success("Profile created successfully!");
-      // MOCKED FLOW: Bypass real authentication and navigate directly to dashboard
+      // Navigate directly to dashboard
       // Note: We use replace: true to prevent navigating back to the onboarding step
       navigate({ to: "/dashboard", replace: true });
     } catch (error) {
-      toast.error("Failed to create profile. Please try again.");
+      toast.error(error instanceof Error ? error.message : "Failed to create profile. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
