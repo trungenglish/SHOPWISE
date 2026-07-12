@@ -186,7 +186,7 @@ function SpatialWorkspaceContent({
   return (
     <main className="relative flex h-full flex-1 flex-col overflow-hidden bg-transparent p-6 select-none">
       {/* Title block */}
-      <div className="relative z-10 mb-4 flex items-start justify-between">
+      <div className="relative z-10 mb-4 flex items-start justify-between pr-36">
         <div>
           <h2 className="font-display text-on-surface flex items-center gap-2 text-2xl font-extrabold tracking-tight">
             Spatial Workspace

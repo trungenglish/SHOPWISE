@@ -154,3 +154,27 @@ export async function deletePreference(id: string): Promise<void> {
   });
   if (!res.ok) throw new Error('Failed to delete preference');
 }
+
+export class ResumeSessionError extends Error {
+  code: string;
+  constructor(message: string, code: string) {
+    super(message);
+    this.name = 'ResumeSessionError';
+    this.code = code;
+  }
+}
+
+export async function resumeSessionFromToken(token: string): Promise<DecisionSession> {
+  const res = await fetch(`/api/v1/session/resume?token=${encodeURIComponent(token)}`, {
+    method: 'GET',
+    headers: getHeaders(),
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new ResumeSessionError(
+      errorData.message || 'Failed to resume session',
+      errorData.error || `http_error_${res.status}`
+    );
+  }
+  return res.json();
+}

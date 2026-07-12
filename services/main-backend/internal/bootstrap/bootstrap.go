@@ -25,6 +25,10 @@ import (
 	decisionmemoryhandler "shopwise/retail/internal/decision_memory/handler"
 	decisionmemorypostgres "shopwise/retail/internal/decision_memory/repository/postgres"
 	decisionmemoryusecase "shopwise/retail/internal/decision_memory/usecase"
+	resumesessionhandler "shopwise/retail/internal/resume_session/handler"
+	zaloprovider "shopwise/retail/internal/resume_session/provider/zalo"
+	resumesessionpostgres "shopwise/retail/internal/resume_session/repository/postgres"
+	resumesessionusecase "shopwise/retail/internal/resume_session/usecase"
 	"shopwise/retail/internal/platform/cache"
 	"shopwise/retail/internal/platform/config"
 	"shopwise/retail/internal/platform/database"
@@ -117,6 +121,15 @@ func Run() error {
 	decisionSvc := decisionmemoryusecase.NewService(decisionRepo)
 	decisionH := decisionmemoryhandler.NewHandler(decisionSvc)
 
+	resumeRepo := resumesessionpostgres.NewRepository(db)
+	resumeJWTSvc := resumesessionusecase.NewJWTService(cfg.JWTSecret)
+	
+	zaloProv := zaloprovider.NewProvider("oa_dummy", "token_dummy")
+	retryZalo := resumesessionusecase.NewRetryableProvider(zaloProv, 1)
+
+	resumeSvc := resumesessionusecase.NewService(resumeRepo, resumeJWTSvc, decisionSvc, userSvc, retryZalo)
+	resumeH := resumesessionhandler.NewHandler(resumeSvc)
+
 	engine := router.New(router.Dependencies{
 		Config: cfg,
 		Log:    log,
@@ -136,6 +149,7 @@ func Run() error {
 	ordershandler.RegisterListRoutes(v1.Group("/orders"), orderH, jwtSvc)
 	fileshandler.RegisterRoutes(v1.Group("/files"), filesH)
 	decisionmemoryhandler.RegisterRoutes(v1.Group("/sessions"), decisionH, jwtSvc)
+	resumesessionhandler.RegisterRoutes(v1.Group("/session"), resumeH)
 
 	adminGroup := v1.Group("/admin")
 	adminGroup.Use(guestRateLimit)
@@ -220,6 +234,11 @@ func Migrate() error {
 	log.Info("running decision memory migrations")
 	if err := decisionmemorypostgres.Migrate(db); err != nil {
 		return fmt.Errorf("failed to migrate decision memory: %w", err)
+	}
+
+	log.Info("running resume session migrations")
+	if err := resumesessionpostgres.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate resume session: %w", err)
 	}
 
 	log.Info("migrations completed successfully")
