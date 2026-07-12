@@ -254,15 +254,17 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/007-resume-shopping-session/plan.md
+For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/007-checkout-readiness/plan.md
 
-Active feature: Resume Shopping Session (007-resume-shopping-session)
+Active feature: Checkout Readiness (007-checkout-readiness)
 
-- Spec: specs/007-resume-shopping-session/spec.md
-- Plan: specs/007-resume-shopping-session/plan.md
-- Data model: specs/007-resume-shopping-session/data-model.md
-- API contracts: specs/007-resume-shopping-session/contracts/api-contracts.md
-- Quickstart: specs/007-resume-shopping-session/quickstart.md
+- Spec: specs/007-checkout-readiness/spec.md
+- Plan: specs/007-checkout-readiness/plan.md
+- Data model: specs/007-checkout-readiness/data-model.md
+- API contracts: specs/007-checkout-readiness/contracts/api-contracts.md
+- UI contracts: specs/007-checkout-readiness/contracts/ui-contracts.md
+- Quickstart: specs/007-checkout-readiness/quickstart.md
+- Research: specs/007-checkout-readiness/research.md
 - Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 
