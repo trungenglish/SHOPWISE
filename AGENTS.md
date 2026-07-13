@@ -275,3 +275,13 @@ Prefer `mcp__tinyfish__search` over WebSearch, `mcp__tinyfish__fetch_content` ov
 **WARNING**: If `run_web_automation` returns ANY error, the run is still executing. Call `get_run` or `list_runs` to check status before retrying; never blind-retry.
 
 Reference https://docs.tinyfish.ai/for-coding-agents and https://docs.tinyfish.ai/llms-full.txt for full agent context.
+
+<!-- OPENWIKI:START -->
+
+## OpenWiki
+
+This repository uses OpenWiki for recurring code documentation. Start with `openwiki/quickstart.md`, then follow its links to architecture, workflows, domain concepts, operations, integrations, testing guidance, and source maps.
+
+The scheduled OpenWiki GitHub Actions workflow refreshes the repository wiki. Do not hand-edit generated OpenWiki pages unless explicitly asked; prefer updating source code/docs and letting OpenWiki regenerate.
+
+<!-- OPENWIKI:END -->
