@@ -324,6 +324,7 @@ func RegisterRoutes(group *gin.RouterGroup, handler *Handler, verifier middlewar
 	
 	group.POST("/:id/branch", handler.BranchSession)
 	group.POST("/:id/restore", handler.RestoreSession)
+	group.POST("/:id/chat", handler.ChatStream)
 	group.POST("/:id/resume-token", handler.GenerateResumeToken)
 	group.GET("/resume/:token", handler.ResolveResumeToken)
 

@@ -23,7 +23,7 @@ import { Input } from "@shopwise/ui/components/input";
 import { toast } from "sonner";
 
 import { signInSchema, type SignInFormData } from "../schema";
-import { mockSubmitSignIn } from "../services/mock-adapter";
+import { submitSignIn } from "../services/auth.service";
 
 interface SignInStepProps {
   onBack: () => void;
@@ -48,10 +48,8 @@ export function SignInStep({ onBack }: SignInStepProps) {
   const onSubmit = async (data: SignInFormData) => {
     try {
       setIsSubmitting(true);
-      await mockSubmitSignIn(data);
+      await submitSignIn(data);
       toast.success("Signed in successfully!");
-      // MOCKED FLOW: Bypass real authentication and navigate directly to dashboard
-      // Note: We use replace: true to prevent navigating back to the sign-in step
       navigate({ to: "/dashboard", replace: true });
     } catch (error) {
       toast.error("Failed to sign in. Please try again.");

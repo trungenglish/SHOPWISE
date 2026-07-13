@@ -31,18 +31,21 @@ class OpenAIProvider(LLMProvider):
         model: str,
         temperature: float = 0.7,
         max_tokens: int | None = None,
-        session_id: str = "unknown"
+        session_id: str = "unknown",
+        response_format: dict[str, Any] | None = None
     ) -> str:
         async def _call():
-            kwargs = {
+            kwargs: dict[str, Any] = {
                 "model": model,
                 "messages": cast(Iterable[ChatCompletionMessageParam], messages),
                 "temperature": temperature,
             }
             if max_tokens:
                 kwargs["max_tokens"] = max_tokens
+            if response_format:
+                kwargs["response_format"] = response_format
                 
-            response = await self.client.chat.completions.create(**kwargs)
+            response = cast(Any, await self.client.chat.completions.create(**kwargs))
             return response.choices[0].message.content or ""
             
         result = await self._execute_with_retry(_call, session_id)
@@ -56,10 +59,11 @@ class OpenAIProvider(LLMProvider):
         model: str,
         temperature: float = 0.7,
         max_tokens: int | None = None,
-        session_id: str = "unknown"
+        session_id: str = "unknown",
+        response_format: dict[str, Any] | None = None
     ) -> AsyncGenerator[str, None]:
         async def _call():
-            kwargs = {
+            kwargs: dict[str, Any] = {
                 "model": model,
                 "messages": cast(Iterable[ChatCompletionMessageParam], messages),
                 "temperature": temperature,
@@ -67,8 +71,10 @@ class OpenAIProvider(LLMProvider):
             }
             if max_tokens:
                 kwargs["max_tokens"] = max_tokens
+            if response_format:
+                kwargs["response_format"] = response_format
                 
-            response_stream = await self.client.chat.completions.create(**kwargs)
+            response_stream = cast(Any, await self.client.chat.completions.create(**kwargs))
             return response_stream
             
         stream = await self._execute_with_retry(_call, session_id)

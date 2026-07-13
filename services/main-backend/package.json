@@ -12,6 +12,7 @@
     "build": "node ./scripts/with-go-env.mjs build -o ./bin/server ./cmd/retail",
     "build:worker": "node ./scripts/with-go-env.mjs build -o ./bin/worker ./cmd/worker",
     "start": "./bin/server",
+    "seed": "node ./scripts/with-go-env.mjs run ./cmd/seed",
     "swagger:gen": "node ./scripts/with-go-env.mjs run github.com/swaggo/swag/cmd/swag@latest fmt && node ./scripts/with-go-env.mjs run github.com/swaggo/swag/cmd/swag@latest init -g cmd/retail/main.go --parseInternal -d ./",
     "check-types": "node ./scripts/with-go-env.mjs vet ./...",
     "test": "node ./scripts/with-go-env.mjs test ./...",

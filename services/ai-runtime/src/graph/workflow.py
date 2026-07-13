@@ -13,10 +13,21 @@ def create_workflow(provider: Any):
     workflow = StateGraph(GraphState)  # type: ignore
     
     async def llm_node(state: GraphState):
+        from src.models.schemas import DecisionResponse
+        schema_dict = DecisionResponse.model_json_schema()
+        response_format = {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "DecisionResponse",
+                "schema": schema_dict,
+                "strict": False
+            }
+        }
         response = await provider.chat_completion(
             messages=state["messages"],
             model="gpt-4o-mini",
-            session_id=state["session_id"]
+            session_id=state["session_id"],
+            response_format=response_format
         )
         return {"final_response": response}
         

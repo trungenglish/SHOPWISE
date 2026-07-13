@@ -65,6 +65,8 @@ async def chat_endpoint(req: ChatRequest, provider: OpenAIProvider = Depends(get
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+from src.models.schemas import DecisionResponse
+
 @router.post("/chat/stream")
 async def chat_stream_endpoint(req: ChatRequest, provider: OpenAIProvider = Depends(get_provider)):
     # Merge runtime params with defaults
@@ -78,13 +80,24 @@ async def chat_stream_endpoint(req: ChatRequest, provider: OpenAIProvider = Depe
         {"role": "user", "content": req.message}
     ]
     
+    schema_dict = DecisionResponse.model_json_schema()
+    response_format = {
+        "type": "json_schema",
+        "json_schema": {
+            "name": "DecisionResponse",
+            "schema": schema_dict,
+            "strict": False
+        }
+    }
+    
     try:
         generator = provider.stream_chat_completion(
             messages=messages,
             model=model,
             temperature=temperature,
             max_tokens=max_tokens,
-            session_id=req.session_id
+            session_id=req.session_id,
+            response_format=response_format
         )
         return EventSourceResponse(generate_sse(generator))
     except Exception as e:
