@@ -27,8 +27,16 @@ jobs:
       - name: Run OpenWiki
         run: openwiki code --update --print
         env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENWIKI_MODEL_ID: z-ai/glm-5.2
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENWIKI_PROVIDER: "openai"
+          OPENWIKI_MODEL_ID: ${{ secrets.OPENWIKI_MODEL_ID }}
+          OPENWIKI_X_CLIENT_ID: ${{ secrets.OPENWIKI_X_CLIENT_ID }}
+          OPENWIKI_NOTION_MCP_CLIENT_ID: ${{ secrets.OPENWIKI_NOTION_MCP_CLIENT_ID }}
+          OPENWIKI_NOTION_MCP_ACCESS_TOKEN: ${{ secrets.OPENWIKI_NOTION_MCP_ACCESS_TOKEN }}
+          OPENWIKI_NOTION_MCP_REFRESH_TOKEN: ${{ secrets.OPENWIKI_NOTION_MCP_REFRESH_TOKEN }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          OPENWIKI_NOTION_MCP_TOKEN_EXPIRES_AT: ${{ secrets.OPENWIKI_NOTION_MCP_TOKEN_EXPIRES_AT }}
+          OPENWIKI_NOTION_MCP_TOKEN_TYPE: ${{ secrets.OPENWIKI_NOTION_MCP_TOKEN_TYPE }}
           LANGSMITH_API_KEY: ${{ secrets.LANGSMITH_API_KEY }}
           LANGCHAIN_PROJECT: openwiki
           LANGCHAIN_TRACING_V2: "true"
