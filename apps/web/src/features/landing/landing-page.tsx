@@ -1,15 +1,15 @@
 import { ReactLenis, useLenis } from "lenis/react";
 import { ScrollTrigger } from "@/lib/gsap-config";
-import { LandingNavbar } from "./components/navbar/LandingNavbar";
-import { HeroSection } from "./components/hero/HeroSection";
-import { TrustedBySection } from "./components/trusted-by/TrustedBySection";
-import { ProblemStatementSection } from "./components/problem/ProblemStatementSection";
-import { AiDecisionSection } from "./components/ai-viz/AiDecisionSection";
-import { FeaturesSection } from "./components/features/FeaturesSection";
-import { WorkflowSection } from "./components/workflow/WorkflowSection";
-import { DecisionConfidenceSection } from "./components/confidence/DecisionConfidenceSection";
-import { FinalCtaSection } from "./components/final-cta/FinalCtaSection";
-import { LandingFooter } from "./components/footer/LandingFooter";
+import { LandingNavbar } from "./components/navbar/landing-navbar";
+import { HeroSection } from "./components/hero/hero-section";
+import { TrustedBySection } from "./components/trusted-by/trusted-by-section";
+import { ProblemStatementSection } from "./components/problem/problem-statement-section";
+import { AiDecisionSection } from "./components/ai-viz/ai-decision-section";
+import { FeaturesSection } from "./components/features/features-section";
+import { WorkflowSection } from "./components/workflow/workflow-section";
+import { DecisionConfidenceSection } from "./components/confidence/decision-confidence-section";
+import { FinalCtaSection } from "./components/final-cta/final-cta-section";
+import { LandingFooter } from "./components/footer/landing-footer";
 
 function ScrollTriggerSync() {
   useLenis(() => {

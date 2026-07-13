@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
-import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
+import { useReducedMotion } from "@/features/landing/hooks/use-reduced-motion";
 import { ShieldCheck, ShieldAlert, CheckSquare } from "lucide-react";
 
 export function AiDecisionPanel() {

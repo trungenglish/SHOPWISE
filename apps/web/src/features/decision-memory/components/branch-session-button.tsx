@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { branchSession, DecisionSession } from '../../../api/decisionMemory';
+import { branchSession, DecisionSession } from '../../../api/decision-memory';
 
 interface BranchSessionButtonProps {
   sessionId: string;

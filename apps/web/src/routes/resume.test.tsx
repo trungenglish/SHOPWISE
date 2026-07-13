@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ResumePage, Route } from './resume';
-import * as decisionMemoryApi from '@/api/decisionMemory';
+import * as decisionMemoryApi from '@/api/decision-memory';
 
 const mockNavigate = vi.fn();
 const mockInvalidateQueries = vi.fn();
@@ -25,7 +25,7 @@ vi.mock('@tanstack/react-query', () => ({
   useQuery: (opts: any) => mockUseQueryReturn,
 }));
 
-vi.mock('@/api/decisionMemory', () => ({
+vi.mock('@/api/decision-memory', () => ({
   resumeSessionFromToken: vi.fn(),
   ResumeSessionError: class extends Error {
     code: string;

@@ -1,5 +1,5 @@
 import { TRUSTED_BY_LOGOS } from "../../data/trusted-by";
-import { LogoMarquee } from "./LogoMarquee";
+import { LogoMarquee } from "./logo-marquee";
 
 export function TrustedBySection() {
   if (!TRUSTED_BY_LOGOS || TRUSTED_BY_LOGOS.length === 0) {

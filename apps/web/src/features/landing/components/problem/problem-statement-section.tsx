@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
-import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
+import { useReducedMotion } from "@/features/landing/hooks/use-reduced-motion";
 
 export function ProblemStatementSection() {
   const containerRef = useRef<HTMLDivElement>(null);

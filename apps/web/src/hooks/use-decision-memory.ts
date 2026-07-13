@@ -4,7 +4,7 @@ import {
   createSession,
   getSession,
   autoSaveSession,
-} from '../api/decisionMemory';
+} from '../api/decision-memory';
 
 export function useDecisionMemory() {
   const [activeSession, setActiveSession] = useState<DecisionSession | null>(null);

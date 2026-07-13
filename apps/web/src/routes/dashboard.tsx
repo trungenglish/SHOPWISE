@@ -2,18 +2,18 @@ import { createFileRoute } from "@tanstack/react-router";
 import React, { useState, useEffect } from "react";
 import { ReactFlowProvider } from "@xyflow/react";
 import { useMutation } from "@tanstack/react-query";
-import Sidebar from "@/features/dashboard/components/Sidebar";
-import AuditTrail from "@/features/dashboard/components/AuditTrail";
-import AgentHub from "@/features/dashboard/components/AgentHub";
-import TrustCenterHeader from "@/features/dashboard/components/TrustCenterHeader";
-import SpatialWorkspace from "@/features/dashboard/components/SpatialWorkspace";
-import ComparisonModal from "@/features/dashboard/components/ComparisonModal";
-import AccessoriesModal from "@/features/dashboard/components/AccessoriesModal";
-import ReasoningModal from "@/features/dashboard/components/ReasoningModal";
-import RetailModal from "@/features/dashboard/components/RetailModal";
-import CheckoutModal from "@/features/dashboard/components/CheckoutModal";
-import PriceAlertModal from "@/features/dashboard/components/PriceAlertModal";
-import { OrderHistoryPage } from "@/features/orders/components/OrderHistoryPage";
+import Sidebar from "@/features/dashboard/components/sidebar";
+import AuditTrail from "@/features/dashboard/components/audit-trail";
+import AgentHub from "@/features/dashboard/components/agent-hub";
+import TrustCenterHeader from "@/features/dashboard/components/trust-center-header";
+import SpatialWorkspace from "@/features/dashboard/components/spatial-workspace";
+import ComparisonModal from "@/features/dashboard/components/comparison-modal";
+import AccessoriesModal from "@/features/dashboard/components/accessories-modal";
+import ReasoningModal from "@/features/dashboard/components/reasoning-modal";
+import RetailModal from "@/features/dashboard/components/retail-modal";
+import CheckoutModal from "@/features/dashboard/components/checkout-modal";
+import PriceAlertModal from "@/features/dashboard/components/price-alert-modal";
+import { OrderHistoryPage } from "@/features/orders/components/order-history-page";
 import {
   Laptop,
   AuditLog,
@@ -28,7 +28,7 @@ import {
   initialAccessories,
 } from "@/features/dashboard/mock-data";
 import { Sparkles, Loader2, Bookmark, Bell, Menu } from "lucide-react";
-import EmptyWorkspace from "@/features/dashboard/components/EmptyWorkspace";
+import EmptyWorkspace from "@/features/dashboard/components/empty-workspace";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,

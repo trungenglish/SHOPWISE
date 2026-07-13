@@ -2,8 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import React, { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
-import { resumeSessionFromToken, ResumeSessionError } from '@/api/decisionMemory';
-import { ExpiredTokenUI, TokenErrorCode } from '@/components/ExpiredTokenUI';
+import { resumeSessionFromToken, ResumeSessionError } from '@/api/decision-memory';
+import { ExpiredTokenUI, TokenErrorCode } from '@/components/expired-token-ui';
 
 export const Route = createFileRoute('/resume')({
   component: ResumePage,

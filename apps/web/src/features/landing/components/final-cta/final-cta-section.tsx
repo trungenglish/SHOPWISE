@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@shopwise/ui/components/button";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
-import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
+import { useReducedMotion } from "@/features/landing/hooks/use-reduced-motion";
 
 export function FinalCtaSection() {
   const sectionRef = useRef<HTMLDivElement>(null);

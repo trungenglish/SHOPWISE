@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@shopwise/ui/components/button";
 import { Menu } from "lucide-react";
-import { useScrollSpy } from "@/features/landing/hooks/useScrollSpy";
-import { MobileNavDrawer } from "./MobileNavDrawer";
-import logoUrl from "@/assets/shopwise_favicon.svg";
+import { useScrollSpy } from "@/features/landing/hooks/use-scroll-spy";
+import { MobileNavDrawer } from "./mobile-nav-drawer";
+import logoUrl from "@/assets/shopwise-favicon.svg";
 
 export function LandingNavbar() {
   const [isScrolled, setIsScrolled] = useState(false);

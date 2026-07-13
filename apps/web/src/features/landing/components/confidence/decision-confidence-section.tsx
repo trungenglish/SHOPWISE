@@ -3,8 +3,8 @@ import { Link } from "@tanstack/react-router";
 import { Button } from "@shopwise/ui/components/button";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
-import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
-import { DecisionConfidencePanel } from "./DecisionConfidencePanel";
+import { useReducedMotion } from "@/features/landing/hooks/use-reduced-motion";
+import { DecisionConfidencePanel } from "./decision-confidence-panel";
 
 export function DecisionConfidenceSection() {
   const sectionRef = useRef<HTMLDivElement>(null);

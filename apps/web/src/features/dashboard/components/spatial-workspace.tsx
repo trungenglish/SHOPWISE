@@ -21,7 +21,7 @@ import {
   Edge,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
-import { UserGoalNode, PriorityNode, LaptopNode } from "./FlowNodes";
+import { UserGoalNode, PriorityNode, LaptopNode } from "./flow-nodes";
 
 const nodeTypes = {
   userGoal: UserGoalNode,

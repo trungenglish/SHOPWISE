@@ -1,1 +1,1 @@
-export * from './CheckoutReadiness';
+export * from './checkout-readiness';

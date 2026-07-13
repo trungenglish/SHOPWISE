@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { deletePreference } from '../../../api/decisionMemory';
+import { deletePreference } from '../../../api/decision-memory';
 
 interface PreferenceUndoToastProps {
   preferenceId: string;

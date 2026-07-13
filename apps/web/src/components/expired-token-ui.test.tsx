@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import { ExpiredTokenUI } from './ExpiredTokenUI';
+import { ExpiredTokenUI } from './expired-token-ui';
 
 vi.mock('@tanstack/react-router', () => ({
   useNavigate: () => vi.fn(),

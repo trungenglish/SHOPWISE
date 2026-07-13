@@ -4,8 +4,8 @@ import { Badge } from "@shopwise/ui/components/badge";
 import { Button } from "@shopwise/ui/components/button";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
-import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
-import { HeroVisual } from "./HeroVisual";
+import { useReducedMotion } from "@/features/landing/hooks/use-reduced-motion";
+import { HeroVisual } from "./hero-visual";
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);

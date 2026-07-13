@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
-import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
+import { useReducedMotion } from "@/features/landing/hooks/use-reduced-motion";
 import { WORKFLOW_STEPS } from "../../data/workflow-steps";
-import { WorkflowTimeline } from "./WorkflowTimeline";
+import { WorkflowTimeline } from "./workflow-timeline";
 
 export function WorkflowSection() {
   const sectionRef = useRef<HTMLDivElement>(null);

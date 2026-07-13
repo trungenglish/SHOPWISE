@@ -1,9 +1,9 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap-config";
-import { useReducedMotion } from "@/features/landing/hooks/useReducedMotion";
+import { useReducedMotion } from "@/features/landing/hooks/use-reduced-motion";
 import { FEATURES } from "../../data/features";
-import { FeatureCard } from "./FeatureCard";
+import { FeatureCard } from "./feature-card";
 
 export function FeaturesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);

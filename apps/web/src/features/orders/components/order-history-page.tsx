@@ -1,7 +1,7 @@
 import { ShoppingBag, Loader2, AlertCircle, RefreshCw } from "lucide-react";
-import { OrderCard } from "./OrderCard";
-import { EmptyOrders } from "./EmptyOrders";
-import { OrderDetailModal } from "./OrderDetailModal";
+import { OrderCard } from "./order-card";
+import { EmptyOrders } from "./empty-orders";
+import { OrderDetailModal } from "./order-detail-modal";
 import { useOrders } from "../hooks/use-orders";
 import { Order } from "../types";
 import { useState } from "react";

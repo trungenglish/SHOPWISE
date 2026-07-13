@@ -1,5 +1,5 @@
 import React from 'react';
-import { SessionMessage } from '../../../api/decisionMemory';
+import { SessionMessage } from '../../../api/decision-memory';
 
 interface ReasoningStep {
   summary: string;

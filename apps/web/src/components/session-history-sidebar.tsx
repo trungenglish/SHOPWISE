@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { listSessions, DecisionSession, deleteSession, renameSession } from '../api/decisionMemory';
+import { listSessions, DecisionSession, deleteSession, renameSession } from '../api/decision-memory';
 import { Button } from '@shopwise/ui/components/button';
 import { Input } from '@shopwise/ui/components/input';
 import { Search, Trash, Edit2, Archive, MessageSquare } from 'lucide-react';
