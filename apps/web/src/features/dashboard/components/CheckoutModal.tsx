@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { checkout } from "../../../api/checkout";
 import { UserResponse } from "../../../api/users";
 import {
@@ -94,13 +94,6 @@ const formatVND = (amount: number) => {
   }).format(vndAmount);
 };
 
-const MOCK_STORES = [
-  { id: "pv-1", name: "Phong Vũ Nguyễn Thị Minh Khai", address: "264 Nguyễn Thị Minh Khai, P. Võ Thị Sáu, Q. 3, TP.HCM" },
-  { id: "pv-2", name: "Phong Vũ Cách Mạng Tháng 8", address: "288 Cách Mạng Tháng 8, P. 10, Q. 3, TP.HCM" },
-  { id: "pv-3", name: "Phong Vũ Thái Hà", address: "1 Thái Hà, Trung Liệt, Đống Đa, Hà Nội" },
-  { id: "pv-4", name: "Phong Vũ Cầu Giấy", address: "173 Xuân Thủy, Dịch Vọng Hậu, Cầu Giấy, Hà Nội" },
-  { id: "pv-5", name: "Phong Vũ Lê Văn Việt", address: "1A Lê Văn Việt, Hiệp Phú, TP. Thủ Đức, TP.HCM" },
-];
 
 export default function CheckoutModal({
   isOpen,
@@ -165,8 +158,18 @@ export default function CheckoutModal({
     }
   }, [isOpen, reset]);
 
-  const filteredStores = MOCK_STORES.filter(s => 
-    s.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const { data: stores = [] } = useQuery({
+    queryKey: ["stores"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:8080/api/v1/stores");
+      if (!res.ok) throw new Error("Failed to fetch stores");
+      const data = await res.json();
+      return data.items || [];
+    },
+  });
+
+  const filteredStores = stores.filter((s: any) =>
+    s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     s.address.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -397,7 +400,7 @@ export default function CheckoutModal({
                           disabled={isSubmittingManual}
                         />
                       </div>
-                      
+
                       <div className="border-outline-variant/30 flex max-h-[250px] flex-col overflow-y-auto overflow-x-hidden rounded-lg border">
                         <Controller
                           control={control}
@@ -409,7 +412,7 @@ export default function CheckoutModal({
                               className="flex flex-col gap-0"
                               disabled={isSubmittingManual}
                             >
-                              {filteredStores.length > 0 ? filteredStores.map((store) => (
+                              {filteredStores.length > 0 ? filteredStores.map((store: any) => (
                                 <Label
                                   key={store.id}
                                   htmlFor={store.id}

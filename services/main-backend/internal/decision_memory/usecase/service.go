@@ -119,3 +119,7 @@ func (s *Service) RestoreSession(ctx context.Context, id uuid.UUID, clientTimest
 	session.Status = "active"
 	return s.repo.UpdateSession(ctx, session, clientTimestamp)
 }
+
+func (s *Service) AddMessage(ctx context.Context, msg *domain.SessionMessage) error {
+	return s.repo.AddMessage(ctx, msg)
+}

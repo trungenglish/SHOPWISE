@@ -542,8 +542,6 @@ importers:
 
   scripts: {}
 
-  services/agentic: {}
-
   services/main-backend: {}
 
 packages:

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import React, { useState, useEffect } from "react";
+import { ReactFlowProvider } from "@xyflow/react";
 import { useMutation } from "@tanstack/react-query";
 import Sidebar from "@/features/dashboard/components/Sidebar";
 import AuditTrail from "@/features/dashboard/components/AuditTrail";
@@ -21,7 +22,6 @@ import {
   PriceAlert,
 } from "@/features/dashboard/types";
 import {
-  initialProducts,
   initialLogs,
   initialAgents,
   initialReasoning,
@@ -36,11 +36,29 @@ export const Route = createFileRoute("/dashboard")({
 
 // A simulated API response for TanStack Query mutation
 const mockDecisionApi = async (queryText: string) => {
-  return new Promise<any>((resolve) => {
+  return new Promise<any>(async (resolve) => {
+    let fetchedProducts = [];
+    try {
+      const res = await fetch("http://localhost:8080/api/v1/products");
+      const data = await res.json();
+      fetchedProducts = data.items || [];
+    } catch (e) {}
+    
+    let mappedProducts = fetchedProducts.map((p: any) => ({
+      id: p.ID || p.id,
+      name: p.Name || p.name,
+      price: p.Price || p.price,
+      image: p.Metadata?.images?.[0] || "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80",
+      specs: p.Specifications || { cpu: "Intel Core", ram: "16GB", storage: "512GB SSD", gpu: "Integrated", screen: "14 inch" },
+      aiPerf: { label: "NPU (TOPS)", value: p.Metadata?.npu_tops || "40" },
+      rendering: { label: "Cinebench R23", value: p.Metadata?.cinebench || "15000" },
+      thermals: { label: "Max Temp", value: p.Metadata?.max_temp || "85°C" },
+    }));
+
     setTimeout(() => {
       resolve({
         sessionTitle: "AI Custom Decision",
-        products: initialProducts.map((p) => ({
+        products: mappedProducts.map((p: any) => ({
           ...p,
           matchScore: Math.floor(Math.random() * 15) + 84,
           matchExplanation: `Recommended for: "${queryText}". Demonstrates solid real-world performance.`,
@@ -445,14 +463,32 @@ function DashboardPage() {
       }, 8000);
 
       // Step 4: Final Resolve
-      setTimeout(() => {
+      setTimeout(async () => {
         setSessionTitle("AI Custom Decision");
 
-        // Customize products based on intent
-        let finalProducts = [...initialProducts];
-        if (queryText.includes("Yes")) {
-          // If earning money, push high reliability options (just reordering mock data as an example)
-          finalProducts = [initialProducts[0], initialProducts[2], initialProducts[1]];
+        let fetchedProducts = [];
+        try {
+          const res = await fetch("http://localhost:8080/api/v1/products");
+          const data = await res.json();
+          fetchedProducts = data.items || [];
+        } catch (e) {
+          console.error(e);
+        }
+
+        let mappedProducts = fetchedProducts.map((p: any) => ({
+          id: p.ID || p.id,
+          name: p.Name || p.name,
+          price: p.Price || p.price,
+          image: p.Metadata?.images?.[0] || "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80",
+          specs: p.Specifications || { cpu: "Intel Core", ram: "16GB", storage: "512GB SSD", gpu: "Integrated", screen: "14 inch" },
+          aiPerf: { label: "NPU (TOPS)", value: p.Metadata?.npu_tops || "40" },
+          rendering: { label: "Cinebench R23", value: p.Metadata?.cinebench || "15000" },
+          thermals: { label: "Max Temp", value: p.Metadata?.max_temp || "85°C" },
+        }));
+
+        let finalProducts = [...mappedProducts];
+        if (queryText.includes("Yes") && mappedProducts.length >= 3) {
+          finalProducts = [mappedProducts[0], mappedProducts[2], mappedProducts[1]];
         }
 
         setProducts(
@@ -526,7 +562,8 @@ function DashboardPage() {
     products.find((p) => p.id === activeProductId) || products[0] || null;
 
   return (
-    <div className="relative flex h-screen w-full overflow-hidden bg-[#09090B]">
+    <ReactFlowProvider>
+      <div className="relative flex h-screen w-full overflow-hidden bg-[#09090B]">
       {/* Background radial overlays */}
       <div className="shader-bg" />
 
@@ -758,5 +795,6 @@ function DashboardPage() {
         </div>
       )}
     </div>
+    </ReactFlowProvider>
   );
 }

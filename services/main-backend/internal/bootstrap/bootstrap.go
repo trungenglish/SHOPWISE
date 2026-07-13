@@ -40,6 +40,8 @@ import (
 	usershandler "shopwise/retail/internal/users/handler"
 	userpostgres "shopwise/retail/internal/users/repository/postgres"
 	usersusecase "shopwise/retail/internal/users/usecase"
+	cataloghandler "shopwise/retail/internal/catalog/handler"
+	storeshandler "shopwise/retail/internal/stores/handler"
 
 	langfuse "github.com/git-hulk/langfuse-go"
 )
@@ -148,6 +150,13 @@ func Run() error {
 	ordershandler.RegisterRoutes(v1.Group("/checkout"), orderH, jwtSvc)
 	ordershandler.RegisterListRoutes(v1.Group("/orders"), orderH, jwtSvc)
 	fileshandler.RegisterRoutes(v1.Group("/files"), filesH)
+
+	catalogH := cataloghandler.NewHandler(db)
+	cataloghandler.RegisterRoutes(v1.Group("/products"), catalogH)
+
+	storesH := storeshandler.NewHandler()
+	storeshandler.RegisterRoutes(v1.Group("/stores"), storesH)
+
 	decisionmemoryhandler.RegisterRoutes(v1.Group("/sessions"), decisionH, jwtSvc)
 	resumesessionhandler.RegisterRoutes(v1.Group("/session"), resumeH)
 

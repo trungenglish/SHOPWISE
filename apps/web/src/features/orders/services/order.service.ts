@@ -37,28 +37,34 @@ export class OrderService {
   private static readonly CUSTOMER_ID = "11111111-1111-1111-1111-111111111111"; // Dev bypass ID
 
   static async getOrders(): Promise<Order[]> {
-    const res = await fetch(`${this.API_BASE}?customer_id=${this.CUSTOMER_ID}`, {
-      headers: {
-        "x-checkout-auth-bypass": "true",
-      },
-    });
+    const [ordersRes, productsRes] = await Promise.all([
+      fetch(`${this.API_BASE}?customer_id=${this.CUSTOMER_ID}`, {
+        headers: { "x-checkout-auth-bypass": "true" },
+      }),
+      fetch(`http://localhost:8080/api/v1/products`)
+    ]);
 
-    if (!res.ok) {
-      throw new Error(`Failed to fetch orders: ${res.statusText}`);
+    if (!ordersRes.ok) {
+      throw new Error(`Failed to fetch orders: ${ordersRes.statusText}`);
     }
 
-    const data: OrderListResponse = await res.json();
+    const data: OrderListResponse = await ordersRes.json();
+    let products: any[] = [];
+    if (productsRes.ok) {
+        const prodData = await productsRes.json();
+        products = prodData.items || [];
+    }
 
-    return data.items.map((order) => this.mapOrderResponse(order));
+    return data.items.map((order) => this.mapOrderResponse(order, products));
   }
 
-  private static mapOrderResponse(order: OrderResponse): Order {
+  private static mapOrderResponse(order: OrderResponse, products: any[]): Order {
     return {
       id: order.order_id,
       date: order.created_at,
       status: this.mapStatus(order.status),
       totalPrice: order.total_amount,
-      items: order.items.map((item) => this.mapOrderItem(item)),
+      items: order.items.map((item) => this.mapOrderItem(item, products)),
     };
   }
 
@@ -72,16 +78,20 @@ export class OrderService {
     }
   }
 
-  private static mapOrderItem(item: OrderItemResponse): OrderItem {
-    // Attempt to enrich from mock data since API only returns ID and price
-    const mockProduct = initialProducts.find((p) => p.id === item.product_id);
+  private static mapOrderItem(item: OrderItemResponse, products: any[]): OrderItem {
+    // Attempt to enrich from real product data
+    const apiProduct = products.find((p) => p.ID === item.product_id || p.id === item.product_id);
+    let thumbnail = "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80";
+    if (apiProduct && apiProduct.Metadata && apiProduct.Metadata.images && apiProduct.Metadata.images.length > 0) {
+      thumbnail = apiProduct.Metadata.images[0];
+    }
     
     return {
       id: item.product_id,
-      name: mockProduct?.name || "Sản phẩm ShopWise",
+      name: apiProduct?.Name || apiProduct?.name || "Sản phẩm ShopWise",
       quantity: item.quantity,
       price: item.unit_price,
-      thumbnail: mockProduct?.image || "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80",
+      thumbnail: thumbnail,
     };
   }
 }
