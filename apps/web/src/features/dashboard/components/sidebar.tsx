@@ -51,7 +51,7 @@ export default function Sidebar({
       {/* New Session Action */}
       <button
         onClick={onNewSession}
-        className="bg-surface text-primary font-display mx-1 mb-6 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#4F7CFF]/30 px-4 py-3 text-xs font-semibold shadow-[0_0_15px_rgba(79,124,255,0.08)] transition-all hover:scale-[1.02] hover:border-[#4F7CFF]/60 hover:bg-[#4F7CFF]/15 active:scale-[0.98]"
+        className="bg-surface text-primary font-display mx-1 mb-6 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#4F7CFF]/30 px-4 py-3 text-xs font-semibold shadow-[0_0_15px_rgba(79,124,255,0.08)] transition-[color,transform,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:scale-[1.02] hover:border-[#4F7CFF]/60 hover:bg-[#4F7CFF]/15 active:scale-[0.98] max-md:hover:scale-100"
       >
         <Plus size={16} />
         New Session
@@ -61,7 +61,7 @@ export default function Sidebar({
       <nav className="flex flex-1 flex-col gap-1.5">
         <button
           onClick={() => setActiveTab("sessions")}
-          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-all ${
+          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors duration-200 ease-[var(--ease-out)] ${
             activeTab === "sessions"
               ? "border-r-2 border-[#4F7CFF] bg-[#4F7CFF]/5 font-bold text-[#4F7CFF]"
               : "text-on-surface-variant hover:bg-surface-high hover:text-on-surface"
@@ -78,7 +78,7 @@ export default function Sidebar({
 
         <button
           onClick={() => setActiveTab("saved")}
-          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-all ${
+          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors duration-200 ease-[var(--ease-out)] ${
             activeTab === "saved"
               ? "border-r-2 border-[#4F7CFF] bg-[#4F7CFF]/5 font-bold text-[#4F7CFF]"
               : "text-on-surface-variant hover:bg-surface-high hover:text-on-surface"
@@ -100,7 +100,7 @@ export default function Sidebar({
 
         <button
           onClick={() => setActiveTab("retail")}
-          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-all ${
+          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors duration-200 ease-[var(--ease-out)] ${
             activeTab === "retail"
               ? "border-r-2 border-[#4F7CFF] bg-[#4F7CFF]/5 font-bold text-[#4F7CFF]"
               : "text-on-surface-variant hover:bg-surface-high hover:text-on-surface"
@@ -115,7 +115,7 @@ export default function Sidebar({
 
         <button
           onClick={() => setActiveTab("orders")}
-          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-all ${
+          className={`flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left transition-colors duration-200 ease-[var(--ease-out)] ${
             activeTab === "orders"
               ? "border-r-2 border-[#4F7CFF] bg-[#4F7CFF]/5 font-bold text-[#4F7CFF]"
               : "text-on-surface-variant hover:bg-surface-high hover:text-on-surface"
@@ -133,7 +133,7 @@ export default function Sidebar({
       <div className="border-outline-variant/20 mt-auto border-t pt-4">
         <a
           href="#settings"
-          className="text-on-surface-variant hover:bg-surface-high hover:text-on-surface mb-2 flex items-center gap-3 rounded-lg px-4 py-2.5 transition-all"
+          className="text-on-surface-variant hover:bg-surface-high hover:text-on-surface mb-2 flex items-center gap-3 rounded-lg px-4 py-2.5 transition-colors duration-200 ease-[var(--ease-out)]"
         >
           <Settings size={18} />
           <span className="font-sans text-sm font-medium">Settings</span>

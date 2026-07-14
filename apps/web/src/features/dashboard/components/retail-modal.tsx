@@ -68,7 +68,7 @@ export default function RetailModal({
               return (
                 <div
                   key={acc.id}
-                  className={`rounded-xl border p-4 transition-all ${
+                  className={`rounded-xl border p-4 transition-[background-color,border-color] duration-200 ease-[var(--ease-out)] ${
                     acc.connected
                       ? "border-[#4F7CFF]/50 bg-[#4F7CFF]/5"
                       : "border-outline-variant/20 bg-surface-low"

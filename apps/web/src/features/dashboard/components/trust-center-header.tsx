@@ -58,7 +58,7 @@ const TrustCenterHeader = ({
             ) : (
               <ShieldCheck
                 size={16}
-                className="text-[#4F7CFF] transition-transform group-hover:scale-110"
+                className="text-[#4F7CFF] transition-transform duration-200 ease-[var(--ease-out)] group-hover:scale-110 max-md:group-hover:scale-100"
               />
             )}
           </div>
@@ -135,7 +135,7 @@ const TrustCenterHeader = ({
                 (val, idx) => (
                   <div
                     key={idx}
-                    className="w-1/5 rounded-t-sm bg-[#4F7CFF]/20 transition-all duration-700"
+                    className="w-1/5 rounded-t-sm bg-[#4F7CFF]/20 transition-[height,background-color] duration-300 ease-[var(--ease-out)]"
                     style={{
                       height: `${Math.max(10, val)}%`,
                       backgroundColor:

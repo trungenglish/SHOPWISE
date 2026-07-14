@@ -58,11 +58,11 @@ export default function AuditTrail({
         <button
           onClick={onReplay}
           disabled={isLoading}
-          className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#4F7CFF]/20 bg-[#4F7CFF]/5 px-4 py-3 font-mono text-[11px] font-bold text-[#4F7CFF] shadow-[0_0_15px_rgba(79,124,255,0.05)] transition-all hover:border-[#4F7CFF]/40 hover:bg-[#4F7CFF]/15 disabled:cursor-not-allowed disabled:opacity-50"
+          className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#4F7CFF]/20 bg-[#4F7CFF]/5 px-4 py-3 font-mono text-[11px] font-bold text-[#4F7CFF] shadow-[0_0_15px_rgba(79,124,255,0.05)] transition-[color,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:border-[#4F7CFF]/40 hover:bg-[#4F7CFF]/15 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <RotateCw
             size={14}
-            className={`transition-all duration-500 group-hover:rotate-180 ${isLoading ? "animate-spin" : ""}`}
+            className={`transition-transform duration-200 ease-[var(--ease-out)] group-hover:rotate-180 ${isLoading ? "animate-spin" : ""}`}
           />
           REPLAY DECISION FLOW
         </button>
@@ -137,7 +137,7 @@ export default function AuditTrail({
               <button
                 key={idx}
                 onClick={() => onInjectConstraint(s)}
-                className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex cursor-pointer shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-all hover:scale-[1.03] active:scale-[0.97] snap-start"
+                className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex cursor-pointer shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-[color,transform,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:scale-[1.03] active:scale-[0.97] snap-start max-md:hover:scale-100"
               >
                 <Sparkles size={11} />
                 <span className="whitespace-nowrap">{s}</span>
@@ -148,7 +148,7 @@ export default function AuditTrail({
 
         <form
           onSubmit={handleSubmit}
-          className="bg-surface border-outline-variant/30 flex items-center rounded-lg border p-1.5 transition-all focus-within:border-[#4F7CFF]/70 focus-within:ring-1 focus-within:ring-[#4F7CFF]/30"
+          className="bg-surface border-outline-variant/30 flex items-center rounded-lg border p-1.5 transition-[border-color,box-shadow] duration-200 ease-[var(--ease-out)] focus-within:border-[#4F7CFF]/70 focus-within:ring-1 focus-within:ring-[#4F7CFF]/30"
         >
           <input
             value={inputValue}

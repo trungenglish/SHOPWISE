@@ -42,7 +42,7 @@ export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
         <div className="w-full">
           <form
             onSubmit={handleSubmit}
-            className="bg-surface-highest border-outline-variant/30 flex w-full items-center rounded-2xl border p-2 shadow-2xl transition-all focus-within:border-[#4F7CFF] focus-within:shadow-[0_0_40px_rgba(79,124,255,0.15)]"
+            className="bg-surface-highest border-outline-variant/30 flex w-full items-center rounded-2xl border p-2 shadow-2xl transition-[border-color,box-shadow] duration-200 ease-[var(--ease-out)] focus-within:border-[#4F7CFF] focus-within:shadow-[0_0_40px_rgba(79,124,255,0.15)]"
           >
             <div className="text-on-surface-variant flex h-12 w-12 items-center justify-center">
               <Search size={24} />
@@ -70,7 +70,7 @@ export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
             <button
               key={idx}
               onClick={() => onSubmit(suggestion)}
-              className="glass-card border-outline-variant/20 text-on-surface-variant hover:text-on-surface cursor-pointer rounded-xl border px-4 py-2.5 font-sans text-sm font-medium transition-all hover:border-[#4F7CFF]/40 hover:bg-[#4F7CFF]/5"
+              className="glass-card border-outline-variant/20 text-on-surface-variant hover:text-on-surface cursor-pointer rounded-xl border px-4 py-2.5 font-sans text-sm font-medium transition-[color,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:border-[#4F7CFF]/40 hover:bg-[#4F7CFF]/5"
             >
               {suggestion}
             </button>

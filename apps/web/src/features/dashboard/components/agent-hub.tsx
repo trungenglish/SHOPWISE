@@ -77,10 +77,10 @@ export default function AgentHub({ agents }: AgentHubProps) {
 
   return (
     <aside
-      className={`fixed right-6 bottom-6 z-50 flex flex-col transition-all duration-300 select-none ${
+      className={`fixed right-6 bottom-6 z-50 flex flex-col transition-[transform,opacity,background-color,border-color,box-shadow,max-height,width] duration-200 ease-[var(--ease-out)] select-none ${
         isOpen
           ? "glass-panel border-outline-variant/15 max-h-[70vh] w-[320px] rounded-2xl border p-5 shadow-[0_15px_40px_rgba(0,0,0,0.6)]"
-          : "glass-panel border-outline-variant/15 hover:bg-surface-high h-14 w-14 cursor-pointer items-center justify-center rounded-full border shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:scale-105"
+          : "glass-panel border-outline-variant/15 hover:bg-surface-high h-14 w-14 cursor-pointer items-center justify-center rounded-full border shadow-[0_10px_25px_rgba(0,0,0,0.5)] hover:scale-105 max-md:hover:scale-100"
       }`}
       onClick={() => !isOpen && setIsOpen(true)}
     >
@@ -131,7 +131,7 @@ export default function AgentHub({ agents }: AgentHubProps) {
                   <React.Fragment key={agent.id}>
                     {/* Agent Card */}
                     <div
-                      className={`bg-surface-low border-outline-variant/15 hover:border-outline-variant/30 relative flex flex-col gap-2 overflow-hidden rounded-xl border border-l-4 p-3.5 transition-all duration-300 ${getStatusColorClass(
+                      className={`bg-surface-low border-outline-variant/15 hover:border-outline-variant/30 relative flex flex-col gap-2 overflow-hidden rounded-xl border border-l-4 p-3.5 transition-[border-color,background-color,opacity] duration-200 ease-[var(--ease-out)] ${getStatusColorClass(
                         agent.type,
                         agent.progress
                       )} ${isQueued ? "opacity-60" : ""}`}
@@ -154,7 +154,7 @@ export default function AgentHub({ agents }: AgentHubProps) {
 
                       <div className="bg-surface-highest mt-1 h-1 w-full overflow-hidden rounded-full">
                         <div
-                          className={`h-full transition-all duration-500 ${getProgressBg(
+                          className={`h-full transition-[width] duration-300 ease-[var(--ease-out)] ${getProgressBg(
                             agent.type
                           )}`}
                           style={{ width: `${agent.progress}%` }}

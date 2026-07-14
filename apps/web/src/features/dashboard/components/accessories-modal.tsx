@@ -65,7 +65,7 @@ export default function AccessoriesModal({
                 <button
                   key={cat}
                   onClick={() => setActiveFilter(cat)}
-                  className={`shrink-0 cursor-pointer rounded-full px-4 py-1.5 font-mono text-xs font-bold transition-all ${
+                  className={`shrink-0 cursor-pointer rounded-full px-4 py-1.5 font-mono text-xs font-bold transition-[color,background-color,border-color] duration-200 ease-[var(--ease-out)] ${
                     activeFilter === cat
                       ? "bg-[#4F7CFF] text-white shadow-md shadow-[#4F7CFF]/20 border border-[#4F7CFF]"
                       : "bg-surface border-outline-variant/30 text-on-surface-variant hover:bg-surface-highest hover:text-on-surface border"

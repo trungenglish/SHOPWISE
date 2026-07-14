@@ -83,10 +83,10 @@ export function LaptopNode({ data }: any) {
       onClick={data.onSelect}
       onMouseEnter={data.onHover}
       onMouseLeave={data.onHoverLeave}
-      className={`glass-card relative w-[240px] cursor-pointer overflow-hidden rounded-xl text-left transition-all duration-300 select-none ${
+      className={`glass-card relative w-[240px] cursor-pointer overflow-hidden rounded-xl text-left transition-[transform,opacity,border-color,box-shadow,background-color] duration-200 ease-[var(--ease-out)] select-none ${
         isActive
           ? "border-primary ring-primary/40 scale-[1.02] border-2 bg-[#18181B]/95 shadow-[0_0_20px_rgba(79,124,255,0.25)] ring-1"
-          : "border-outline-variant/15 border bg-[#18181B]/80 opacity-80 hover:scale-[1.01] hover:opacity-100"
+          : "border-outline-variant/15 border bg-[#18181B]/80 opacity-80 hover:scale-[1.01] hover:opacity-100 max-md:hover:scale-100"
       }`}
     >
       {/* Target Handle from Priorities */}
@@ -179,7 +179,7 @@ export function LaptopNode({ data }: any) {
               e.stopPropagation();
               onOpenPriceAlert(laptop);
             }}
-            className={`cursor-pointer rounded p-1 transition-all ${
+            className={`cursor-pointer rounded p-1 transition-[color,background-color,border-color] duration-200 ease-[var(--ease-out)] ${
               hasActiveAlert
                 ? "border border-[#4F7CFF]/30 bg-[#4F7CFF]/20 text-[#4F7CFF] hover:bg-[#4F7CFF]/30"
                 : "text-on-surface-variant hover:bg-surface-lowest hover:text-[#4F7CFF]"
