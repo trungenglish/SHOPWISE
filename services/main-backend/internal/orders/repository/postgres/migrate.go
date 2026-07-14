@@ -30,6 +30,7 @@ func Migrate(database *gorm.DB) error {
 		MinimumSubtotal: 0,
 		Active:          true,
 	}
-	return database.Where("coupon_code = ?", defaultPromotion.CouponCode).
-		FirstOrCreate(&defaultPromotion).Error
+	return database.Where(model.Promotion{CouponCode: "SHOPWISE5"}).
+		Attrs(defaultPromotion).
+		FirstOrCreate(&model.Promotion{}).Error
 }
