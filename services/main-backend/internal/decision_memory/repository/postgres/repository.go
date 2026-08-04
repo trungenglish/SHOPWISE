@@ -9,10 +9,94 @@ import (
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type Repository struct {
 	database *gorm.DB
+}
+
+func (r *Repository) BeginInteraction(
+	ctx context.Context,
+	interaction *domain.SessionInteraction,
+) (*domain.SessionInteraction, bool, error) {
+	var stored SessionInteraction
+	acquired := false
+	err := r.database.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		result := tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+			Where("session_id = ? AND interaction_id = ?", interaction.SessionID, interaction.InteractionID).
+			First(&stored)
+		if result.Error == gorm.ErrRecordNotFound {
+			candidate := SessionInteraction{
+				SessionID: interaction.SessionID, InteractionID: interaction.InteractionID,
+				PayloadHash: interaction.PayloadHash, Status: "pending",
+				LeaseUntil: interaction.LeaseUntil, CreatedAt: interaction.CreatedAt,
+				UpdatedAt: interaction.UpdatedAt,
+			}
+			created := tx.Clauses(clause.OnConflict{DoNothing: true}).Create(&candidate)
+			if created.Error != nil {
+				return fmt.Errorf("create session interaction: %w", created.Error)
+			}
+			if created.RowsAffected == 1 {
+				stored = candidate
+				acquired = true
+				return nil
+			}
+			if err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+				Where("session_id = ? AND interaction_id = ?", interaction.SessionID, interaction.InteractionID).
+				First(&stored).Error; err != nil {
+				return fmt.Errorf("reload session interaction: %w", err)
+			}
+		}
+		if result.Error != nil {
+			return fmt.Errorf("get session interaction: %w", result.Error)
+		}
+		if stored.PayloadHash != interaction.PayloadHash {
+			return domain.ErrInteractionConflict
+		}
+		if stored.Status == "completed" {
+			return nil
+		}
+		if stored.Status == "pending" && stored.LeaseUntil.After(time.Now().UTC()) {
+			return domain.ErrInteractionInProgress
+		}
+		stored.Status = "pending"
+		stored.LeaseUntil = interaction.LeaseUntil
+		stored.UpdatedAt = interaction.UpdatedAt
+		if err := tx.Save(&stored).Error; err != nil {
+			return fmt.Errorf("resume session interaction: %w", err)
+		}
+		acquired = true
+		return nil
+	})
+	if err != nil {
+		return nil, false, err
+	}
+	return &domain.SessionInteraction{
+		SessionID: stored.SessionID, InteractionID: stored.InteractionID,
+		PayloadHash: stored.PayloadHash, Status: stored.Status,
+		LeaseUntil: stored.LeaseUntil, ResponseEnvelope: string(stored.ResponseEnvelope),
+		CreatedAt: stored.CreatedAt, UpdatedAt: stored.UpdatedAt,
+	}, acquired, nil
+}
+
+func (r *Repository) FinishInteraction(
+	ctx context.Context,
+	sessionID uuid.UUID,
+	interactionID uuid.UUID,
+	status string,
+	response []byte,
+) error {
+	updates := map[string]interface{}{
+		"status": status, "response_envelope": response, "updated_at": time.Now().UTC(),
+	}
+	result := r.database.WithContext(ctx).Model(&SessionInteraction{}).
+		Where("session_id = ? AND interaction_id = ?", sessionID, interactionID).
+		Updates(updates)
+	if result.Error != nil {
+		return fmt.Errorf("finish session interaction: %w", result.Error)
+	}
+	return nil
 }
 
 func NewRepository(database *gorm.DB) *Repository {
@@ -288,7 +372,7 @@ func (r *Repository) ArchiveInactiveSessions(ctx context.Context, before time.Ti
 	result := r.database.WithContext(ctx).Model(&DecisionSession{}).
 		Where("status = ? AND updated_at < ?", "active", before).
 		Update("status", "archived")
-	
+
 	if result.Error != nil {
 		return 0, fmt.Errorf("archive inactive sessions: %w", result.Error)
 	}
