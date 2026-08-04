@@ -19,6 +19,17 @@ async def generate_agent_sse(
             "data": response.root.decision.model_dump_json(),
         }
 
+    for operation in response.root.ui_operations:
+        yield {
+            "event": "ui_operation",
+            "data": operation.model_dump_json(exclude_none=True),
+        }
+
+    yield {
+        "event": "envelope",
+        "data": response.root.model_dump_json(exclude_none=True),
+    }
+
     yield {
         "event": "done",
         "data": "{}",
