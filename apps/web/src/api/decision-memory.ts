@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { InteractionRequest } from "@shopwise/protocols";
 
 export interface SessionMessage {
   ID: string;
@@ -148,25 +149,98 @@ const recommendationDecisionSchema = z.object({
   reasoning: z.string(),
 });
 
+const dynamicUIComponentSchema: z.ZodType<{
+  id: string;
+  type: string;
+  props?: Record<string, unknown>;
+  children?: unknown[];
+  interaction?: Record<string, unknown> | null;
+}> = z.lazy(() =>
+  z.object({
+    id: z.string(),
+    type: z.string(),
+    props: z.record(z.string(), z.unknown()).optional(),
+    children: z.array(dynamicUIComponentSchema).optional(),
+    interaction: z.record(z.string(), z.unknown()).nullable().optional(),
+  })
+);
+
+const dynamicEnvelopeFields = {
+  schema_version: z.literal("1.0").optional(),
+  turn_id: z.string().optional(),
+  revision: z.number().int().positive().optional(),
+  conversation_state: z
+    .enum([
+      "collecting_requirements",
+      "recommending",
+      "comparing",
+      "checkout_ready",
+      "error",
+    ])
+    .optional(),
+  ui_state: z
+    .object({
+      status: z.enum(["loading", "ready", "error"]),
+      error: z
+        .object({
+          code: z.string(),
+          message: z.string(),
+          retryable: z.boolean(),
+        })
+        .optional(),
+    })
+    .optional(),
+  ui_operations: z
+    .array(
+      z.object({
+        id: z.string(),
+        sequence: z.number().int().nonnegative(),
+        operation: z.enum(["append", "replace"]),
+        target: z.enum(["surface", "component"]),
+        target_id: z.string().nullable().optional(),
+        component: dynamicUIComponentSchema,
+      })
+    )
+    .optional(),
+};
+
 const agentEnvelopeSchema = z.discriminatedUnion("type", [
   z.object({
     type: z.literal("question"),
     message: z.string().min(1),
+    question: z
+      .object({
+        id: z.string(),
+        mode: z.enum(["single", "multiple"]),
+        options: z
+          .array(z.object({ id: z.string(), label: z.string() }))
+          .min(3)
+          .max(4),
+        free_text_allowed: z.boolean(),
+        input_label: z.string().optional(),
+        input_placeholder: z.string().optional(),
+        submit_label: z.string().optional(),
+      })
+      .optional(),
+    ...dynamicEnvelopeFields,
   }),
   z.object({
     type: z.literal("recommendation"),
     message: z.string().min(1),
     decision: recommendationDecisionSchema,
+    ...dynamicEnvelopeFields,
   }),
   z.object({
     type: z.literal("comparison"),
     message: z.string().min(1),
     decision: recommendationDecisionSchema,
+    ...dynamicEnvelopeFields,
   }),
   z.object({
     type: z.literal("checkout_ready"),
     message: z.string().min(1),
     decision: recommendationDecisionSchema,
+    ...dynamicEnvelopeFields,
   }),
 ]);
 
@@ -230,6 +304,16 @@ export async function streamChatMessage(
     throw new Error("Agent request failed");
   }
 
+  return readAgentSSE(response, onToken);
+}
+
+async function readAgentSSE(
+  response: Response,
+  onToken?: (text: string) => void
+): Promise<AgentEnvelope> {
+  if (response.body === null) {
+    throw new Error("Agent request failed");
+  }
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
@@ -237,6 +321,7 @@ export async function streamChatMessage(
   let decision: z.infer<typeof recommendationDecisionSchema> | undefined;
   let decisionType: "recommendation" | "comparison" | "checkout_ready" =
     "recommendation";
+  let streamedEnvelope: AgentEnvelope | undefined;
 
   const consumeBlock = (block: string) => {
     const event = parseSSEBlock(block);
@@ -253,6 +338,8 @@ export async function streamChatMessage(
     ) {
       decision = recommendationDecisionSchema.parse(JSON.parse(event.data));
       decisionType = event.event;
+    } else if (event.event === "envelope") {
+      streamedEnvelope = agentEnvelopeSchema.parse(JSON.parse(event.data));
     } else if (event.event === "error") {
       throw new Error("Agent request failed");
     }
@@ -275,11 +362,32 @@ export async function streamChatMessage(
     consumeBlock(buffer);
   }
 
-  return agentEnvelopeSchema.parse(
-    decision === undefined
-      ? { type: "question", message: agentMessage }
-      : { type: decisionType, message: agentMessage, decision }
+  return (
+    streamedEnvelope ??
+    agentEnvelopeSchema.parse(
+      decision === undefined
+        ? { type: "question", message: agentMessage }
+        : { type: decisionType, message: agentMessage, decision }
+    )
   );
+}
+
+export async function sendInteractionStream(
+  sessionId: string,
+  request: InteractionRequest,
+  onToken?: (text: string) => void
+): Promise<AgentEnvelope> {
+  const response = await fetch(`${API_BASE}/${sessionId}/interactions/stream`, {
+    method: "POST",
+    headers: getHeaders(),
+    body: JSON.stringify(request),
+  });
+  if (!response.ok) {
+    throw new Error(
+      response.status === 409 ? "Interaction conflict" : "Agent request failed"
+    );
+  }
+  return readAgentSSE(response, onToken);
 }
 
 export async function runAgentTurnStream(
