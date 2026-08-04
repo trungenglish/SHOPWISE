@@ -1,7 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import React, { useState, useEffect } from "react";
 import { ReactFlowProvider } from "@xyflow/react";
-import { runAgentTurnStream } from "@/api/decision-memory";
+import {
+  type AgentEnvelope,
+  runAgentTurnStream,
+  sendInteractionStream,
+} from "@/api/decision-memory";
+import type { AccessoryRecommendation } from "@/api/accessories";
+import DynamicUIRenderer from "@/components/dynamic-uirenderer";
+import type { InteractionRequest } from "@shopwise/protocols";
 import Sidebar from "@/features/dashboard/components/sidebar";
 import AuditTrail from "@/features/dashboard/components/audit-trail";
 import AgentHub from "@/features/dashboard/components/agent-hub";
@@ -22,7 +29,7 @@ import {
   PriceAlert,
 } from "@/features/dashboard/types";
 import { mapRecommendationProduct } from "@/features/dashboard/agent-mapping";
-import { Sparkles, Bookmark, Bell, Menu } from "lucide-react";
+import { Bookmark, Bell, Menu } from "lucide-react";
 import EmptyWorkspace from "@/features/dashboard/components/empty-workspace";
 
 export const Route = createFileRoute("/dashboard")({
@@ -34,18 +41,21 @@ function DashboardPage() {
   const [isInitialState, setIsInitialState] = useState(true);
   const [isSimulating, setIsSimulating] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
+  const [activeEnvelope, setActiveEnvelope] = useState<AgentEnvelope | null>(
+    null
+  );
   const [activeTab, setActiveTab] = useState<string>("sessions");
   const [userIntent, setUserIntent] = useState<string>("");
   const [products, setProducts] = useState<Laptop[]>([]);
   const [logs, setLogs] = useState<AuditLog[]>([]);
   const [agents, setAgents] = useState<AgentStatus[]>([]);
-  const [trustScore, setTrustScore] = useState<number>(0);
-  const [trustFactors, setTrustFactors] = useState<TrustFactors>(
-    {} as TrustFactors
-  );
+  const trustScore = 0;
+  const trustFactors = {} as TrustFactors;
   const [graphNodes, setGraphNodes] = useState<string[]>([]);
   const [reasoning, setReasoning] = useState<string>("");
-  const [accessories, setAccessories] = useState<any[]>([]);
+  const [checkoutAccessories, setCheckoutAccessories] = useState<
+    AccessoryRecommendation[]
+  >([]);
 
   // Active highlighted product card
   const [activeProductId, setActiveProductId] = useState<string>("macbook-pro");
@@ -222,7 +232,43 @@ function DashboardPage() {
     }
   };
 
-  // const [isSimulating, setIsSimulating] = useState(false);
+  const applyAgentEnvelope = (envelope: AgentEnvelope, time: string) => {
+    setActiveEnvelope(envelope);
+    setLogs((previous) => [
+      ...previous,
+      { time, message: `Agent: ${envelope.message}`, status: "done" },
+    ]);
+    if (
+      envelope.type !== "recommendation" &&
+      envelope.type !== "comparison" &&
+      envelope.type !== "checkout_ready"
+    ) {
+      return;
+    }
+    const recommendedProducts = envelope.decision.products.map(
+      mapRecommendationProduct
+    );
+    setCheckoutAccessories([]);
+    setProducts(recommendedProducts);
+    setReasoning(envelope.decision.reasoning);
+    setAgents([
+      {
+        id: "shopping-agent",
+        name: "Shopping Agent",
+        progress: 100,
+        statusMessage: "Recommendation generated from the live catalog",
+        type: "shopping",
+      },
+    ]);
+    setGraphNodes(["Catalog recommendation"]);
+    setActiveProductId(recommendedProducts[0]?.id ?? "");
+    if (envelope.type === "comparison") {
+      setIsCompareOpen(true);
+    }
+    if (envelope.type === "checkout_ready") {
+      setIsCheckoutOpen(true);
+    }
+  };
 
   const handleQueryEvaluation = async (queryText: string) => {
     const trimmedMessage = queryText.trim();
@@ -245,43 +291,7 @@ function DashboardPage() {
     try {
       const turn = await runAgentTurnStream(sessionId, trimmedMessage);
       setSessionId(turn.sessionId);
-      setLogs((previous) => [
-        ...previous,
-        {
-          time: timeNow,
-          message: `Agent: ${turn.envelope.message}`,
-          status: "done",
-        },
-      ]);
-
-      if (
-        turn.envelope.type === "recommendation" ||
-        turn.envelope.type === "comparison" ||
-        turn.envelope.type === "checkout_ready"
-      ) {
-        const recommendedProducts = turn.envelope.decision.products.map(
-          mapRecommendationProduct
-        );
-        setProducts(recommendedProducts);
-        setReasoning(turn.envelope.decision.reasoning);
-        setAgents([
-          {
-            id: "shopping-agent",
-            name: "Shopping Agent",
-            progress: 100,
-            statusMessage: "Recommendation generated from the live catalog",
-            type: "shopping",
-          },
-        ]);
-        setGraphNodes(["Catalog recommendation"]);
-        setActiveProductId(recommendedProducts[0]?.id ?? "");
-        if (turn.envelope.type === "comparison") {
-          setIsCompareOpen(true);
-        }
-        if (turn.envelope.type === "checkout_ready") {
-          setIsCheckoutOpen(true);
-        }
-      }
+      applyAgentEnvelope(turn.envelope, timeNow);
     } catch {
       const errorMessage = "Agent request failed. Please retry.";
       setToastNotification(errorMessage);
@@ -289,6 +299,25 @@ function DashboardPage() {
         ...previous,
         { time: timeNow, message: errorMessage, status: "pending" },
       ]);
+    } finally {
+      setIsSimulating(false);
+    }
+  };
+
+  const handleInteraction = async (request: InteractionRequest) => {
+    if (sessionId === null || isSimulating) {
+      return;
+    }
+    const timeNow = new Date().toLocaleTimeString("vi-VN", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    setIsSimulating(true);
+    try {
+      const envelope = await sendInteractionStream(sessionId, request);
+      applyAgentEnvelope(envelope, timeNow);
+    } catch {
+      setToastNotification("Agent request failed. Please retry.");
     } finally {
       setIsSimulating(false);
     }
@@ -318,6 +347,7 @@ function DashboardPage() {
 
   const handleNewSession = () => {
     setSessionId(null);
+    setActiveEnvelope(null);
     setIsInitialState(true);
     setUserIntent("");
     setProducts([]);
@@ -325,7 +355,7 @@ function DashboardPage() {
     setAgents([]);
     setGraphNodes([]);
     setReasoning("");
-    setAccessories([]);
+    setCheckoutAccessories([]);
     setActiveProductId("");
   };
 
@@ -447,6 +477,7 @@ function DashboardPage() {
                   isLoading={isSimulating}
                   onReplay={handleReplay}
                   hasMenuButton={!isSidebarOpen}
+                  hideComposer={activeEnvelope?.type === "question"}
                   suggestions={[
                     "Ngân sách dưới 25 triệu VND",
                     "Ưu tiên hiệu năng và tản nhiệt",
@@ -457,6 +488,19 @@ function DashboardPage() {
 
               {isInitialState ? (
                 <EmptyWorkspace onSubmit={handleQueryEvaluation} />
+              ) : activeEnvelope?.type === "question" &&
+                products.length === 0 ? (
+                <main className="flex flex-1 items-center justify-center overflow-y-auto p-8">
+                  <DynamicUIRenderer
+                    envelope={activeEnvelope}
+                    onInteraction={handleInteraction}
+                  />
+                </main>
+              ) : products.length === 0 ? (
+                <main className="flex flex-1 items-center justify-center p-8 text-center text-white/60">
+                  Tell the agent your constraints to build a recommendation
+                  workspace.
+                </main>
               ) : (
                 <SpatialWorkspace
                   products={products}
@@ -493,7 +537,19 @@ function DashboardPage() {
         <AccessoriesModal
           isOpen={isAccessoriesOpen}
           onClose={() => setIsAccessoriesOpen(false)}
-          accessories={accessories}
+          products={products}
+          onAddToCheckout={(accessory) => {
+            setCheckoutAccessories((current) =>
+              current.some(
+                (item) => item.retailer_offer_id === accessory.retailer_offer_id
+              )
+                ? current
+                : [...current, accessory]
+            );
+            setToastNotification(
+              `${accessory.name} đã được thêm vào checkout.`
+            );
+          }}
         />
 
         <ReasoningModal
@@ -513,6 +569,7 @@ function DashboardPage() {
           isOpen={isCheckoutOpen}
           onClose={() => setIsCheckoutOpen(false)}
           product={activeProduct}
+          accessories={checkoutAccessories}
           discountRate={connectedDiscount}
           onSuccess={() => setActiveTab("orders")}
         />
