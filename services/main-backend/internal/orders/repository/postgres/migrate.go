@@ -16,6 +16,8 @@ func Migrate(database *gorm.DB) error {
 		&model.Promotion{},
 		&OrderModel{},
 		&OrderItemModel{},
+		&RetailerOrderItemModel{},
+		&CheckoutIdempotencyModel{},
 	); err != nil {
 		return err
 	}

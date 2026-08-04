@@ -7,8 +7,9 @@ import (
 )
 
 type CheckoutItemRequest struct {
-	ProductID string `json:"product_id" binding:"required,uuid" format:"uuid"`
-	Quantity  int    `json:"quantity" binding:"required,gt=0" minimum:"1"`
+	ProductID       string `json:"product_id,omitempty" binding:"omitempty,uuid" format:"uuid"`
+	RetailerOfferID string `json:"retailer_offer_id,omitempty" binding:"omitempty,uuid" format:"uuid"`
+	Quantity        int    `json:"quantity" binding:"required,gt=0" minimum:"1"`
 }
 
 type CheckoutRequest struct {
@@ -20,9 +21,13 @@ type CheckoutRequest struct {
 }
 
 type OrderItemResponse struct {
-	ProductID string `json:"product_id" format:"uuid"`
-	Quantity  int    `json:"quantity"`
-	UnitPrice int64  `json:"unit_price"`
+	ProductID       string     `json:"product_id,omitempty" format:"uuid"`
+	RetailerOfferID string     `json:"retailer_offer_id,omitempty" format:"uuid"`
+	Name            string     `json:"name,omitempty"`
+	SourceURL       string     `json:"source_url,omitempty"`
+	VerifiedAt      *time.Time `json:"verified_at,omitempty"`
+	Quantity        int        `json:"quantity"`
+	UnitPrice       int64      `json:"unit_price"`
 }
 
 type OrderResponse struct {
@@ -40,7 +45,7 @@ type OrderResponse struct {
 	ShippingAmount    int64               `json:"shipping_amount"`
 	TaxAmount         int64               `json:"tax_amount"`
 	TotalAmount       int64               `json:"total_amount"`
-	Status            string              `json:"status" enums:"PENDING,PROCESSING"`
+	Status            string              `json:"status" enums:"PENDING,PROCESSING,PENDING_SUPPLIER_CONFIRMATION"`
 	CreatedAt         time.Time           `json:"created_at" swaggertype:"string" format:"date-time"`
 }
 
@@ -66,6 +71,14 @@ func toOrderResponse(order *domain.Order) OrderResponse {
 			ProductID: item.ProductID.String(),
 			Quantity:  item.Quantity,
 			UnitPrice: item.UnitPrice,
+		})
+	}
+	for _, item := range order.RetailerItems {
+		verifiedAt := item.VerifiedAt
+		items = append(items, OrderItemResponse{
+			RetailerOfferID: item.RetailerOfferID.String(), Name: item.Name,
+			SourceURL: item.SourceURL, VerifiedAt: &verifiedAt,
+			Quantity: item.Quantity, UnitPrice: item.UnitPrice,
 		})
 	}
 

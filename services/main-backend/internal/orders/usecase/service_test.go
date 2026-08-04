@@ -28,6 +28,14 @@ type checkoutRepositoryStub struct {
 	listedCustomerID uuid.UUID
 	listedLimit      int
 	listedOffset     int
+	retailerOffers   map[uuid.UUID]domain.RetailerOfferQuote
+	refreshedOffers  map[uuid.UUID]domain.RetailerOfferQuote
+	retailerErr      error
+	refreshErr       error
+	idempotencyKey   string
+	payloadHash      string
+	idempotentResult *domain.Order
+	idempotentErr    error
 }
 
 func (stub *checkoutRepositoryStub) Create(_ context.Context, order *domain.Order) error {
@@ -63,8 +71,119 @@ func (stub *checkoutRepositoryStub) GetPromotion(context.Context, string) (*doma
 	return stub.promotion, stub.promotionErr
 }
 
+func (stub *checkoutRepositoryStub) GetRetailerOffers(context.Context, []uuid.UUID) (map[uuid.UUID]domain.RetailerOfferQuote, error) {
+	return stub.retailerOffers, stub.retailerErr
+}
+
+func (stub *checkoutRepositoryStub) RefreshRetailerOffer(_ context.Context, quote domain.RetailerOfferQuote) (domain.RetailerOfferQuote, error) {
+	if stub.refreshErr != nil {
+		return domain.RetailerOfferQuote{}, stub.refreshErr
+	}
+	if refreshed, exists := stub.refreshedOffers[quote.ID]; exists {
+		return refreshed, nil
+	}
+	return quote, nil
+}
+
+func (stub *checkoutRepositoryStub) UpdateRetailerOffer(_ context.Context, quote domain.RetailerOfferQuote) error {
+	if stub.retailerOffers == nil {
+		stub.retailerOffers = make(map[uuid.UUID]domain.RetailerOfferQuote)
+	}
+	stub.retailerOffers[quote.ID] = quote
+	return nil
+}
+
+func (stub *checkoutRepositoryStub) CreateIdempotent(_ context.Context, order *domain.Order, key, payloadHash string) (*domain.Order, error) {
+	stub.idempotencyKey = key
+	stub.payloadHash = payloadHash
+	if err := stub.Create(context.Background(), order); err != nil {
+		return nil, err
+	}
+	return order, nil
+}
+
+func (stub *checkoutRepositoryStub) FindIdempotent(_ context.Context, _ uuid.UUID, key, payloadHash string) (*domain.Order, error) {
+	stub.idempotencyKey = key
+	stub.payloadHash = payloadHash
+	return stub.idempotentResult, stub.idempotentErr
+}
+
 func newService(stub *checkoutRepositoryStub) *usecase.Service {
-	return usecase.NewService(stub, stub, stub, stub)
+	return usecase.NewService(stub, stub, stub, stub).WithRetailerOffers(stub, stub, stub)
+}
+
+func TestCreateMixedOrderUsesPendingSupplierAndInternalTaxOnly(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	productID := uuid.New()
+	offerID := uuid.New()
+	repository := validRepository(customerID, productID, 10_000_000)
+	repository.retailerOffers = map[uuid.UUID]domain.RetailerOfferQuote{
+		offerID: {ID: offerID, AccessoryName: "Phong Vu mouse", UnitPrice: 1_000_000, InStock: true, SourceURL: "https://phongvu.vn/p/mouse", FetchedAt: time.Now().UTC()},
+	}
+	input := validInput(customerID, productID)
+	input.Items = append(input.Items, usecase.CreateItemInput{RetailerOfferID: offerID.String(), Quantity: 1})
+	input.IdempotencyKey = "checkout-key"
+
+	order, err := newService(repository).Create(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Create() error = %v", err)
+	}
+	if order.Status != domain.StatusPendingSupplierConfirmation {
+		t.Fatalf("status = %s", order.Status)
+	}
+	if order.SubtotalAmount != 11_000_000 || order.TaxAmount != 800_000 || order.TotalAmount != 11_800_000 {
+		t.Fatalf("subtotal/tax/total = %d/%d/%d", order.SubtotalAmount, order.TaxAmount, order.TotalAmount)
+	}
+	if len(order.RetailerItems) != 1 || repository.idempotencyKey != "checkout-key" || repository.payloadHash == "" {
+		t.Fatalf("retailer items/key/hash = %d/%q/%q", len(order.RetailerItems), repository.idempotencyKey, repository.payloadHash)
+	}
+}
+
+func TestCreateRejectsChangedRetailerOffer(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	offerID := uuid.New()
+	repository := &checkoutRepositoryStub{
+		customer:        &domain.CustomerSnapshot{ID: customerID, Name: "A", Email: "a@example.com", Phone: "1"},
+		retailerOffers:  map[uuid.UUID]domain.RetailerOfferQuote{offerID: {ID: offerID, UnitPrice: 900_000, InStock: true}},
+		refreshedOffers: map[uuid.UUID]domain.RetailerOfferQuote{offerID: {ID: offerID, UnitPrice: 950_000, InStock: true}},
+	}
+	_, err := newService(repository).Create(context.Background(), usecase.CreateInput{
+		AuthenticatedCustomerID: customerID, CustomerID: customerID,
+		Items:             []usecase.CreateItemInput{{RetailerOfferID: offerID.String(), Quantity: 1}},
+		FulfillmentMethod: string(domain.FulfillmentStorePickup), IdempotencyKey: "key",
+	})
+	var changed *usecase.OfferChangedError
+	if !errors.As(err, &changed) || changed.Offer.UnitPrice != 950_000 {
+		t.Fatalf("error = %v, want OfferChangedError", err)
+	}
+	if repository.retailerOffers[offerID].UnitPrice != 950_000 {
+		t.Fatal("changed offer snapshot was not persisted for explicit retry")
+	}
+}
+
+func TestCreateReturnsIdempotentOrderBeforeRetailerRefresh(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	offerID := uuid.New()
+	existing := &domain.Order{ID: uuid.New(), CustomerID: customerID, Status: domain.StatusPendingSupplierConfirmation}
+	repository := &checkoutRepositoryStub{
+		customer:         &domain.CustomerSnapshot{ID: customerID, Name: "A", Email: "a@example.com", Phone: "1"},
+		idempotentResult: existing,
+		refreshErr:       errors.New("Phong Vu unavailable"),
+	}
+	order, err := newService(repository).Create(context.Background(), usecase.CreateInput{
+		AuthenticatedCustomerID: customerID, CustomerID: customerID,
+		Items:             []usecase.CreateItemInput{{RetailerOfferID: offerID.String(), Quantity: 1}},
+		FulfillmentMethod: string(domain.FulfillmentStorePickup), IdempotencyKey: "same-key",
+	})
+	if err != nil || order.ID != existing.ID {
+		t.Fatalf("Create() order/error = %v/%v, want existing order", order, err)
+	}
 }
 
 func validInput(customerID, productID uuid.UUID) usecase.CreateInput {

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 
+	"shopwise/retail/internal/accessories"
 	"shopwise/retail/internal/orders/domain"
 	"shopwise/retail/internal/platform/database/model"
 	userpostgres "shopwise/retail/internal/users/repository/postgres"
@@ -25,6 +26,58 @@ func (repository *Repository) GetCustomer(ctx context.Context, customerID uuid.U
 	return &domain.CustomerSnapshot{
 		ID: customer.ID, Name: customer.Name, Email: customer.Email, Phone: customer.Phone,
 	}, nil
+}
+
+func (repository *Repository) GetRetailerOffers(
+	ctx context.Context,
+	offerIDs []uuid.UUID,
+) (map[uuid.UUID]domain.RetailerOfferQuote, error) {
+	var offers []accessories.RetailerOfferModel
+	if err := repository.database.WithContext(ctx).Where("id IN ? AND retailer = ?", offerIDs, "phongvu").Find(&offers).Error; err != nil {
+		return nil, fmt.Errorf("get retailer offers: %w", err)
+	}
+	accessoryIDs := make([]uuid.UUID, 0, len(offers))
+	for _, offer := range offers {
+		accessoryIDs = append(accessoryIDs, offer.AccessoryID)
+	}
+	var accessoryModels []accessories.AccessoryModel
+	if len(accessoryIDs) > 0 {
+		if err := repository.database.WithContext(ctx).Where("id IN ?", accessoryIDs).Find(&accessoryModels).Error; err != nil {
+			return nil, fmt.Errorf("get retailer accessories: %w", err)
+		}
+	}
+	names := make(map[uuid.UUID]accessories.AccessoryModel, len(accessoryModels))
+	for _, accessory := range accessoryModels {
+		names[accessory.ID] = accessory
+	}
+	quotes := make(map[uuid.UUID]domain.RetailerOfferQuote, len(offers))
+	for _, offer := range offers {
+		accessory := names[offer.AccessoryID]
+		quotes[offer.ID] = domain.RetailerOfferQuote{
+			ID: offer.ID, RetailerProductID: offer.RetailerProductID, AccessoryName: accessory.Name,
+			Category: accessory.Category, UnitPrice: offer.Price, OriginalPrice: offer.OriginalPrice,
+			InStock: offer.InStock, SourceURL: offer.SourceURL, FetchedAt: offer.FetchedAt,
+		}
+	}
+	return quotes, nil
+}
+
+func (repository *Repository) UpdateRetailerOffer(ctx context.Context, quote domain.RetailerOfferQuote) error {
+	updates := map[string]any{
+		"price": quote.UnitPrice, "original_price": quote.OriginalPrice,
+		"in_stock": quote.InStock, "source_url": quote.SourceURL, "fetched_at": quote.FetchedAt,
+	}
+	result := repository.database.WithContext(ctx).
+		Model(&accessories.RetailerOfferModel{}).
+		Where("id = ? AND retailer = ?", quote.ID, "phongvu").
+		Updates(updates)
+	if result.Error != nil {
+		return fmt.Errorf("update retailer offer: %w", result.Error)
+	}
+	if result.RowsAffected != 1 {
+		return fmt.Errorf("update retailer offer: offer not found")
+	}
+	return nil
 }
 
 func (repository *Repository) GetProducts(
