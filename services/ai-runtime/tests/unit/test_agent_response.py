@@ -43,6 +43,27 @@ def test_question_draft_becomes_question_response():
 
     assert response.root.type == "question"
     assert response.root.message == "What is your budget?"
+    assert response.root.conversation_state == "collecting_requirements"
+    assert response.root.question is not None
+    assert len(response.root.question.options) == 3
+    assert response.root.ui_operations[0].component.type == "card"
+
+
+def test_question_controls_follow_the_user_language():
+    draft = AgentDraft.model_validate(
+        {
+            "type": "question",
+            "message": "Ngân sách của bạn là bao nhiêu?",
+            "reasoning": None,
+            "selections": None,
+        }
+    )
+
+    response = hydrate_agent_response(draft, [], language_source="Tôi muốn tìm laptop chơi game")
+
+    assert response.root.question is not None
+    assert response.root.question.submit_label == "Gửi"
+    assert response.root.question.options[0].label == "Dưới 25 triệu VND"
 
 
 def test_recommendation_uses_only_authoritative_catalog_data():

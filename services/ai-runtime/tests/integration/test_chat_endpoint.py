@@ -37,10 +37,12 @@ def test_chat_endpoint_accepts_history_and_returns_agent_envelope():
 
     app.dependency_overrides.clear()
     assert response.status_code == 200
-    assert response.json() == {
-        "type": "question",
-        "message": "What is your budget?",
-    }
+    body = response.json()
+    assert body["type"] == "question"
+    assert body["message"] == "What is your budget?"
+    assert body["schema_version"] == "1.0"
+    assert body["question"]["mode"] == "single"
+    assert len(body["question"]["options"]) == 3
 
 
 def test_chat_stream_endpoint_uses_named_sse_events():
@@ -59,4 +61,6 @@ def test_chat_stream_endpoint_uses_named_sse_events():
     app.dependency_overrides.clear()
     assert response.status_code == 200
     assert "event: token" in response.text
+    assert "event: ui_operation" in response.text
+    assert "event: envelope" in response.text
     assert "event: done" in response.text
