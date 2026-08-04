@@ -17,14 +17,13 @@ This guide explains how to validate the LLM Integration locally.
    Add your OpenAI API key to `.env`:
    ```env
    OPENAI_API_KEY=sk-...
-   LLM_PROVIDER=openai
-   LLM_MODEL=gpt-4o-mini
+   MODEL=gpt-5.4-mini
    ```
 
 2. **Start the AI Runtime**:
    ```bash
    cd services/ai-runtime
-   uv run uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   uv run uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
    ```
 
 ## Validation Scenarios
@@ -38,19 +37,18 @@ curl -N -X POST http://localhost:8000/api/v1/chat/stream \
 -H "Content-Type: application/json" \
 -d '{
   "session_id": "test-1",
-  "messages": [{"role": "user", "content": "Hello, respond with the word SUCCESS."}],
-  "tools": []
+  "messages": [{"role": "user", "content": "I need a laptop."}]
 }'
 ```
 
 **Expected Outcome**:
-You should see a stream of SSE events ending with `[DONE]`. The API key should not be printed in the server logs.
+You should see validated SSE events ending with `done`. The API key and message content must not be printed in server logs.
 ```text
 event: token
-data: {"content": "SUCCESS"}
+data: {"text": "What is your budget?"}
 
 event: done
-data: "[DONE]"
+data: {}
 ```
 
 ### Scenario 2: Error Handling (Invalid API Key)
@@ -63,18 +61,18 @@ Test that the AI Runtime catches authentication errors and returns a structured 
 **Expected Outcome**:
 ```text
 event: error
-data: {"error_code": "INVALID_CREDENTIALS", "message": "The provided API key is invalid.", "retryable": false}
+data: {"message": "Agent request failed"}
 
 event: done
-data: "[DONE]"
+data: {}
 ```
 
-### Scenario 3: Structured Output / Self-Correction
-*(Requires tool orchestration to be fully implemented)*
-Test that the LLM successfully forces structured output for a tool.
+### Scenario 3: Structured Recommendation / Self-Correction
+Test that the LLM returns a validated recommendation hydrated from the catalog.
 
 **Command**:
-Send a chat request including a `compare_products` tool schema, and ask "Compare iPhone and Samsung".
+Ask for a laptop with a concrete use case and VND budget.
 
 **Expected Outcome**:
-The AI Runtime should emit a `tool_call` event with strict JSON arguments matching the schema, even if it had to self-correct internally.
+The AI Runtime should emit `token`, `recommendation`, and `done`. Every product ID
+and price must match the Go catalog.

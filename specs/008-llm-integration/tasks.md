@@ -1,5 +1,9 @@
 # Tasks: AI Runtime LLM Integration
 
+> Historical planning checklist only. Do not use checked boxes as completion
+> evidence. Current implementation evidence and remaining gates are recorded in
+> `readiness.md`.
+
 **Input**: Design documents from `/specs/008-llm-integration/`
 
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
