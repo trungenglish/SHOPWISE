@@ -15,6 +15,7 @@ interface CheckoutIncentiveContextValue {
   retryVoucherIssuance: () => void;
   collapse: () => void;
   expand: () => void;
+  dismiss: () => void;
 }
 
 const CheckoutIncentiveContext = createContext<CheckoutIncentiveContextValue | null>(null);
@@ -22,6 +23,7 @@ const CheckoutIncentiveContext = createContext<CheckoutIncentiveContextValue | n
 export const CheckoutIncentiveProvider = ({ children }: { children: ReactNode }) => {
   const queryClient = useQueryClient();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
 
   const { data: currentPromotion, error, refetch, isError } = useQuery<PromotionStatusResponse>({
@@ -100,8 +102,19 @@ export const CheckoutIncentiveProvider = ({ children }: { children: ReactNode })
     displayState = "ERROR";
   }
 
-  // Auto-hide EXPIRED after a few seconds? The requirements say "Expired state: This promotional window has ended." 
-  // We'll leave it up to the panel to display the expired state.
+  // Auto-hide EXPIRED or SUCCESS after 5 seconds
+  useEffect(() => {
+    if (displayState === "EXPIRED" || displayState === "SUCCESS") {
+      const timer = setTimeout(() => {
+        setIsDismissed(true);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [displayState]);
+
+  if (isDismissed) {
+    displayState = "HIDDEN";
+  }
 
   const value: CheckoutIncentiveContextValue = {
     currentPromotion: currentPromotion || null,
@@ -113,6 +126,7 @@ export const CheckoutIncentiveProvider = ({ children }: { children: ReactNode })
     retryVoucherIssuance: () => { refetch(); /* Backend retry endpoint not specified, we'll just refetch */ },
     collapse: () => setIsCollapsed(true),
     expand: () => setIsCollapsed(false),
+    dismiss: () => setIsDismissed(true),
   };
 
   return (

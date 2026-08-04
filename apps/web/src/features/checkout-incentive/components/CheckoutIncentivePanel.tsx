@@ -18,6 +18,7 @@ export const CheckoutIncentivePanel: React.FC = () => {
     remainingSeconds, 
     collapse, 
     expand,
+    dismiss,
     retryVoucherIssuance
   } = useCheckoutIncentive();
 
@@ -67,7 +68,7 @@ export const CheckoutIncentivePanel: React.FC = () => {
           )}
           {displayState !== "ACTIVE" && (
             <button 
-              onClick={collapse}
+              onClick={dismiss}
               className="p-1 rounded-md text-slate-400 hover:bg-slate-800 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
               aria-label="Close panel"
             >
