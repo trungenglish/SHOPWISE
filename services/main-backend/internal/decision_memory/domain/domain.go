@@ -1,9 +1,15 @@
 package domain
 
 import (
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
+)
+
+var (
+	ErrInteractionConflict   = errors.New("interaction payload conflict")
+	ErrInteractionInProgress = errors.New("interaction is already in progress")
 )
 
 type DecisionSession struct {
@@ -26,6 +32,17 @@ type SessionMessage struct {
 	ReasoningGraph string // JSON string
 	PinnedProducts string // JSON string
 	CreatedAt      time.Time
+}
+
+type SessionInteraction struct {
+	SessionID        uuid.UUID
+	InteractionID    uuid.UUID
+	PayloadHash      string
+	Status           string
+	LeaseUntil       time.Time
+	ResponseEnvelope string
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
 }
 
 type UserPreference struct {

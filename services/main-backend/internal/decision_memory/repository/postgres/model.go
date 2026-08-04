@@ -8,11 +8,11 @@ import (
 )
 
 type DecisionSession struct {
-	ID              uuid.UUID `gorm:"type:uuid;primary_key;default:gen_random_uuid()"`
+	ID              uuid.UUID  `gorm:"type:uuid;primary_key;default:gen_random_uuid()"`
 	UserID          *uuid.UUID `gorm:"type:uuid;index"`
-	AnonymousID     *string   `gorm:"type:varchar(255);index"`
-	Title           string    `gorm:"type:varchar(255);not null"`
-	Status          string    `gorm:"type:varchar(50);not null;default:'active'"`
+	AnonymousID     *string    `gorm:"type:varchar(255);index"`
+	Title           string     `gorm:"type:varchar(255);not null"`
+	Status          string     `gorm:"type:varchar(50);not null;default:'active'"`
 	ParentSessionID *uuid.UUID `gorm:"type:uuid"`
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
@@ -44,6 +44,21 @@ type ExtractedPreference struct {
 	SourceSessionID *uuid.UUID     `gorm:"type:uuid"`
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
+}
+
+type SessionInteraction struct {
+	SessionID        uuid.UUID      `gorm:"type:uuid;primaryKey"`
+	InteractionID    uuid.UUID      `gorm:"type:uuid;primaryKey"`
+	PayloadHash      string         `gorm:"type:char(64);not null"`
+	Status           string         `gorm:"type:varchar(20);not null"`
+	LeaseUntil       time.Time      `gorm:"not null"`
+	ResponseEnvelope datatypes.JSON `gorm:"type:jsonb"`
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
+}
+
+func (SessionInteraction) TableName() string {
+	return "session_interactions"
 }
 
 func (ExtractedPreference) TableName() string {
