@@ -80,6 +80,14 @@ def create_workflow(provider: LLMProvider, tool_proxy: ToolProxy, model: str) ->
                 draft,
                 state["catalog"],
                 allowed_comparison_ids=set(state.get("allowed_comparison_ids", [])),
+                language_source=next(
+                    (
+                        str(message.get("content", ""))
+                        for message in reversed(state["messages"])
+                        if message.get("role") == "user"
+                    ),
+                    "",
+                ),
             )
             return {"response": response, "error": None}
         except (ValidationError, ValueError) as error:
