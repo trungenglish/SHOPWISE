@@ -2,7 +2,6 @@ package zalo
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"shopwise/retail/internal/resume_session/usecase"
@@ -23,8 +22,12 @@ func NewProvider(oaID, apiToken string) *Provider {
 func (p *Provider) Send(ctx context.Context, destination string, token string) (usecase.NotificationStatus, *string, error) {
 	// Mock implementation for MVP
 	// In reality, this would make an HTTP request to the Zalo OA API
-	fmt.Printf("[Zalo Mock] Sending token %s to %s via OA %s\n", token, destination, p.oaID)
-	
+	_ = ctx
+	_ = destination
+	_ = token
+	_ = p.oaID
+	_ = p.apiToken
+
 	// Simulate network latency
 	time.Sleep(100 * time.Millisecond)
 

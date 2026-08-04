@@ -27,6 +27,21 @@ type SeedProduct struct {
 	Metadata       map[string]interface{} `json:"metadata"`
 }
 
+const demoUSDToVNDRate = 25_000
+
+func priceInVND(priceUSD float64) int64 {
+	return int64(priceUSD * demoUSDToVNDRate)
+}
+
+func seedConflictClause() clause.OnConflict {
+	return clause.OnConflict{
+		Columns: []clause.Column{{Name: "id"}},
+		DoUpdates: clause.AssignmentColumns([]string{
+			"sku", "name", "brand", "category", "price", "specifications", "metadata",
+		}),
+	}
+}
+
 func main() {
 	cfg, err := config.Load()
 	if err != nil {
@@ -77,14 +92,14 @@ func main() {
 			Name:           sp.Name,
 			Brand:          sp.Brand,
 			Category:       sp.Category,
-			Price:          int64(sp.Price * 100), // Convert to cents
+			Price:          priceInVND(sp.Price),
 			Specifications: datatypes.JSON(specBytes),
 			Metadata:       datatypes.JSON(metaBytes),
 		})
 	}
 
 	if len(products) > 0 {
-		result := db.Clauses(clause.OnConflict{DoNothing: true}).Create(&products)
+		result := db.Clauses(seedConflictClause()).Create(&products)
 		if result.Error != nil {
 			log.Error("failed to seed products", slog.Any("error", result.Error))
 			os.Exit(1)

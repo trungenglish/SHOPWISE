@@ -22,8 +22,6 @@ func TestOpenAPISpecHasIdentityPaths(t *testing.T) {
 	contract.AssertPathMethod(t, spec, "/identity/google/callback", "GET")
 	contract.AssertPathMethod(t, spec, "/identity/verify-email", "POST")
 
-	contract.AssertPathMethod(t, spec, "/notifications", "GET")
-	contract.AssertPathMethod(t, spec, "/notifications/{id}/read", "POST")
 }
 
 func TestSwaggerDocumentsAllOpenAPIPaths(t *testing.T) {

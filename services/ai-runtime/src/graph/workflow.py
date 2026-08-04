@@ -1,62 +1,103 @@
-from langgraph.graph import StateGraph, START, END
-from typing import Any, TypedDict
 import json
+from typing import Any, TypedDict
 
-class GraphState(TypedDict):
+from langchain_core.runnables import RunnableLambda
+from langgraph.graph import END, START, StateGraph
+from pydantic import ValidationError
+
+from src.core.prompts import PromptManager
+from src.llm.provider import LLMProvider
+from src.models.schemas import (
+    AgentDraft,
+    AgentResponse,
+    CatalogProduct,
+    hydrate_agent_response,
+)
+from src.tools.interfaces import ToolProxy
+
+MAX_SELF_CORRECTION_RETRIES = 2
+
+
+class GraphState(TypedDict, total=False):
     messages: list[dict[str, Any]]
     session_id: str
     retry_count: int
-    final_response: str | None
+    catalog: list[CatalogProduct]
+    allowed_comparison_ids: list[str]
+    response: AgentResponse
     error: str | None
 
-def create_workflow(provider: Any):
-    workflow = StateGraph(GraphState)  # type: ignore
-    
-    async def llm_node(state: GraphState):
-        from src.models.schemas import DecisionResponse
-        schema_dict = DecisionResponse.model_json_schema()
-        response_format = {
-            "type": "json_schema",
-            "json_schema": {
-                "name": "DecisionResponse",
-                "schema": schema_dict,
-                "strict": False
-            }
-        }
-        response = await provider.chat_completion(
-            messages=state["messages"],
-            model="gpt-4o-mini",
-            session_id=state["session_id"],
-            response_format=response_format
+
+def create_workflow(provider: LLMProvider, tool_proxy: ToolProxy, model: str) -> Any:
+    workflow = StateGraph(GraphState)
+
+    async def load_catalog(_state: GraphState) -> GraphState:
+        return {"catalog": await tool_proxy.catalog_search()}
+
+    async def invoke_llm(state: GraphState) -> GraphState:
+        catalog_json = json.dumps(
+            [product.model_dump() for product in state["catalog"]],
+            ensure_ascii=False,
         )
-        return {"final_response": response}
-        
-    async def parse_json_node(state: GraphState):
+        messages = [
+            {
+                "role": "system",
+                "content": PromptManager.get_system_prompt(
+                    catalog_json,
+                    json.dumps(state.get("allowed_comparison_ids", [])),
+                ),
+            },
+            *state["messages"],
+        ]
+        if state.get("error"):
+            messages.append(
+                {
+                    "role": "system",
+                    "content": (
+                        "Your previous response was invalid. Return JSON matching "
+                        f"the required schema. Validation error: {state['error']}"
+                    ),
+                }
+            )
+
+        raw_response = await provider.chat_completion(
+            messages=messages,
+            model=model,
+            session_id=state["session_id"],
+            response_format={
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "AgentDraft",
+                    "schema": AgentDraft.model_json_schema(),
+                    "strict": True,
+                },
+            },
+        )
+
         try:
-            if state["final_response"]:
-                # Attempt to parse
-                json.loads(state["final_response"])
-                return {"error": None}
-            return {"error": "empty_response"}
-        except json.JSONDecodeError as e:
-            if state.get("retry_count", 0) < 2:
-                # Append error message back to LLM to self-correct
-                return {"error": str(e), "retry_count": state.get("retry_count", 0) + 1}
-            return {"error": "max_retries_exceeded"}
-            
-    workflow.add_node("llm", llm_node)
-    workflow.add_node("parse_json", parse_json_node)
-    
-    workflow.add_edge(START, "llm")
-    workflow.add_edge("llm", "parse_json")
-    
-    def routing_logic(state: GraphState):
-        if state["error"] == "max_retries_exceeded":
+            draft = AgentDraft.model_validate_json(raw_response)
+            response = hydrate_agent_response(
+                draft,
+                state["catalog"],
+                allowed_comparison_ids=set(state.get("allowed_comparison_ids", [])),
+            )
+            return {"response": response, "error": None}
+        except (ValidationError, ValueError) as error:
+            return {
+                "error": str(error),
+                "retry_count": state.get("retry_count", 0) + 1,
+            }
+
+    def route_after_llm(state: GraphState) -> str:
+        if state.get("error") is None:
             return END
-        elif state["error"]:
-            return "llm"
+        if state.get("retry_count", 0) <= MAX_SELF_CORRECTION_RETRIES:
+            return "invoke_llm"
         return END
-        
-    workflow.add_conditional_edges("parse_json", routing_logic)
-    
+
+    workflow.add_node("load_catalog", RunnableLambda(load_catalog))
+    workflow.add_node("invoke_llm", RunnableLambda(invoke_llm))
+    workflow.add_edge(START, "load_catalog")
+    workflow.add_edge("load_catalog", "invoke_llm")
+    workflow.add_conditional_edges("invoke_llm", route_after_llm)
     return workflow.compile()

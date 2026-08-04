@@ -13,6 +13,10 @@ import (
 
 	adminhandler "shopwise/retail/internal/administration/handler"
 	adminusecase "shopwise/retail/internal/administration/usecase"
+	cataloghandler "shopwise/retail/internal/catalog/handler"
+	decisionmemoryhandler "shopwise/retail/internal/decision_memory/handler"
+	decisionmemorypostgres "shopwise/retail/internal/decision_memory/repository/postgres"
+	decisionmemoryusecase "shopwise/retail/internal/decision_memory/usecase"
 	fileshandler "shopwise/retail/internal/files/handler"
 	localstorage "shopwise/retail/internal/files/repository/local"
 	filesusecase "shopwise/retail/internal/files/usecase"
@@ -22,13 +26,6 @@ import (
 	ordershandler "shopwise/retail/internal/orders/handler"
 	orderspostgres "shopwise/retail/internal/orders/repository/postgres"
 	ordersusecase "shopwise/retail/internal/orders/usecase"
-	decisionmemoryhandler "shopwise/retail/internal/decision_memory/handler"
-	decisionmemorypostgres "shopwise/retail/internal/decision_memory/repository/postgres"
-	decisionmemoryusecase "shopwise/retail/internal/decision_memory/usecase"
-	resumesessionhandler "shopwise/retail/internal/resume_session/handler"
-	zaloprovider "shopwise/retail/internal/resume_session/provider/zalo"
-	resumesessionpostgres "shopwise/retail/internal/resume_session/repository/postgres"
-	resumesessionusecase "shopwise/retail/internal/resume_session/usecase"
 	"shopwise/retail/internal/platform/cache"
 	"shopwise/retail/internal/platform/config"
 	"shopwise/retail/internal/platform/database"
@@ -37,13 +34,14 @@ import (
 	"shopwise/retail/internal/platform/logger"
 	"shopwise/retail/internal/platform/middleware"
 	"shopwise/retail/internal/platform/router"
+	resumesessionhandler "shopwise/retail/internal/resume_session/handler"
+	zaloprovider "shopwise/retail/internal/resume_session/provider/zalo"
+	resumesessionpostgres "shopwise/retail/internal/resume_session/repository/postgres"
+	resumesessionusecase "shopwise/retail/internal/resume_session/usecase"
+	storeshandler "shopwise/retail/internal/stores/handler"
 	usershandler "shopwise/retail/internal/users/handler"
 	userpostgres "shopwise/retail/internal/users/repository/postgres"
 	usersusecase "shopwise/retail/internal/users/usecase"
-	cataloghandler "shopwise/retail/internal/catalog/handler"
-	storeshandler "shopwise/retail/internal/stores/handler"
-
-	langfuse "github.com/git-hulk/langfuse-go"
 )
 
 // Run initializes and starts the HTTP server.
@@ -93,15 +91,6 @@ func Run() error {
 		return fmt.Errorf("failed to init file storage: %w", err)
 	}
 
-	useStubLLM := cfg.LLMAPIKey == ""
-	if !useStubLLM {
-		var lfClient *langfuse.Langfuse
-		if cfg.LangfusePublicKey != "" && cfg.LangfuseSecretKey != "" {
-			lfClient = langfuse.NewClient(cfg.LangfuseHost, cfg.LangfusePublicKey, cfg.LangfuseSecretKey)
-			defer lfClient.Close()
-		}
-	}
-
 	guestRateLimit := middleware.NewIPRateLimiter(30, time.Minute).Middleware()
 
 	userSvc := usersusecase.NewService(userRepo, jobClient, log).WithAccountDeletion(usersusecase.AccountDeletionDeps{
@@ -119,14 +108,14 @@ func Run() error {
 	healthH := health.NewHandler(db, redisClient)
 	filesH := fileshandler.NewHandler(filesusecase.NewService())
 	adminH := adminhandler.NewHandler(adminusecase.NewService(log))
-	
+
 	decisionSvc := decisionmemoryusecase.NewService(decisionRepo)
-	decisionH := decisionmemoryhandler.NewHandler(decisionSvc)
+	decisionH := decisionmemoryhandler.NewHandler(decisionSvc, cfg.AIRuntimeURL)
 
 	resumeRepo := resumesessionpostgres.NewRepository(db)
 	resumeJWTSvc := resumesessionusecase.NewJWTService(cfg.JWTSecret)
-	
-	zaloProv := zaloprovider.NewProvider("oa_dummy", "token_dummy")
+
+	zaloProv := zaloprovider.NewProvider(cfg.ZaloOAID, cfg.ZaloAPIToken)
 	retryZalo := resumesessionusecase.NewRetryableProvider(zaloProv, 1)
 
 	resumeSvc := resumesessionusecase.NewService(resumeRepo, resumeJWTSvc, decisionSvc, userSvc, retryZalo)

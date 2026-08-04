@@ -1,5 +1,5 @@
 import React from "react";
-import { X, Check, Star, ShieldCheck } from "lucide-react";
+import { X } from "lucide-react";
 import { Laptop } from "../types";
 
 interface ComparisonModalProps {
@@ -39,7 +39,12 @@ export default function ComparisonModal({
 
         {/* Content Table */}
         <div className="flex-1 overflow-auto p-6">
-          <div className="grid min-w-[700px] grid-cols-4 gap-4">
+          <div
+            className="grid min-w-175 gap-4"
+            style={{
+              gridTemplateColumns: `minmax(180px, 1fr) repeat(${products.length}, minmax(200px, 1fr))`,
+            }}
+          >
             {/* Row Header */}
             <div className="text-on-surface-variant col-span-1 flex flex-col justify-end pb-3 font-mono text-xs font-bold tracking-wider uppercase">
               Comparison Metrics
@@ -129,7 +134,7 @@ export default function ComparisonModal({
                 key={p.id}
                 className="border-outline-variant/10 text-on-surface col-span-1 border-b py-3 text-center font-sans text-xs font-medium"
               >
-                {p.specs.warranty || "Standard 1-Year"}
+                {p.specs.warranty ?? "Not provided"}
               </div>
             ))}
 
@@ -142,7 +147,7 @@ export default function ComparisonModal({
                 key={p.id}
                 className="border-outline-variant/10 text-on-surface col-span-1 border-b py-3 text-center font-sans text-xs font-medium"
               >
-                {p.specs.cpu || "Optimizing..."}
+                {p.specs.cpu ?? "Not provided"}
               </div>
             ))}
 
@@ -154,7 +159,7 @@ export default function ComparisonModal({
                 key={p.id}
                 className="border-outline-variant/10 text-on-surface col-span-1 border-b py-3 text-center font-sans text-xs font-medium"
               >
-                {p.specs.screen || "Default Panel"}
+                {p.specs.screen ?? "Not provided"}
               </div>
             ))}
 
@@ -167,7 +172,7 @@ export default function ComparisonModal({
                 key={p.id}
                 className="border-outline-variant/10 col-span-1 border-b py-3 text-center font-mono text-xs font-bold text-[#4F7CFF]"
               >
-                {p.aiPerf} / 100
+                {p.aiPerf === undefined ? "N/A" : `${p.aiPerf} / 100`}
               </div>
             ))}
 
@@ -180,7 +185,7 @@ export default function ComparisonModal({
                 key={p.id}
                 className="border-outline-variant/10 col-span-1 border-b py-3 text-center font-mono text-xs font-bold text-[#4F7CFF]"
               >
-                {p.rendering} / 100
+                {p.rendering === undefined ? "N/A" : `${p.rendering} / 100`}
               </div>
             ))}
 
@@ -193,7 +198,7 @@ export default function ComparisonModal({
                 key={p.id}
                 className="border-outline-variant/10 col-span-1 border-b py-3 text-center font-mono text-xs font-bold text-[#4F7CFF]"
               >
-                {p.thermals} / 100
+                {p.thermals === undefined ? "N/A" : `${p.thermals} / 100`}
               </div>
             ))}
 

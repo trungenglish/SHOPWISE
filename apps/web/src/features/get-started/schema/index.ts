@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 export const signInSchema = z.object({
   emailOrPhone: z.string().min(1, "Email or phone number is required"),

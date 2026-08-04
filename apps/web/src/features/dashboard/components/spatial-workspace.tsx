@@ -67,7 +67,6 @@ const SpatialWorkspace = ({
   priceAlerts,
   onOpenPriceAlert,
 }: SpatialWorkspaceProps) => {
-
   const { zoomIn, zoomOut, fitView } = useReactFlow();
 
   const [hoveredProductId, setHoveredProductId] = useState<string | null>(null);
@@ -109,9 +108,6 @@ const SpatialWorkspace = ({
           onSelect: () => setActiveProductId(laptop.id),
           onHover: () => setHoveredProductId(laptop.id),
           onHoverLeave: () => setHoveredProductId(null),
-          onToggleSave,
-          isSaved: savedIds.includes(laptop.id),
-          isHovered: laptop.id === hoveredProductId,
         },
       })),
     ];
@@ -167,7 +163,17 @@ const SpatialWorkspace = ({
 
     setNodes(updatedNodes);
     setEdges(updatedEdges);
-  }, [products, activeProductId, discountRate, priceAlerts, graphNodes, setActiveProductId, onOpenPriceAlert, setNodes, setEdges, onToggleSave, savedIds, hoveredProductId]);
+  }, [
+    products,
+    activeProductId,
+    discountRate,
+    priceAlerts,
+    graphNodes,
+    setActiveProductId,
+    onOpenPriceAlert,
+    setNodes,
+    setEdges,
+  ]);
 
   const activeProduct =
     products.find((p) => p.id === activeProductId) || products[0];
@@ -232,7 +238,6 @@ const SpatialWorkspace = ({
         >
           <Background color="rgba(79, 124, 255, 0.08)" gap={16} size={1} />
         </ReactFlow>
-
         {/* Contextual Specs Side Panel */}
         <AnimatePresence mode="wait">
           {displayProduct ? (
@@ -251,7 +256,8 @@ const SpatialWorkspace = ({
                 <span className="font-mono text-sm font-bold text-emerald-400">
                   {(displayProduct.price * (1 - discountRate)).toLocaleString(
                     "vi-VN"
-                  )} ₫
+                  )}{" "}
+                  ₫
                 </span>
               </div>
 
@@ -308,23 +314,29 @@ const SpatialWorkspace = ({
                   <div className="bg-surface-low mx-2 h-1.5 flex-1 overflow-hidden rounded-full">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-[#4F7CFF] to-indigo-400 transition-[width] duration-300 ease-[var(--ease-out)]"
-                      style={{ width: `${displayProduct.aiPerf}%` }}
+                      style={{ width: `${displayProduct.aiPerf ?? 0}%` }}
                     />
                   </div>
                   <span className="w-7 text-right font-mono text-white">
-                    {displayProduct.aiPerf}%
+                    {displayProduct.aiPerf === undefined
+                      ? "N/A"
+                      : `${displayProduct.aiPerf}%`}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-[10px]">
-                  <span className="text-on-surface-variant w-16">3D Render</span>
+                  <span className="text-on-surface-variant w-16">
+                    3D Render
+                  </span>
                   <div className="bg-surface-low mx-2 h-1.5 flex-1 overflow-hidden rounded-full">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-[#4F7CFF] to-indigo-400 transition-[width] duration-300 ease-[var(--ease-out)]"
-                      style={{ width: `${displayProduct.rendering}%` }}
+                      style={{ width: `${displayProduct.rendering ?? 0}%` }}
                     />
                   </div>
                   <span className="w-7 text-right font-mono text-white">
-                    {displayProduct.rendering}%
+                    {displayProduct.rendering === undefined
+                      ? "N/A"
+                      : `${displayProduct.rendering}%`}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-[10px]">
@@ -332,11 +344,13 @@ const SpatialWorkspace = ({
                   <div className="bg-surface-low mx-2 h-1.5 flex-1 overflow-hidden rounded-full">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-[#4F7CFF] to-indigo-400 transition-[width] duration-300 ease-[var(--ease-out)]"
-                      style={{ width: `${displayProduct.thermals}%` }}
+                      style={{ width: `${displayProduct.thermals ?? 0}%` }}
                     />
                   </div>
                   <span className="w-7 text-right font-mono text-white">
-                    {displayProduct.thermals}%
+                    {displayProduct.thermals === undefined
+                      ? "N/A"
+                      : `${displayProduct.thermals}%`}
                   </span>
                 </div>
               </div>
@@ -350,7 +364,8 @@ const SpatialWorkspace = ({
               </button>
             </motion.div>
           ) : null}
-        </AnimatePresence>      </div>
+        </AnimatePresence>{" "}
+      </div>
 
       {/* Persistent Floating Action Dock */}
       <div className="bg-surface-highest/80 border-outline-variant/40 z-20 mx-auto mb-2 flex w-full max-w-2xl items-center justify-between gap-5 rounded-full border px-6 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)] backdrop-blur-xl">
@@ -381,6 +396,6 @@ const SpatialWorkspace = ({
       </div>
     </main>
   );
-}
+};
 
 export default SpatialWorkspace;

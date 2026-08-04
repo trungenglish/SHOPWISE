@@ -66,10 +66,6 @@ export function LaptopNode({ data }: any) {
   const priceAlerts = data.priceAlerts || [];
   const onOpenPriceAlert = data.onOpenPriceAlert;
   const onSelect = data.onSelect;
-  const isHovered = data.isHovered;
-  const isSaved = data.isSaved;
-  const onToggleSave = data.onToggleSave;
-
   const currentDiscountedPrice = Math.round(laptop.price * (1 - discountRate));
   const hasActiveAlert = priceAlerts.some(
     (a: PriceAlert) => a.productId === laptop.id && a.active

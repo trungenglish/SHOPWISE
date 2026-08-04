@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { z } from "zod/v3";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 import { checkout } from "../../../api/checkout";
 import { UserResponse } from "../../../api/users";
@@ -161,7 +161,7 @@ export default function CheckoutModal({
   const { data: stores = [] } = useQuery({
     queryKey: ["stores"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:8080/api/v1/stores");
+      const res = await fetch("/api/v1/stores");
       if (!res.ok) throw new Error("Failed to fetch stores");
       const data = await res.json();
       return data.items || [];
@@ -199,7 +199,7 @@ export default function CheckoutModal({
       customer_id: guestUser?.id || crypto.randomUUID(),
       items: [
         {
-          product_id: product.id.length === 36 ? product.id : crypto.randomUUID(),
+          product_id: product.id,
           quantity: 1,
         },
       ],

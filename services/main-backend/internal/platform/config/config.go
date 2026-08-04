@@ -27,9 +27,9 @@ type Config struct {
 	GoogleRedirect string
 	WebAppURL      string
 
-	LLMProvider string
-	LLMAPIKey   string
-	LLMModel    string
+	AIRuntimeURL string
+	ZaloOAID     string
+	ZaloAPIToken string
 
 	SMTPHost string
 	SMTPPort string
@@ -77,9 +77,9 @@ func Load() (*Config, error) {
 		GoogleSecret:   os.Getenv("GOOGLE_CLIENT_SECRET"),
 		GoogleRedirect: getEnv("GOOGLE_REDIRECT_URI", "http://localhost:18080/api/v1/identity/google/callback"),
 		WebAppURL:      getEnv("WEB_APP_URL", "http://localhost:3001"),
-		LLMProvider:    getEnv("LLM_PROVIDER", "openai"),
-		LLMAPIKey:      os.Getenv("LLM_API_KEY"),
-		LLMModel:       getEnv("LLM_MODEL", "gpt-4o-mini"),
+		AIRuntimeURL:   getEnv("AI_RUNTIME_URL", "http://localhost:8000"),
+		ZaloOAID:       os.Getenv("ZALO_OA_ID"),
+		ZaloAPIToken:   os.Getenv("ZALO_API_TOKEN"),
 		SMTPHost:       getEnv("SMTP_HOST", "localhost"),
 		SMTPPort:       getEnv("SMTP_PORT", "1025"),
 		SMTPUser:       os.Getenv("SMTP_USER"),

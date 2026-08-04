@@ -1,104 +1,91 @@
-from fastapi import APIRouter, HTTPException, Depends
-from sse_starlette.sse import EventSourceResponse
-from pydantic import BaseModel, Field
+import json
+from collections.abc import AsyncGenerator
+from typing import Literal, cast
 
+import httpx
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel, Field
+from sse_starlette.sse import EventSourceResponse
+
+from src.api.streaming import generate_agent_sse
 from src.core.config import settings
-from src.llm.openai_provider import OpenAIProvider
-from src.core.prompts import PromptManager
-from src.api.streaming import generate_sse
 from src.graph.workflow import create_workflow
+from src.llm.openai_provider import OpenAIProvider
+from src.models.schemas import AgentResponse
+from src.tools.interfaces import ToolProxy
 
 router = APIRouter()
 
+
+class ConversationMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1)
+
+
 class ChatRequest(BaseModel):
-    session_id: str = Field(..., description="Unique session identifier")
-    message: str = Field(..., description="User message content")
-    # Runtime Model Configuration
-    model: str | None = Field(default=None, description="Model override")
-    temperature: float | None = Field(default=None, description="Temperature override")
-    max_tokens: int | None = Field(default=None, description="Max tokens override")
+    session_id: str = Field(min_length=1)
+    messages: list[ConversationMessage] = Field(min_length=1)
+    allowed_comparison_ids: list[str] = Field(default_factory=list)
 
-class ChatResponse(BaseModel):
-    response: str
 
-def get_provider():
-    if not settings.llm_api_key:
-        raise HTTPException(status_code=500, detail="LLM API key not configured")
-    
-    if settings.llm_provider == "openai":
-        return OpenAIProvider(
-            api_key=settings.llm_api_key.get_secret_value(),
-            base_url=settings.llm_base_url
-        )
-    raise HTTPException(status_code=500, detail=f"Provider {settings.llm_provider} not supported")
+def get_provider() -> OpenAIProvider:
+    return OpenAIProvider(
+        api_key=settings.openai_api_key.get_secret_value(),
+        base_url=settings.openai_base_url,
+    )
 
-@router.post("/chat", response_model=ChatResponse)
-async def chat_endpoint(req: ChatRequest, provider: OpenAIProvider = Depends(get_provider)):
-    # Merge runtime params with defaults
-    model = req.model or "gpt-4o-mini"
-    temperature = req.temperature if req.temperature is not None else 0.7
-    max_tokens = req.max_tokens
-    
-    system_prompt = PromptManager.get_system_prompt()
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": req.message}
-    ]
-    
+
+def get_tool_proxy() -> ToolProxy:
+    return ToolProxy(settings.backend_url)
+
+
+@router.post("/chat", response_model=AgentResponse)
+async def chat_endpoint(
+    request: ChatRequest,
+    provider: OpenAIProvider = Depends(get_provider),
+    tool_proxy: ToolProxy = Depends(get_tool_proxy),
+) -> AgentResponse:
+    workflow = create_workflow(provider, tool_proxy, settings.model)
     try:
-        # Wire LangGraph workflow
-        workflow = create_workflow(provider)
-        state = {
-            "messages": messages,
-            "session_id": req.session_id,
-            "retry_count": 0,
-            "final_response": None,
-            "error": None
-        }
-        
-        result = await workflow.ainvoke(state)
-        
-        if result.get("error"):
-            raise HTTPException(status_code=500, detail=f"Workflow error: {result['error']}")
-            
-        return ChatResponse(response=result.get("final_response", ""))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        result = await workflow.ainvoke(
+            {
+                "messages": [message.model_dump() for message in request.messages],
+                "session_id": request.session_id,
+                "retry_count": 0,
+                "allowed_comparison_ids": request.allowed_comparison_ids,
+            }
+        )
+    except httpx.HTTPError as error:
+        raise HTTPException(status_code=502, detail="catalog unavailable") from error
 
-from src.models.schemas import DecisionResponse
+    response = result.get("response")
+    if response is None:
+        raise HTTPException(status_code=502, detail="invalid model response")
+    return cast(AgentResponse, response)
+
 
 @router.post("/chat/stream")
-async def chat_stream_endpoint(req: ChatRequest, provider: OpenAIProvider = Depends(get_provider)):
-    # Merge runtime params with defaults
-    model = req.model or "gpt-4o-mini"
-    temperature = req.temperature if req.temperature is not None else 0.7
-    max_tokens = req.max_tokens
-    
-    system_prompt = PromptManager.get_system_prompt()
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": req.message}
-    ]
-    
-    schema_dict = DecisionResponse.model_json_schema()
-    response_format = {
-        "type": "json_schema",
-        "json_schema": {
-            "name": "DecisionResponse",
-            "schema": schema_dict,
-            "strict": False
-        }
-    }
-    
-    try:
-        generator = provider.stream_chat_completion(
-            messages=messages,
-            model=model,
-            temperature=temperature,
-            max_tokens=max_tokens,
-            session_id=req.session_id,
-            response_format=response_format
-        )
-        return EventSourceResponse(generate_sse(generator))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+async def chat_stream_endpoint(
+    request: ChatRequest,
+    provider: OpenAIProvider = Depends(get_provider),
+    tool_proxy: ToolProxy = Depends(get_tool_proxy),
+) -> EventSourceResponse:
+    async def events() -> AsyncGenerator[dict[str, str], None]:
+        try:
+            response = await chat_endpoint(request, provider, tool_proxy)
+            async for event in generate_agent_sse(response):
+                yield event
+        except HTTPException as error:
+            yield {
+                "event": "error",
+                "data": json.dumps({"message": str(error.detail)}),
+            }
+            yield {"event": "done", "data": "{}"}
+        except Exception:
+            yield {
+                "event": "error",
+                "data": json.dumps({"message": "Agent request failed"}),
+            }
+            yield {"event": "done", "data": "{}"}
+
+    return EventSourceResponse(events())
