@@ -43,7 +43,8 @@ type Config struct {
 	LangfuseSecretKey string
 	LangfuseHost      string
 
-	CheckoutAuthBypass bool
+	CheckoutAuthBypass      bool
+	PhongVuConnectorEnabled bool
 }
 
 func Load() (*Config, error) {
@@ -60,6 +61,10 @@ func Load() (*Config, error) {
 	checkoutAuthBypass, err := strconv.ParseBool(getEnv("CHECKOUT_AUTH_BYPASS", "false"))
 	if err != nil {
 		return nil, fmt.Errorf("CHECKOUT_AUTH_BYPASS: %w", err)
+	}
+	phongVuConnectorEnabled, err := strconv.ParseBool(getEnv("PHONGVU_CONNECTOR_ENABLED", "false"))
+	if err != nil {
+		return nil, fmt.Errorf("PHONGVU_CONNECTOR_ENABLED: %w", err)
 	}
 	ginMode := getEnv("GIN_MODE", "debug")
 
@@ -91,7 +96,8 @@ func Load() (*Config, error) {
 		LangfuseSecretKey: os.Getenv("LANGFUSE_SECRET_KEY"),
 		LangfuseHost:      getEnv("LANGFUSE_HOST", "https://cloud.langfuse.com"),
 
-		CheckoutAuthBypass: checkoutAuthBypass && strings.EqualFold(ginMode, "debug"),
+		CheckoutAuthBypass:      checkoutAuthBypass && strings.EqualFold(ginMode, "debug"),
+		PhongVuConnectorEnabled: phongVuConnectorEnabled,
 	}
 
 	origins := getEnv("ALLOWED_ORIGINS", "http://localhost:3001")

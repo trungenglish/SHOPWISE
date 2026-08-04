@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	TypeSendWelcomeEmail = "notification:send_welcome_email"
-	TypePriceCheck       = "notification:price_check"
+	TypeSendWelcomeEmail     = "notification:send_welcome_email"
+	TypePriceCheck           = "notification:price_check"
+	TypePhongVuAccessorySync = "retailer:phongvu_accessory_sync"
 )
 
 type WelcomeEmailPayload struct {
