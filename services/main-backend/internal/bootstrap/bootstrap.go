@@ -42,6 +42,8 @@ import (
 	usershandler "shopwise/retail/internal/users/handler"
 	userpostgres "shopwise/retail/internal/users/repository/postgres"
 	usersusecase "shopwise/retail/internal/users/usecase"
+	"shopwise/retail/internal/promotions"
+	promotionsrepo "shopwise/retail/internal/promotions/repository"
 )
 
 // Run initializes and starts the HTTP server.
@@ -105,6 +107,13 @@ func Run() error {
 		orderH.WithDevelopmentAuthBypass()
 	}
 
+	promotionsRepo := promotionsrepo.NewPostgresRepository(db)
+	voucherGen := promotions.NewLocalVoucherGenerator()
+	promotionsSvc := promotions.NewService(promotionsRepo, voucherGen)
+	promotionsH := promotions.NewHandler(promotionsSvc)
+
+	orderH.WithPromotionSink(promotionsSvc)
+
 	healthH := health.NewHandler(db, redisClient)
 	filesH := fileshandler.NewHandler(filesusecase.NewService())
 	adminH := adminhandler.NewHandler(adminusecase.NewService(log))
@@ -148,6 +157,11 @@ func Run() error {
 
 	decisionmemoryhandler.RegisterRoutes(v1.Group("/sessions"), decisionH, jwtSvc)
 	resumesessionhandler.RegisterRoutes(v1.Group("/session"), resumeH)
+
+	promotionsH.RegisterRoutes(v1)
+	if cfg.GinMode == "debug" {
+		promotionsH.RegisterDevRoutes(v1)
+	}
 
 	adminGroup := v1.Group("/admin")
 	adminGroup.Use(guestRateLimit)
@@ -237,6 +251,11 @@ func Migrate() error {
 	log.Info("running resume session migrations")
 	if err := resumesessionpostgres.Migrate(db); err != nil {
 		return fmt.Errorf("failed to migrate resume session: %w", err)
+	}
+
+	log.Info("running promotions migrations")
+	if err := promotionsrepo.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate promotions: %w", err)
 	}
 
 	log.Info("migrations completed successfully")

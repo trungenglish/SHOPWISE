@@ -12,6 +12,7 @@ import AccessoriesModal from "@/features/dashboard/components/accessories-modal"
 import ReasoningModal from "@/features/dashboard/components/reasoning-modal";
 import RetailModal from "@/features/dashboard/components/retail-modal";
 import CheckoutModal from "@/features/dashboard/components/checkout-modal";
+import { useCheckoutIncentive } from "@/features/checkout-incentive/hooks/useCheckoutIncentive";
 import PriceAlertModal from "@/features/dashboard/components/price-alert-modal";
 import { OrderHistoryPage } from "@/features/orders/components/order-history-page";
 import {
@@ -30,6 +31,7 @@ export const Route = createFileRoute("/dashboard")({
 });
 
 function DashboardPage() {
+  const { startPromotion } = useCheckoutIncentive();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isInitialState, setIsInitialState] = useState(true);
   const [isSimulating, setIsSimulating] = useState(false);
@@ -219,6 +221,7 @@ function DashboardPage() {
       setSavedIds(savedIds.filter((item) => item !== id));
     } else {
       setSavedIds([...savedIds, id]);
+      startPromotion("saved_product");
     }
   };
 
@@ -471,7 +474,10 @@ function DashboardPage() {
                   onCompareAll={() => setIsCompareOpen(true)}
                   onExplainReasoning={() => setIsReasoningOpen(true)}
                   onAccessories={() => setIsAccessoriesOpen(true)}
-                  onCheckout={() => setIsCheckoutOpen(true)}
+                  onCheckout={() => {
+                    setIsCheckoutOpen(true);
+                    startPromotion("started_checkout");
+                  }}
                   discountRate={connectedDiscount}
                   priceAlerts={priceAlerts}
                   onOpenPriceAlert={handleOpenPriceAlert}
