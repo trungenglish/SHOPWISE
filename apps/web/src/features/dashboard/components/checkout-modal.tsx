@@ -3,7 +3,13 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod/v3";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { checkout } from "../../../api/checkout";
+import {
+  checkout,
+  CheckoutError,
+  type CheckoutRequest,
+  type OrderResponse,
+} from "../../../api/checkout";
+import type { AccessoryRecommendation } from "../../../api/accessories";
 import { UserResponse } from "../../../api/users";
 import {
   X,
@@ -15,7 +21,7 @@ import {
   Store,
   Loader2,
   Search,
-  MapPin
+  MapPin,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Laptop } from "../types";
@@ -38,6 +44,7 @@ interface CheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
   product: Laptop | null;
+  accessories: AccessoryRecommendation[];
   discountRate: number; // calculated from connected retail accounts
   onSuccess?: () => void;
 }
@@ -53,10 +60,7 @@ const checkoutSchema = z
         /^(03|05|07|08|09)\d{8}$/,
         "Số điện thoại không hợp lệ (vd: 0912345678)"
       ),
-    email: z
-      .string()
-      .min(1, "Vui lòng nhập email")
-      .email("Email không hợp lệ"),
+    email: z.string().min(1, "Vui lòng nhập email").email("Email không hợp lệ"),
     deliveryMethod: z.enum(["delivery", "pickup"]),
     address: z.string().optional(),
     storeId: z.string().optional(),
@@ -94,17 +98,26 @@ const formatVND = (amount: number) => {
   }).format(vndAmount);
 };
 
-
 export default function CheckoutModal({
   isOpen,
   onClose,
   product,
+  accessories,
   discountRate,
   onSuccess,
 }: CheckoutModalProps) {
   const [promoCode, setPromoCode] = useState("");
   const [promoApplied, setPromoApplied] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [orderStatus, setOrderStatus] = useState<string | null>(null);
+  const [pendingRequest, setPendingRequest] = useState<CheckoutRequest | null>(
+    null
+  );
+  const [changedOffer, setChangedOffer] = useState<CheckoutError["offer"]>();
+  const [offerPriceOverrides, setOfferPriceOverrides] = useState<
+    Record<string, number>
+  >({});
+  const [idempotencyKey] = useState(() => crypto.randomUUID());
   const [searchTerm, setSearchTerm] = useState("");
   const [guestUser, setGuestUser] = useState<UserResponse | null>(null);
 
@@ -112,12 +125,30 @@ export default function CheckoutModal({
 
   const checkoutMutation = useMutation({
     mutationFn: checkout,
-    onSuccess: () => {
+    onSuccess: (order: OrderResponse) => {
       setPaymentSuccess(true);
-      toast.success("Đặt hàng thành công!");
+      setOrderStatus(order.status);
+      setChangedOffer(undefined);
+      if (order.status === "PENDING_SUPPLIER_CONFIRMATION") {
+        toast.info("Đơn đã được tạo và đang chờ Phong Vũ xác nhận.");
+      } else {
+        toast.success("Đặt hàng thành công!");
+      }
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
     onError: (error: Error) => {
+      if (
+        error instanceof CheckoutError &&
+        error.code === "OFFER_CHANGED" &&
+        error.offer
+      ) {
+        setChangedOffer(error.offer);
+        setOfferPriceOverrides((current) => ({
+          ...current,
+          [error.offer!.retailer_offer_id]: error.offer!.price,
+        }));
+        return;
+      }
       toast.error(error.message || "Đã xảy ra lỗi khi đặt hàng.");
     },
   });
@@ -168,9 +199,10 @@ export default function CheckoutModal({
     },
   });
 
-  const filteredStores = stores.filter((s: any) =>
-    s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    s.address.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredStores = stores.filter(
+    (s: any) =>
+      s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      s.address.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const deliveryMethod = watch("deliveryMethod");
@@ -178,12 +210,23 @@ export default function CheckoutModal({
   if (!isOpen || !product) return null;
 
   const basePrice = product.price;
+  const accessorySubtotal = accessories.reduce(
+    (total, accessory) =>
+      total +
+      (offerPriceOverrides[accessory.retailer_offer_id] ?? accessory.price),
+    0
+  );
   const retailDiscount = basePrice * discountRate;
   const promoDiscount = promoApplied ? basePrice * 0.05 : 0; // extra 5% for promo "SHOPWISE5"
   const shipping = basePrice > 37500000 ? 0 : 625000;
   const tax = (basePrice - retailDiscount - promoDiscount) * 0.08;
   const finalTotal =
-    basePrice - retailDiscount - promoDiscount + shipping + tax;
+    basePrice -
+    retailDiscount -
+    promoDiscount +
+    shipping +
+    tax +
+    accessorySubtotal;
 
   const handleApplyPromo = () => {
     if (promoCode.toUpperCase() === "SHOPWISE5") {
@@ -195,18 +238,27 @@ export default function CheckoutModal({
   };
 
   const handlePayment = (data: CheckoutFormData) => {
-    checkoutMutation.mutate({
+    const request: CheckoutRequest = {
       customer_id: guestUser?.id || crypto.randomUUID(),
       items: [
         {
           product_id: product.id,
           quantity: 1,
         },
+        ...accessories.map((accessory) => ({
+          retailer_offer_id: accessory.retailer_offer_id,
+          quantity: 1,
+        })),
       ],
-      fulfillment_method: data.deliveryMethod === "delivery" ? "DELIVERY" : "STORE_PICKUP",
-      shipping_address: data.deliveryMethod === "delivery" ? data.address : undefined,
+      fulfillment_method:
+        data.deliveryMethod === "delivery" ? "DELIVERY" : "STORE_PICKUP",
+      shipping_address:
+        data.deliveryMethod === "delivery" ? data.address : undefined,
       coupon_code: promoApplied ? "SHOPWISE5" : undefined,
-    });
+      idempotency_key: accessories.length > 0 ? idempotencyKey : undefined,
+    };
+    setPendingRequest(request);
+    checkoutMutation.mutate(request);
   };
 
   const handleCloseSuccess = () => {
@@ -217,7 +269,7 @@ export default function CheckoutModal({
   };
 
   return (
-    <div className="bg-black/80 fixed inset-0 z-50 flex items-center justify-center p-4 select-none backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm select-none">
       <div
         className="bg-surface-high border-outline-variant/30 flex w-full max-w-4xl flex-col overflow-hidden rounded-xl border shadow-2xl"
         style={{ maxHeight: "calc(100vh - 2rem)" }}
@@ -253,17 +305,25 @@ export default function CheckoutModal({
               </div>
               <div>
                 <h4 className="text-on-surface font-display text-xl font-bold">
-                  Đặt hàng thành công!
+                  {orderStatus === "PENDING_SUPPLIER_CONFIRMATION"
+                    ? "Đơn đang chờ nhà cung cấp xác nhận"
+                    : "Đặt hàng thành công!"}
                 </h4>
                 <p className="text-on-surface-variant mx-auto mt-2 max-w-sm text-sm">
-                  Đơn hàng <strong>{product.name}</strong> của bạn đã được xác
-                  nhận. Nhân viên sẽ liên hệ với bạn trong vòng 15 phút.
+                  {orderStatus === "PENDING_SUPPLIER_CONFIRMATION" ? (
+                    <>
+                      Giá Phong Vũ là tạm tính. SHOPWISE chưa thu tiền và sẽ
+                      liên hệ sau khi nhà cung cấp xác nhận.
+                    </>
+                  ) : (
+                    <>
+                      Đơn hàng <strong>{product.name}</strong> của bạn đã được
+                      xác nhận.
+                    </>
+                  )}
                 </p>
               </div>
-              <Button
-                onClick={handleCloseSuccess}
-                className="mt-6 px-8"
-              >
+              <Button onClick={handleCloseSuccess} className="mt-6 px-8">
                 Xem đơn hàng
               </Button>
             </div>
@@ -391,7 +451,10 @@ export default function CheckoutModal({
                   {deliveryMethod === "pickup" && (
                     <div className="animate-in fade-in slide-in-from-top-2 flex flex-col gap-4">
                       <div className="relative">
-                        <Search className="text-on-surface-variant absolute top-1/2 left-3 -translate-y-1/2" size={16} />
+                        <Search
+                          className="text-on-surface-variant absolute top-1/2 left-3 -translate-y-1/2"
+                          size={16}
+                        />
                         <Input
                           placeholder="Tìm kiếm cửa hàng theo tên hoặc địa chỉ..."
                           value={searchTerm}
@@ -401,7 +464,7 @@ export default function CheckoutModal({
                         />
                       </div>
 
-                      <div className="border-outline-variant/30 flex max-h-[250px] flex-col overflow-y-auto overflow-x-hidden rounded-lg border">
+                      <div className="border-outline-variant/30 flex max-h-[250px] flex-col overflow-x-hidden overflow-y-auto rounded-lg border">
                         <Controller
                           control={control}
                           name="storeId"
@@ -412,22 +475,33 @@ export default function CheckoutModal({
                               className="flex flex-col gap-0"
                               disabled={isSubmittingManual}
                             >
-                              {filteredStores.length > 0 ? filteredStores.map((store: any) => (
-                                <Label
-                                  key={store.id}
-                                  htmlFor={store.id}
-                                  className="border-outline-variant/20 hover:bg-surface-low has-[[data-state=checked]]:bg-primary/5 flex cursor-pointer items-start gap-3 border-b p-4 transition-colors last:border-0"
-                                >
-                                  <RadioGroupItem value={store.id} id={store.id} className="mt-0.5" />
-                                  <div className="flex flex-col gap-1">
-                                    <span className="text-on-surface text-sm font-bold">{store.name}</span>
-                                    <span className="text-on-surface-variant flex items-start gap-1 text-xs">
-                                      <MapPin size={14} className="mt-0.5 shrink-0" />
-                                      {store.address}
-                                    </span>
-                                  </div>
-                                </Label>
-                              )) : (
+                              {filteredStores.length > 0 ? (
+                                filteredStores.map((store: any) => (
+                                  <Label
+                                    key={store.id}
+                                    htmlFor={store.id}
+                                    className="border-outline-variant/20 hover:bg-surface-low has-[[data-state=checked]]:bg-primary/5 flex cursor-pointer items-start gap-3 border-b p-4 transition-colors last:border-0"
+                                  >
+                                    <RadioGroupItem
+                                      value={store.id}
+                                      id={store.id}
+                                      className="mt-0.5"
+                                    />
+                                    <div className="flex flex-col gap-1">
+                                      <span className="text-on-surface text-sm font-bold">
+                                        {store.name}
+                                      </span>
+                                      <span className="text-on-surface-variant flex items-start gap-1 text-xs">
+                                        <MapPin
+                                          size={14}
+                                          className="mt-0.5 shrink-0"
+                                        />
+                                        {store.address}
+                                      </span>
+                                    </div>
+                                  </Label>
+                                ))
+                              ) : (
                                 <div className="text-on-surface-variant p-4 text-center text-sm">
                                   Không tìm thấy cửa hàng nào phù hợp.
                                 </div>
@@ -444,6 +518,20 @@ export default function CheckoutModal({
 
               {/* Right Column */}
               <div className="bg-surface-lowest flex flex-col p-5 md:p-8">
+                {changedOffer && pendingRequest && (
+                  <div className="mb-4 rounded-lg border border-amber-400/40 bg-amber-400/10 p-3 text-xs text-amber-200">
+                    Giá Phong Vũ đã đổi thành {formatVND(changedOffer.price)}.
+                    <Button
+                      type="button"
+                      size="sm"
+                      className="mt-2 w-full"
+                      onClick={() => checkoutMutation.mutate(pendingRequest)}
+                      disabled={isSubmittingManual}
+                    >
+                      Xác nhận lại giá mới
+                    </Button>
+                  </div>
+                )}
                 <div className="bg-surface-high border-outline-variant/30 mb-8 flex items-center gap-4 rounded-xl border p-4 shadow-sm">
                   <img
                     src={product.image}
@@ -462,6 +550,28 @@ export default function CheckoutModal({
                     {formatVND(basePrice)}
                   </span>
                 </div>
+
+                {accessories.map((accessory) => (
+                  <div
+                    key={accessory.retailer_offer_id}
+                    className="border-outline-variant/20 mb-3 flex items-center justify-between rounded-lg border p-3 text-xs"
+                  >
+                    <div>
+                      <p className="text-on-surface font-semibold">
+                        {accessory.name}
+                      </p>
+                      <p className="text-on-surface-variant">
+                        Phong Vũ · giá tạm tính
+                      </p>
+                    </div>
+                    <span className="text-on-surface font-semibold">
+                      {formatVND(
+                        offerPriceOverrides[accessory.retailer_offer_id] ??
+                          accessory.price
+                      )}
+                    </span>
+                  </div>
+                ))}
 
                 <div className="mb-8 flex gap-2">
                   <Input
@@ -488,6 +598,15 @@ export default function CheckoutModal({
                       {formatVND(basePrice)}
                     </span>
                   </div>
+
+                  {accessorySubtotal > 0 && (
+                    <div className="text-on-surface-variant flex justify-between text-sm">
+                      <span>Phụ kiện Phong Vũ (tạm tính)</span>
+                      <span className="text-on-surface font-medium">
+                        {formatVND(accessorySubtotal)}
+                      </span>
+                    </div>
+                  )}
 
                   <div className="text-on-surface-variant flex justify-between text-sm">
                     <span>Phí giao hàng bảo đảm chống sốc</span>
@@ -524,10 +643,10 @@ export default function CheckoutModal({
                   )}
 
                   <div className="border-outline-variant/30 mt-2 flex justify-between border-t pt-5">
-                    <span className="flex items-center gap-1.5 text-base font-bold text-primary">
+                    <span className="text-primary flex items-center gap-1.5 text-base font-bold">
                       <Sparkles size={16} /> Tổng thanh toán
                     </span>
-                    <span className="text-lg font-bold text-primary">
+                    <span className="text-primary text-lg font-bold">
                       {formatVND(finalTotal)}
                     </span>
                   </div>

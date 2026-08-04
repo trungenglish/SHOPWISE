@@ -17,6 +17,7 @@ interface AuditTrailProps {
   onReplay: () => void;
   suggestions?: string[];
   hasMenuButton?: boolean;
+  hideComposer?: boolean;
 }
 
 export default function AuditTrail({
@@ -27,6 +28,7 @@ export default function AuditTrail({
   onReplay,
   suggestions,
   hasMenuButton,
+  hideComposer,
 }: AuditTrailProps) {
   const [inputValue, setInputValue] = useState("");
 
@@ -41,7 +43,9 @@ export default function AuditTrail({
   return (
     <section className="glass-panel border-outline-variant/15 flex h-screen w-[320px] shrink-0 flex-col border-r select-none">
       {/* Header */}
-      <div className={`border-outline-variant/20 flex items-center justify-between border-b p-4 pt-6 ${hasMenuButton ? "pl-16" : ""}`}>
+      <div
+        className={`border-outline-variant/20 flex items-center justify-between border-b p-4 pt-6 ${hasMenuButton ? "pl-16" : ""}`}
+      >
         <h2 className="font-display text-on-surface flex items-center gap-1.5 text-sm font-semibold tracking-wide uppercase">
           <Sparkles size={14} className="text-[#4F7CFF]" />
           Audit Trail
@@ -130,50 +134,52 @@ export default function AuditTrail({
       </div>
 
       {/* Input section */}
-      <div className="border-outline-variant/15 bg-surface-lowest border-t p-4 flex flex-col gap-3">
-        {suggestions && suggestions.length > 0 && (
-          <div className="flex w-full gap-2 overflow-x-auto pb-1 scrollbar-hide snap-x">
-            {suggestions.map((s, idx) => (
-              <button
-                key={idx}
-                onClick={() => onInjectConstraint(s)}
-                className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex cursor-pointer shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-[color,transform,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:scale-[1.03] active:scale-[0.97] snap-start max-md:hover:scale-100"
-              >
-                <Sparkles size={11} />
-                <span className="whitespace-nowrap">{s}</span>
-              </button>
-            ))}
-          </div>
-        )}
+      {hideComposer ? null : (
+        <div className="border-outline-variant/15 bg-surface-lowest flex flex-col gap-3 border-t p-4">
+          {suggestions && suggestions.length > 0 && (
+            <div className="scrollbar-hide flex w-full snap-x gap-2 overflow-x-auto pb-1">
+              {suggestions.map((suggestion) => (
+                <button
+                  className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex shrink-0 cursor-pointer snap-start items-center gap-2 rounded-full border px-3 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-[color,transform,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:scale-[1.03] active:scale-[0.97] max-md:hover:scale-100"
+                  key={suggestion}
+                  onClick={() => onInjectConstraint(suggestion)}
+                >
+                  <Sparkles size={11} />
+                  <span className="whitespace-nowrap">{suggestion}</span>
+                </button>
+              ))}
+            </div>
+          )}
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-surface border-outline-variant/30 flex items-center rounded-lg border p-1.5 transition-[border-color,box-shadow] duration-200 ease-[var(--ease-out)] focus-within:border-[#4F7CFF]/70 focus-within:ring-1 focus-within:ring-[#4F7CFF]/30"
-        >
-          <input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            disabled={isLoading}
-            className="text-on-surface placeholder:text-on-surface-variant/40 w-full border-none bg-transparent px-2 py-1.5 font-sans text-xs outline-none focus:ring-0 focus:outline-none"
-            placeholder="Add new constraint (e.g., OLED screen, under 80.000.000 ₫)..."
-            type="text"
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !inputValue.trim()}
-            className="hover:bg-surface-high flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-[#4F7CFF] transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+          <form
+            onSubmit={handleSubmit}
+            className="bg-surface border-outline-variant/30 flex items-center rounded-lg border p-1.5 transition-[border-color,box-shadow] duration-200 ease-[var(--ease-out)] focus-within:border-[#4F7CFF]/70 focus-within:ring-1 focus-within:ring-[#4F7CFF]/30"
           >
-            {isLoading ? (
-              <Loader2
-                size={16}
-                className="text-on-surface-variant animate-spin"
-              />
-            ) : (
-              <Send size={15} />
-            )}
-          </button>
-        </form>
-      </div>
+            <input
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={isLoading}
+              className="text-on-surface placeholder:text-on-surface-variant/40 w-full border-none bg-transparent px-2 py-1.5 font-sans text-xs outline-none focus:ring-0 focus:outline-none"
+              placeholder="Add new constraint (e.g., OLED screen, under 80.000.000 ₫)..."
+              type="text"
+            />
+            <button
+              type="submit"
+              disabled={isLoading || !inputValue.trim()}
+              className="hover:bg-surface-high flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-[#4F7CFF] transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+            >
+              {isLoading ? (
+                <Loader2
+                  size={16}
+                  className="text-on-surface-variant animate-spin"
+                />
+              ) : (
+                <Send size={15} />
+              )}
+            </button>
+          </form>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,140 +1,299 @@
-import React, { useState, useMemo } from "react";
-import { X, HelpCircle, Check, ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Check, ExternalLink, X } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 
-interface Accessory {
-  name: string;
-  price: number;
-  category: string;
-  reason: string;
-  image?: string;
-}
+import {
+  type AccessoryRecommendation,
+  getAccessoryRecommendations,
+} from "@/api/accessories";
+
+import type { Laptop } from "../types";
 
 interface AccessoriesModalProps {
   isOpen: boolean;
   onClose: () => void;
-  accessories: Accessory[];
+  products: Laptop[];
+  onAddToCheckout: (accessory: AccessoryRecommendation) => void;
 }
+
+const ALL = "all";
+const PAGE_SIZE = 12;
+
+const formatVND = (amount: number) =>
+  new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount);
 
 export default function AccessoriesModal({
   isOpen,
   onClose,
-  accessories,
+  products,
+  onAddToCheckout,
 }: AccessoriesModalProps) {
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [productFilter, setProductFilter] = useState(ALL);
+  const [categoryFilter, setCategoryFilter] = useState(ALL);
+  const [kindFilter, setKindFilter] = useState(ALL);
+  const [currentPage, setCurrentPage] = useState(1);
+  const listRef = useRef<HTMLDivElement>(null);
+  const productIds = useMemo(
+    () => products.map((product) => product.id),
+    [products]
+  );
+  const recommendations = useQuery({
+    queryKey: ["accessory-recommendations", productIds],
+    queryFn: () => getAccessoryRecommendations(productIds),
+    enabled: isOpen && productIds.length > 0,
+  });
+  const items = recommendations.data ?? [];
+  const categories = useMemo(
+    () => Array.from(new Set(items.map((item) => item.category))).sort(),
+    [items]
+  );
+  const filteredItems = useMemo(
+    () =>
+      items.filter(
+        (item) =>
+          (productFilter === ALL ||
+            item.compatible_product_ids.includes(productFilter)) &&
+          (categoryFilter === ALL || item.category === categoryFilter) &&
+          (kindFilter === ALL || item.kind === kindFilter)
+      ),
+    [categoryFilter, items, kindFilter, productFilter]
+  );
+  const productNames = useMemo(
+    () => new Map(products.map((product) => [product.id, product.name])),
+    [products]
+  );
+  const pageCount = Math.max(1, Math.ceil(filteredItems.length / PAGE_SIZE));
+  const visibleItems = filteredItems.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+  const changePage = (page: number) => {
+    setCurrentPage(page);
+    if (listRef.current) {
+      listRef.current.scrollTop = 0;
+    }
+  };
 
-  const categories = useMemo(() => {
-    if (!accessories) return ["All"];
-    const cats = new Set(accessories.map((a) => a.category));
-    return ["All", ...Array.from(cats)];
-  }, [accessories]);
-
-  const filteredAccessories = useMemo(() => {
-    if (!accessories) return [];
-    if (activeFilter === "All") return accessories;
-    return accessories.filter((a) => a.category === activeFilter);
-  }, [accessories, activeFilter]);
-
-  if (!isOpen) return null;
+  if (!isOpen) {
+    return null;
+  }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md select-none">
-      <div className="bg-surface-high border-outline-variant/30 flex max-h-[85vh] w-full max-w-xl flex-col overflow-hidden rounded-2xl border shadow-2xl">
-        {/* Header */}
-        <div className="border-outline-variant/15 bg-surface-lowest flex flex-col border-b">
-          <div className="flex items-center justify-between p-5 pb-3">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md">
+      <div className="bg-surface-high border-outline-variant/30 flex max-h-[85vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border shadow-2xl">
+        <header className="border-outline-variant/15 bg-surface-lowest border-b p-5">
+          <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="text-on-surface font-display text-lg font-bold">
-                Recommended Accessories
+                Phụ kiện đề xuất từ Phong Vũ
               </h3>
-              <p className="text-on-surface-variant mt-1 text-xs font-medium">
-                Accessories to maximize your hardware capabilities
+              <p className="text-on-surface-variant mt-1 text-xs">
+                Giá và tồn kho được đồng bộ từ nguồn Phong Vũ.
               </p>
             </div>
             <button
+              type="button"
               onClick={onClose}
-              className="text-on-surface-variant hover:text-on-surface hover:bg-surface-highest cursor-pointer rounded-lg p-1.5 transition-colors"
+              aria-label="Đóng modal phụ kiện"
+              className="text-on-surface-variant hover:text-on-surface rounded-lg p-1.5"
             >
               <X size={18} />
             </button>
           </div>
-          
-          {/* Filters */}
-          {categories.length > 1 && (
-            <div className="flex gap-2 overflow-x-auto px-5 pb-4 scrollbar-hide">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveFilter(cat)}
-                  className={`shrink-0 cursor-pointer rounded-full px-4 py-1.5 font-mono text-xs font-bold transition-[color,background-color,border-color] duration-200 ease-[var(--ease-out)] ${
-                    activeFilter === cat
-                      ? "bg-[#4F7CFF] text-white shadow-md shadow-[#4F7CFF]/20 border border-[#4F7CFF]"
-                      : "bg-surface border-outline-variant/30 text-on-surface-variant hover:bg-surface-highest hover:text-on-surface border"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 overflow-auto p-5 content-start">
-          {filteredAccessories.length > 0 ? (
-            filteredAccessories.map((acc, index) => (
-              <div
-                key={index}
-                className="bg-surface-low border-outline-variant/15 group flex cursor-pointer flex-col overflow-hidden rounded-xl border transition-colors hover:border-[#4F7CFF]/40"
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            <label className="text-on-surface-variant text-xs">
+              Lọc theo laptop
+              <select
+                value={productFilter}
+                onChange={(event) => {
+                  setProductFilter(event.target.value);
+                  changePage(1);
+                }}
+                className="bg-surface border-outline-variant/30 text-on-surface mt-1 w-full rounded-lg border p-2"
               >
-                {/* Image */}
-                {acc.image ? (
-                  <div className="border-outline-variant/10 h-32 w-full overflow-hidden border-b">
-                    <img
-                      src={acc.image}
-                      alt={acc.name}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                ) : (
-                  <div className="border-outline-variant/10 bg-[#4F7CFF]/5 text-[#4F7CFF] flex h-32 w-full items-center justify-center border-b">
-                    <Check size={24} />
-                  </div>
-                )}
-                {/* Details */}
-                <div className="flex flex-1 flex-col p-4">
-                  <div className="mb-2 flex items-center justify-between">
-                    <span className="bg-[#4F7CFF]/10 text-[#4F7CFF] rounded px-2 py-0.5 font-mono text-[10px] font-bold uppercase">
-                      {acc.category}
-                    </span>
-                    <span className="text-on-surface font-mono text-sm font-bold">
-                      {acc.price.toLocaleString("vi-VN")} ₫
-                    </span>
-                  </div>
-                  <h4 className="font-display text-on-surface mb-1 text-sm font-bold">
-                    {acc.name}
-                  </h4>
-                  <p className="text-on-surface-variant line-clamp-2 font-sans text-xs leading-relaxed">
-                    {acc.reason}
-                  </p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="text-on-surface-variant col-span-full py-8 text-center font-medium">
-              No accessories found for this category.
+                <option value={ALL}>Tất cả laptop đề xuất</option>
+                {products.map((product) => (
+                  <option key={product.id} value={product.id}>
+                    {product.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="text-on-surface-variant text-xs">
+              Loại phụ kiện
+              <select
+                value={kindFilter}
+                onChange={(event) => {
+                  setKindFilter(event.target.value);
+                  changePage(1);
+                }}
+                className="bg-surface border-outline-variant/30 text-on-surface mt-1 w-full rounded-lg border p-2"
+              >
+                <option value={ALL}>Tất cả</option>
+                <option value="external">Phụ kiện ngoài</option>
+                <option value="upgrade">Nâng cấp</option>
+              </select>
+            </label>
+            <label className="text-on-surface-variant text-xs">
+              Danh mục
+              <select
+                value={categoryFilter}
+                onChange={(event) => {
+                  setCategoryFilter(event.target.value);
+                  changePage(1);
+                }}
+                className="bg-surface border-outline-variant/30 text-on-surface mt-1 w-full rounded-lg border p-2"
+              >
+                <option value={ALL}>Tất cả</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </header>
+
+        <div
+          ref={listRef}
+          className="grid min-h-0 flex-1 content-start gap-4 overflow-auto p-5 md:grid-cols-2"
+        >
+          {recommendations.isLoading && (
+            <p className="text-on-surface-variant col-span-full py-10 text-center">
+              Đang tải dữ liệu Phong Vũ…
+            </p>
+          )}
+          {recommendations.isError && (
+            <div className="col-span-full py-10 text-center">
+              <p className="text-red-400">
+                Không thể tải phụ kiện từ Phong Vũ.
+              </p>
+              <button
+                type="button"
+                onClick={() => recommendations.refetch()}
+                className="text-primary mt-3 underline"
+              >
+                Thử lại
+              </button>
             </div>
           )}
+          {!recommendations.isLoading &&
+            !recommendations.isError &&
+            filteredItems.length === 0 && (
+              <p className="text-on-surface-variant col-span-full py-10 text-center">
+                Không có phụ kiện phù hợp với bộ lọc này.
+              </p>
+            )}
+          {visibleItems.map((item) => {
+            const applicableModels = item.compatible_product_ids
+              .map((id) => productNames.get(id))
+              .filter((name): name is string => Boolean(name));
+            return (
+              <article
+                key={item.id}
+                className="bg-surface-low border-outline-variant/20 flex h-max overflow-hidden rounded-xl border"
+              >
+                <div className="bg-primary/5 flex w-28 shrink-0 items-center justify-center overflow-hidden">
+                  {item.image_url ? (
+                    <img
+                      src={item.image_url}
+                      alt={item.name}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <Check className="text-primary" size={24} />
+                  )}
+                </div>
+                <div className="min-w-0 flex-1 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <span className="text-primary font-mono text-[10px] uppercase">
+                        {item.kind === "upgrade"
+                          ? "Nâng cấp"
+                          : "Phụ kiện ngoài"}{" "}
+                        · {item.category}
+                      </span>
+                      <h4 className="text-on-surface mt-1 text-sm font-bold">
+                        {item.name}
+                      </h4>
+                    </div>
+                    <strong className="text-on-surface shrink-0 text-sm">
+                      {formatVND(item.price)}
+                    </strong>
+                  </div>
+                  <p className="text-on-surface-variant mt-2 text-xs">
+                    {item.compatibility_reason}
+                  </p>
+                  <p className="text-on-surface-variant mt-1 text-[11px]">
+                    Áp dụng: {applicableModels.join(", ")}
+                  </p>
+                  <p className="text-on-surface-variant mt-1 text-[11px]">
+                    {item.in_stock ? "Còn hàng" : "Hết hàng"} · cập nhật{" "}
+                    {new Date(item.fetched_at).toLocaleString("vi-VN")}
+                  </p>
+                  {item.offer_state === "stale" && (
+                    <p className="mt-1 text-[11px] text-amber-400">
+                      Dữ liệu giá đã cũ
+                    </p>
+                  )}
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <a
+                      href={item.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-outline-variant/30 text-on-surface inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs"
+                    >
+                      Xem tại Phong Vũ <ExternalLink size={12} />
+                    </a>
+                    <button
+                      type="button"
+                      disabled={!item.checkout_available}
+                      onClick={() => onAddToCheckout(item)}
+                      className="bg-primary text-on-primary rounded-md px-2.5 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      Thêm vào checkout
+                    </button>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
-
-        {/* Footer */}
-        <div className="border-outline-variant/15 bg-surface-lowest flex justify-end border-t p-4">
-          <button
-            onClick={onClose}
-            className="cursor-pointer rounded-lg bg-[#4F7CFF] px-6 py-2.5 font-mono text-xs font-bold text-white shadow-lg transition-colors hover:bg-[#4F7CFF]/90"
-          >
-            Close
-          </button>
-        </div>
+        {!recommendations.isLoading &&
+          !recommendations.isError &&
+          filteredItems.length > 0 && (
+            <nav
+              aria-label="Phân trang phụ kiện"
+              className="border-outline-variant/15 flex items-center justify-center gap-4 border-t p-4"
+            >
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() => changePage(currentPage - 1)}
+                className="border-outline-variant/30 text-on-surface rounded-md border px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Trước
+              </button>
+              <span
+                className="text-on-surface-variant text-xs"
+                aria-live="polite"
+              >
+                Trang {currentPage}/{pageCount}
+              </span>
+              <button
+                type="button"
+                disabled={currentPage === pageCount}
+                onClick={() => changePage(currentPage + 1)}
+                className="border-outline-variant/30 text-on-surface rounded-md border px-3 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Sau
+              </button>
+            </nav>
+          )}
       </div>
     </div>
   );
