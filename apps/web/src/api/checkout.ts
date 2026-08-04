@@ -46,6 +46,12 @@ export async function checkout(request: CheckoutRequest): Promise<OrderResponse>
     headers["Authorization"] = `Bearer ${token}`;
   }
 
+  const anonId = localStorage.getItem("anonymousId");
+  if (anonId) {
+    headers["X-Session-ID"] = anonId;
+    headers["X-Device-ID"] = anonId;
+  }
+
   const response = await fetch("/api/v1/checkout", {
     method: "POST",
     headers,

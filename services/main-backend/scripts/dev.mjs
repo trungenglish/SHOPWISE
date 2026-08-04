@@ -25,7 +25,7 @@ const main = () => {
 
   const server = spawn(
     process.execPath,
-    [join(rootDir, "scripts/with-go-env.mjs"), "run", "./cmd/server"],
+    [join(rootDir, "scripts/with-go-env.mjs"), "run", "./cmd/retail"],
     {
       cwd: rootDir,
       stdio: "inherit",

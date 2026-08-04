@@ -254,17 +254,16 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/008-llm-integration/plan.md
+For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/009-checkout-incentive/plan.md
 
-Active feature: AI Runtime LLM Integration (008-llm-integration)
+Active feature: Checkout Incentive Countdown (009-checkout-incentive)
 
-- Spec: specs/008-llm-integration/spec.md
-- Plan: specs/008-llm-integration/plan.md
-- Data model: specs/008-llm-integration/data-model.md
-- API contracts: specs/008-llm-integration/contracts/api-contracts.md
-- UI contracts: specs/008-llm-integration/contracts/ui-contracts.md
-- Quickstart: specs/008-llm-integration/quickstart.md
-- Research: specs/008-llm-integration/research.md
+- Spec: specs/009-checkout-incentive/spec.md
+- Plan: specs/009-checkout-incentive/plan.md
+- Data model: specs/009-checkout-incentive/data-model.md
+- API contracts: specs/009-checkout-incentive/contracts/api-contracts.md
+- UI contracts: specs/009-checkout-incentive/contracts/ui-contracts.md
+- Quickstart: specs/009-checkout-incentive/quickstart.md
 - Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 
