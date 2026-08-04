@@ -39,7 +39,7 @@ def get_tool_proxy() -> ToolProxy:
     return ToolProxy(settings.backend_url)
 
 
-@router.post("/chat", response_model=AgentResponse)
+@router.post("/chat", response_model=AgentResponse, response_model_exclude_none=True)
 async def chat_endpoint(
     request: ChatRequest,
     provider: OpenAIProvider = Depends(get_provider),

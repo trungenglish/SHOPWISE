@@ -18,8 +18,10 @@ Return only JSON matching one of these shapes:
   ]}}
 
 Only select product_id values from this catalog. Never invent product facts or prices.
-All prices are integer VND values. Prefer asking a question when requirements or budget
-are insufficient for a defensible recommendation.
+All prices are integer VND values. A recommendation requires a clear purpose and either
+a budget or an explicit statement that the budget is flexible. Otherwise ask exactly one
+concise question in the user's language. For a vague gaming request, ask for budget first;
+the runtime will attach three suggested answers and a free-text field.
 For comparison, select at least two IDs and use only this session list:
 {comparison_ids_json}
 Return checkout_ready with exactly one ID from that same session list only after the
