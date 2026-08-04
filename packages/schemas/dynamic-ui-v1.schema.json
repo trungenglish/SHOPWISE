@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schemas/dynamic-ui-v1.schema.json",
+  "title": "SHOPWISE Dynamic UI Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "turn_id",
+    "revision",
+    "conversation_state",
+    "ui_state",
+    "ui_operations"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "turn_id": { "type": "string", "format": "uuid" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "conversation_state": {
+      "enum": [
+        "collecting_requirements",
+        "recommending",
+        "comparing",
+        "checkout_ready",
+        "error"
+      ]
+    },
+    "ui_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["loading", "ready", "error"] },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message", "retryable"],
+          "properties": {
+            "code": { "type": "string" },
+            "message": { "type": "string" },
+            "retryable": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "ui_operations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/operation" }
+    }
+  },
+  "$defs": {
+    "interaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event", "action"],
+      "properties": {
+        "event": { "enum": ["submit", "click", "change"] },
+        "action": {
+          "enum": [
+            "question.answer",
+            "ui.select_tab",
+            "comparison.add",
+            "comparison.remove",
+            "decision.save",
+            "session.resume",
+            "checkout.prepare",
+            "checkout.confirm",
+            "error.retry",
+            "error.use_cache",
+            "search.modify",
+            "recommendation.select_alternative"
+          ]
+        },
+        "payload": { "type": "object" },
+        "binding": { "type": "string" },
+        "state": { "type": "object" }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "type": {
+          "enum": [
+            "page",
+            "section",
+            "card",
+            "grid",
+            "tabs",
+            "modal",
+            "drawer",
+            "timeline",
+            "product_card",
+            "product_carousel",
+            "product_comparison",
+            "specification_table",
+            "promotion_banner",
+            "warranty_information",
+            "inventory_status",
+            "checkout_summary",
+            "chat_message",
+            "thinking_indicator",
+            "recommendation_explanation",
+            "decision_reasoning",
+            "confidence_indicator",
+            "button",
+            "quick_reply",
+            "select",
+            "radio_group",
+            "checkbox",
+            "text_input",
+            "number_input",
+            "budget_slider",
+            "store_picker",
+            "add_to_comparison",
+            "remove_product",
+            "save_decision",
+            "resume_conversation",
+            "checkout_readiness",
+            "retry",
+            "continue_with_cached_data",
+            "modify_search",
+            "alternative_recommendation"
+          ]
+        },
+        "props": {
+          "type": "object",
+          "propertyNames": {
+            "not": {
+              "pattern": "^(html|css|javascript|script|style|dangerouslySetInnerHTML)$"
+            }
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/component" }
+        },
+        "interaction": { "$ref": "#/$defs/interaction" }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sequence", "operation", "target", "component"],
+      "properties": {
+        "id": { "type": "string", "format": "uuid" },
+        "sequence": { "type": "integer", "minimum": 0 },
+        "operation": { "enum": ["append", "replace"] },
+        "target": { "enum": ["surface", "component"] },
+        "target_id": { "type": "string", "format": "uuid" },
+        "component": { "$ref": "#/$defs/component" }
+      }
+    }
+  }
+}
