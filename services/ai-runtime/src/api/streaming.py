@@ -1,19 +1,25 @@
 import json
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
-async def generate_sse(generator: AsyncGenerator[str, None]) -> AsyncGenerator[dict, None]:
-    """
-    Wraps an async generator of strings into an SSE-compatible dictionary format
-    for EventSourceResponse.
-    """
-    async for chunk in generator:
+from src.models.schemas import AgentResponse
+
+
+async def generate_agent_sse(
+    response: AgentResponse,
+) -> AsyncGenerator[dict[str, str], None]:
+    # ponytail: one validated message token; stream model deltas when partial JSON is safe.
+    yield {
+        "event": "token",
+        "data": json.dumps({"text": response.root.message}),
+    }
+
+    if response.root.type in {"recommendation", "comparison", "checkout_ready"}:
         yield {
-            "event": "message",
-            "data": json.dumps({"text": chunk})
+            "event": response.root.type,
+            "data": response.root.decision.model_dump_json(),
         }
-    
-    # End of stream indicator
+
     yield {
         "event": "done",
-        "data": "[DONE]"
+        "data": "{}",
     }

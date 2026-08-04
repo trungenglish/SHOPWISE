@@ -1,15 +1,19 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { ResumePage, Route } from './resume';
-import * as decisionMemoryApi from '@/api/decisionMemory';
+import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { ResumePage } from "./resume";
+import * as decisionMemoryApi from "@/api/decision-memory";
 
 const mockNavigate = vi.fn();
 const mockInvalidateQueries = vi.fn();
+let mockToken = "mock-token";
 
-vi.mock('@tanstack/react-router', () => ({
+vi.mock("@tanstack/react-router", () => ({
   useNavigate: () => mockNavigate,
-  createFileRoute: () => (config: any) => ({ ...config, useSearch: () => ({ token: 'mock-token' }) }),
+  createFileRoute: () => (config: any) => ({
+    ...config,
+    useSearch: () => ({ token: mockToken }),
+  }),
 }));
 
 let mockUseQueryReturn = {
@@ -18,14 +22,14 @@ let mockUseQueryReturn = {
   isFetching: false,
 };
 
-vi.mock('@tanstack/react-query', () => ({
+vi.mock("@tanstack/react-query", () => ({
   useQueryClient: () => ({
     invalidateQueries: mockInvalidateQueries,
   }),
   useQuery: (opts: any) => mockUseQueryReturn,
 }));
 
-vi.mock('@/api/decisionMemory', () => ({
+vi.mock("@/api/decision-memory", () => ({
   resumeSessionFromToken: vi.fn(),
   ResumeSessionError: class extends Error {
     code: string;
@@ -33,10 +37,10 @@ vi.mock('@/api/decisionMemory', () => ({
       super(m);
       this.code = c;
     }
-  }
+  },
 }));
 
-describe('ResumePage', () => {
+describe("ResumePage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockUseQueryReturn = {
@@ -44,17 +48,18 @@ describe('ResumePage', () => {
       error: null,
       isFetching: false,
     };
+    mockToken = "mock-token";
   });
 
-  it('valid token successfully resumes and redirects', async () => {
+  it("valid token successfully resumes and redirects", async () => {
     mockUseQueryReturn = {
-      data: { ID: 'session-123' },
+      data: { ID: "session-123" },
       error: null,
       isFetching: false,
     } as any;
 
     // Override the mock to return a token
-    Route.useSearch = () => ({ token: 'valid-token' });
+    mockToken = "valid-token";
 
     render(<ResumePage />);
 
@@ -62,45 +67,63 @@ describe('ResumePage', () => {
 
     await waitFor(() => {
       // Verify token removed from URL
-      expect(mockNavigate).toHaveBeenCalledWith({ to: '/resume', replace: true });
+      expect(mockNavigate).toHaveBeenCalledWith({
+        to: "/resume",
+        search: { token: undefined },
+        replace: true,
+      });
       // Verify invalidation
-      expect(mockInvalidateQueries).toHaveBeenCalledWith({ queryKey: ['sessions'] });
-      expect(mockInvalidateQueries).toHaveBeenCalledWith({ queryKey: ['session', 'session-123'] });
+      expect(mockInvalidateQueries).toHaveBeenCalledWith({
+        queryKey: ["sessions"],
+      });
+      expect(mockInvalidateQueries).toHaveBeenCalledWith({
+        queryKey: ["session", "session-123"],
+      });
       // Verify navigation to dashboard
-      expect(mockNavigate).toHaveBeenCalledWith({ to: '/dashboard', search: { sessionId: 'session-123' } });
+      expect(mockNavigate).toHaveBeenCalledWith({
+        to: "/dashboard",
+        search: { sessionId: "session-123" },
+      });
     });
   });
 
-  it('renders expired token UI on error', async () => {
+  it("renders expired token UI on error", async () => {
     mockUseQueryReturn = {
       data: undefined,
-      error: new decisionMemoryApi.ResumeSessionError('expired', 'token_expired'),
+      error: new decisionMemoryApi.ResumeSessionError(
+        "expired",
+        "token_expired"
+      ),
       isFetching: false,
     } as any;
-    Route.useSearch = () => ({ token: 'expired-token' });
+    mockToken = "expired-token";
 
     render(<ResumePage />);
 
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /link expired/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /link expired/i })
+      ).toBeInTheDocument();
     });
-    
+
     // Ensure token is not persisted or sent to dashboard
     expect(mockNavigate).not.toHaveBeenCalled();
   });
 
-  it('renders network error and handles retry without duplicate requests', async () => {
+  it("renders network error and handles retry without duplicate requests", async () => {
     mockUseQueryReturn = {
       data: undefined,
-      error: new Error('Network Error'),
+      error: new Error("Network Error"),
       isFetching: false,
     } as any;
-    Route.useSearch = () => ({ token: 'network-token' });
+    mockToken = "network-token";
 
     render(<ResumePage />);
 
     await waitFor(() => {
-      expect(screen.getByRole('heading', { name: /connection error/i })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /connection error/i })
+      ).toBeInTheDocument();
     });
 
     // Ensure useQuery is tested implicitly, but we just verify UI

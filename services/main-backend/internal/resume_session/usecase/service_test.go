@@ -153,7 +153,7 @@ func TestResumeSession(t *testing.T) {
 	// Invalid signature
 	_, err = svc.ResumeSession(ctx, "invalid.token.str", &consumeCtxHash)
 	assert.ErrorIs(t, err, usecase.ErrTokenInvalid)
-	
+
 	// Different IP does not hard block
 	tokenStr4, err := svc.GenerateToken(ctx, sessionID, &issueCtxHash)
 	require.NoError(t, err)
@@ -161,6 +161,17 @@ func TestResumeSession(t *testing.T) {
 	session4, err := svc.ResumeSession(ctx, tokenStr4, &diffCtxHash)
 	require.NoError(t, err)
 	assert.Equal(t, sessionID, session4.ID)
+
+	// Expired token rejected even when signature and database record are valid.
+	expiredToken, err := svc.GenerateToken(ctx, sessionID, &issueCtxHash)
+	require.NoError(t, err)
+	for _, storedToken := range repo.tokens {
+		if storedToken.ConsumedAt == nil && storedToken.RevokedAt == nil {
+			storedToken.ExpiresAt = time.Now().UTC().Add(-time.Minute)
+		}
+	}
+	_, err = svc.ResumeSession(ctx, expiredToken, &consumeCtxHash)
+	assert.ErrorIs(t, err, usecase.ErrTokenExpired)
 }
 
 func TestTriggerInactivityNotification(t *testing.T) {
@@ -168,7 +179,7 @@ func TestTriggerInactivityNotification(t *testing.T) {
 	repo := newMockRepo()
 	userID := uuid.New()
 	sessionID := uuid.New()
-	
+
 	decisionSvc := &mockDecision{
 		session: &decisiondomain.DecisionSession{
 			ID:     sessionID,

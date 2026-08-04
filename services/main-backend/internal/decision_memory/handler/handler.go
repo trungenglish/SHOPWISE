@@ -17,11 +17,17 @@ import (
 )
 
 type Handler struct {
-	service *usecase.Service
+	service      *usecase.Service
+	aiRuntimeURL string
+	httpClient   *http.Client
 }
 
-func NewHandler(service *usecase.Service) *Handler {
-	return &Handler{service: service}
+func NewHandler(service *usecase.Service, aiRuntimeURL string) *Handler {
+	return &Handler{
+		service:      service,
+		aiRuntimeURL: strings.TrimRight(aiRuntimeURL, "/"),
+		httpClient:   &http.Client{Timeout: 30 * time.Second},
+	}
 }
 
 func OptionalAuth(verifier middleware.TokenVerifier) gin.HandlerFunc {
@@ -60,7 +66,7 @@ func getIdentity(c *gin.Context) (*uuid.UUID, *string) {
 			uid = &id
 		}
 	}
-	
+
 	if header := c.GetHeader("X-Anonymous-ID"); header != "" {
 		anonID = &header
 	}
@@ -138,9 +144,8 @@ func (h *Handler) GetSession(c *gin.Context) {
 		return
 	}
 
-	session, err := h.service.GetSession(c.Request.Context(), id)
-	if err != nil {
-		c.Error(apperror.NotFound("session not found", err))
+	session, ok := h.getOwnedSession(c, id)
+	if !ok {
 		return
 	}
 
@@ -170,9 +175,8 @@ func (h *Handler) UpdateSession(c *gin.Context) {
 		return
 	}
 
-	session, err := h.service.GetSession(c.Request.Context(), id)
-	if err != nil {
-		c.Error(apperror.NotFound("session not found", err))
+	session, ok := h.getOwnedSession(c, id)
+	if !ok {
 		return
 	}
 
@@ -198,12 +202,12 @@ func (h *Handler) UpdateSession(c *gin.Context) {
 	if len(req.PinnedProducts) > 0 {
 		b, _ := json.Marshal(req.PinnedProducts)
 		msg := domain.SessionMessage{
-			ID:        uuid.New(),
-			SessionID: session.ID,
-			Role:      "system",
-			Content:   "auto-save update",
+			ID:             uuid.New(),
+			SessionID:      session.ID,
+			Role:           "system",
+			Content:        "auto-save update",
 			PinnedProducts: string(b),
-			CreatedAt: time.Now().UTC(),
+			CreatedAt:      time.Now().UTC(),
 		}
 		// In a real scenario we'd inject a repo method to add a message or update the session state.
 		_ = msg
@@ -220,6 +224,9 @@ func (h *Handler) RenameSession(c *gin.Context) {
 	id, err := uuid.Parse(c.Param("id"))
 	if err != nil {
 		c.Error(apperror.Validation("invalid session id", err))
+		return
+	}
+	if _, ok := h.getOwnedSession(c, id); !ok {
 		return
 	}
 
@@ -253,6 +260,9 @@ func (h *Handler) DeleteSession(c *gin.Context) {
 		c.Error(apperror.Validation("invalid session id", err))
 		return
 	}
+	if _, ok := h.getOwnedSession(c, id); !ok {
+		return
+	}
 
 	if err := h.service.DeleteSession(c.Request.Context(), id); err != nil {
 		c.Error(err)
@@ -270,6 +280,9 @@ func (h *Handler) BranchSession(c *gin.Context) {
 	id, err := uuid.Parse(c.Param("id"))
 	if err != nil {
 		c.Error(apperror.Validation("invalid session id", err))
+		return
+	}
+	if _, ok := h.getOwnedSession(c, id); !ok {
 		return
 	}
 
@@ -294,6 +307,9 @@ func (h *Handler) RestoreSession(c *gin.Context) {
 		c.Error(apperror.Validation("invalid session id", err))
 		return
 	}
+	if _, ok := h.getOwnedSession(c, id); !ok {
+		return
+	}
 
 	clientTsStr := c.GetHeader("X-Client-Timestamp")
 	if clientTsStr == "" {
@@ -313,6 +329,23 @@ func (h *Handler) RestoreSession(c *gin.Context) {
 	c.Status(http.StatusOK)
 }
 
+func (h *Handler) getOwnedSession(
+	c *gin.Context,
+	id uuid.UUID,
+) (*domain.DecisionSession, bool) {
+	session, err := h.service.GetSession(c.Request.Context(), id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "session not found"})
+		return nil, false
+	}
+	userID, anonymousID := getIdentity(c)
+	if !ownsSession(session, userID, anonymousID) {
+		c.JSON(http.StatusNotFound, gin.H{"error": "session not found"})
+		return nil, false
+	}
+	return session, true
+}
+
 func RegisterRoutes(group *gin.RouterGroup, handler *Handler, verifier middleware.TokenVerifier) {
 	group.Use(OptionalAuth(verifier))
 	group.POST("", handler.CreateSession)
@@ -321,13 +354,11 @@ func RegisterRoutes(group *gin.RouterGroup, handler *Handler, verifier middlewar
 	group.PUT("/:id", handler.UpdateSession)
 	group.PATCH("/:id", handler.RenameSession)
 	group.DELETE("/:id", handler.DeleteSession)
-	
+
 	group.POST("/:id/branch", handler.BranchSession)
 	group.POST("/:id/restore", handler.RestoreSession)
-	group.POST("/:id/chat", handler.ChatStream)
-	group.POST("/:id/resume-token", handler.GenerateResumeToken)
-	group.GET("/resume/:token", handler.ResolveResumeToken)
-
+	group.POST("/:id/chat", handler.Chat)
+	group.POST("/:id/chat/stream", handler.ChatStream)
 	group.GET("/preferences", handler.ListPreferences)
 	group.PUT("/preferences/:id", handler.UpdatePreference)
 	group.DELETE("/preferences/:id", handler.DeletePreference)

@@ -43,8 +43,6 @@ func Connect(databaseURL string, ginMode string) (*gorm.DB, error) {
 
 	if err := db.AutoMigrate(
 		&model.AppMetadata{},
-		&model.User{},
-		&model.UserPreference{},
 		&model.Product{},
 		&model.Inventory{},
 		&model.Promotion{},
