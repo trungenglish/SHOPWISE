@@ -55,3 +55,6 @@ temp
 apps/server/bin/
 /apps/server/server.exe
 /.specify
+
+.tmp
+/.pnpm-store/
