@@ -71,9 +71,16 @@ class AgentDraft(StrictDraftModel):
         "question", "recommendation", "comparison", "offer_comparison", "checkout_ready"
     ]
     message: str
-    reasoning: str | None
-    selections: list[RecommendationSelection] | None
+    reasoning: str | None = None
+    selections: list[RecommendationSelection] | None = None
     question: QuestionDraft | None = None
+
+    @classmethod
+    def model_json_schema(cls, *args: Any, **kwargs: Any) -> dict[str, Any]:
+        schema = super().model_json_schema(*args, **kwargs)
+        if "properties" in schema:
+            schema["required"] = list(schema["properties"].keys())
+        return schema
 
     @model_validator(mode="after")
     def validate_shape(self) -> "AgentDraft":

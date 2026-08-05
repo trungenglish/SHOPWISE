@@ -187,10 +187,10 @@ export const ClarificationCard = ({
   return (
     <form
       aria-label="Clarification question"
-      className="mx-auto w-full max-w-xl rounded-2xl border border-[#4F7CFF]/40 bg-[#11131a] p-6 shadow-xl"
+      className="mx-auto w-full max-w-xl rounded-2xl border border-[#4F7CFF]/40 bg-[#11131a] p-4 shadow-xl"
       onSubmit={submit}
     >
-      <h2 className="text-lg font-semibold text-white">{envelope.message}</h2>
+      <h2 className="text-md font-semibold text-white">{envelope.message}</h2>
       <fieldset className="mt-4 grid gap-2">
         <legend className="sr-only">Suggested answers</legend>
         {question.options.map((option) => (

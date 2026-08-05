@@ -83,7 +83,7 @@ export default function AccessoriesModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md">
-      <div className="bg-surface-high border-outline-variant/30 flex max-h-[85vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border shadow-2xl">
+      <div className="bg-surface-high border-outline-variant/30 flex max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border shadow-2xl">
         <header className="border-outline-variant/15 bg-surface-lowest border-b p-5">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -160,7 +160,7 @@ export default function AccessoriesModal({
 
         <div
           ref={listRef}
-          className="grid min-h-0 flex-1 content-start gap-4 overflow-auto p-5 md:grid-cols-2"
+          className="grid min-h-0 flex-1 content-start gap-2 overflow-auto p-5 md:grid-cols-2"
         >
           {recommendations.isLoading && (
             <p className="text-on-surface-variant col-span-full py-10 text-center">
@@ -195,57 +195,59 @@ export default function AccessoriesModal({
             return (
               <article
                 key={item.id}
-                className="bg-surface-low border-outline-variant/20 flex h-max overflow-hidden rounded-xl border"
+                className="bg-surface-low border-outline-variant/20 hover:border-outline-variant/40 flex min-h-52.5 overflow-hidden rounded-xl border transition-colors"
               >
-                <div className="bg-primary/5 flex w-28 shrink-0 items-center justify-center overflow-hidden">
+                <div className="bg-surface/50 border-outline-variant/15 flex w-32 shrink-0 items-center justify-center overflow-hidden border-r p-3">
                   {item.image_url ? (
                     <img
                       src={item.image_url}
                       alt={item.name}
-                      className="h-full w-full object-cover"
+                      className="max-h-28 w-full object-contain transition-transform duration-200 hover:scale-105"
                     />
                   ) : (
                     <Check className="text-primary" size={24} />
                   )}
                 </div>
-                <div className="min-w-0 flex-1 p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <span className="text-primary font-mono text-[10px] uppercase">
-                        {item.kind === "upgrade"
-                          ? "Nâng cấp"
-                          : "Phụ kiện ngoài"}{" "}
-                        · {item.category}
-                      </span>
-                      <h4 className="text-on-surface mt-1 text-sm font-bold">
-                        {item.name}
-                      </h4>
-                    </div>
-                    <strong className="text-on-surface shrink-0 text-sm">
+                <div className="flex min-w-0 flex-1 flex-col p-4">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-primary font-mono text-[10px] font-semibold uppercase tracking-wider">
+                      {item.kind === "upgrade"
+                        ? "Nâng cấp"
+                        : "Phụ kiện ngoài"}{" "}
+                      · {item.category}
+                    </span>
+                    <strong className="text-on-surface shrink-0 text-sm font-bold">
                       {formatVND(item.price)}
                     </strong>
                   </div>
-                  <p className="text-on-surface-variant mt-2 text-xs">
+                  <h4 className="text-on-surface line-clamp-2 mt-1 min-h-[2.5rem] text-sm font-bold leading-snug">
+                    {item.name}
+                  </h4>
+                  <p className="text-on-surface-variant line-clamp-2 mt-2 text-xs leading-relaxed">
                     {item.compatibility_reason}
                   </p>
-                  <p className="text-on-surface-variant mt-1 text-[11px]">
-                    Áp dụng: {applicableModels.join(", ")}
+                  <p className="text-on-surface-variant/80 line-clamp-1 mt-1 text-[11px]">
+                    <span className="text-on-surface-variant font-medium">Áp dụng:</span> {applicableModels.join(", ")}
                   </p>
-                  <p className="text-on-surface-variant mt-1 text-[11px]">
-                    {item.in_stock ? "Còn hàng" : "Hết hàng"} · cập nhật{" "}
-                    {new Date(item.fetched_at).toLocaleString("vi-VN")}
-                  </p>
+                  <div className="mt-1 flex items-center justify-between text-[11px]">
+                    <span className={item.in_stock ? "font-medium text-emerald-400" : "text-rose-400"}>
+                      {item.in_stock ? "Còn hàng" : "Hết hàng"}
+                    </span>
+                    <span className="text-on-surface-variant/60">
+                      cập nhật {new Date(item.fetched_at).toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })}
+                    </span>
+                  </div>
                   {item.offer_state === "stale" && (
-                    <p className="mt-1 text-[11px] text-amber-400">
+                    <p className="mt-1 text-[11px] font-medium text-amber-400">
                       Dữ liệu giá đã cũ
                     </p>
                   )}
-                  <div className="mt-3 flex flex-wrap gap-2">
+                  <div className="border-outline-variant/15 mt-auto flex flex-wrap items-center gap-2 border-t pt-3">
                     <a
                       href={item.source_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="border-outline-variant/30 text-on-surface inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs"
+                      className="border-outline-variant/30 text-on-surface hover:bg-surface-high inline-flex items-center gap-1 rounded-md border px-2.5 py-1.5 text-xs transition-colors"
                     >
                       Xem tại Phong Vũ <ExternalLink size={12} />
                     </a>
@@ -253,7 +255,7 @@ export default function AccessoriesModal({
                       type="button"
                       disabled={!item.checkout_available}
                       onClick={() => onAddToCheckout(item)}
-                      className="bg-primary text-on-primary rounded-md px-2.5 py-1.5 text-xs disabled:cursor-not-allowed disabled:opacity-40"
+                      className="bg-primary text-on-primary hover:bg-primary/90 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Thêm vào checkout
                     </button>

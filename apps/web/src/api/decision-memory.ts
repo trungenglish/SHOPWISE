@@ -257,7 +257,7 @@ const agentEnvelopeSchema = z.discriminatedUnion("type", [
 		type: z.literal("offer_comparison"),
 		message: z.string().min(1),
 		decision: recommendationDecisionSchema,
-		offer: z.object({ offer_id: z.string() }).passthrough(),
+		offer: z.record(z.string(), z.unknown()),
 		...dynamicEnvelopeFields,
 	  }),
 ]);
@@ -337,8 +337,11 @@ async function readAgentSSE(
   let buffer = "";
   let agentMessage = "";
   let decision: z.infer<typeof recommendationDecisionSchema> | undefined;
-  let decisionType: "recommendation" | "comparison" | "checkout_ready" =
-    "recommendation";
+  let decisionType:
+    | "recommendation"
+    | "comparison"
+    | "offer_comparison"
+    | "checkout_ready" = "recommendation";
   let streamedEnvelope: AgentEnvelope | undefined;
 
   const consumeBlock = (block: string) => {
@@ -352,6 +355,7 @@ async function readAgentSSE(
     } else if (
       event.event === "recommendation" ||
       event.event === "comparison" ||
+      event.event === "offer_comparison" ||
       event.event === "checkout_ready"
     ) {
       decision = recommendationDecisionSchema.parse(JSON.parse(event.data));
