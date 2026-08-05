@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schema/event-schema.json",
+  "title": "Interaction Event",
+  "description": "Upstream event emitted from the frontend to the backend",
+  "type": "object",
+  "properties": {
+    "componentId": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": ["componentId", "action", "payload"],
+  "additionalProperties": false
+}

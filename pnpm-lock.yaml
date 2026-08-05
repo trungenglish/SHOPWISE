@@ -32,6 +32,9 @@ importers:
       '@shopwise/env':
         specifier: workspace:*
         version: link:packages/env
+      ajv:
+        specifier: ^8.20.0
+        version: 8.20.0
       axios:
         specifier: 1.18.0
         version: 1.18.0

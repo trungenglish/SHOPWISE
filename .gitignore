@@ -58,3 +58,10 @@ apps/server/bin/
 
 .tmp
 /.pnpm-store/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/

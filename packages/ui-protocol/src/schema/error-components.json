@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schema/error-components.json",
+  "title": "Error Components",
+  "description": "Schemas for Error Recovery Components",
+  "$defs": {
+    "ErrorStateProps": {
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "code": { "type": "string" },
+        "severity": { "type": "string", "enum": ["info", "warning", "error", "critical"] }
+      },
+      "required": ["title", "message"]
+    },
+    "RetryActionProps": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "actionId": { "type": "string" }
+      }
+    },
+    "ContinueCachedDataProps": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" }
+      }
+    },
+    "ModifySearchProps": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "originalQuery": { "type": "string" }
+      }
+    },
+    "AlternativeRecommendationProps": {
+      "type": "object",
+      "properties": {
+        "message": { "type": "string" },
+        "productIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  "type": "object"
+}
