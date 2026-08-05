@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { expect, it, vi } from 'vitest'
+import { expect, it, vi, beforeEach } from 'vitest'
+
+window.HTMLElement.prototype.scrollIntoView = vi.fn()
 
 import type { AgentEnvelope } from '@/api/decision-memory'
 import AuditTrail from './audit-trail'
