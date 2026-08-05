@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 import { ReactFlowProvider } from "@xyflow/react";
 import {
   type AgentEnvelope,
+	fetchGreeting,
   runAgentTurnStream,
   sendInteractionStream,
 } from "@/api/decision-memory";
 import type { AccessoryRecommendation } from "@/api/accessories";
-import DynamicUIRenderer from "@/components/dynamic-uirenderer";
 import type { InteractionRequest } from "@shopwise/protocols";
 import Sidebar from "@/features/dashboard/components/sidebar";
 import AuditTrail from "@/features/dashboard/components/audit-trail";
@@ -56,6 +56,12 @@ function DashboardPage() {
   const [checkoutAccessories, setCheckoutAccessories] = useState<
     AccessoryRecommendation[]
   >([]);
+
+	useEffect(() => {
+		fetchGreeting("en", "Quan")
+			.then((message) => setLogs([{ time: new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }), message: `Agent: ${message}`, status: "done" }]))
+			.catch(() => undefined);
+	}, []);
 
   // Active highlighted product card
   const [activeProductId, setActiveProductId] = useState<string>("macbook-pro");
@@ -234,13 +240,13 @@ function DashboardPage() {
 
   const applyAgentEnvelope = (envelope: AgentEnvelope, time: string) => {
     setActiveEnvelope(envelope);
-    setLogs((previous) => [
-      ...previous,
-      { time, message: `Agent: ${envelope.message}`, status: "done" },
-    ]);
+	if (envelope.type !== "question") {
+	  setLogs((previous) => [...previous, { time, message: `Agent: ${envelope.message}`, status: "done" }]);
+	}
     if (
       envelope.type !== "recommendation" &&
       envelope.type !== "comparison" &&
+	  envelope.type !== "offer_comparison" &&
       envelope.type !== "checkout_ready"
     ) {
       return;
@@ -312,6 +318,12 @@ function DashboardPage() {
       hour: "2-digit",
       minute: "2-digit",
     });
+	setLogs((previous) => [
+	  ...previous,
+	  { time: timeNow, message: `Agent: ${activeEnvelope?.message ?? "Question"}`, status: "done" },
+	  { time: timeNow, message: "User: answered clarification", status: "done" },
+	]);
+	setActiveEnvelope(null);
     setIsSimulating(true);
     try {
       const envelope = await sendInteractionStream(sessionId, request);
@@ -469,8 +481,7 @@ function DashboardPage() {
           ) : (
             /* MAIN SPATIAL DECISION OS WORKSPACE */
             <>
-              {!isInitialState && (
-                <AuditTrail
+			  <AuditTrail
                   logs={logs}
                   userIntent={userIntent}
                   onInjectConstraint={handleQueryEvaluation}
@@ -478,24 +489,17 @@ function DashboardPage() {
                   onReplay={handleReplay}
                   hasMenuButton={!isSidebarOpen}
                   hideComposer={activeEnvelope?.type === "question"}
+				  activeQuestion={activeEnvelope?.type === "question" ? activeEnvelope : null}
+				  onInteraction={handleInteraction}
                   suggestions={[
                     "Ngân sách dưới 25 triệu VND",
                     "Ưu tiên hiệu năng và tản nhiệt",
                     "Ưu tiên mỏng nhẹ và pin lâu",
                   ]}
-                />
-              )}
+				/>
 
               {isInitialState ? (
                 <EmptyWorkspace onSubmit={handleQueryEvaluation} />
-              ) : activeEnvelope?.type === "question" &&
-                products.length === 0 ? (
-                <main className="flex flex-1 items-center justify-center overflow-y-auto p-8">
-                  <DynamicUIRenderer
-                    envelope={activeEnvelope}
-                    onInteraction={handleInteraction}
-                  />
-                </main>
               ) : products.length === 0 ? (
                 <main className="flex flex-1 items-center justify-center p-8 text-center text-white/60">
                   Tell the agent your constraints to build a recommendation

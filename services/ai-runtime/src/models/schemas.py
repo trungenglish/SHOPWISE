@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Annotated, Any, Literal
 from uuid import uuid4
 
@@ -18,6 +19,34 @@ class CatalogProduct(BaseModel):
     )
 
 
+class OfferLine(BaseModel):
+    retailer_offer_id: str
+    name: str
+    original_price: int = Field(ge=0)
+    price: int = Field(ge=0)
+    required: bool
+    default_selected: bool
+
+
+class ScheduledCampaign(BaseModel):
+    name: str
+    starts_at: datetime
+    ends_at: datetime
+    discount_percent: int = Field(gt=0, le=100)
+    sale_price: int = Field(ge=0)
+    savings: int = Field(ge=0)
+
+
+class OfferComparison(BaseModel):
+    id: str
+    product_id: str
+    currency: Literal["VND"] = "VND"
+    lines: list[OfferLine]
+    default_total: int = Field(ge=0)
+    base_total: int = Field(ge=0)
+    scheduled_campaign: ScheduledCampaign
+
+
 class StrictDraftModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -28,22 +57,40 @@ class RecommendationSelection(StrictDraftModel):
     explanation: str
 
 
+class QuestionDraft(StrictDraftModel):
+    mode: Literal["single", "multiple"]
+    options: list[str] = Field(min_length=2, max_length=4)
+    free_text_allowed: bool
+    input_label: str
+    input_placeholder: str
+    submit_label: str
+
+
 class AgentDraft(StrictDraftModel):
-    type: Literal["question", "recommendation", "comparison", "checkout_ready"]
+    type: Literal[
+        "question", "recommendation", "comparison", "offer_comparison", "checkout_ready"
+    ]
     message: str
     reasoning: str | None
     selections: list[RecommendationSelection] | None
+    question: QuestionDraft | None = None
 
     @model_validator(mode="after")
     def validate_shape(self) -> "AgentDraft":
         if self.type == "question":
             if self.reasoning is not None or self.selections is not None:
                 raise ValueError("question must use null reasoning and selections")
+            if self.question is None:
+                raise ValueError("question controls are required")
             return self
+        if self.question is not None:
+            raise ValueError(f"{self.type} must use null question controls")
         if not self.reasoning or not self.selections:
             raise ValueError(f"{self.type} requires reasoning and selections")
         if self.type == "comparison" and len(self.selections) < 2:
             raise ValueError("comparison requires at least two selections")
+        if self.type == "offer_comparison" and len(self.selections) != 1:
+            raise ValueError("offer_comparison requires exactly one selection")
         if self.type == "checkout_ready" and len(self.selections) != 1:
             raise ValueError("checkout_ready requires exactly one selection")
         return self
@@ -72,7 +119,7 @@ class ClarificationOption(BaseModel):
 class ClarificationQuestion(BaseModel):
     id: str
     mode: Literal["single", "multiple"] = "single"
-    options: list[ClarificationOption] = Field(min_length=3, max_length=4)
+    options: list[ClarificationOption] = Field(min_length=2, max_length=4)
     free_text_allowed: bool = True
     input_label: str = "Your answer"
     input_placeholder: str = "Add details in your own words"
@@ -97,13 +144,14 @@ class UIOperation(BaseModel):
 
 
 class DynamicUIResponse(BaseModel):
-    schema_version: Literal["1.0"] = "1.0"
+    schema_version: Literal["1.1"] = "1.1"
     turn_id: str = Field(default_factory=lambda: str(uuid4()))
     revision: int = 1
     conversation_state: Literal[
         "collecting_requirements",
         "recommending",
         "comparing",
+        "offering",
         "checkout_ready",
         "error",
     ]
@@ -132,6 +180,14 @@ class ComparisonResponse(DynamicUIResponse):
     conversation_state: Literal["comparing"] = "comparing"
 
 
+class OfferComparisonResponse(DynamicUIResponse):
+    type: Literal["offer_comparison"]
+    message: str
+    decision: RecommendationDecision
+    offer: OfferComparison
+    conversation_state: Literal["offering"] = "offering"
+
+
 class CheckoutReadyResponse(DynamicUIResponse):
     type: Literal["checkout_ready"]
     message: str
@@ -140,7 +196,11 @@ class CheckoutReadyResponse(DynamicUIResponse):
 
 
 Response = Annotated[
-    QuestionResponse | RecommendationResponse | ComparisonResponse | CheckoutReadyResponse,
+    QuestionResponse
+    | RecommendationResponse
+    | ComparisonResponse
+    | OfferComparisonResponse
+    | CheckoutReadyResponse,
     Field(discriminator="type"),
 ]
 
@@ -149,30 +209,19 @@ class AgentResponse(RootModel[Response]):
     pass
 
 
-def _question_response(message: str, language_source: str = "") -> QuestionResponse:
+def _question_response(message: str, draft: QuestionDraft) -> QuestionResponse:
     question_id = str(uuid4())
-    is_vietnamese = any(character in language_source.lower() for character in "ăâđêôơưáàảãạ")
-    if is_vietnamese:
-        labels = ("Dưới 25 triệu VND", "25–40 triệu VND", "Ngân sách linh hoạt")
-        question = ClarificationQuestion(
-            id=question_id,
-            options=[
-                ClarificationOption(id=option_id, label=label)
-                for option_id, label in zip(("under-25m", "25m-40m", "flexible"), labels)
-            ],
-            input_label="Câu trả lời của bạn",
-            input_placeholder="Thêm chi tiết theo ý bạn",
-            submit_label="Gửi",
-        )
-    else:
-        question = ClarificationQuestion(
-            id=question_id,
-            options=[
-                ClarificationOption(id="under-25m", label="Under 25 million VND"),
-                ClarificationOption(id="25m-40m", label="25–40 million VND"),
-                ClarificationOption(id="flexible", label="Flexible budget"),
-            ],
-        )
+    question = ClarificationQuestion(
+        id=question_id,
+        mode=draft.mode,
+        options=[
+            ClarificationOption(id=str(uuid4()), label=label) for label in draft.options
+        ],
+        free_text_allowed=draft.free_text_allowed,
+        input_label=draft.input_label,
+        input_placeholder=draft.input_placeholder,
+        submit_label=draft.submit_label,
+    )
     options = question.options
     option_components = [
         DynamicUIComponent(
@@ -180,11 +229,16 @@ def _question_response(message: str, language_source: str = "") -> QuestionRespo
             type="radio_group",
             props={"options": [option.model_dump() for option in options], "name": question_id},
         ),
-        DynamicUIComponent(
-            id=str(uuid4()),
-            type="text_input",
-            props={"label": question.input_label, "name": "free_text"},
-        ),
+    ]
+    if question.free_text_allowed:
+        option_components.append(
+            DynamicUIComponent(
+                id=str(uuid4()),
+                type="text_input",
+                props={"label": question.input_label, "name": "free_text"},
+            )
+        )
+    option_components.append(
         DynamicUIComponent(
             id=str(uuid4()),
             type="button",
@@ -196,8 +250,8 @@ def _question_response(message: str, language_source: str = "") -> QuestionRespo
                 "binding": question_id,
                 "state": {"disabled": False},
             },
-        ),
-    ]
+        )
+    )
     card = DynamicUIComponent(
         id=question_id,
         type="card",
@@ -221,13 +275,16 @@ def _question_response(message: str, language_source: str = "") -> QuestionRespo
 
 
 def _decision_ui(
-    response_type: Literal["recommendation", "comparison", "checkout_ready"],
+    response_type: Literal[
+        "recommendation", "comparison", "offer_comparison", "checkout_ready"
+    ],
     message: str,
     decision: RecommendationDecision,
 ) -> list[UIOperation]:
     component_type = {
         "recommendation": "product_carousel",
         "comparison": "product_comparison",
+        "offer_comparison": "promotion_banner",
         "checkout_ready": "checkout_summary",
     }[response_type]
     component = DynamicUIComponent(
@@ -255,14 +312,21 @@ def hydrate_agent_response(
     catalog: list[CatalogProduct],
     allowed_comparison_ids: set[str] | None = None,
     language_source: str = "",
+    offers: dict[str, OfferComparison] | None = None,
 ) -> AgentResponse:
     if draft.type == "question":
-        return AgentResponse(root=_question_response(draft.message, language_source))
+        if draft.question is None:
+            raise ValueError("question controls are required")
+        return AgentResponse(root=_question_response(draft.message, draft.question))
 
     products_by_id = {product.id: product for product in catalog}
     hydrated_products: list[RecommendedProduct] = []
     for selection in draft.selections or []:
-        is_session_only_action = draft.type in {"comparison", "checkout_ready"}
+        is_session_only_action = draft.type in {
+            "comparison",
+            "offer_comparison",
+            "checkout_ready",
+        }
         if is_session_only_action and selection.product_id not in (allowed_comparison_ids or set()):
             raise ValueError(f"product is not available in this session: {selection.product_id}")
         product = products_by_id.get(selection.product_id)
@@ -291,6 +355,21 @@ def hydrate_agent_response(
                 message=draft.message,
                 decision=decision,
                 ui_operations=_decision_ui("comparison", draft.message, decision),
+            )
+        )
+
+    if draft.type == "offer_comparison":
+        product_id = hydrated_products[0].id
+        offer = (offers or {}).get(product_id)
+        if offer is None:
+            raise ValueError(f"offer is not available for product: {product_id}")
+        return AgentResponse(
+            root=OfferComparisonResponse(
+                type="offer_comparison",
+                message=draft.message,
+                decision=decision,
+                offer=offer,
+                ui_operations=_decision_ui("offer_comparison", draft.message, decision),
             )
         )
 

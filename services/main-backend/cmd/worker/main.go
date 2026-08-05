@@ -56,6 +56,9 @@ func main() {
 	})
 
 	mux := asynq.NewServeMux()
+	mux.HandleFunc(job.TypeOrderConfirmation, func(_ context.Context, task *asynq.Task) error {
+		return job.HandleOrderConfirmation(cfg)(task)
+	})
 
 	scheduler := asynq.NewScheduler(opts, nil)
 	if _, err := scheduler.Register("@every 30m", asynq.NewTask(job.TypePriceCheck, nil)); err != nil {

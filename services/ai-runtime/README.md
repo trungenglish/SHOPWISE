@@ -2,6 +2,15 @@
 
 Python FastAPI service providing LLM integration for the SHOPWISE platform.
 
+## Shopping conversation contract
+
+Chat envelopes use `schema_version: "1.1"`. The runtime asks one structured
+question at a time until workload, gaming ambition, and budget are known;
+question interaction requests remain at `"1.0"`. Product, offer, campaign,
+and checkout identifiers are hydrated from backend tools, so generated copy
+cannot supply its own prices or offer IDs. `POST /api/v1/greeting` is
+ephemeral and consumes only caller-supplied, limited facts.
+
 ## Features
 - **Stateless design:** All conversation state comes from the client
 - **Pydantic Validation:** Strict request/response schemas

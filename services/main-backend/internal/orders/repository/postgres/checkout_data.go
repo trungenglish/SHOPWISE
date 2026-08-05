@@ -31,9 +31,10 @@ func (repository *Repository) GetCustomer(ctx context.Context, customerID uuid.U
 func (repository *Repository) GetRetailerOffers(
 	ctx context.Context,
 	offerIDs []uuid.UUID,
+	productIDs []uuid.UUID,
 ) (map[uuid.UUID]domain.RetailerOfferQuote, error) {
 	var offers []accessories.RetailerOfferModel
-	if err := repository.database.WithContext(ctx).Where("id IN ? AND retailer = ?", offerIDs, "phongvu").Find(&offers).Error; err != nil {
+	if err := repository.database.WithContext(ctx).Where("id IN ?", offerIDs).Find(&offers).Error; err != nil {
 		return nil, fmt.Errorf("get retailer offers: %w", err)
 	}
 	accessoryIDs := make([]uuid.UUID, 0, len(offers))
@@ -50,11 +51,24 @@ func (repository *Repository) GetRetailerOffers(
 	for _, accessory := range accessoryModels {
 		names[accessory.ID] = accessory
 	}
+	compatible := make(map[uuid.UUID]bool)
+	if len(productIDs) > 0 {
+		var rows []accessories.AccessoryCompatibilityModel
+		if err := repository.database.WithContext(ctx).Where("accessory_id IN ? AND product_id IN ?", accessoryIDs, productIDs).Find(&rows).Error; err != nil {
+			return nil, fmt.Errorf("get bundle compatibility: %w", err)
+		}
+		for _, row := range rows {
+			compatible[row.AccessoryID] = true
+		}
+	}
 	quotes := make(map[uuid.UUID]domain.RetailerOfferQuote, len(offers))
 	for _, offer := range offers {
+		if offer.Retailer == "shopwise" && !compatible[offer.AccessoryID] {
+			continue
+		}
 		accessory := names[offer.AccessoryID]
 		quotes[offer.ID] = domain.RetailerOfferQuote{
-			ID: offer.ID, RetailerProductID: offer.RetailerProductID, AccessoryName: accessory.Name,
+			ID: offer.ID, Retailer: offer.Retailer, RetailerProductID: offer.RetailerProductID, AccessoryName: accessory.Name,
 			Category: accessory.Category, UnitPrice: offer.Price, OriginalPrice: offer.OriginalPrice,
 			InStock: offer.InStock, SourceURL: offer.SourceURL, FetchedAt: offer.FetchedAt,
 		}

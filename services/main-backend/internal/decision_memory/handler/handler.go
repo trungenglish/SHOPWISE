@@ -348,6 +348,7 @@ func (h *Handler) getOwnedSession(
 
 func RegisterRoutes(group *gin.RouterGroup, handler *Handler, verifier middleware.TokenVerifier) {
 	group.Use(OptionalAuth(verifier))
+	group.POST("/greeting", handler.Greeting)
 	group.POST("", handler.CreateSession)
 	group.GET("", handler.ListSessions)
 	group.GET("/:id", handler.GetSession)

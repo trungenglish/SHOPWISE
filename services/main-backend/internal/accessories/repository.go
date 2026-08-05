@@ -20,10 +20,37 @@ type Repository struct{ database *gorm.DB }
 func NewRepository(database *gorm.DB) *Repository { return &Repository{database: database} }
 
 func Migrate(database *gorm.DB) error {
-	return database.AutoMigrate(
+	if err := database.AutoMigrate(
 		&AccessoryModel{}, &RetailerOfferModel{}, &AccessoryCompatibilityModel{},
 		&LaptopCompatibilityProfileModel{}, &RetailerSyncStateModel{},
-	)
+	); err != nil {
+		return err
+	}
+
+	productID := uuid.MustParse("7cc26fb0-ace4-4e35-b6c5-fc3e13623546")
+	fetchedAt := time.Date(2026, time.August, 5, 0, 0, 0, 0, time.UTC)
+	seeds := []struct {
+		accessory AccessoryModel
+		offer     RetailerOfferModel
+	}{
+		{AccessoryModel{ID: uuid.MustParse("30000000-0000-4000-8000-000000000001"), Kind: string(KindExternal), Category: "mouse", Name: "Gaming Mouse", Specifications: datatypes.JSON([]byte(`{}`))}, RetailerOfferModel{ID: uuid.MustParse("10000000-0000-4000-8000-000000000001"), Retailer: "shopwise", RetailerProductID: "ROG-BUNDLE-MOUSE", SourceURL: "https://shopwise.local/offers/rog-mouse", Price: 0, OriginalPrice: 1_500_000, InStock: true, FetchedAt: fetchedAt}},
+		{AccessoryModel{ID: uuid.MustParse("30000000-0000-4000-8000-000000000002"), Kind: string(KindExternal), Category: "bag", Name: "Anti-shock Bag", Specifications: datatypes.JSON([]byte(`{}`))}, RetailerOfferModel{ID: uuid.MustParse("10000000-0000-4000-8000-000000000002"), Retailer: "shopwise", RetailerProductID: "ROG-BUNDLE-BAG", SourceURL: "https://shopwise.local/offers/rog-bag", Price: 0, OriginalPrice: 800_000, InStock: true, FetchedAt: fetchedAt}},
+		{AccessoryModel{ID: uuid.MustParse("30000000-0000-4000-8000-000000000003"), Kind: string(KindExternal), Category: "warranty", Name: "2-Year Accidental Damage Warranty", Specifications: datatypes.JSON([]byte(`{}`))}, RetailerOfferModel{ID: uuid.MustParse("10000000-0000-4000-8000-000000000003"), Retailer: "shopwise", RetailerProductID: "ROG-BUNDLE-WARRANTY", SourceURL: "https://shopwise.local/offers/rog-warranty", Price: 1_000_000, OriginalPrice: 2_000_000, InStock: true, FetchedAt: fetchedAt}},
+	}
+	for _, seed := range seeds {
+		if err := database.Where(AccessoryModel{ID: seed.accessory.ID}).Attrs(seed.accessory).FirstOrCreate(&AccessoryModel{}).Error; err != nil {
+			return err
+		}
+		seed.offer.AccessoryID = seed.accessory.ID
+		if err := database.Where(RetailerOfferModel{ID: seed.offer.ID}).Attrs(seed.offer).FirstOrCreate(&RetailerOfferModel{}).Error; err != nil {
+			return err
+		}
+		compatibility := AccessoryCompatibilityModel{ID: uuid.New(), AccessoryID: seed.accessory.ID, ProductID: &productID, Reason: "Included in the ROG RTX 5070 bundle", VerificationStatus: string(VerificationModel)}
+		if err := database.Where("accessory_id = ? AND product_id = ?", seed.accessory.ID, productID).Attrs(compatibility).FirstOrCreate(&AccessoryCompatibilityModel{}).Error; err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func (repository *Repository) UpsertPhongVuCatalog(ctx context.Context, products []SyncedProduct, fetchedAt time.Time) error {

@@ -26,7 +26,7 @@ type PromotionReader interface {
 }
 
 type RetailerOfferReader interface {
-	GetRetailerOffers(context.Context, []uuid.UUID) (map[uuid.UUID]domain.RetailerOfferQuote, error)
+	GetRetailerOffers(context.Context, []uuid.UUID, []uuid.UUID) (map[uuid.UUID]domain.RetailerOfferQuote, error)
 }
 
 type RetailerOfferRefresher interface {
@@ -40,4 +40,8 @@ type RetailerOfferUpdater interface {
 type IdempotentOrderRepository interface {
 	FindIdempotent(context.Context, uuid.UUID, string, string) (*domain.Order, error)
 	CreateIdempotent(context.Context, *domain.Order, string, string) (*domain.Order, error)
+}
+
+type OrderConfirmationEnqueuer interface {
+	EnqueueOrderConfirmation(context.Context, *domain.Order) error
 }

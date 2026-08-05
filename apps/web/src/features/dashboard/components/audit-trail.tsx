@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   RotateCw,
   HelpCircle,
@@ -8,6 +8,9 @@ import {
   Sparkles,
 } from "lucide-react";
 import { AuditLog } from "../types";
+import { ClarificationCard } from "@/components/dynamic-uirenderer";
+import type { AgentEnvelope } from "@/api/decision-memory";
+import type { InteractionRequest } from "@shopwise/protocols";
 
 interface AuditTrailProps {
   logs: AuditLog[];
@@ -17,7 +20,9 @@ interface AuditTrailProps {
   onReplay: () => void;
   suggestions?: string[];
   hasMenuButton?: boolean;
-  hideComposer?: boolean;
+	hideComposer?: boolean;
+	activeQuestion?: Extract<AgentEnvelope, { type: "question" }> | null;
+	onInteraction?: (request: InteractionRequest) => void;
 }
 
 export default function AuditTrail({
@@ -28,9 +33,13 @@ export default function AuditTrail({
   onReplay,
   suggestions,
   hasMenuButton,
-  hideComposer,
+	hideComposer,
+	activeQuestion,
+	onInteraction,
 }: AuditTrailProps) {
-  const [inputValue, setInputValue] = useState("");
+	const [inputValue, setInputValue] = useState("");
+	const newestRef = useRef<HTMLDivElement>(null);
+	useEffect(() => newestRef.current?.scrollIntoView({ block: "end" }), [logs, activeQuestion]);
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -129,6 +138,11 @@ export default function AuditTrail({
                 </div>
               );
             })}
+			{activeQuestion ? (
+			  <div ref={newestRef} className="pl-1">
+				<ClarificationCard envelope={activeQuestion} onInteraction={onInteraction} />
+			  </div>
+			) : null}
           </div>
         </div>
       </div>

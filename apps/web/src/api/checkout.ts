@@ -64,6 +64,9 @@ export interface OrderResponse {
   total_amount: number;
   status: string;
   created_at: string;
+	estimated_delivery_from: string;
+	estimated_delivery_to: string;
+	confirmation_email_status: "queued" | "failed";
 }
 
 export async function checkout(

@@ -253,7 +253,7 @@ func (h *Handler) ChatStream(c *gin.Context) {
 			if json.Unmarshal([]byte(data), &token) == nil {
 				message.WriteString(token.Text)
 			}
-		case "recommendation", "comparison", "checkout_ready":
+		case "recommendation", "comparison", "offer_comparison", "checkout_ready":
 			decision = json.RawMessage(data)
 			decisionEvent = event
 		case "envelope":
@@ -323,7 +323,7 @@ func validEnvelope(envelope agentEnvelope) bool {
 	if envelope.Type == "question" {
 		return true
 	}
-	return (envelope.Type == "recommendation" || envelope.Type == "comparison" ||
+	return (envelope.Type == "recommendation" || envelope.Type == "comparison" || envelope.Type == "offer_comparison" ||
 		envelope.Type == "checkout_ready") &&
 		len(envelope.Decision) > 0
 }

@@ -58,6 +58,16 @@ export async function createSession(
   return res.json();
 }
 
+export async function fetchGreeting(locale = "en", displayName?: string): Promise<string> {
+	const response = await fetch(`${API_BASE}/greeting`, {
+		method: "POST",
+		headers: getHeaders(),
+		body: JSON.stringify({ locale, display_name: displayName }),
+	});
+	if (!response.ok) throw new Error("Failed to load greeting");
+	return (await response.json() as { message: string }).message;
+}
+
 export async function listSessions(
   limit = 20,
   offset = 0
@@ -166,7 +176,7 @@ const dynamicUIComponentSchema: z.ZodType<{
 );
 
 const dynamicEnvelopeFields = {
-  schema_version: z.literal("1.0").optional(),
+  schema_version: z.enum(["1.0", "1.1"]).optional(),
   turn_id: z.string().optional(),
   revision: z.number().int().positive().optional(),
   conversation_state: z
@@ -174,6 +184,7 @@ const dynamicEnvelopeFields = {
       "collecting_requirements",
       "recommending",
       "comparing",
+	  "offering",
       "checkout_ready",
       "error",
     ])
@@ -214,7 +225,7 @@ const agentEnvelopeSchema = z.discriminatedUnion("type", [
         mode: z.enum(["single", "multiple"]),
         options: z
           .array(z.object({ id: z.string(), label: z.string() }))
-          .min(3)
+          .min(2)
           .max(4),
         free_text_allowed: z.boolean(),
         input_label: z.string().optional(),
@@ -242,6 +253,13 @@ const agentEnvelopeSchema = z.discriminatedUnion("type", [
     decision: recommendationDecisionSchema,
     ...dynamicEnvelopeFields,
   }),
+	  z.object({
+		type: z.literal("offer_comparison"),
+		message: z.string().min(1),
+		decision: recommendationDecisionSchema,
+		offer: z.object({ offer_id: z.string() }).passthrough(),
+		...dynamicEnvelopeFields,
+	  }),
 ]);
 
 export type AgentEnvelope = z.infer<typeof agentEnvelopeSchema>;

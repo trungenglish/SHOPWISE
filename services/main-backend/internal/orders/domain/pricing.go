@@ -29,6 +29,7 @@ type ProductQuote struct {
 
 type RetailerOfferQuote struct {
 	ID                uuid.UUID
+	Retailer          string
 	RetailerProductID string
 	AccessoryName     string
 	Category          string

@@ -29,6 +29,12 @@ type Service struct {
 	retailerOffers    RetailerOfferReader
 	retailerRefresher RetailerOfferRefresher
 	idempotentOrders  IdempotentOrderRepository
+	confirmationQueue OrderConfirmationEnqueuer
+}
+
+func (service *Service) WithOrderConfirmation(queue OrderConfirmationEnqueuer) *Service {
+	service.confirmationQueue = queue
+	return service
 }
 
 func (service *Service) WithRetailerOffers(
@@ -242,18 +248,29 @@ func (service *Service) Create(ctx context.Context, input CreateInput) (*domain.
 		Status:            status,
 		CreatedAt:         time.Now().UTC(),
 	}
+	order.EstimatedDeliveryFrom = order.CreatedAt.AddDate(0, 0, 3)
+	order.EstimatedDeliveryTo = order.CreatedAt.AddDate(0, 0, 5)
+	order.ConfirmationEmailStatus = "failed"
 	if len(retailerItems) > 0 {
 		created, createErr := service.idempotentOrders.CreateIdempotent(ctx, order, strings.TrimSpace(input.IdempotencyKey), payloadHash)
 		if createErr != nil {
 			return nil, mapIdempotencyError(createErr)
 		}
+		service.enqueueConfirmation(ctx, created)
 		return created, nil
 	}
 	if err := service.orders.Create(ctx, order); err != nil {
 		return nil, apperror.Internal("failed to create order", err)
 	}
 
+	service.enqueueConfirmation(ctx, order)
 	return order, nil
+}
+
+func (service *Service) enqueueConfirmation(ctx context.Context, order *domain.Order) {
+	if service.confirmationQueue != nil && service.confirmationQueue.EnqueueOrderConfirmation(ctx, order) == nil {
+		order.ConfirmationEmailStatus = "queued"
+	}
 }
 
 func mapIdempotencyError(err error) error {
@@ -333,7 +350,7 @@ func (service *Service) buildRetailerItems(ctx context.Context, validated valida
 	if service.retailerOffers == nil || service.retailerRefresher == nil {
 		return nil, 0, apperror.Internal("retailer checkout is not configured", nil)
 	}
-	offers, err := service.retailerOffers.GetRetailerOffers(ctx, validated.retailerOfferIDs)
+	offers, err := service.retailerOffers.GetRetailerOffers(ctx, validated.retailerOfferIDs, validated.productIDs)
 	if err != nil {
 		return nil, 0, apperror.Internal("failed to load retailer offers", err)
 	}
@@ -344,8 +361,13 @@ func (service *Service) buildRetailerItems(ctx context.Context, validated valida
 		if !exists {
 			return nil, 0, apperror.Validation(fmt.Sprintf("items[%d].retailer_offer_id does not exist", index), nil)
 		}
-		refreshed, refreshErr := service.retailerRefresher.RefreshRetailerOffer(ctx, stored)
-		if refreshErr != nil || !refreshed.InStock || refreshed.UnitPrice <= 0 {
+		refreshed := stored
+		var refreshErr error
+		if stored.Retailer != "shopwise" {
+			refreshed, refreshErr = service.retailerRefresher.RefreshRetailerOffer(ctx, stored)
+		}
+		invalidPrice := refreshed.UnitPrice < 0 || (refreshed.UnitPrice == 0 && stored.Retailer != "shopwise")
+		if refreshErr != nil || !refreshed.InStock || invalidPrice {
 			return nil, 0, &OfferUnavailableError{OfferID: offerID}
 		}
 		if refreshed.UnitPrice != stored.UnitPrice {

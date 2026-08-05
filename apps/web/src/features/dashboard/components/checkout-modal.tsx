@@ -110,6 +110,7 @@ export default function CheckoutModal({
   const [promoApplied, setPromoApplied] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [orderStatus, setOrderStatus] = useState<string | null>(null);
+	const [completedOrder, setCompletedOrder] = useState<OrderResponse | null>(null);
   const [pendingRequest, setPendingRequest] = useState<CheckoutRequest | null>(
     null
   );
@@ -128,6 +129,7 @@ export default function CheckoutModal({
     onSuccess: (order: OrderResponse) => {
       setPaymentSuccess(true);
       setOrderStatus(order.status);
+		setCompletedOrder(order);
       setChangedOffer(undefined);
       if (order.status === "PENDING_SUPPLIER_CONFIRMATION") {
         toast.info("Đơn đã được tạo và đang chờ Phong Vũ xác nhận.");
@@ -219,7 +221,7 @@ export default function CheckoutModal({
   const retailDiscount = basePrice * discountRate;
   const promoDiscount = promoApplied ? basePrice * 0.05 : 0; // extra 5% for promo "SHOPWISE5"
   const shipping = basePrice > 37500000 ? 0 : 625000;
-  const tax = (basePrice - retailDiscount - promoDiscount) * 0.08;
+	const tax = 0;
   const finalTotal =
     basePrice -
     retailDiscount -
@@ -322,6 +324,9 @@ export default function CheckoutModal({
                     </>
                   )}
                 </p>
+				<p className="text-on-surface-variant mt-2 max-w-sm text-xs">
+					Invoice {completedOrder?.order_id}; total {completedOrder ? formatVND(completedOrder.total_amount) : ""}. Estimated delivery {completedOrder?.estimated_delivery_from?.slice(0, 10)} to {completedOrder?.estimated_delivery_to?.slice(0, 10)}. Confirmation email is {completedOrder?.confirmation_email_status === "queued" ? "queued" : "not queued"}.
+				</p>
               </div>
               <Button onClick={handleCloseSuccess} className="mt-6 px-8">
                 Xem đơn hàng

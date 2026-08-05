@@ -105,7 +105,8 @@ func Run() error {
 	userH := usershandler.NewHandler(userSvc)
 	phongVuClient := phongvu.NewClient(http.DefaultClient, 10*time.Second)
 	orderService := ordersusecase.NewService(orderRepo, orderRepo, orderRepo, orderRepo).
-		WithRetailerOffers(orderRepo, phongvu.NewOfferRefresher(phongVuClient, cfg.PhongVuConnectorEnabled, time.Now), orderRepo)
+		WithRetailerOffers(orderRepo, phongvu.NewOfferRefresher(phongVuClient, cfg.PhongVuConnectorEnabled, time.Now), orderRepo).
+		WithOrderConfirmation(jobClient)
 	orderH := ordershandler.NewHandler(orderService)
 	if cfg.CheckoutAuthBypass {
 		orderH.WithDevelopmentAuthBypass()

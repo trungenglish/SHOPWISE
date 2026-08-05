@@ -138,7 +138,7 @@ const ComponentRenderer = ({
   }
 };
 
-const ClarificationCard = ({
+export const ClarificationCard = ({
   envelope,
   onInteraction,
 }: Readonly<{

@@ -49,5 +49,5 @@ async def test_recommendation_sse_has_token_recommendation_and_done_events():
     assert json.loads(events[0]["data"]) == {"text": "Catalog match found."}
     assert json.loads(events[1]["data"])["products"][0]["id"] == "product-1"
     assert "target_id" not in json.loads(events[2]["data"])
-    assert json.loads(events[3]["data"])["schema_version"] == "1.0"
+    assert json.loads(events[3]["data"])["schema_version"] == "1.1"
     assert "target_id" not in json.loads(events[3]["data"])["ui_operations"][0]
