@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Sparkles, Send, Search, History } from "lucide-react";
 
 interface EmptyWorkspaceProps {
-  onSubmit: (query: string) => void;
+  readonly onSubmit: (query: string) => void;
 }
 
 export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
@@ -78,7 +78,7 @@ export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
         </div>
 
         {/* Recent Activity (Mock) */}
-        <div className="mt-8 flex w-full flex-col gap-3">
+        <div className="mt-8 flex w-full flex-col gap-3 hidden">
           <div className="text-on-surface-variant flex items-center gap-2 font-mono text-xs font-bold tracking-wider uppercase">
             <History size={14} />
             <span>Continue previous sessions</span>
