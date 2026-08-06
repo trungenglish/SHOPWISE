@@ -101,7 +101,7 @@ export default function EmptyWorkspace({ onSubmit }: EmptyWorkspaceProps) {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

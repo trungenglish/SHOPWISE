@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -17,8 +18,13 @@ import (
 	"github.com/google/uuid"
 )
 
+type PromotionEventSink interface {
+	HandlePaymentCompleted(ctx context.Context, sessionID string) error
+}
+
 type Handler struct {
 	service               *usecase.Service
+	promotionSink         PromotionEventSink
 	developmentAuthBypass bool
 }
 
@@ -28,6 +34,11 @@ func NewHandler(service *usecase.Service) *Handler {
 
 func (handler *Handler) WithDevelopmentAuthBypass() *Handler {
 	handler.developmentAuthBypass = true
+	return handler
+}
+
+func (handler *Handler) WithPromotionSink(sink PromotionEventSink) *Handler {
+	handler.promotionSink = sink
 	return handler
 }
 
@@ -98,6 +109,14 @@ func (handler *Handler) Create(ctx *gin.Context) {
 		}
 		_ = ctx.Error(err)
 		return
+	}
+
+	if handler.promotionSink != nil {
+		sessionID := ctx.GetHeader("X-Session-ID")
+		if sessionID != "" {
+			// Notify promotion service asynchronously or synchronously.
+			_ = handler.promotionSink.HandlePaymentCompleted(context.Background(), sessionID)
+		}
 	}
 
 	ctx.JSON(http.StatusCreated, toOrderResponse(order))

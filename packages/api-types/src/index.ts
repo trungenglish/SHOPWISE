@@ -11,3 +11,4 @@ export {
   type RefreshRequest,
 } from "./identity";
 export * from "./decision-memory";
+export * from "./promotions";
