@@ -26,6 +26,7 @@
   "packageManager": "pnpm@11.9.0",
   "dependencies": {
     "@shopwise/env": "workspace:*",
+    "ajv": "^8.20.0",
     "axios": "1.18.0",
     "dotenv": "catalog:",
     "zod": "catalog:"

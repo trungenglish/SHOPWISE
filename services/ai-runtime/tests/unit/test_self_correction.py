@@ -21,7 +21,10 @@ async def test_self_correction_retries_invalid_json_twice_at_most():
             "invalid json",
             "still invalid",
             '{"type":"question","message":"What is your budget?",'
-            '"reasoning":null,"selections":null}',
+            '"reasoning":null,"selections":null,"question":{"mode":"single",'
+            '"options":["Under 25M","25-40M"],"free_text_allowed":true,'
+            '"input_label":"Budget","input_placeholder":"Enter budget",'
+            '"submit_label":"Continue"}}',
         ]
     )
     workflow = create_workflow(provider, FakeToolProxy(), "gpt-5.4-mini")

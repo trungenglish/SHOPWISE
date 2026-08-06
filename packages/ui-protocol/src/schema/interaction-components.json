@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schema/interaction-components.json",
+  "title": "Interaction Components",
+  "description": "Schemas for Dynamic Form and Interaction Components",
+  "$defs": {
+    "ButtonProps": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "variant": { "type": "string", "enum": ["primary", "secondary", "danger", "outline"] }
+      },
+      "required": ["text"]
+    },
+    "QuickReplyProps": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" }
+      },
+      "required": ["label"]
+    },
+    "SelectProps": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "placeholder": { "type": "string" }
+      }
+    },
+    "RadioGroupProps": {
+      "type": "object",
+      "properties": {
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "name": { "type": "string" }
+      }
+    },
+    "CheckboxProps": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string" },
+        "checked": { "type": "boolean" }
+      }
+    },
+    "TextInputProps": {
+      "type": "object",
+      "properties": {
+        "placeholder": { "type": "string" },
+        "defaultValue": { "type": "string" },
+        "type": { "type": "string", "enum": ["text", "email", "password", "tel"] }
+      }
+    },
+    "NumberInputProps": {
+      "type": "object",
+      "properties": {
+        "placeholder": { "type": "string" },
+        "defaultValue": { "type": "number" }
+      }
+    },
+    "BudgetSliderProps": {
+      "type": "object",
+      "properties": {
+        "minPriceVND": { "type": "integer", "minimum": 0 },
+        "maxPriceVND": { "type": "integer", "minimum": 0 },
+        "step": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["minPriceVND", "maxPriceVND"]
+    },
+    "StorePickerProps": {
+      "type": "object",
+      "properties": {
+        "stores": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "storeId": { "type": "string" },
+              "name": { "type": "string" },
+              "address": { "type": "string" },
+              "distanceKm": { "type": "number" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "type": "object"
+}

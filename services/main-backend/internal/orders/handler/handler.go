@@ -80,8 +80,7 @@ func (handler *Handler) Create(ctx *gin.Context) {
 	items := make([]usecase.CreateItemInput, 0, len(request.Items))
 	for _, item := range request.Items {
 		items = append(items, usecase.CreateItemInput{
-			ProductID: item.ProductID,
-			Quantity:  item.Quantity,
+			ProductID: item.ProductID, RetailerOfferID: item.RetailerOfferID, Quantity: item.Quantity,
 		})
 	}
 
@@ -92,8 +91,22 @@ func (handler *Handler) Create(ctx *gin.Context) {
 		FulfillmentMethod:       request.FulfillmentMethod,
 		ShippingAddress:         request.ShippingAddress,
 		CouponCode:              request.CouponCode,
+		IdempotencyKey:          ctx.GetHeader("Idempotency-Key"),
 	})
 	if err != nil {
+		var offerChanged *usecase.OfferChangedError
+		if errors.As(err, &offerChanged) {
+			ctx.JSON(http.StatusConflict, gin.H{
+				"code": "OFFER_CHANGED", "detail": err.Error(),
+				"offer": gin.H{"retailer_offer_id": offerChanged.Offer.ID.String(), "price": offerChanged.Offer.UnitPrice, "in_stock": offerChanged.Offer.InStock, "fetched_at": offerChanged.Offer.FetchedAt},
+			})
+			return
+		}
+		var unavailable *usecase.OfferUnavailableError
+		if errors.As(err, &unavailable) {
+			ctx.JSON(http.StatusConflict, gin.H{"code": "OFFER_UNAVAILABLE", "detail": err.Error(), "retailer_offer_id": unavailable.OfferID.String()})
+			return
+		}
 		_ = ctx.Error(err)
 		return
 	}

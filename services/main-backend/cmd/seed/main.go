@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"log/slog"
+	"math"
 	"os"
 	"path/filepath"
 
@@ -27,10 +28,20 @@ type SeedProduct struct {
 	Metadata       map[string]interface{} `json:"metadata"`
 }
 
-const demoUSDToVNDRate = 25_000
+const (
+	demoUSDToVNDRate  = 26_000
+	demoPriceRounding = 10_000
+)
 
 func priceInVND(priceUSD float64) int64 {
-	return int64(priceUSD * demoUSDToVNDRate)
+	return int64(math.Round(priceUSD*demoUSDToVNDRate/demoPriceRounding)) * demoPriceRounding
+}
+
+func normalizedSeedPrice(sku string, legacyUSDPrice float64) int64 {
+	if sku == "ASUS-0001" {
+		return 42_000_000
+	}
+	return priceInVND(legacyUSDPrice)
 }
 
 func seedConflictClause() clause.OnConflict {
@@ -92,7 +103,7 @@ func main() {
 			Name:           sp.Name,
 			Brand:          sp.Brand,
 			Category:       sp.Category,
-			Price:          priceInVND(sp.Price),
+			Price:          normalizedSeedPrice(sp.SKU, sp.Price),
 			Specifications: datatypes.JSON(specBytes),
 			Metadata:       datatypes.JSON(metaBytes),
 		})

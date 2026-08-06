@@ -33,4 +33,5 @@ func (h *Handler) ListProducts(c *gin.Context) {
 
 func RegisterRoutes(rg *gin.RouterGroup, h *Handler) {
 	rg.GET("", h.ListProducts)
+	rg.GET("/:id/offer-comparison", h.GetOfferComparison)
 }

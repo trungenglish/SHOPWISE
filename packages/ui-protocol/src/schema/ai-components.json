@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://shopwise.local/schema/ai-components.json",
+  "title": "AI Components",
+  "description": "Schemas for AI Conversation Components",
+  "$defs": {
+    "ChatMessageProps": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "sender": { "type": "string", "enum": ["user", "ai", "system"] }
+      },
+      "required": ["text", "sender"]
+    },
+    "ThinkingIndicatorProps": {
+      "type": "object",
+      "properties": {
+        "statusText": { "type": "string" }
+      }
+    },
+    "RecommendationExplanationProps": {
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "highlights": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "DecisionReasoningProps": {
+      "type": "object",
+      "properties": {
+        "reasoning": { "type": "string" }
+      }
+    },
+    "ConfidenceIndicatorProps": {
+      "type": "object",
+      "properties": {
+        "score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "label": { "type": "string" }
+      }
+    }
+  },
+  "type": "object"
+}

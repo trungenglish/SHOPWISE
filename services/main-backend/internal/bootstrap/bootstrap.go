@@ -11,6 +11,8 @@ import (
 	"syscall"
 	"time"
 
+	"shopwise/retail/internal/accessories"
+	"shopwise/retail/internal/accessories/phongvu"
 	adminhandler "shopwise/retail/internal/administration/handler"
 	adminusecase "shopwise/retail/internal/administration/usecase"
 	cataloghandler "shopwise/retail/internal/catalog/handler"
@@ -74,6 +76,7 @@ func Run() error {
 	identityRepo := identitypostgres.NewRepository(db)
 	orderRepo := orderspostgres.NewRepository(db)
 	decisionRepo := decisionmemorypostgres.NewRepository(db)
+	accessoryRepo := accessories.NewRepository(db)
 
 	jwtSvc := identityusecase.NewJWTService(cfg.JWTSecret, cfg.JWTAccessTTL)
 	googleSvc := identityusecase.NewGoogleOAuthService(cfg)
@@ -102,7 +105,11 @@ func Run() error {
 		Storage:  fileStorage,
 	})
 	userH := usershandler.NewHandler(userSvc)
-	orderH := ordershandler.NewHandler(ordersusecase.NewService(orderRepo, orderRepo, orderRepo, orderRepo))
+	phongVuClient := phongvu.NewClient(http.DefaultClient, 10*time.Second)
+	orderService := ordersusecase.NewService(orderRepo, orderRepo, orderRepo, orderRepo).
+		WithRetailerOffers(orderRepo, phongvu.NewOfferRefresher(phongVuClient, cfg.PhongVuConnectorEnabled, time.Now), orderRepo).
+		WithOrderConfirmation(jobClient)
+	orderH := ordershandler.NewHandler(orderService)
 	if cfg.CheckoutAuthBypass {
 		orderH.WithDevelopmentAuthBypass()
 	}
@@ -120,6 +127,7 @@ func Run() error {
 
 	decisionSvc := decisionmemoryusecase.NewService(decisionRepo)
 	decisionH := decisionmemoryhandler.NewHandler(decisionSvc, cfg.AIRuntimeURL)
+	accessoryH := accessories.NewHandler(accessories.NewService(accessoryRepo, time.Now))
 
 	resumeRepo := resumesessionpostgres.NewRepository(db)
 	resumeJWTSvc := resumesessionusecase.NewJWTService(cfg.JWTSecret)
@@ -151,6 +159,7 @@ func Run() error {
 
 	catalogH := cataloghandler.NewHandler(db)
 	cataloghandler.RegisterRoutes(v1.Group("/products"), catalogH)
+	accessories.RegisterRoutes(v1.Group("/accessories"), accessoryH)
 
 	storesH := storeshandler.NewHandler()
 	storeshandler.RegisterRoutes(v1.Group("/stores"), storesH)
@@ -246,6 +255,11 @@ func Migrate() error {
 	log.Info("running decision memory migrations")
 	if err := decisionmemorypostgres.Migrate(db); err != nil {
 		return fmt.Errorf("failed to migrate decision memory: %w", err)
+	}
+
+	log.Info("running accessory catalog migrations")
+	if err := accessories.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate accessory catalog: %w", err)
 	}
 
 	log.Info("running resume session migrations")

@@ -13,11 +13,27 @@ async def generate_agent_sse(
         "data": json.dumps({"text": response.root.message}),
     }
 
-    if response.root.type in {"recommendation", "comparison", "checkout_ready"}:
+    if response.root.type in {
+        "recommendation",
+        "comparison",
+        "offer_comparison",
+        "checkout_ready",
+    }:
         yield {
             "event": response.root.type,
             "data": response.root.decision.model_dump_json(),
         }
+
+    for operation in response.root.ui_operations:
+        yield {
+            "event": "ui_operation",
+            "data": operation.model_dump_json(exclude_none=True),
+        }
+
+    yield {
+        "event": "envelope",
+        "data": response.root.model_dump_json(exclude_none=True),
+    }
 
     yield {
         "event": "done",

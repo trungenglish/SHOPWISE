@@ -1,6 +1,7 @@
 import json
 from typing import Any, TypedDict
 
+import httpx
 from langchain_core.runnables import RunnableLambda
 from langgraph.graph import END, START, StateGraph
 from pydantic import ValidationError
@@ -11,6 +12,7 @@ from src.models.schemas import (
     AgentDraft,
     AgentResponse,
     CatalogProduct,
+    OfferComparison,
     hydrate_agent_response,
 )
 from src.tools.interfaces import ToolProxy
@@ -23,6 +25,7 @@ class GraphState(TypedDict, total=False):
     session_id: str
     retry_count: int
     catalog: list[CatalogProduct]
+    offers: dict[str, OfferComparison]
     allowed_comparison_ids: list[str]
     response: AgentResponse
     error: str | None
@@ -31,8 +34,15 @@ class GraphState(TypedDict, total=False):
 def create_workflow(provider: LLMProvider, tool_proxy: ToolProxy, model: str) -> Any:
     workflow = StateGraph(GraphState)
 
-    async def load_catalog(_state: GraphState) -> GraphState:
-        return {"catalog": await tool_proxy.catalog_search()}
+    async def load_catalog(state: GraphState) -> GraphState:
+        offers: dict[str, OfferComparison] = {}
+        for product_id in state.get("allowed_comparison_ids", []):
+            try:
+                offers[product_id] = await tool_proxy.offer_comparison(product_id)
+            except httpx.HTTPStatusError as error:
+                if error.response.status_code != 404:
+                    raise
+        return {"catalog": await tool_proxy.catalog_search(), "offers": offers}
 
     async def invoke_llm(state: GraphState) -> GraphState:
         catalog_json = json.dumps(
@@ -45,6 +55,13 @@ def create_workflow(provider: LLMProvider, tool_proxy: ToolProxy, model: str) ->
                 "content": PromptManager.get_system_prompt(
                     catalog_json,
                     json.dumps(state.get("allowed_comparison_ids", [])),
+                    json.dumps(
+                        {
+                            product_id: offer.model_dump(mode="json")
+                            for product_id, offer in state.get("offers", {}).items()
+                        },
+                        ensure_ascii=False,
+                    ),
                 ),
             },
             *state["messages"],
@@ -80,6 +97,15 @@ def create_workflow(provider: LLMProvider, tool_proxy: ToolProxy, model: str) ->
                 draft,
                 state["catalog"],
                 allowed_comparison_ids=set(state.get("allowed_comparison_ids", [])),
+                language_source=next(
+                    (
+                        str(message.get("content", ""))
+                        for message in reversed(state["messages"])
+                        if message.get("role") == "user"
+                    ),
+                    "",
+                ),
+                offers=state.get("offers", {}),
             )
             return {"response": response, "error": None}
         except (ValidationError, ValueError) as error:

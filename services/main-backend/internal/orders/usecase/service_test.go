@@ -28,6 +28,14 @@ type checkoutRepositoryStub struct {
 	listedCustomerID uuid.UUID
 	listedLimit      int
 	listedOffset     int
+	retailerOffers   map[uuid.UUID]domain.RetailerOfferQuote
+	refreshedOffers  map[uuid.UUID]domain.RetailerOfferQuote
+	retailerErr      error
+	refreshErr       error
+	idempotencyKey   string
+	payloadHash      string
+	idempotentResult *domain.Order
+	idempotentErr    error
 }
 
 func (stub *checkoutRepositoryStub) Create(_ context.Context, order *domain.Order) error {
@@ -63,8 +71,143 @@ func (stub *checkoutRepositoryStub) GetPromotion(context.Context, string) (*doma
 	return stub.promotion, stub.promotionErr
 }
 
+func (stub *checkoutRepositoryStub) GetRetailerOffers(context.Context, []uuid.UUID, []uuid.UUID) (map[uuid.UUID]domain.RetailerOfferQuote, error) {
+	return stub.retailerOffers, stub.retailerErr
+}
+
+func (stub *checkoutRepositoryStub) RefreshRetailerOffer(_ context.Context, quote domain.RetailerOfferQuote) (domain.RetailerOfferQuote, error) {
+	if stub.refreshErr != nil {
+		return domain.RetailerOfferQuote{}, stub.refreshErr
+	}
+	if refreshed, exists := stub.refreshedOffers[quote.ID]; exists {
+		return refreshed, nil
+	}
+	return quote, nil
+}
+
+func (stub *checkoutRepositoryStub) UpdateRetailerOffer(_ context.Context, quote domain.RetailerOfferQuote) error {
+	if stub.retailerOffers == nil {
+		stub.retailerOffers = make(map[uuid.UUID]domain.RetailerOfferQuote)
+	}
+	stub.retailerOffers[quote.ID] = quote
+	return nil
+}
+
+func (stub *checkoutRepositoryStub) CreateIdempotent(_ context.Context, order *domain.Order, key, payloadHash string) (*domain.Order, error) {
+	stub.idempotencyKey = key
+	stub.payloadHash = payloadHash
+	if err := stub.Create(context.Background(), order); err != nil {
+		return nil, err
+	}
+	return order, nil
+}
+
+func (stub *checkoutRepositoryStub) FindIdempotent(_ context.Context, _ uuid.UUID, key, payloadHash string) (*domain.Order, error) {
+	stub.idempotencyKey = key
+	stub.payloadHash = payloadHash
+	return stub.idempotentResult, stub.idempotentErr
+}
+
 func newService(stub *checkoutRepositoryStub) *usecase.Service {
-	return usecase.NewService(stub, stub, stub, stub)
+	return usecase.NewService(stub, stub, stub, stub).WithRetailerOffers(stub, stub, stub)
+}
+
+func TestCreateMixedOrderTreatsConsumerPricesAsVATInclusive(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	productID := uuid.New()
+	offerID := uuid.New()
+	repository := validRepository(customerID, productID, 10_000_000)
+	repository.retailerOffers = map[uuid.UUID]domain.RetailerOfferQuote{
+		offerID: {ID: offerID, AccessoryName: "Phong Vu mouse", UnitPrice: 1_000_000, InStock: true, SourceURL: "https://phongvu.vn/p/mouse", FetchedAt: time.Now().UTC()},
+	}
+	input := validInput(customerID, productID)
+	input.Items = append(input.Items, usecase.CreateItemInput{RetailerOfferID: offerID.String(), Quantity: 1})
+	input.IdempotencyKey = "checkout-key"
+
+	order, err := newService(repository).Create(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Create() error = %v", err)
+	}
+	if order.Status != domain.StatusPendingSupplierConfirmation {
+		t.Fatalf("status = %s", order.Status)
+	}
+	if order.SubtotalAmount != 11_000_000 || order.TaxAmount != 0 || order.TotalAmount != 11_000_000 {
+		t.Fatalf("subtotal/tax/total = %d/%d/%d", order.SubtotalAmount, order.TaxAmount, order.TotalAmount)
+	}
+	if len(order.RetailerItems) != 1 || repository.idempotencyKey != "checkout-key" || repository.payloadHash == "" {
+		t.Fatalf("retailer items/key/hash = %d/%q/%q", len(order.RetailerItems), repository.idempotencyKey, repository.payloadHash)
+	}
+}
+
+func TestCreateAcceptsAuthoritativeFreeShopWiseBundleLineWithoutRefresh(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	productID := uuid.New()
+	offerID := uuid.New()
+	repository := validRepository(customerID, productID, 42_000_000)
+	repository.retailerOffers = map[uuid.UUID]domain.RetailerOfferQuote{
+		offerID: {ID: offerID, Retailer: "shopwise", AccessoryName: "Gaming Mouse", UnitPrice: 0, InStock: true},
+	}
+	repository.refreshErr = errors.New("external retailer must not be called")
+	input := validInput(customerID, productID)
+	input.Items = append(input.Items, usecase.CreateItemInput{RetailerOfferID: offerID.String(), Quantity: 1})
+	input.IdempotencyKey = "bundle-key"
+
+	order, err := newService(repository).Create(context.Background(), input)
+	if err != nil {
+		t.Fatalf("Create() error = %v", err)
+	}
+	if order.TotalAmount != 42_000_000 || len(order.RetailerItems) != 1 {
+		t.Fatalf("total/items = %d/%d", order.TotalAmount, len(order.RetailerItems))
+	}
+}
+
+func TestCreateRejectsChangedRetailerOffer(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	offerID := uuid.New()
+	repository := &checkoutRepositoryStub{
+		customer:        &domain.CustomerSnapshot{ID: customerID, Name: "A", Email: "a@example.com", Phone: "1"},
+		retailerOffers:  map[uuid.UUID]domain.RetailerOfferQuote{offerID: {ID: offerID, UnitPrice: 900_000, InStock: true}},
+		refreshedOffers: map[uuid.UUID]domain.RetailerOfferQuote{offerID: {ID: offerID, UnitPrice: 950_000, InStock: true}},
+	}
+	_, err := newService(repository).Create(context.Background(), usecase.CreateInput{
+		AuthenticatedCustomerID: customerID, CustomerID: customerID,
+		Items:             []usecase.CreateItemInput{{RetailerOfferID: offerID.String(), Quantity: 1}},
+		FulfillmentMethod: string(domain.FulfillmentStorePickup), IdempotencyKey: "key",
+	})
+	var changed *usecase.OfferChangedError
+	if !errors.As(err, &changed) || changed.Offer.UnitPrice != 950_000 {
+		t.Fatalf("error = %v, want OfferChangedError", err)
+	}
+	if repository.retailerOffers[offerID].UnitPrice != 950_000 {
+		t.Fatal("changed offer snapshot was not persisted for explicit retry")
+	}
+}
+
+func TestCreateReturnsIdempotentOrderBeforeRetailerRefresh(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	offerID := uuid.New()
+	existing := &domain.Order{ID: uuid.New(), CustomerID: customerID, Status: domain.StatusPendingSupplierConfirmation}
+	repository := &checkoutRepositoryStub{
+		customer:         &domain.CustomerSnapshot{ID: customerID, Name: "A", Email: "a@example.com", Phone: "1"},
+		idempotentResult: existing,
+		refreshErr:       errors.New("Phong Vu unavailable"),
+	}
+	order, err := newService(repository).Create(context.Background(), usecase.CreateInput{
+		AuthenticatedCustomerID: customerID, CustomerID: customerID,
+		Items:             []usecase.CreateItemInput{{RetailerOfferID: offerID.String(), Quantity: 1}},
+		FulfillmentMethod: string(domain.FulfillmentStorePickup), IdempotencyKey: "same-key",
+	})
+	if err != nil || order.ID != existing.ID {
+		t.Fatalf("Create() order/error = %v/%v, want existing order", order, err)
+	}
 }
 
 func validInput(customerID, productID uuid.UUID) usecase.CreateInput {
@@ -123,11 +266,11 @@ func TestCreateUsesOfficialPriceAndPersistsCheckoutSnapshot(t *testing.T) {
 	if order.DiscountAmount != 0 || order.ShippingAmount != 0 {
 		t.Fatalf("discount/shipping = %d/%d, want 0/0", order.DiscountAmount, order.ShippingAmount)
 	}
-	if order.TaxAmount != 6_998_000 {
-		t.Fatalf("TaxAmount = %d, want 6998000", order.TaxAmount)
+	if order.TaxAmount != 0 {
+		t.Fatalf("TaxAmount = %d, want VAT included", order.TaxAmount)
 	}
-	if order.TotalAmount != 94_473_000 {
-		t.Fatalf("TotalAmount = %d, want 94473000", order.TotalAmount)
+	if order.TotalAmount != 87_475_000 {
+		t.Fatalf("TotalAmount = %d, want 87475000", order.TotalAmount)
 	}
 	if repository.persisted == nil || repository.persisted.ID != order.ID {
 		t.Fatal("repository did not receive the completed order")
@@ -160,8 +303,8 @@ func TestCreateAppliesActivePercentageCoupon(t *testing.T) {
 	if order.DiscountAmount != 5_000 {
 		t.Fatalf("DiscountAmount = %d, want 5000", order.DiscountAmount)
 	}
-	if order.TaxAmount != 7_600 || order.TotalAmount != 102_600 {
-		t.Fatalf("tax/total = %d/%d, want 7600/102600", order.TaxAmount, order.TotalAmount)
+	if order.TaxAmount != 0 || order.TotalAmount != 95_000 {
+		t.Fatalf("tax/total = %d/%d, want 0/95000", order.TaxAmount, order.TotalAmount)
 	}
 }
 
@@ -186,12 +329,12 @@ func TestCreateAppliesFixedCouponMaximum(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Create() error = %v", err)
 	}
-	if order.DiscountAmount != 20_000 || order.TaxAmount != 6_400 || order.TotalAmount != 86_400 {
+	if order.DiscountAmount != 20_000 || order.TaxAmount != 0 || order.TotalAmount != 80_000 {
 		t.Fatalf("discount/tax/total = %d/%d/%d", order.DiscountAmount, order.TaxAmount, order.TotalAmount)
 	}
 }
 
-func TestCreateRoundsTaxToNearestWholeVND(t *testing.T) {
+func TestCreateLeavesVATInclusivePriceUntaxed(t *testing.T) {
 	t.Parallel()
 
 	customerID := uuid.New()
@@ -202,8 +345,8 @@ func TestCreateRoundsTaxToNearestWholeVND(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Create() error = %v", err)
 	}
-	if order.TaxAmount != 9 {
-		t.Fatalf("TaxAmount = %d, want rounded value 9", order.TaxAmount)
+	if order.TaxAmount != 0 || order.TotalAmount != 107 {
+		t.Fatalf("tax/total = %d/%d, want 0/107", order.TaxAmount, order.TotalAmount)
 	}
 }
 
@@ -427,3 +570,150 @@ func assertAppErrorCode(t *testing.T, err error, code string) {
 func timePointer(value time.Time) *time.Time {
 	return &value
 }
+
+// enqueueSpy records EnqueueOrderConfirmation calls and can optionally fail.
+type enqueueSpy struct {
+	calls    int
+	failWith error
+}
+
+func (spy *enqueueSpy) EnqueueOrderConfirmation(_ context.Context, _ *domain.Order) error {
+	spy.calls++
+	return spy.failWith
+}
+
+func newServiceWithConfirmation(stub *checkoutRepositoryStub, queue usecase.OrderConfirmationEnqueuer) *usecase.Service {
+	return usecase.NewService(stub, stub, stub, stub).
+		WithRetailerOffers(stub, stub, stub).
+		WithOrderConfirmation(queue)
+}
+
+func TestCreateBundleArithmeticWithAndWithoutBundleLine(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	productID := uuid.New()
+	offerID := uuid.New()
+
+	// Laptop at 42M; bundle line (warranty) at 1M; total without warranty = 42M, with = 43M.
+	repository := validRepository(customerID, productID, 42_000_000)
+	repository.retailerOffers = map[uuid.UUID]domain.RetailerOfferQuote{
+		offerID: {
+			ID:            offerID,
+			Retailer:      "shopwise",
+			AccessoryName: "2-Year Warranty",
+			UnitPrice:     1_000_000,
+			InStock:       true,
+		},
+	}
+	repository.refreshErr = errors.New("shopwise bundle must not be refreshed via external retailer")
+
+	t.Run("with bundle line total is 43M", func(t *testing.T) {
+		t.Parallel()
+		input := validInput(customerID, productID)
+		input.Items = append(input.Items, usecase.CreateItemInput{RetailerOfferID: offerID.String(), Quantity: 1})
+		input.IdempotencyKey = "bundle-with-warranty"
+
+		order, err := newService(repository).Create(context.Background(), input)
+		if err != nil {
+			t.Fatalf("Create() error = %v", err)
+		}
+		if order.TotalAmount != 43_000_000 {
+			t.Fatalf("TotalAmount = %d, want 43_000_000 (laptop + warranty)", order.TotalAmount)
+		}
+	})
+
+	t.Run("without bundle line total is 42M", func(t *testing.T) {
+		t.Parallel()
+		input := validInput(customerID, productID)
+
+		order, err := newService(repository).Create(context.Background(), input)
+		if err != nil {
+			t.Fatalf("Create() error = %v", err)
+		}
+		if order.TotalAmount != 42_000_000 {
+			t.Fatalf("TotalAmount = %d, want 42_000_000 (laptop only)", order.TotalAmount)
+		}
+	})
+}
+
+func TestCreateIdempotentOrderDoesNotEnqueueSecondEmail(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	offerID := uuid.New()
+	existingOrderID := uuid.New()
+	existing := &domain.Order{
+		ID:         existingOrderID,
+		CustomerID: customerID,
+		Status:     domain.StatusPendingSupplierConfirmation,
+	}
+
+	repository := &checkoutRepositoryStub{
+		customer:         &domain.CustomerSnapshot{ID: customerID, Name: "A", Email: "a@example.com", Phone: "1"},
+		retailerOffers:   map[uuid.UUID]domain.RetailerOfferQuote{offerID: {ID: offerID, UnitPrice: 1_000_000, InStock: true}},
+		idempotentResult: existing, // FindIdempotent returns an already-created order
+	}
+
+	spy := &enqueueSpy{}
+	order, err := newServiceWithConfirmation(repository, spy).Create(context.Background(), usecase.CreateInput{
+		AuthenticatedCustomerID: customerID,
+		CustomerID:              customerID,
+		Items:                   []usecase.CreateItemInput{{RetailerOfferID: offerID.String(), Quantity: 1}},
+		FulfillmentMethod:       string(domain.FulfillmentStorePickup),
+		IdempotencyKey:          "same-key",
+	})
+
+	if err != nil || order.ID != existingOrderID {
+		t.Fatalf("Create() order/error = %v/%v, want existing order", order, err)
+	}
+	if spy.calls != 0 {
+		t.Fatalf("EnqueueOrderConfirmation called %d times on idempotent path, want 0", spy.calls)
+	}
+}
+
+func TestCreateEmailEnqueueFailurePreservesOrderWithFailedStatus(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	productID := uuid.New()
+	repository := validRepository(customerID, productID, 10_000_000)
+	spy := &enqueueSpy{failWith: errors.New("redis unavailable")}
+
+	order, err := newServiceWithConfirmation(repository, spy).Create(context.Background(), validInput(customerID, productID))
+
+	if err != nil {
+		t.Fatalf("Create() returned error on email failure: %v", err)
+	}
+	if order == nil {
+		t.Fatal("Create() returned nil order when email enqueue failed")
+	}
+	if order.ConfirmationEmailStatus != "failed" {
+		t.Fatalf("ConfirmationEmailStatus = %q, want \"failed\"", order.ConfirmationEmailStatus)
+	}
+	if repository.persisted == nil {
+		t.Fatal("order was not persisted when email enqueue failed")
+	}
+}
+
+func TestCreateEmailEnqueueSuccessSetsQueuedStatus(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	productID := uuid.New()
+	repository := validRepository(customerID, productID, 10_000_000)
+	spy := &enqueueSpy{} // no error → success
+
+	order, err := newServiceWithConfirmation(repository, spy).Create(context.Background(), validInput(customerID, productID))
+
+	if err != nil {
+		t.Fatalf("Create() error = %v", err)
+	}
+	if order.ConfirmationEmailStatus != "queued" {
+		t.Fatalf("ConfirmationEmailStatus = %q, want \"queued\"", order.ConfirmationEmailStatus)
+	}
+	if spy.calls != 1 {
+		t.Fatalf("EnqueueOrderConfirmation called %d times, want 1", spy.calls)
+	}
+}
+

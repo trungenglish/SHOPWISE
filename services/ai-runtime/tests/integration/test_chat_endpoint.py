@@ -8,8 +8,11 @@ from src.models.schemas import CatalogProduct
 class FakeProvider:
     async def chat_completion(self, **_kwargs) -> str:
         return (
-            '{"type":"question","message":"What is your budget?",'
-            '"reasoning":null,"selections":null}'
+            '{"type":"question","message":"What games do you play?",'
+            '"reasoning":null,"selections":null,"question":{"mode":"single",'
+            '"options":["AAA games","Esports","Casual games"],'
+            '"free_text_allowed":true,"input_label":"Your games",'
+            '"input_placeholder":"Name a game","submit_label":"Continue"}}'
         )
 
 
@@ -37,10 +40,12 @@ def test_chat_endpoint_accepts_history_and_returns_agent_envelope():
 
     app.dependency_overrides.clear()
     assert response.status_code == 200
-    assert response.json() == {
-        "type": "question",
-        "message": "What is your budget?",
-    }
+    body = response.json()
+    assert body["type"] == "question"
+    assert body["message"] == "What games do you play?"
+    assert body["schema_version"] == "1.1"
+    assert body["question"]["mode"] == "single"
+    assert len(body["question"]["options"]) == 3
 
 
 def test_chat_stream_endpoint_uses_named_sse_events():
@@ -59,4 +64,25 @@ def test_chat_stream_endpoint_uses_named_sse_events():
     app.dependency_overrides.clear()
     assert response.status_code == 200
     assert "event: token" in response.text
+    assert "event: ui_operation" in response.text
+    assert "event: envelope" in response.text
     assert "event: done" in response.text
+
+
+class FailingGreetingProvider:
+    async def chat_completion(self, **_kwargs) -> str:
+        raise RuntimeError("provider unavailable")
+
+
+def test_greeting_endpoint_returns_localized_fallback_without_failing_dashboard():
+    app.dependency_overrides[get_provider] = lambda: FailingGreetingProvider()
+    client = TestClient(app)
+
+    response = client.post(
+        "/api/v1/greeting",
+        json={"locale": "vi-VN", "display_name": "Quan", "recent_interests": []},
+    )
+
+    app.dependency_overrides.clear()
+    assert response.status_code == 200
+    assert response.json() == {"message": "Chào Quan! 👋 Hôm nay mình có thể giúp gì cho bạn?"}

@@ -90,7 +90,7 @@ func (h *Handler) prepareChatRequest(c *gin.Context) (uuid.UUID, []byte, bool) {
 		return uuid.Nil, nil, false
 	}
 
-	session, ok := h.getOwnedSession(c, sessionID)
+	_, ok := h.getOwnedSession(c, sessionID)
 	if !ok {
 		return uuid.Nil, nil, false
 	}
@@ -100,23 +100,31 @@ func (h *Handler) prepareChatRequest(c *gin.Context) (uuid.UUID, []byte, bool) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid request body"})
 		return uuid.Nil, nil, false
 	}
+	payload, ok := h.prepareAIChatPayload(c, sessionID, request.Message)
+	return sessionID, payload, ok
+}
 
+func (h *Handler) prepareAIChatPayload(
+	c *gin.Context,
+	sessionID uuid.UUID,
+	message string,
+) ([]byte, bool) {
 	userMessage := &domain.SessionMessage{
 		ID:        uuid.New(),
 		SessionID: sessionID,
 		Role:      "user",
-		Content:   request.Message,
+		Content:   message,
 		CreatedAt: time.Now().UTC(),
 	}
 	if err := h.service.AddMessage(c.Request.Context(), userMessage); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to save message"})
-		return uuid.Nil, nil, false
+		return nil, false
 	}
 
-	session, err = h.service.GetSession(c.Request.Context(), sessionID)
+	session, err := h.service.GetSession(c.Request.Context(), sessionID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to load session history"})
-		return uuid.Nil, nil, false
+		return nil, false
 	}
 	messages := make([]aiChatMessage, 0, len(session.Messages))
 	for _, message := range session.Messages {
@@ -132,9 +140,9 @@ func (h *Handler) prepareChatRequest(c *gin.Context) (uuid.UUID, []byte, bool) {
 	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to encode AI request"})
-		return uuid.Nil, nil, false
+		return nil, false
 	}
-	return sessionID, payload, true
+	return payload, true
 }
 
 func sessionProductIDs(messages []domain.SessionMessage) []string {
@@ -224,6 +232,7 @@ func (h *Handler) ChatStream(c *gin.Context) {
 
 	var message strings.Builder
 	var decision json.RawMessage
+	var fullEnvelope json.RawMessage
 	var decisionEvent string
 	failed := false
 	scanner := bufio.NewScanner(response.Body)
@@ -244,13 +253,26 @@ func (h *Handler) ChatStream(c *gin.Context) {
 			if json.Unmarshal([]byte(data), &token) == nil {
 				message.WriteString(token.Text)
 			}
-		case "recommendation", "comparison", "checkout_ready":
+		case "recommendation", "comparison", "offer_comparison", "checkout_ready":
 			decision = json.RawMessage(data)
 			decisionEvent = event
+		case "envelope":
+			fullEnvelope = json.RawMessage(data)
 		case "error":
 			failed = true
 		case "done":
 			if !failed && message.Len() > 0 {
+				if len(fullEnvelope) > 0 {
+					var stored agentEnvelope
+					if json.Unmarshal(fullEnvelope, &stored) == nil && validEnvelope(stored) {
+						if h.persistAssistantMessage(
+							c, sessionID, stored.Message, fullEnvelope,
+						) != nil {
+							writeBlock([]string{"event: error", `data: {"message":"failed to save AI response"}`})
+						}
+						break
+					}
+				}
 				envelope := agentEnvelope{Type: "question", Message: message.String()}
 				if len(decision) > 0 {
 					envelope.Type = decisionEvent
@@ -301,7 +323,7 @@ func validEnvelope(envelope agentEnvelope) bool {
 	if envelope.Type == "question" {
 		return true
 	}
-	return (envelope.Type == "recommendation" || envelope.Type == "comparison" ||
+	return (envelope.Type == "recommendation" || envelope.Type == "comparison" || envelope.Type == "offer_comparison" ||
 		envelope.Type == "checkout_ready") &&
 		len(envelope.Decision) > 0
 }

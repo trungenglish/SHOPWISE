@@ -6,6 +6,15 @@
 
 This endpoint accepts a conversation history and streams back the LLM's response using Server-Sent Events (SSE). It handles tool calling orchestration internally.
 
+## Adaptive shopping additions (v1.1)
+
+Response envelopes use `schema_version: "1.1"`; question submissions retain
+`"1.0"`. A question carries 2--4 backend-safe option labels, mode, and
+localized text-control labels. `offer_comparison` carries a backend-hydrated
+product, active bundle and scheduled campaign. `checkout_ready` can reference
+only product and retailer-offer IDs returned by those tools. `POST /greeting`
+returns an ephemeral `{ "message": string }` response and persists nothing.
+
 ### Request Body (`ChatRequest`)
 ```json
 {

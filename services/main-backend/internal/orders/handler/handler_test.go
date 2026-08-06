@@ -97,7 +97,7 @@ func TestCreateCheckoutReturnsServerCalculatedOrder(t *testing.T) {
 	if response.CustomerName != "Nguyen Van A" || response.CustomerPhone != "0912345678" {
 		t.Fatalf("customer snapshot = %q/%q", response.CustomerName, response.CustomerPhone)
 	}
-	if response.SubtotalAmount != 200_000 || response.TaxAmount != 16_000 || response.TotalAmount != 216_000 {
+	if response.SubtotalAmount != 200_000 || response.TaxAmount != 0 || response.TotalAmount != 200_000 {
 		t.Fatalf("subtotal/tax/total = %d/%d/%d", response.SubtotalAmount, response.TaxAmount, response.TotalAmount)
 	}
 	if len(response.Items) != 1 || response.Items[0].UnitPrice != 100_000 {

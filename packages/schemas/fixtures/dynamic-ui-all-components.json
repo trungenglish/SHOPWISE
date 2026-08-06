@@ -1,0 +1,234 @@
+{
+  "schema_version": "1.0",
+  "turn_id": "00000000-0000-4000-8000-000000000100",
+  "revision": 1,
+  "conversation_state": "collecting_requirements",
+  "ui_state": { "status": "ready" },
+  "ui_operations": [
+    {
+      "id": "00000000-0000-4000-8000-000000000101",
+      "sequence": 0,
+      "operation": "append",
+      "target": "surface",
+      "component": {
+        "id": "00000000-0000-4000-8000-000000000001",
+        "type": "page",
+        "props": { "title": "Dynamic UI fixture" },
+        "children": [
+          {
+            "id": "00000000-0000-4000-8000-000000000002",
+            "type": "section",
+            "props": { "title": "Section" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000003",
+            "type": "card",
+            "props": { "title": "Card" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000004",
+            "type": "grid",
+            "props": { "title": "Grid" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000005",
+            "type": "tabs",
+            "props": { "title": "Tabs" },
+            "interaction": { "event": "change", "action": "ui.select_tab" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000006",
+            "type": "modal",
+            "props": { "title": "Modal" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000007",
+            "type": "drawer",
+            "props": { "title": "Drawer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000008",
+            "type": "timeline",
+            "props": { "title": "Timeline" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000009",
+            "type": "product_card",
+            "props": { "title": "Product card", "products": [] }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000010",
+            "type": "product_carousel",
+            "props": { "title": "Product carousel", "products": [] }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000011",
+            "type": "product_comparison",
+            "props": { "title": "Product comparison", "products": [] }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000012",
+            "type": "specification_table",
+            "props": { "title": "Specifications" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000013",
+            "type": "promotion_banner",
+            "props": { "message": "Promotion" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000014",
+            "type": "warranty_information",
+            "props": { "message": "Warranty" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000015",
+            "type": "inventory_status",
+            "props": { "message": "In stock" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000016",
+            "type": "checkout_summary",
+            "props": { "message": "Checkout summary", "products": [] }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000017",
+            "type": "chat_message",
+            "props": { "message": "Chat message" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000018",
+            "type": "thinking_indicator",
+            "props": {}
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000019",
+            "type": "recommendation_explanation",
+            "props": { "message": "Recommendation explanation" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000020",
+            "type": "decision_reasoning",
+            "props": { "message": "Decision reasoning" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000021",
+            "type": "confidence_indicator",
+            "props": { "value": 90 }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000022",
+            "type": "button",
+            "props": { "label": "Submit" },
+            "interaction": { "event": "submit", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000023",
+            "type": "quick_reply",
+            "props": { "label": "Quick reply" },
+            "interaction": { "event": "click", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000024",
+            "type": "select",
+            "props": { "label": "Select", "options": [] },
+            "interaction": { "event": "change", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000025",
+            "type": "radio_group",
+            "props": { "label": "Radio group", "options": [] },
+            "interaction": { "event": "submit", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000026",
+            "type": "checkbox",
+            "props": { "label": "Checkbox" },
+            "interaction": { "event": "change", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000027",
+            "type": "text_input",
+            "props": { "label": "Text input" },
+            "interaction": { "event": "change", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000028",
+            "type": "number_input",
+            "props": { "label": "Number input" },
+            "interaction": { "event": "change", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000029",
+            "type": "budget_slider",
+            "props": { "label": "Budget slider" },
+            "interaction": { "event": "change", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000030",
+            "type": "store_picker",
+            "props": { "label": "Store picker", "options": [] },
+            "interaction": { "event": "change", "action": "question.answer" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000031",
+            "type": "add_to_comparison",
+            "props": { "label": "Add to comparison" },
+            "interaction": { "event": "click", "action": "comparison.add" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000032",
+            "type": "remove_product",
+            "props": { "label": "Remove product" },
+            "interaction": { "event": "click", "action": "comparison.remove" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000033",
+            "type": "save_decision",
+            "props": { "label": "Save decision" },
+            "interaction": { "event": "click", "action": "decision.save" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000034",
+            "type": "resume_conversation",
+            "props": { "label": "Resume conversation" },
+            "interaction": { "event": "click", "action": "session.resume" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000035",
+            "type": "checkout_readiness",
+            "props": { "label": "Prepare checkout" },
+            "interaction": { "event": "click", "action": "checkout.prepare" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000036",
+            "type": "retry",
+            "props": { "label": "Retry" },
+            "interaction": { "event": "click", "action": "error.retry" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000037",
+            "type": "continue_with_cached_data",
+            "props": { "label": "Use cached data" },
+            "interaction": { "event": "click", "action": "error.use_cache" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000038",
+            "type": "modify_search",
+            "props": { "label": "Modify search" },
+            "interaction": { "event": "click", "action": "search.modify" }
+          },
+          {
+            "id": "00000000-0000-4000-8000-000000000039",
+            "type": "alternative_recommendation",
+            "props": { "label": "Alternative" },
+            "interaction": {
+              "event": "click",
+              "action": "recommendation.select_alternative"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

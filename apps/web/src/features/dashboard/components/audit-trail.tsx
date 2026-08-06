@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   RotateCw,
   HelpCircle,
@@ -8,6 +8,9 @@ import {
   Sparkles,
 } from "lucide-react";
 import { AuditLog } from "../types";
+import { ClarificationCard } from "@/components/dynamic-uirenderer";
+import type { AgentEnvelope } from "@/api/decision-memory";
+import type { InteractionRequest } from "@shopwise/protocols";
 
 interface AuditTrailProps {
   logs: AuditLog[];
@@ -17,6 +20,9 @@ interface AuditTrailProps {
   onReplay: () => void;
   suggestions?: string[];
   hasMenuButton?: boolean;
+	hideComposer?: boolean;
+	activeQuestion?: Extract<AgentEnvelope, { type: "question" }> | null;
+	onInteraction?: (request: InteractionRequest) => void;
 }
 
 export default function AuditTrail({
@@ -27,8 +33,15 @@ export default function AuditTrail({
   onReplay,
   suggestions,
   hasMenuButton,
+	hideComposer,
+	activeQuestion,
+	onInteraction,
 }: AuditTrailProps) {
-  const [inputValue, setInputValue] = useState("");
+	const [inputValue, setInputValue] = useState("");
+	const newestRef = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		newestRef.current?.scrollIntoView({ block: "end" });
+	}, [logs, activeQuestion]);
 
   const handleSubmit = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -41,7 +54,9 @@ export default function AuditTrail({
   return (
     <section className="glass-panel border-outline-variant/15 flex h-screen w-[320px] shrink-0 flex-col border-r select-none">
       {/* Header */}
-      <div className={`border-outline-variant/20 flex items-center justify-between border-b p-4 pt-6 ${hasMenuButton ? "pl-16" : ""}`}>
+      <div
+        className={`border-outline-variant/20 flex items-center justify-between border-b p-4 pt-6 ${hasMenuButton ? "pl-16" : ""}`}
+      >
         <h2 className="font-display text-on-surface flex items-center gap-1.5 text-sm font-semibold tracking-wide uppercase">
           <Sparkles size={14} className="text-[#4F7CFF]" />
           Audit Trail
@@ -58,11 +73,11 @@ export default function AuditTrail({
         <button
           onClick={onReplay}
           disabled={isLoading}
-          className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#4F7CFF]/20 bg-[#4F7CFF]/5 px-4 py-3 font-mono text-[11px] font-bold text-[#4F7CFF] shadow-[0_0_15px_rgba(79,124,255,0.05)] transition-[color,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:border-[#4F7CFF]/40 hover:bg-[#4F7CFF]/15 disabled:cursor-not-allowed disabled:opacity-50"
+          className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-[#4F7CFF]/20 bg-[#4F7CFF]/5 px-4 py-3 font-mono text-[11px] font-bold text-[#4F7CFF] shadow-[0_0_15px_rgba(79,124,255,0.05)] transition-[color,background-color,border-color] duration-200 ease-out hover:border-[#4F7CFF]/40 hover:bg-[#4F7CFF]/15 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <RotateCw
             size={14}
-            className={`transition-transform duration-200 ease-[var(--ease-out)] group-hover:rotate-180 ${isLoading ? "animate-spin" : ""}`}
+            className={`transition-transform duration-200 ease-out group-hover:rotate-180 ${isLoading ? "animate-spin" : ""}`}
           />
           REPLAY DECISION FLOW
         </button>
@@ -81,7 +96,7 @@ export default function AuditTrail({
 
         {/* Logs Timeline */}
         <div className="relative mt-2 flex flex-1 flex-col pl-1">
-          <div className="bg-outline-variant/20 absolute top-[10px] bottom-[15px] left-[7px] w-0.5"></div>
+          <div className="bg-outline-variant/20 absolute top-2.5 bottom-3.75 left-1.75 w-0.5"></div>
 
           <div className="flex flex-col gap-5">
             {logs.map((log, index) => {
@@ -94,7 +109,7 @@ export default function AuditTrail({
                   className="group relative flex flex-col gap-1 pl-6"
                 >
                   {/* Status Node */}
-                  <div className="absolute top-[2px] left-0 z-10 flex items-center justify-center">
+                  <div className="absolute top-0.5 left-0 z-10 flex items-center justify-center">
                     {isDone ? (
                       <CheckCircle2
                         size={15}
@@ -106,7 +121,7 @@ export default function AuditTrail({
                         className="animate-spin text-[#4F7CFF] drop-shadow-[0_0_8px_rgba(79,124,255,0.8)]"
                       />
                     ) : (
-                      <div className="bg-surface-low border-outline-variant/60 h-[11px] w-[11px] rounded-full border-2"></div>
+                      <div className="bg-surface-low border-outline-variant/60 h-2.75 w-2.75 rounded-full border-2"></div>
                     )}
                   </div>
 
@@ -125,55 +140,62 @@ export default function AuditTrail({
                 </div>
               );
             })}
+			{activeQuestion ? (
+			  <div ref={newestRef} className="pl-1">
+				<ClarificationCard envelope={activeQuestion} onInteraction={onInteraction} />
+			  </div>
+			) : null}
           </div>
         </div>
       </div>
 
       {/* Input section */}
-      <div className="border-outline-variant/15 bg-surface-lowest border-t p-4 flex flex-col gap-3">
-        {suggestions && suggestions.length > 0 && (
-          <div className="flex w-full gap-2 overflow-x-auto pb-1 scrollbar-hide snap-x">
-            {suggestions.map((s, idx) => (
-              <button
-                key={idx}
-                onClick={() => onInjectConstraint(s)}
-                className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex cursor-pointer shrink-0 items-center gap-2 rounded-full border px-3 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-[color,transform,background-color,border-color] duration-200 ease-[var(--ease-out)] hover:scale-[1.03] active:scale-[0.97] snap-start max-md:hover:scale-100"
-              >
-                <Sparkles size={11} />
-                <span className="whitespace-nowrap">{s}</span>
-              </button>
-            ))}
-          </div>
-        )}
+      {hideComposer ? null : (
+        <div className="border-outline-variant/15 bg-surface-lowest flex flex-col gap-3 border-t p-4">
+          {suggestions && suggestions.length > 0 && (
+            <div className="scrollbar-hide flex w-full snap-x gap-2 overflow-x-auto pb-1">
+              {suggestions.map((suggestion) => (
+                <button
+                  className="floating-chip bg-primary/10 border-primary/20 hover:border-primary/50 flex shrink-0 cursor-pointer snap-start items-center gap-2 rounded-full border px-3 py-1.5 text-left font-mono text-[10px] font-bold tracking-wide text-[#4F7CFF] backdrop-blur-md transition-[color,transform,background-color,border-color] duration-200 ease-out hover:scale-[1.03] active:scale-[0.97] max-md:hover:scale-100"
+                  key={suggestion}
+                  onClick={() => onInjectConstraint(suggestion)}
+                >
+                  <Sparkles size={11} />
+                  <span className="whitespace-nowrap">{suggestion}</span>
+                </button>
+              ))}
+            </div>
+          )}
 
-        <form
-          onSubmit={handleSubmit}
-          className="bg-surface border-outline-variant/30 flex items-center rounded-lg border p-1.5 transition-[border-color,box-shadow] duration-200 ease-[var(--ease-out)] focus-within:border-[#4F7CFF]/70 focus-within:ring-1 focus-within:ring-[#4F7CFF]/30"
-        >
-          <input
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            disabled={isLoading}
-            className="text-on-surface placeholder:text-on-surface-variant/40 w-full border-none bg-transparent px-2 py-1.5 font-sans text-xs outline-none focus:ring-0 focus:outline-none"
-            placeholder="Add new constraint (e.g., OLED screen, under 80.000.000 ₫)..."
-            type="text"
-          />
-          <button
-            type="submit"
-            disabled={isLoading || !inputValue.trim()}
-            className="hover:bg-surface-high flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-[#4F7CFF] transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+          <form
+            onSubmit={handleSubmit}
+            className="bg-surface border-outline-variant/30 flex items-center rounded-lg border p-1.5 transition-[border-color,box-shadow] duration-200 ease-out focus-within:border-[#4F7CFF]/70 focus-within:ring-1 focus-within:ring-[#4F7CFF]/30"
           >
-            {isLoading ? (
-              <Loader2
-                size={16}
-                className="text-on-surface-variant animate-spin"
-              />
-            ) : (
-              <Send size={15} />
-            )}
-          </button>
-        </form>
-      </div>
+            <input
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              disabled={isLoading}
+              className="text-on-surface placeholder:text-on-surface-variant/40 w-full border-none bg-transparent px-2 py-1.5 font-sans text-xs outline-none focus:ring-0 focus:outline-none"
+              placeholder="Add new constraint (e.g., OLED screen, under 80.000.000 ₫)..."
+              type="text"
+            />
+            <button
+              type="submit"
+              disabled={isLoading || !inputValue.trim()}
+              className="hover:bg-surface-high flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-[#4F7CFF] transition-colors disabled:opacity-30 disabled:hover:bg-transparent"
+            >
+              {isLoading ? (
+                <Loader2
+                  size={16}
+                  className="text-on-surface-variant animate-spin"
+                />
+              ) : (
+                <Send size={15} />
+              )}
+            </button>
+          </form>
+        </div>
+      )}
     </section>
   );
 }

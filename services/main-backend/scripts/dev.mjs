@@ -2,6 +2,7 @@ import { spawn, spawnSync } from "node:child_process";
 import { join } from "node:path";
 
 const rootDir = join(import.meta.dirname, "..");
+const withGoEnv = join(rootDir, "scripts/with-go-env.mjs");
 
 const startDependencies = () => {
   const result = spawnSync(
@@ -23,20 +24,38 @@ const main = () => {
   console.log("Starting postgres and redis...");
   startDependencies();
 
-  const server = spawn(
+  const migration = spawnSync(
     process.execPath,
-    [join(rootDir, "scripts/with-go-env.mjs"), "run", "./cmd/retail"],
+    [withGoEnv, "run", "./cmd/retail", "--migrate"],
     {
       cwd: rootDir,
       stdio: "inherit",
     }
   );
 
+  if (migration.status !== 0) {
+    process.exit(migration.status ?? 1);
+  }
+
+  const server = spawn(
+    process.execPath,
+    [withGoEnv, "run", "./cmd/retail"],
+    {
+      cwd: rootDir,
+      stdio: "inherit",
+    }
+  );
+  const worker = spawn(process.execPath, [withGoEnv, "run", "./cmd/worker"], {
+    cwd: rootDir,
+    stdio: "inherit",
+  });
+
   const handleExit = function handleExit(code) {
     process.exit(code ?? 1);
   };
 
   server.on("exit", handleExit);
+  worker.on("exit", handleExit);
 };
 
 main();

@@ -30,6 +30,11 @@ type Service struct {
 	repo Repository
 }
 
+type interactionRepository interface {
+	BeginInteraction(context.Context, *domain.SessionInteraction) (*domain.SessionInteraction, bool, error)
+	FinishInteraction(context.Context, uuid.UUID, uuid.UUID, string, []byte) error
+}
+
 func NewService(repo Repository) *Service {
 	return &Service{repo: repo}
 }
@@ -122,4 +127,29 @@ func (s *Service) RestoreSession(ctx context.Context, id uuid.UUID, clientTimest
 
 func (s *Service) AddMessage(ctx context.Context, msg *domain.SessionMessage) error {
 	return s.repo.AddMessage(ctx, msg)
+}
+
+func (s *Service) BeginInteraction(
+	ctx context.Context,
+	interaction *domain.SessionInteraction,
+) (*domain.SessionInteraction, bool, error) {
+	repository, ok := s.repo.(interactionRepository)
+	if !ok {
+		return nil, false, fmt.Errorf("interaction persistence is unavailable")
+	}
+	return repository.BeginInteraction(ctx, interaction)
+}
+
+func (s *Service) FinishInteraction(
+	ctx context.Context,
+	sessionID uuid.UUID,
+	interactionID uuid.UUID,
+	status string,
+	response []byte,
+) error {
+	repository, ok := s.repo.(interactionRepository)
+	if !ok {
+		return fmt.Errorf("interaction persistence is unavailable")
+	}
+	return repository.FinishInteraction(ctx, sessionID, interactionID, status, response)
 }

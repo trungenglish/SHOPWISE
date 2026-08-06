@@ -73,3 +73,18 @@ func TestLoadUsesZaloCredentials(t *testing.T) {
 		t.Fatal("Zalo credentials were not loaded from the environment")
 	}
 }
+
+func TestLoadKeepsPhongVuConnectorDisabledByDefault(t *testing.T) {
+	t.Setenv("DATABASE_URL", "postgres://example")
+	t.Setenv("REDIS_URL", "redis://example")
+	t.Setenv("JWT_SECRET", "test-secret")
+	t.Setenv("PHONGVU_CONNECTOR_ENABLED", "false")
+
+	configuration, err := Load()
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+	if configuration.PhongVuConnectorEnabled {
+		t.Fatal("PhongVuConnectorEnabled = true, want fail-closed default")
+	}
+}
