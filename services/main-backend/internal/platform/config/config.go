@@ -27,9 +27,9 @@ type Config struct {
 	GoogleRedirect string
 	WebAppURL      string
 
-	LLMProvider string
-	LLMAPIKey   string
-	LLMModel    string
+	AIRuntimeURL string
+	ZaloOAID     string
+	ZaloAPIToken string
 
 	SMTPHost string
 	SMTPPort string
@@ -43,7 +43,8 @@ type Config struct {
 	LangfuseSecretKey string
 	LangfuseHost      string
 
-	CheckoutAuthBypass bool
+	CheckoutAuthBypass      bool
+	PhongVuConnectorEnabled bool
 }
 
 func Load() (*Config, error) {
@@ -61,6 +62,10 @@ func Load() (*Config, error) {
 	if err != nil {
 		return nil, fmt.Errorf("CHECKOUT_AUTH_BYPASS: %w", err)
 	}
+	phongVuConnectorEnabled, err := strconv.ParseBool(getEnv("PHONGVU_CONNECTOR_ENABLED", "false"))
+	if err != nil {
+		return nil, fmt.Errorf("PHONGVU_CONNECTOR_ENABLED: %w", err)
+	}
 	ginMode := getEnv("GIN_MODE", "debug")
 
 	cfg := &Config{
@@ -77,9 +82,9 @@ func Load() (*Config, error) {
 		GoogleSecret:   os.Getenv("GOOGLE_CLIENT_SECRET"),
 		GoogleRedirect: getEnv("GOOGLE_REDIRECT_URI", "http://localhost:18080/api/v1/identity/google/callback"),
 		WebAppURL:      getEnv("WEB_APP_URL", "http://localhost:3001"),
-		LLMProvider:    getEnv("LLM_PROVIDER", "openai"),
-		LLMAPIKey:      os.Getenv("LLM_API_KEY"),
-		LLMModel:       getEnv("LLM_MODEL", "gpt-4o-mini"),
+		AIRuntimeURL:   getEnv("AI_RUNTIME_URL", "http://localhost:8000"),
+		ZaloOAID:       os.Getenv("ZALO_OA_ID"),
+		ZaloAPIToken:   os.Getenv("ZALO_API_TOKEN"),
 		SMTPHost:       getEnv("SMTP_HOST", "localhost"),
 		SMTPPort:       getEnv("SMTP_PORT", "1025"),
 		SMTPUser:       os.Getenv("SMTP_USER"),
@@ -91,7 +96,8 @@ func Load() (*Config, error) {
 		LangfuseSecretKey: os.Getenv("LANGFUSE_SECRET_KEY"),
 		LangfuseHost:      getEnv("LANGFUSE_HOST", "https://cloud.langfuse.com"),
 
-		CheckoutAuthBypass: checkoutAuthBypass && strings.EqualFold(ginMode, "debug"),
+		CheckoutAuthBypass:      checkoutAuthBypass && strings.EqualFold(ginMode, "debug"),
+		PhongVuConnectorEnabled: phongVuConnectorEnabled,
 	}
 
 	origins := getEnv("ALLOWED_ORIGINS", "http://localhost:3001")

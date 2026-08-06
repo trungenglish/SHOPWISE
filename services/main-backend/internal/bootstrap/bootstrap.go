@@ -11,8 +11,14 @@ import (
 	"syscall"
 	"time"
 
+	"shopwise/retail/internal/accessories"
+	"shopwise/retail/internal/accessories/phongvu"
 	adminhandler "shopwise/retail/internal/administration/handler"
 	adminusecase "shopwise/retail/internal/administration/usecase"
+	cataloghandler "shopwise/retail/internal/catalog/handler"
+	decisionmemoryhandler "shopwise/retail/internal/decision_memory/handler"
+	decisionmemorypostgres "shopwise/retail/internal/decision_memory/repository/postgres"
+	decisionmemoryusecase "shopwise/retail/internal/decision_memory/usecase"
 	fileshandler "shopwise/retail/internal/files/handler"
 	localstorage "shopwise/retail/internal/files/repository/local"
 	filesusecase "shopwise/retail/internal/files/usecase"
@@ -30,11 +36,16 @@ import (
 	"shopwise/retail/internal/platform/logger"
 	"shopwise/retail/internal/platform/middleware"
 	"shopwise/retail/internal/platform/router"
+	resumesessionhandler "shopwise/retail/internal/resume_session/handler"
+	zaloprovider "shopwise/retail/internal/resume_session/provider/zalo"
+	resumesessionpostgres "shopwise/retail/internal/resume_session/repository/postgres"
+	resumesessionusecase "shopwise/retail/internal/resume_session/usecase"
+	storeshandler "shopwise/retail/internal/stores/handler"
 	usershandler "shopwise/retail/internal/users/handler"
 	userpostgres "shopwise/retail/internal/users/repository/postgres"
 	usersusecase "shopwise/retail/internal/users/usecase"
-
-	langfuse "github.com/git-hulk/langfuse-go"
+	"shopwise/retail/internal/promotions"
+	promotionsrepo "shopwise/retail/internal/promotions/repository"
 )
 
 // Run initializes and starts the HTTP server.
@@ -64,6 +75,8 @@ func Run() error {
 	userRepo := userpostgres.NewRepository(db)
 	identityRepo := identitypostgres.NewRepository(db)
 	orderRepo := orderspostgres.NewRepository(db)
+	decisionRepo := decisionmemorypostgres.NewRepository(db)
+	accessoryRepo := accessories.NewRepository(db)
 
 	jwtSvc := identityusecase.NewJWTService(cfg.JWTSecret, cfg.JWTAccessTTL)
 	googleSvc := identityusecase.NewGoogleOAuthService(cfg)
@@ -83,15 +96,6 @@ func Run() error {
 		return fmt.Errorf("failed to init file storage: %w", err)
 	}
 
-	useStubLLM := cfg.LLMAPIKey == ""
-	if !useStubLLM {
-		var lfClient *langfuse.Langfuse
-		if cfg.LangfusePublicKey != "" && cfg.LangfuseSecretKey != "" {
-			lfClient = langfuse.NewClient(cfg.LangfuseHost, cfg.LangfusePublicKey, cfg.LangfuseSecretKey)
-			defer lfClient.Close()
-		}
-	}
-
 	guestRateLimit := middleware.NewIPRateLimiter(30, time.Minute).Middleware()
 
 	userSvc := usersusecase.NewService(userRepo, jobClient, log).WithAccountDeletion(usersusecase.AccountDeletionDeps{
@@ -101,14 +105,38 @@ func Run() error {
 		Storage:  fileStorage,
 	})
 	userH := usershandler.NewHandler(userSvc)
-	orderH := ordershandler.NewHandler(ordersusecase.NewService(orderRepo, orderRepo, orderRepo, orderRepo))
+	phongVuClient := phongvu.NewClient(http.DefaultClient, 10*time.Second)
+	orderService := ordersusecase.NewService(orderRepo, orderRepo, orderRepo, orderRepo).
+		WithRetailerOffers(orderRepo, phongvu.NewOfferRefresher(phongVuClient, cfg.PhongVuConnectorEnabled, time.Now), orderRepo).
+		WithOrderConfirmation(jobClient)
+	orderH := ordershandler.NewHandler(orderService)
 	if cfg.CheckoutAuthBypass {
 		orderH.WithDevelopmentAuthBypass()
 	}
 
+	promotionsRepo := promotionsrepo.NewPostgresRepository(db)
+	voucherGen := promotions.NewLocalVoucherGenerator()
+	promotionsSvc := promotions.NewService(promotionsRepo, voucherGen)
+	promotionsH := promotions.NewHandler(promotionsSvc)
+
+	orderH.WithPromotionSink(promotionsSvc)
+
 	healthH := health.NewHandler(db, redisClient)
 	filesH := fileshandler.NewHandler(filesusecase.NewService())
 	adminH := adminhandler.NewHandler(adminusecase.NewService(log))
+
+	decisionSvc := decisionmemoryusecase.NewService(decisionRepo)
+	decisionH := decisionmemoryhandler.NewHandler(decisionSvc, cfg.AIRuntimeURL)
+	accessoryH := accessories.NewHandler(accessories.NewService(accessoryRepo, time.Now))
+
+	resumeRepo := resumesessionpostgres.NewRepository(db)
+	resumeJWTSvc := resumesessionusecase.NewJWTService(cfg.JWTSecret)
+
+	zaloProv := zaloprovider.NewProvider(cfg.ZaloOAID, cfg.ZaloAPIToken)
+	retryZalo := resumesessionusecase.NewRetryableProvider(zaloProv, 1)
+
+	resumeSvc := resumesessionusecase.NewService(resumeRepo, resumeJWTSvc, decisionSvc, userSvc, retryZalo)
+	resumeH := resumesessionhandler.NewHandler(resumeSvc)
 
 	engine := router.New(router.Dependencies{
 		Config: cfg,
@@ -126,7 +154,23 @@ func Run() error {
 
 	usershandler.RegisterRoutes(v1.Group("/users"), userH, jwtSvc)
 	ordershandler.RegisterRoutes(v1.Group("/checkout"), orderH, jwtSvc)
+	ordershandler.RegisterListRoutes(v1.Group("/orders"), orderH, jwtSvc)
 	fileshandler.RegisterRoutes(v1.Group("/files"), filesH)
+
+	catalogH := cataloghandler.NewHandler(db)
+	cataloghandler.RegisterRoutes(v1.Group("/products"), catalogH)
+	accessories.RegisterRoutes(v1.Group("/accessories"), accessoryH)
+
+	storesH := storeshandler.NewHandler()
+	storeshandler.RegisterRoutes(v1.Group("/stores"), storesH)
+
+	decisionmemoryhandler.RegisterRoutes(v1.Group("/sessions"), decisionH, jwtSvc)
+	resumesessionhandler.RegisterRoutes(v1.Group("/session"), resumeH)
+
+	promotionsH.RegisterRoutes(v1)
+	if cfg.GinMode == "debug" {
+		promotionsH.RegisterDevRoutes(v1)
+	}
 
 	adminGroup := v1.Group("/admin")
 	adminGroup.Use(guestRateLimit)
@@ -206,6 +250,26 @@ func Migrate() error {
 	log.Info("running order migrations")
 	if err := orderspostgres.Migrate(db); err != nil {
 		return fmt.Errorf("failed to migrate orders: %w", err)
+	}
+
+	log.Info("running decision memory migrations")
+	if err := decisionmemorypostgres.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate decision memory: %w", err)
+	}
+
+	log.Info("running accessory catalog migrations")
+	if err := accessories.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate accessory catalog: %w", err)
+	}
+
+	log.Info("running resume session migrations")
+	if err := resumesessionpostgres.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate resume session: %w", err)
+	}
+
+	log.Info("running promotions migrations")
+	if err := promotionsrepo.Migrate(db); err != nil {
+		return fmt.Errorf("failed to migrate promotions: %w", err)
 	}
 
 	log.Info("migrations completed successfully")

@@ -1,0 +1,2076 @@
+[
+  {
+    "id": "7cc26fb0-ace4-4e35-b6c5-fc3e13623546",
+    "sku": "ASUS-0001",
+    "name": "ASUS ROG Strix G16 (RTX 5070)",
+    "brand": "ASUS",
+    "category": "gaming",
+    "price": 1499.0,
+    "specifications": {
+      "cpu": "Core Ultra 9 275HX",
+      "cpu_cores": 16,
+      "gpu": "RTX 5070",
+      "vram_gb": 8,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 165,
+      "panel_type": "IPS",
+      "color_accuracy": "72% NTSC",
+      "weight_kg": 2.5,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "value"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "verified",
+      "url": "https://www.newegg.com/asus-rog-strix-g16-16-geforce-rtx-5070-laptop-gpu-intel-core-ultra-9-275hx-wqxga-32gb-memory-1tb-pcie-4-0-nvme-m-2-ssd/p/N82E16834236594",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20ROG%20Strix%20G16%20%28RTX%205070%29"
+    }
+  },
+  {
+    "id": "a74106e6-d1b8-4c34-94ab-382dfb0d3e39",
+    "sku": "ASUS-0002",
+    "name": "ASUS ROG Strix G16 (RTX 5070 Ti/5080)",
+    "brand": "ASUS",
+    "category": "gaming",
+    "price": 1999.0,
+    "specifications": {
+      "cpu": "Core Ultra 9 290HX Plus",
+      "cpu_cores": 24,
+      "gpu": "RTX 5080",
+      "vram_gb": 12,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 300,
+      "panel_type": "IPS",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.6,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "balanced"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "verified",
+      "url": "https://www.bestbuy.com/product/asus-rog-strix-g16-16-fhd-165hz-gaming-laptop-amd-ryzen-9-8940hx-16gb-ram-nvidia-geforce-rtx-5070-ti-1tb-ssd-eclipse-gray/JJGGLHJLTS",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20ROG%20Strix%20G16%20%28RTX%205070%20Ti/5080%29"
+    }
+  },
+  {
+    "id": "e31ebe5a-4a98-4c86-bf5a-fdb0939aa5be",
+    "sku": "ASUS-0003",
+    "name": "ASUS ROG Zephyrus G16 (RTX 5070 Ti OLED)",
+    "brand": "ASUS",
+    "category": "gaming",
+    "price": 2199.0,
+    "specifications": {
+      "cpu": "Core Ultra 9 285H",
+      "cpu_cores": 16,
+      "gpu": "RTX 5070 Ti",
+      "vram_gb": 12,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 240,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.85,
+      "battery_life_hrs": 7
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "portable",
+        "premium"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "verified",
+      "url": "https://www.bestbuy.com/product/asus-rog-zephyrus-g16-16-oled-2-5k-240hz-gaming-laptop-intel-core-ultra-9-32gb-ram-nvidia-rtx-5070-ti-12gb-1tb-ssd-eclipse-gray/JJGGLHXFTQ",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20ROG%20Zephyrus%20G16%20%28RTX%205070%20Ti%20OLED%29"
+    }
+  },
+  {
+    "id": "2b82f5d2-c3c1-4185-82e7-0c3fc2f149a2",
+    "sku": "ASUS-0004",
+    "name": "ASUS ROG Strix G16 (RTX 4050)",
+    "brand": "ASUS",
+    "category": "gaming",
+    "price": 999.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7735HS",
+      "cpu_cores": 8,
+      "gpu": "RTX 4050",
+      "vram_gb": 6,
+      "ram_gb": 16,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 144,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.5,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "esports",
+        "indie",
+        "budget"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_placeholder",
+      "url": "https://www.google.com/search?q=ASUS%20ROG%20Strix%20G16%20%28RTX%204050%29%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20ROG%20Strix%20G16%20%28RTX%204050%29"
+    }
+  },
+  {
+    "id": "f91494db-bed2-48d0-9198-1d4398b45b2f",
+    "sku": "ASUS-0005",
+    "name": "ASUS Vivobook Pro 15 OLED",
+    "brand": "ASUS",
+    "category": "creative",
+    "price": 1099.0,
+    "specifications": {
+      "cpu": "Core Ultra 7 155H",
+      "cpu_cores": 16,
+      "gpu": "RTX 4050",
+      "vram_gb": 6,
+      "ram_gb": 16,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "3K",
+      "refresh_rate_hz": 60,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.6,
+      "battery_life_hrs": 8
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "2d",
+        "color-accurate"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_placeholder",
+      "url": "https://www.google.com/search?q=ASUS%20Vivobook%20Pro%2015%20OLED%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20Vivobook%20Pro%2015%20OLED"
+    }
+  },
+  {
+    "id": "278c18b6-05e5-4df9-aa53-d5dc4e9b916a",
+    "sku": "ASUS-0006",
+    "name": "ASUS ProArt Studiobook 16",
+    "brand": "ASUS",
+    "category": "creative",
+    "price": 2499.0,
+    "specifications": {
+      "cpu": "Core Ultra 9 185H",
+      "cpu_cores": 16,
+      "gpu": "RTX 4070",
+      "vram_gb": 8,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "3.2K",
+      "refresh_rate_hz": 60,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.4,
+      "battery_life_hrs": 7
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "video",
+        "3d",
+        "professional"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_placeholder",
+      "url": "https://www.google.com/search?q=ASUS%20ProArt%20Studiobook%2016%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20ProArt%20Studiobook%2016"
+    }
+  },
+  {
+    "id": "86b1f886-686b-4047-820b-efc7636d40df",
+    "sku": "ASUS-0007",
+    "name": "ASUS Zenbook 14 OLED",
+    "brand": "ASUS",
+    "category": "work",
+    "price": 1299.0,
+    "specifications": {
+      "cpu": "Core Ultra 7 155H",
+      "cpu_cores": 16,
+      "gpu": "Integrated",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "2.8K",
+      "refresh_rate_hz": 120,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.2,
+      "battery_life_hrs": 10
+    },
+    "metadata": {
+      "use_case_tags": [
+        "work",
+        "dev",
+        "coding",
+        "portable"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_placeholder",
+      "url": "https://www.google.com/search?q=ASUS%20Zenbook%2014%20OLED%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20Zenbook%2014%20OLED"
+    }
+  },
+  {
+    "id": "0cf46588-e1ac-4c80-a5d7-15a18989dab6",
+    "sku": "ASUS-0008",
+    "name": "ASUS Vivobook Go 15",
+    "brand": "ASUS",
+    "category": "work",
+    "price": 599.0,
+    "specifications": {
+      "cpu": "Ryzen 5 7520U",
+      "cpu_cores": 4,
+      "gpu": "Integrated",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "FHD",
+      "refresh_rate_hz": 60,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.6,
+      "battery_life_hrs": 12
+    },
+    "metadata": {
+      "use_case_tags": [
+        "work",
+        "office",
+        "battery-life",
+        "budget"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_placeholder",
+      "url": "https://www.google.com/search?q=ASUS%20Vivobook%20Go%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20Vivobook%20Go%2015"
+    }
+  },
+  {
+    "id": "38dc1377-df19-47ed-a876-fbfbce47c9da",
+    "sku": "ASUS-0009",
+    "name": "ASUS Vivobook 15",
+    "brand": "ASUS",
+    "category": "study",
+    "price": 549.0,
+    "specifications": {
+      "cpu": "Core i5-1335U",
+      "cpu_cores": 10,
+      "gpu": "Integrated",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "FHD",
+      "refresh_rate_hz": 60,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.7,
+      "battery_life_hrs": 9
+    },
+    "metadata": {
+      "use_case_tags": [
+        "study",
+        "general",
+        "budget"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_placeholder",
+      "url": "https://www.google.com/search?q=ASUS%20Vivobook%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20Vivobook%2015"
+    }
+  },
+  {
+    "id": "7ab8c074-37ab-49f4-ae3b-b60ec1fa77ca",
+    "sku": "ASUS-0010",
+    "name": "ASUS Chromebook CX34",
+    "brand": "ASUS",
+    "category": "study",
+    "price": 399.0,
+    "specifications": {
+      "cpu": "Core i3-1215U",
+      "cpu_cores": 6,
+      "gpu": "Integrated",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 128,
+      "storage_type": "eMMC",
+      "display_size_in": 14.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 60,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.4,
+      "battery_life_hrs": 10
+    },
+    "metadata": {
+      "use_case_tags": [
+        "study",
+        "portable",
+        "ultra-budget"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_placeholder",
+      "url": "https://www.google.com/search?q=ASUS%20Chromebook%20CX34%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=ASUS%20Chromebook%20CX34"
+    }
+  },
+  {
+    "id": "40ebe3d2-dd43-42bd-9fec-114fb689839f",
+    "sku": "DELL-0011",
+    "name": "Dell XPS 13",
+    "brand": "Dell",
+    "category": "business",
+    "price": 2056.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 8,
+      "gpu": "RTX 3050",
+      "vram_gb": 4,
+      "ram_gb": 16,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 240,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.5,
+      "battery_life_hrs": 13
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20XPS%2013%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20XPS%2013"
+    }
+  },
+  {
+    "id": "0a60acfa-dbef-443c-90f0-125f699a2906",
+    "sku": "APPL-0012",
+    "name": "Apple MacBook Air M2",
+    "brand": "Apple",
+    "category": "student",
+    "price": 2736.0,
+    "specifications": {
+      "cpu": "M3 Max",
+      "cpu_cores": 12,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 64,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 240,
+      "panel_type": "Liquid Retina",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.73,
+      "battery_life_hrs": 12
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Air%20M2%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Air%20M2"
+    }
+  },
+  {
+    "id": "e8249fb5-910a-4fd5-b209-7df0ec98c852",
+    "sku": "DELL-0013",
+    "name": "Dell XPS 15",
+    "brand": "Dell",
+    "category": "creative",
+    "price": 1897.0,
+    "specifications": {
+      "cpu": "Ryzen 5 7530U",
+      "cpu_cores": 8,
+      "gpu": "AMD Radeon Graphics",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "QHD",
+      "refresh_rate_hz": 144,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.61,
+      "battery_life_hrs": 9
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20XPS%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20XPS%2015"
+    }
+  },
+  {
+    "id": "ade97c63-83ad-4ff8-8ca9-76ab8b445014",
+    "sku": "APPL-0014",
+    "name": "Apple MacBook Pro 14 M3 Pro",
+    "brand": "Apple",
+    "category": "creative",
+    "price": 2048.0,
+    "specifications": {
+      "cpu": "M2",
+      "cpu_cores": 12,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 2000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 120,
+      "panel_type": "Liquid Retina",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.32,
+      "battery_life_hrs": 14
+    },
+    "metadata": {
+      "use_case_tags": [
+        "budget",
+        "school"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20Pro%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3%20Pro"
+    }
+  },
+  {
+    "id": "0f6aebe9-622e-4a86-b30a-18bfe3bc0809",
+    "sku": "DELL-0015",
+    "name": "Dell XPS 15",
+    "brand": "Dell",
+    "category": "general",
+    "price": 3191.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 8,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "4K",
+      "refresh_rate_hz": 165,
+      "panel_type": "IPS",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.9,
+      "battery_life_hrs": 18
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20XPS%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20XPS%2015"
+    }
+  },
+  {
+    "id": "f911b654-6936-4727-9e40-bf7d52393a83",
+    "sku": "LENO-0016",
+    "name": "Lenovo IdeaPad 5",
+    "brand": "Lenovo",
+    "category": "gaming",
+    "price": 1369.0,
+    "specifications": {
+      "cpu": "Core i5-1335U",
+      "cpu_cores": 24,
+      "gpu": "RTX 3050",
+      "vram_gb": 6,
+      "ram_gb": 8,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 165,
+      "panel_type": "OLED",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 2.61,
+      "battery_life_hrs": 12
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20IdeaPad%205%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20IdeaPad%205"
+    }
+  },
+  {
+    "id": "881b68b7-b82a-4867-b59e-2cebed70f92d",
+    "sku": "DELL-0017",
+    "name": "Dell XPS 15",
+    "brand": "Dell",
+    "category": "creative",
+    "price": 1126.0,
+    "specifications": {
+      "cpu": "Ryzen 5 7530U",
+      "cpu_cores": 12,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 144,
+      "panel_type": "OLED",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 1.15,
+      "battery_life_hrs": 4
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20XPS%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20XPS%2015"
+    }
+  },
+  {
+    "id": "13b92007-3299-4892-9ebb-662f263fb040",
+    "sku": "DELL-0018",
+    "name": "Dell Inspiron 15",
+    "brand": "Dell",
+    "category": "business",
+    "price": 1061.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 12,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "FHD",
+      "refresh_rate_hz": 144,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.76,
+      "battery_life_hrs": 17
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Inspiron%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Inspiron%2015"
+    }
+  },
+  {
+    "id": "e60d61df-5e91-4cfb-adb4-11dec339ac9d",
+    "sku": "DELL-0019",
+    "name": "Dell XPS 15",
+    "brand": "Dell",
+    "category": "student",
+    "price": 1899.0,
+    "specifications": {
+      "cpu": "Ryzen 5 7530U",
+      "cpu_cores": 24,
+      "gpu": "AMD Radeon Graphics",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 165,
+      "panel_type": "OLED",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.56,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20XPS%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20XPS%2015"
+    }
+  },
+  {
+    "id": "3a4797a4-674c-48ad-81d4-59d9fd307b1d",
+    "sku": "XIAO-0020",
+    "name": "Xiaomi Mi Notebook Pro",
+    "brand": "Xiaomi",
+    "category": "gaming",
+    "price": 1966.0,
+    "specifications": {
+      "cpu": "Core i5-1335U",
+      "cpu_cores": 10,
+      "gpu": "RTX 3050",
+      "vram_gb": 16,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 60,
+      "panel_type": "OLED",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 1.77,
+      "battery_life_hrs": 9
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Xiaomi%20Mi%20Notebook%20Pro%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Xiaomi%20Mi%20Notebook%20Pro"
+    }
+  },
+  {
+    "id": "159e757f-96b3-4d25-a7ac-919733bafe1f",
+    "sku": "DELL-0021",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 1756.0,
+    "specifications": {
+      "cpu": "Core i7-13700HX",
+      "cpu_cores": 24,
+      "gpu": "RTX 4070",
+      "vram_gb": 8,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "4K",
+      "refresh_rate_hz": 120,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.09,
+      "battery_life_hrs": 5
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "1427ae3b-eb1a-49ca-b179-4939ef7e8fbd",
+    "sku": "APPL-0022",
+    "name": "Apple MacBook Air M3",
+    "brand": "Apple",
+    "category": "creative",
+    "price": 3105.0,
+    "specifications": {
+      "cpu": "M3 Max",
+      "cpu_cores": 14,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 2000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "QHD",
+      "refresh_rate_hz": 165,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.78,
+      "battery_life_hrs": 14
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Air%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Air%20M3"
+    }
+  },
+  {
+    "id": "1629ae95-f1d2-4ecf-a3a6-0d3a9c489d76",
+    "sku": "XIAO-0023",
+    "name": "Xiaomi RedmiBook 15",
+    "brand": "Xiaomi",
+    "category": "student",
+    "price": 1738.0,
+    "specifications": {
+      "cpu": "Core i7-1355U",
+      "cpu_cores": 14,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "QHD",
+      "refresh_rate_hz": 90,
+      "panel_type": "IPS",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.89,
+      "battery_life_hrs": 12
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Xiaomi%20RedmiBook%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Xiaomi%20RedmiBook%2015"
+    }
+  },
+  {
+    "id": "b2ce6dfe-554c-45ee-8782-a9a1c6497dd3",
+    "sku": "DELL-0024",
+    "name": "Dell Latitude 7420",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 2416.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 14,
+      "gpu": "RTX 3050",
+      "vram_gb": 6,
+      "ram_gb": 16,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "QHD",
+      "refresh_rate_hz": 60,
+      "panel_type": "IPS",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.39,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Latitude%207420%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Latitude%207420"
+    }
+  },
+  {
+    "id": "aebebf72-3da5-4f08-b980-fddb06b3982d",
+    "sku": "APPL-0025",
+    "name": "Apple MacBook Air M3",
+    "brand": "Apple",
+    "category": "student",
+    "price": 3019.0,
+    "specifications": {
+      "cpu": "M3 Pro",
+      "cpu_cores": 24,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 32,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "3K",
+      "refresh_rate_hz": 90,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.51,
+      "battery_life_hrs": 9
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Air%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Air%20M3"
+    }
+  },
+  {
+    "id": "72817d19-8465-45e1-a219-da4542ffa19e",
+    "sku": "DELL-0026",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 1499.0,
+    "specifications": {
+      "cpu": "Ryzen 9 7945HX",
+      "cpu_cores": 10,
+      "gpu": "RTX 4060",
+      "vram_gb": 8,
+      "ram_gb": 16,
+      "storage_gb": 2000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "QHD",
+      "refresh_rate_hz": 120,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.37,
+      "battery_life_hrs": 8
+    },
+    "metadata": {
+      "use_case_tags": [
+        "budget",
+        "school"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "a293bcc0-bba1-4062-99bf-1f08d24f3032",
+    "sku": "LENO-0027",
+    "name": "Lenovo ThinkPad X1 Carbon",
+    "brand": "Lenovo",
+    "category": "general",
+    "price": 1349.0,
+    "specifications": {
+      "cpu": "Core i7-1355U",
+      "cpu_cores": 16,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "FHD",
+      "refresh_rate_hz": 240,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.67,
+      "battery_life_hrs": 5
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20ThinkPad%20X1%20Carbon%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20ThinkPad%20X1%20Carbon"
+    }
+  },
+  {
+    "id": "b042a8dc-f82b-47a6-9e36-91c29ec8edf1",
+    "sku": "APPL-0028",
+    "name": "Apple MacBook Pro 14 M3",
+    "brand": "Apple",
+    "category": "creative",
+    "price": 1289.0,
+    "specifications": {
+      "cpu": "M3 Pro",
+      "cpu_cores": 14,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "4K",
+      "refresh_rate_hz": 120,
+      "panel_type": "Liquid Retina",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.79,
+      "battery_life_hrs": 10
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3"
+    }
+  },
+  {
+    "id": "c9c3e0e3-c514-4d7c-a166-7753c5b00fbf",
+    "sku": "APPL-0029",
+    "name": "Apple MacBook Pro 14 M3 Pro",
+    "brand": "Apple",
+    "category": "creative",
+    "price": 2392.0,
+    "specifications": {
+      "cpu": "M3 Pro",
+      "cpu_cores": 8,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 64,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "FHD",
+      "refresh_rate_hz": 90,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.23,
+      "battery_life_hrs": 5
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20Pro%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3%20Pro"
+    }
+  },
+  {
+    "id": "ca6434f8-3d41-48f1-99b1-a7cb92fb9801",
+    "sku": "DELL-0030",
+    "name": "Dell Latitude 7420",
+    "brand": "Dell",
+    "category": "creative",
+    "price": 1446.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 14,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "3K",
+      "refresh_rate_hz": 90,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.32,
+      "battery_life_hrs": 18
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Latitude%207420%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Latitude%207420"
+    }
+  },
+  {
+    "id": "5b1e4dff-a2e2-4112-92ef-34f57f48aed2",
+    "sku": "DELL-0031",
+    "name": "Dell Latitude 7420",
+    "brand": "Dell",
+    "category": "creative",
+    "price": 982.0,
+    "specifications": {
+      "cpu": "Core i7-1355U",
+      "cpu_cores": 8,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "3K",
+      "refresh_rate_hz": 240,
+      "panel_type": "OLED",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.4,
+      "battery_life_hrs": 14
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Latitude%207420%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Latitude%207420"
+    }
+  },
+  {
+    "id": "223ac43e-808a-4cd9-a388-84edded045d1",
+    "sku": "LENO-0032",
+    "name": "Lenovo ThinkPad X1 Carbon",
+    "brand": "Lenovo",
+    "category": "gaming",
+    "price": 1167.0,
+    "specifications": {
+      "cpu": "Core i7-1355U",
+      "cpu_cores": 14,
+      "gpu": "RTX 3050",
+      "vram_gb": 8,
+      "ram_gb": 16,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "4K",
+      "refresh_rate_hz": 165,
+      "panel_type": "IPS",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 2.57,
+      "battery_life_hrs": 12
+    },
+    "metadata": {
+      "use_case_tags": [
+        "budget",
+        "school"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20ThinkPad%20X1%20Carbon%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20ThinkPad%20X1%20Carbon"
+    }
+  },
+  {
+    "id": "c3dbbbf2-9184-4aad-ae9c-6f41b19edad5",
+    "sku": "XIAO-0033",
+    "name": "Xiaomi RedmiBook Pro 16",
+    "brand": "Xiaomi",
+    "category": "general",
+    "price": 779.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 24,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "3K",
+      "refresh_rate_hz": 90,
+      "panel_type": "IPS",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 1.94,
+      "battery_life_hrs": 11
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Xiaomi%20RedmiBook%20Pro%2016%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Xiaomi%20RedmiBook%20Pro%2016"
+    }
+  },
+  {
+    "id": "ae920b85-0787-434a-bb54-42c26cde52bf",
+    "sku": "DELL-0034",
+    "name": "Dell XPS 13",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 3162.0,
+    "specifications": {
+      "cpu": "Core i7-1355U",
+      "cpu_cores": 12,
+      "gpu": "RTX 3050",
+      "vram_gb": 8,
+      "ram_gb": 16,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 240,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.68,
+      "battery_life_hrs": 7
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20XPS%2013%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20XPS%2013"
+    }
+  },
+  {
+    "id": "cdec3575-d623-4b6d-b950-edf9c1e8bf21",
+    "sku": "DELL-0035",
+    "name": "Dell Inspiron 15",
+    "brand": "Dell",
+    "category": "business",
+    "price": 821.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 10,
+      "gpu": "AMD Radeon Graphics",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "3K",
+      "refresh_rate_hz": 90,
+      "panel_type": "OLED",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.57,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "budget",
+        "school"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Inspiron%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Inspiron%2015"
+    }
+  },
+  {
+    "id": "fbdf6c8e-4822-4643-a7d4-6112e848da17",
+    "sku": "LENO-0036",
+    "name": "Lenovo IdeaPad 5",
+    "brand": "Lenovo",
+    "category": "student",
+    "price": 1580.0,
+    "specifications": {
+      "cpu": "Core i5-1335U",
+      "cpu_cores": 8,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "4K",
+      "refresh_rate_hz": 144,
+      "panel_type": "IPS",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 2.78,
+      "battery_life_hrs": 17
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20IdeaPad%205%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20IdeaPad%205"
+    }
+  },
+  {
+    "id": "d9808f1f-6fcb-4331-82ef-0562664c2911",
+    "sku": "LENO-0037",
+    "name": "Lenovo ThinkBook 15",
+    "brand": "Lenovo",
+    "category": "student",
+    "price": 3154.0,
+    "specifications": {
+      "cpu": "Core i5-1335U",
+      "cpu_cores": 12,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "QHD",
+      "refresh_rate_hz": 144,
+      "panel_type": "IPS",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 2.6,
+      "battery_life_hrs": 9
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20ThinkBook%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20ThinkBook%2015"
+    }
+  },
+  {
+    "id": "91fbfc78-65fa-44a0-bf07-f8b484b927c8",
+    "sku": "LENO-0038",
+    "name": "Lenovo Legion Pro 5i",
+    "brand": "Lenovo",
+    "category": "gaming",
+    "price": 3001.0,
+    "specifications": {
+      "cpu": "Core i7-13700HX",
+      "cpu_cores": 12,
+      "gpu": "RTX 4060",
+      "vram_gb": 6,
+      "ram_gb": 16,
+      "storage_gb": 2000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "FHD",
+      "refresh_rate_hz": 144,
+      "panel_type": "IPS",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.49,
+      "battery_life_hrs": 10
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20Legion%20Pro%205i%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20Legion%20Pro%205i"
+    }
+  },
+  {
+    "id": "78efb1d2-1cc5-4fdf-85e3-8db41166fe89",
+    "sku": "APPL-0039",
+    "name": "Apple MacBook Pro 14 M3 Pro",
+    "brand": "Apple",
+    "category": "student",
+    "price": 1745.0,
+    "specifications": {
+      "cpu": "M3",
+      "cpu_cores": 24,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 64,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 120,
+      "panel_type": "Liquid Retina",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.07,
+      "battery_life_hrs": 7
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20Pro%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3%20Pro"
+    }
+  },
+  {
+    "id": "e49dde4d-6094-4f98-82aa-bd59aa25fb9d",
+    "sku": "APPL-0040",
+    "name": "Apple MacBook Pro 14 M3 Pro",
+    "brand": "Apple",
+    "category": "business",
+    "price": 3116.0,
+    "specifications": {
+      "cpu": "M3 Max",
+      "cpu_cores": 10,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 64,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "QHD",
+      "refresh_rate_hz": 90,
+      "panel_type": "Liquid Retina",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.7,
+      "battery_life_hrs": 13
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20Pro%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3%20Pro"
+    }
+  },
+  {
+    "id": "c9f8116e-e3e0-4f5f-afff-6d71374e4caf",
+    "sku": "DELL-0041",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "general",
+    "price": 2409.0,
+    "specifications": {
+      "cpu": "Core i7-13700HX",
+      "cpu_cores": 8,
+      "gpu": "RTX 4090",
+      "vram_gb": 4,
+      "ram_gb": 32,
+      "storage_gb": 2000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 144,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.76,
+      "battery_life_hrs": 13
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "d7eb5b72-881a-4c26-919a-445b6fe1f958",
+    "sku": "DELL-0042",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 1529.0,
+    "specifications": {
+      "cpu": "Core i7-13700HX",
+      "cpu_cores": 10,
+      "gpu": "RTX 4080",
+      "vram_gb": 12,
+      "ram_gb": 64,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 240,
+      "panel_type": "IPS",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 1.41,
+      "battery_life_hrs": 16
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "336a8dc3-c2ff-4f6f-8a4d-96c5c44410cc",
+    "sku": "LENO-0043",
+    "name": "Lenovo Yoga 9i",
+    "brand": "Lenovo",
+    "category": "creative",
+    "price": 2377.0,
+    "specifications": {
+      "cpu": "Ryzen 5 7530U",
+      "cpu_cores": 10,
+      "gpu": "AMD Radeon Graphics",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "QHD",
+      "refresh_rate_hz": 120,
+      "panel_type": "OLED",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 1.54,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "budget",
+        "school"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20Yoga%209i%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20Yoga%209i"
+    }
+  },
+  {
+    "id": "6df40c8f-ee21-4da8-9266-51a4e3ff3952",
+    "sku": "APPL-0044",
+    "name": "Apple MacBook Pro 14 M3 Pro",
+    "brand": "Apple",
+    "category": "general",
+    "price": 781.0,
+    "specifications": {
+      "cpu": "M3",
+      "cpu_cores": 10,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 2000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "3K",
+      "refresh_rate_hz": 90,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.47,
+      "battery_life_hrs": 17
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20Pro%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3%20Pro"
+    }
+  },
+  {
+    "id": "72657118-ef5e-4205-8341-74e3e3c09ba3",
+    "sku": "LENO-0045",
+    "name": "Lenovo ThinkPad X1 Carbon",
+    "brand": "Lenovo",
+    "category": "business",
+    "price": 1607.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 16,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "QHD",
+      "refresh_rate_hz": 165,
+      "panel_type": "OLED",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.03,
+      "battery_life_hrs": 10
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20ThinkPad%20X1%20Carbon%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20ThinkPad%20X1%20Carbon"
+    }
+  },
+  {
+    "id": "b506258c-492d-4093-8eac-5d638a05546a",
+    "sku": "LENO-0046",
+    "name": "Lenovo IdeaPad 5",
+    "brand": "Lenovo",
+    "category": "business",
+    "price": 1563.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 10,
+      "gpu": "AMD Radeon Graphics",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 240,
+      "panel_type": "IPS",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 1.75,
+      "battery_life_hrs": 17
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20IdeaPad%205%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20IdeaPad%205"
+    }
+  },
+  {
+    "id": "38ef970f-1e52-4b39-bda9-a28496651dff",
+    "sku": "APPL-0047",
+    "name": "Apple MacBook Air M3",
+    "brand": "Apple",
+    "category": "general",
+    "price": 1208.0,
+    "specifications": {
+      "cpu": "M3",
+      "cpu_cores": 24,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 60,
+      "panel_type": "Liquid Retina",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.59,
+      "battery_life_hrs": 9
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Air%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Air%20M3"
+    }
+  },
+  {
+    "id": "c4d94924-5af9-4ce2-893c-74a0d65fa06f",
+    "sku": "APPL-0048",
+    "name": "Apple MacBook Air M3",
+    "brand": "Apple",
+    "category": "business",
+    "price": 2287.0,
+    "specifications": {
+      "cpu": "M3 Max",
+      "cpu_cores": 8,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "4K",
+      "refresh_rate_hz": 60,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.54,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Air%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Air%20M3"
+    }
+  },
+  {
+    "id": "b26bcff5-6134-4f4b-bedb-b43ad368bb68",
+    "sku": "DELL-0049",
+    "name": "Dell Inspiron 15",
+    "brand": "Dell",
+    "category": "business",
+    "price": 876.0,
+    "specifications": {
+      "cpu": "Ryzen 7 7730U",
+      "cpu_cores": 10,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "4K",
+      "refresh_rate_hz": 144,
+      "panel_type": "OLED",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.39,
+      "battery_life_hrs": 13
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Inspiron%2015%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Inspiron%2015"
+    }
+  },
+  {
+    "id": "8debde60-fd02-4935-9049-0cb5df7f0de2",
+    "sku": "LENO-0050",
+    "name": "Lenovo Yoga 9i",
+    "brand": "Lenovo",
+    "category": "gaming",
+    "price": 1667.0,
+    "specifications": {
+      "cpu": "Core i7-1355U",
+      "cpu_cores": 24,
+      "gpu": "RTX 3050",
+      "vram_gb": 12,
+      "ram_gb": 16,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "4K",
+      "refresh_rate_hz": 165,
+      "panel_type": "OLED",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.22,
+      "battery_life_hrs": 13
+    },
+    "metadata": {
+      "use_case_tags": [
+        "everyday",
+        "value"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20Yoga%209i%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20Yoga%209i"
+    }
+  },
+  {
+    "id": "b604abf4-0669-4956-8da2-5ff375ad4fe4",
+    "sku": "APPL-0051",
+    "name": "Apple MacBook Pro 14 M3",
+    "brand": "Apple",
+    "category": "business",
+    "price": 2584.0,
+    "specifications": {
+      "cpu": "M3 Max",
+      "cpu_cores": 10,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "3K",
+      "refresh_rate_hz": 60,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.01,
+      "battery_life_hrs": 10
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3"
+    }
+  },
+  {
+    "id": "e91e7239-bc55-4267-88f2-113f32bad1ee",
+    "sku": "DELL-0052",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 616.0,
+    "specifications": {
+      "cpu": "Core i7-13700HX",
+      "cpu_cores": 24,
+      "gpu": "RTX 4070",
+      "vram_gb": 8,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "3K",
+      "refresh_rate_hz": 165,
+      "panel_type": "IPS",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 2.4,
+      "battery_life_hrs": 5
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "493de103-e229-45e5-bee6-cca122ef9acd",
+    "sku": "APPL-0053",
+    "name": "Apple MacBook Pro 14 M3",
+    "brand": "Apple",
+    "category": "general",
+    "price": 713.0,
+    "specifications": {
+      "cpu": "M3 Pro",
+      "cpu_cores": 16,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 64,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 15.6,
+      "resolution": "3K",
+      "refresh_rate_hz": 165,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.71,
+      "battery_life_hrs": 11
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3"
+    }
+  },
+  {
+    "id": "6a6e6a89-943e-4972-9fb1-bae69abece4a",
+    "sku": "LENO-0054",
+    "name": "Lenovo Yoga 9i",
+    "brand": "Lenovo",
+    "category": "general",
+    "price": 744.0,
+    "specifications": {
+      "cpu": "Core i5-1335U",
+      "cpu_cores": 10,
+      "gpu": "Intel Iris Xe",
+      "vram_gb": 0,
+      "ram_gb": 8,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 90,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 1.29,
+      "battery_life_hrs": 13
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Lenovo%20Yoga%209i%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Lenovo%20Yoga%209i"
+    }
+  },
+  {
+    "id": "cea5e6d0-e68b-4051-940c-92840fcb69f6",
+    "sku": "DELL-0055",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 928.0,
+    "specifications": {
+      "cpu": "Core i9-14900HX",
+      "cpu_cores": 24,
+      "gpu": "RTX 4070",
+      "vram_gb": 16,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 13.3,
+      "resolution": "3K",
+      "refresh_rate_hz": 120,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.41,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "6df1f656-df3b-44e5-b47f-fb109e553a6a",
+    "sku": "APPL-0056",
+    "name": "Apple MacBook Pro 14 M3",
+    "brand": "Apple",
+    "category": "creative",
+    "price": 911.0,
+    "specifications": {
+      "cpu": "M3 Pro",
+      "cpu_cores": 14,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 64,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "4K",
+      "refresh_rate_hz": 144,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 1.86,
+      "battery_life_hrs": 8
+    },
+    "metadata": {
+      "use_case_tags": [
+        "gaming",
+        "AAA",
+        "power"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3"
+    }
+  },
+  {
+    "id": "26328755-d73c-4a0c-9156-1dd3122b1874",
+    "sku": "APPL-0057",
+    "name": "Apple MacBook Pro 14 M3",
+    "brand": "Apple",
+    "category": "creative",
+    "price": 2470.0,
+    "specifications": {
+      "cpu": "M3 Pro",
+      "cpu_cores": 10,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 16,
+      "storage_gb": 512,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "2.5K",
+      "refresh_rate_hz": 240,
+      "panel_type": "Liquid Retina XDR",
+      "color_accuracy": "100% DCI-P3",
+      "weight_kg": 2.68,
+      "battery_life_hrs": 13
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Pro%2014%20M3%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Pro%2014%20M3"
+    }
+  },
+  {
+    "id": "f4f59ae3-4c10-4b9a-98d5-e9df05d57d6a",
+    "sku": "DELL-0058",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 3001.0,
+    "specifications": {
+      "cpu": "Core i7-13700HX",
+      "cpu_cores": 8,
+      "gpu": "RTX 4060",
+      "vram_gb": 16,
+      "ram_gb": 32,
+      "storage_gb": 1000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 16.0,
+      "resolution": "FHD",
+      "refresh_rate_hz": 120,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.14,
+      "battery_life_hrs": 6
+    },
+    "metadata": {
+      "use_case_tags": [
+        "office",
+        "battery"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "58d76ce1-228f-427d-ad57-4763ea80a7db",
+    "sku": "DELL-0059",
+    "name": "Dell Alienware m16",
+    "brand": "Dell",
+    "category": "gaming",
+    "price": 2007.0,
+    "specifications": {
+      "cpu": "Ryzen 9 7945HX",
+      "cpu_cores": 8,
+      "gpu": "RTX 4070",
+      "vram_gb": 12,
+      "ram_gb": 64,
+      "storage_gb": 2000,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "3K",
+      "refresh_rate_hz": 120,
+      "panel_type": "IPS",
+      "color_accuracy": "45% NTSC",
+      "weight_kg": 2.39,
+      "battery_life_hrs": 8
+    },
+    "metadata": {
+      "use_case_tags": [
+        "art",
+        "color-accurate",
+        "premium"
+      ],
+      "aaa_gaming_ready": true,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Dell%20Alienware%20m16%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Dell%20Alienware%20m16"
+    }
+  },
+  {
+    "id": "847d1556-98a2-4b6e-b3a9-dec9ac883e2f",
+    "sku": "APPL-0060",
+    "name": "Apple MacBook Air M2",
+    "brand": "Apple",
+    "category": "general",
+    "price": 2354.0,
+    "specifications": {
+      "cpu": "M3",
+      "cpu_cores": 14,
+      "gpu": "Integrated Apple GPU",
+      "vram_gb": 0,
+      "ram_gb": 64,
+      "storage_gb": 256,
+      "storage_type": "NVMe SSD",
+      "display_size_in": 14.0,
+      "resolution": "4K",
+      "refresh_rate_hz": 120,
+      "panel_type": "Liquid Retina",
+      "color_accuracy": "100% sRGB",
+      "weight_kg": 2.38,
+      "battery_life_hrs": 17
+    },
+    "metadata": {
+      "use_case_tags": [
+        "budget",
+        "school"
+      ],
+      "aaa_gaming_ready": false,
+      "data_source": "dummy_generated",
+      "url": "https://www.google.com/search?q=Apple%20MacBook%20Air%20M2%20laptop",
+      "image_url": "https://placehold.co/400x300/1F4E78/FFFFFF?text=Apple%20MacBook%20Air%20M2"
+    }
+  }
+]

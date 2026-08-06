@@ -62,4 +62,3 @@ func (m *MockRetailProvider) GetProducts(ids []string) []Product {
 	}
 	return results
 }
-

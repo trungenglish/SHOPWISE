@@ -14,9 +14,9 @@ export interface Laptop {
     screen?: string;
     warranty?: string;
   };
-  aiPerf: number;
-  rendering: number;
-  thermals: number;
+  aiPerf?: number;
+  rendering?: number;
+  thermals?: number;
   matchExplanation?: string;
 }
 

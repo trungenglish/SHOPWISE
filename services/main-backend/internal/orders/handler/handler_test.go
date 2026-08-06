@@ -24,10 +24,16 @@ type checkoutRepositoryStub struct {
 	customer  *domain.CustomerSnapshot
 	products  map[uuid.UUID]domain.ProductQuote
 	createErr error
+	orders    []domain.Order
+	listErr   error
 }
 
 func (stub *checkoutRepositoryStub) Create(context.Context, *domain.Order) error {
 	return stub.createErr
+}
+
+func (stub *checkoutRepositoryStub) ListByCustomer(context.Context, uuid.UUID, int, int) ([]domain.Order, error) {
+	return stub.orders, stub.listErr
 }
 
 func (stub *checkoutRepositoryStub) GetCustomer(context.Context, uuid.UUID) (*domain.CustomerSnapshot, error) {
@@ -61,7 +67,9 @@ func newCheckoutRouter(t *testing.T, repository *checkoutRepositoryStub) (*gin.E
 	router.Use(middleware.ErrorHandler(logger, false))
 	v1 := router.Group("/api/v1")
 	service := usecase.NewService(repository, repository, repository, repository)
-	handler.RegisterRoutes(v1.Group("/checkout"), handler.NewHandler(service), jwtService)
+	checkoutHandler := handler.NewHandler(service)
+	handler.RegisterRoutes(v1.Group("/checkout"), checkoutHandler, jwtService)
+	handler.RegisterListRoutes(v1.Group("/orders"), checkoutHandler, jwtService)
 	return router, token, customerID
 }
 
@@ -89,7 +97,7 @@ func TestCreateCheckoutReturnsServerCalculatedOrder(t *testing.T) {
 	if response.CustomerName != "Nguyen Van A" || response.CustomerPhone != "0912345678" {
 		t.Fatalf("customer snapshot = %q/%q", response.CustomerName, response.CustomerPhone)
 	}
-	if response.SubtotalAmount != 200_000 || response.TaxAmount != 16_000 || response.TotalAmount != 216_000 {
+	if response.SubtotalAmount != 200_000 || response.TaxAmount != 0 || response.TotalAmount != 200_000 {
 		t.Fatalf("subtotal/tax/total = %d/%d/%d", response.SubtotalAmount, response.TaxAmount, response.TotalAmount)
 	}
 	if len(response.Items) != 1 || response.Items[0].UnitPrice != 100_000 {
@@ -193,4 +201,78 @@ func TestCreateCheckoutMapsRepositoryFailure(t *testing.T) {
 	}, map[string]string{"Authorization": "Bearer " + token})
 
 	testutil.AssertStatus(t, recorder, http.StatusInternalServerError)
+}
+
+func TestListOrdersReturnsAuthenticatedCustomerOrders(t *testing.T) {
+	t.Parallel()
+
+	orderID := uuid.New()
+	productID := uuid.New()
+	repository := &checkoutRepositoryStub{orders: []domain.Order{{
+		ID:          orderID,
+		Items:       []domain.Item{{ProductID: productID, Quantity: 2, UnitPrice: 100_000}},
+		TotalAmount: 216_000,
+		Status:      domain.StatusPending,
+		CreatedAt:   time.Now().UTC(),
+	}}}
+	router, token, customerID := newCheckoutRouter(t, repository)
+	repository.orders[0].CustomerID = customerID
+
+	recorder := testutil.PerformRequest(t, router, http.MethodGet, "/api/v1/orders?limit=10&offset=0", nil, map[string]string{
+		"Authorization": "Bearer " + token,
+	})
+
+	testutil.AssertStatus(t, recorder, http.StatusOK)
+	var response handler.OrderListResponse
+	testutil.AssertJSON(t, recorder, &response)
+	if response.Limit != 10 || response.Offset != 0 || len(response.Items) != 1 {
+		t.Fatalf("response pagination/items = %d/%d/%d", response.Limit, response.Offset, len(response.Items))
+	}
+	if response.Items[0].OrderID != orderID.String() || len(response.Items[0].Items) != 1 {
+		t.Fatalf("order response = %#v", response.Items[0])
+	}
+}
+
+func TestListOrdersAllowsCustomerQueryInDebugBypass(t *testing.T) {
+	t.Parallel()
+
+	customerID := uuid.New()
+	repository := &checkoutRepositoryStub{orders: []domain.Order{{ID: uuid.New(), CustomerID: customerID}}}
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	jwtService := identityusecase.NewJWTService("checkout-test-secret", 15*time.Minute)
+	router := testutil.NewTestRouter()
+	router.Use(middleware.ErrorHandler(logger, false))
+	service := usecase.NewService(repository, repository, repository, repository)
+	checkoutHandler := handler.NewHandler(service).WithDevelopmentAuthBypass()
+	handler.RegisterListRoutes(router.Group("/api/v1/orders"), checkoutHandler, jwtService)
+
+	recorder := testutil.PerformRequest(t, router, http.MethodGet, "/api/v1/orders?customer_id="+customerID.String(), nil, nil)
+
+	testutil.AssertStatus(t, recorder, http.StatusOK)
+}
+
+func TestListOrdersRequiresCustomerQueryInDebugBypass(t *testing.T) {
+	t.Parallel()
+
+	repository := &checkoutRepositoryStub{}
+	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+	jwtService := identityusecase.NewJWTService("checkout-test-secret", 15*time.Minute)
+	router := testutil.NewTestRouter()
+	router.Use(middleware.ErrorHandler(logger, false))
+	service := usecase.NewService(repository, repository, repository, repository)
+	checkoutHandler := handler.NewHandler(service).WithDevelopmentAuthBypass()
+	handler.RegisterListRoutes(router.Group("/api/v1/orders"), checkoutHandler, jwtService)
+
+	recorder := testutil.PerformRequest(t, router, http.MethodGet, "/api/v1/orders", nil, nil)
+
+	testutil.AssertStatus(t, recorder, http.StatusBadRequest)
+}
+
+func TestListOrdersRequiresAuthentication(t *testing.T) {
+	t.Parallel()
+
+	router, _, _ := newCheckoutRouter(t, &checkoutRepositoryStub{})
+	recorder := testutil.PerformRequest(t, router, http.MethodGet, "/api/v1/orders", nil, nil)
+
+	testutil.AssertStatus(t, recorder, http.StatusUnauthorized)
 }

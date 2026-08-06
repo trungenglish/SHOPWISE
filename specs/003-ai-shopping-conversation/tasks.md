@@ -1,5 +1,9 @@
 # Tasks: AI Shopping Conversation MVP
 
+> Historical planning checklist only. Do not use checked boxes as completion
+> evidence. Current implementation evidence and remaining gates are recorded in
+> `../008-llm-integration/readiness.md`.
+
 **Input**: Design documents from `/specs/003-ai-shopping-conversation/`
 **Prerequisites**: plan.md, spec.md, data-model.md, contracts/ui-contracts.md
 

@@ -8,7 +8,8 @@ import (
 	"shopwise/retail/internal/orders/domain"
 )
 
-const taxPercentage int64 = 8
+// Consumer catalog prices are VAT-inclusive.
+const taxPercentage int64 = 0
 
 func checkedMultiply(amount int64, quantity int) (int64, error) {
 	if amount < 0 || quantity < 0 {

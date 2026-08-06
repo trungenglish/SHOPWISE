@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => {
       tailwindcss(),
       tanstackRouter({
         autoCodeSplitting: true,
+        routeFileIgnorePattern: "\\.test\\.[jt]sx?$",
         target: "react",
       }),
       viteReact(),

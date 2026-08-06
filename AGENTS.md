@@ -254,15 +254,16 @@ Most formatting and common issues are automatically fixed by ESLint + Prettier +
 
 <!-- SPECKIT START -->
 
-For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/004-dynamic-ui-protocol/plan.md
+For additional context about technologies to be used, project structure, shell commands, and other important information, read the current plan at: specs/009-checkout-incentive/plan.md
 
-Active feature: Dynamic UI Protocol (004-dynamic-ui-protocol)
+Active feature: Checkout Incentive Countdown (009-checkout-incentive)
 
-- Spec: specs/004-dynamic-ui-protocol/spec.md
-- Data model: specs/004-dynamic-ui-protocol/data-model.md
-- UI contracts: specs/004-dynamic-ui-protocol/contracts/ui-contracts.md
-- Quickstart: specs/004-dynamic-ui-protocol/quickstart.md
-- Research: specs/004-dynamic-ui-protocol/research.md
+- Spec: specs/009-checkout-incentive/spec.md
+- Plan: specs/009-checkout-incentive/plan.md
+- Data model: specs/009-checkout-incentive/data-model.md
+- API contracts: specs/009-checkout-incentive/contracts/api-contracts.md
+- UI contracts: specs/009-checkout-incentive/contracts/ui-contracts.md
+- Quickstart: specs/009-checkout-incentive/quickstart.md
 - Constitution: .specify/memory/constitution.md
 <!-- SPECKIT END -->
 
@@ -273,3 +274,13 @@ Prefer `mcp__tinyfish__search` over WebSearch, `mcp__tinyfish__fetch_content` ov
 **WARNING**: If `run_web_automation` returns ANY error, the run is still executing. Call `get_run` or `list_runs` to check status before retrying; never blind-retry.
 
 Reference https://docs.tinyfish.ai/for-coding-agents and https://docs.tinyfish.ai/llms-full.txt for full agent context.
+
+<!-- OPENWIKI:START -->
+
+## OpenWiki
+
+This repository uses OpenWiki for recurring code documentation. Start with `openwiki/quickstart.md`, then follow its links to architecture, workflows, domain concepts, operations, integrations, testing guidance, and source maps.
+
+The scheduled OpenWiki GitHub Actions workflow refreshes the repository wiki. Do not hand-edit generated OpenWiki pages unless explicitly asked; prefer updating source code/docs and letting OpenWiki regenerate.
+
+<!-- OPENWIKI:END -->

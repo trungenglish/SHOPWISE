@@ -16,6 +16,8 @@ import "../index.css";
 import Loader from "@/components/loader";
 import { NotFoundError } from "@/features/errors/not-found-error";
 import { GeneralError } from "@/features/errors/general-error";
+import { CheckoutIncentiveProvider } from "@/features/checkout-incentive/hooks/useCheckoutIncentive";
+import { CheckoutIncentivePanel } from "@/features/checkout-incentive/components/CheckoutIncentivePanel";
 
 export interface RouterAppContext {
   queryClient: QueryClient;
@@ -32,14 +34,17 @@ const RootComponent = () => {
         enableSystem={false}
         disableTransitionOnChange
       >
-        <Outlet />
-        <Toaster richColors duration={5000} />
-        {env.VITE_NODE_ENV === "development" && (
+        <CheckoutIncentiveProvider>
+          <Outlet />
+          <CheckoutIncentivePanel />
+          <Toaster richColors duration={5000} />
+          {env.VITE_NODE_ENV === "development" && (
           <>
             <ReactQueryDevtools buttonPosition="bottom-left" />
             <TanStackRouterDevtools position="bottom-right" />
           </>
         )}
+        </CheckoutIncentiveProvider>
       </ThemeProvider>
     </TooltipProvider>
   );

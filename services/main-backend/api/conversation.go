@@ -34,7 +34,7 @@ func (api *ConversationAPI) SendMessage(c *gin.Context) {
 	}
 
 	api.manager.UpdateSession(req.SessionID, func(s *session.CustomerSession) {
-		s.Messages = append(s.Messages, map[string]interface{}{
+		s.Messages = append(s.Messages, map[string]any{
 			"role":    "user",
 			"content": req.Message,
 		})
@@ -49,4 +49,3 @@ func (api *ConversationAPI) SendMessage(c *gin.Context) {
 		},
 	})
 }
-

@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	defaultSpecRelPath    = "specs/001-ai-shopping-copilot/contracts/openapi.yaml"
-	defaultSwaggerRelPath = "apps/server/docs/swagger.yaml"
+	defaultSpecRelPath    = "specs/002-get-started-onboarding/contracts/openapi.yaml"
+	defaultSwaggerRelPath = "services/main-backend/docs/swagger.yaml"
 )
 
 type Spec struct {
@@ -103,7 +103,7 @@ func LoadSwaggerSpec(t *testing.T) *Spec {
 }
 
 // AssertSwaggerDocumentsOpenAPIPaths ensures generated swagger is a superset of the
-// Phase 1 product contract in specs/001-ai-shopping-copilot/contracts/openapi.yaml.
+// Current onboarding contract in specs/002-get-started-onboarding/contracts/openapi.yaml.
 func AssertSwaggerDocumentsOpenAPIPaths(t *testing.T, openapi, swagger *Spec) {
 	t.Helper()
 
