@@ -1,0 +1,408 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:023f779a9c76cd7ecf371fa1d5eca5451471ec346d165e797c53c231755bbc77",
+  "claims": [
+    {
+      "id": "claim_90111c7432a740de806034fd744e96bd",
+      "statement": "The web app boots from apps/web/src/main.tsx, where it creates a TanStack router and React Query client, then renders the app under QueryClientProvider, a dark ThemeProvider, and the shared FontProvider.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/main.tsx#L1-L21",
+          "version": "repo-lines-v1:sha256:cdf73e69865356349cefb7cb629321c9b8ae680021b8d2ef3deb4b7de1f48387:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkOGJhNjQ1OTM5MjBiNzE1OGViYTY1MDkyNjc3MTkyMDQ4MGIwMjQxZTNhYjc2YTYwM2M1OTc5YmMyNmE3NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhY2UzYzMzNzgzMzdiZmQ2Y2YzYTA3ZDU4ZWZjNDJkMDdhYzNiYjQxYjZjZTA1ZTM2YTk4ZDMyOWRjMzg1OWEifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/main.tsx#L35-L52",
+          "version": "repo-lines-v1:sha256:96de925929b49d50833ff4027bf3ddac285e16d5505323fab34b127d6e78744e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0YjViZWI4OWIxYTY4MjRkYWMwZTFlNDhhZDNkMDlmNjYxMWYzZmUxZjZiODMyNmZlMDk5ZGY4ODk3NzRjNDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZWYwMWJjMDhkYmMzYjYzZTRlNzVlYTNkMjZhNWI5NDE4OTE4NzdlMjdhZDg5MTMyOWM4NDExZDdkOGRjNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkNWFiOWMyMDI2NjJiMGNlNzRhNTUwNWRiMGNlODJkNmJlZTkxZWI5MzJmZjFkMzU5ZjRjYTY5ZmI0MmVkZjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5dc9d8a613dd43b28abff372f82f1e0d",
+      "statement": "The web root route in apps/web/src/routes/__root.tsx is the global UI shell: it wraps the app in TooltipProvider and ThemeProvider, mounts the checkout incentive provider/panel and toaster, and only shows React Query and router devtools when VITE_NODE_ENV is development.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/routes/__root.tsx#L1-L21",
+          "version": "repo-lines-v1:sha256:c8afca313ad37ce62eee77932a5de68068263db01d45ca7878a64627226211bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1MDQwZjg4MmM5ZWNlYTUyY2ExNTQ4ZTlmNzlmNmI4MTBmZGIzMzljNDkzMjI3NGVkN2U1ODIwYmUxMmM4MTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRkNWVhNDJjMzM2NjY2MGFmYzVlZjMyNjMxMjVlODQ3ZWI1YjA4MDcxOWY2OGExNTZjNDI2ZWZhYTRiNTE2NDMifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/__root.tsx#L26-L49",
+          "version": "repo-lines-v1:sha256:9f6358e669ddb761647e30cc069c2cc8b22a703f2e1c51de95f63ba2565d68c2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwNmU4NDg5ODFmNjJmM2IyZjE5NzcxYjM5MGUxMjZiZTI5NjVhZGFiZjYyOWMwMzBhYTY2NGZhZjI5ZmZkNzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwZGE0NDRlZmQ3ZTQxZmMzZGI2N2YzNTdlMmI1ZDQzZDBkNDdjMzlkNjQxMjcwYWYxYTZlYjhhNDEzNWQ5MGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM0YTk4NWFmYTlkODFiNjE5MGYxOTYyOGM1OWE3MjUzYmYyMGY5ODhiYzY2YmY4NDM5OGYxMzY4ZjEzZDcwZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlNTgzNDRjNWE2NWEzNjNmNmM5Y2Y2YmNhMjM1ZTlhYjI4MWE3NTI4ZmJlNWUxY2JjZTk2YzdlYzU4ZTY0YzUifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/__root.tsx#L53-L75",
+          "version": "repo-lines-v1:sha256:9f214f950153754795f74febc41cec870af66a368c7a9f932ad7bb952ac5425f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhODY4MWQyYTQ5YzAwY2Q1MmEzZDk1YTM1ZmU0ZTY5MTNiOTg2MjEyNzExYTdlNWZkZTlhZDg0OTUxMThjZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlNTgzNDRjNWE2NWEzNjNmNmM5Y2Y2YmNhMjM1ZTlhYjI4MWE3NTI4ZmJlNWUxY2JjZTk2YzdlYzU4ZTY0YzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7488a6ed646c41a181e781c723aee13f",
+      "statement": "apps/web/src/routes/dashboard.tsx is the main conversational workspace hotspot: it fetches the greeting on mount, starts agent turns through runAgentTurnStream, sends follow-up interactions through sendInteractionStream, and coordinates recommendation, comparison, checkout, reasoning, accessory, and retail modal state in one route component.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/routes/dashboard.tsx#L1-L24",
+          "version": "repo-lines-v1:sha256:0ada903ebe44fa2cbc4cab4e19a69955994c7ed4b8ace0580d400c75ee64cedc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwNDg2YmJkZThiZjI2NWQwNmZiMjBmZGI1ZmNhYjM4ZGI3MjVmN2NmNzgyODAxNDEyM2JhZDEzZTNjYjg1YzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4YzIwOTY5MmRjMzU0MzUxODNhMTVlZDc3ZGJkYWUwYjMwZWFlNTZjM2U5YjQ2NWRiNjlkYTVlMjJhMGIzNjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2YjJlYjYwOWU5MmM0NjcwZjQ3ODU5YjFjNjg3MDBmMmQwNGZkNGIzNTY4NGQwMjVjMzE3NTNlYzQzOGM4ZjMifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/dashboard.tsx#L244-L314",
+          "version": "repo-lines-v1:sha256:cdf9fd6e0bb092f314e66f42b7732564f1aea5858e12c43f7248ae3b6679f646:eyJzZWxlY3RlZExpbmVDb3VudCI6NzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxNDhkMGQzZGI0ZGU1ZmFlNThlMjM4YmRhNmM5NTY0NTgwNzg2YzRhNWVhN2NjOTQ1YmQ1NmI0OGZkYWMwMTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUxZTM3MjVkYTAwMmI0NmVkOGI0ZGU4ODAwM2FkOTcxMGRjYWYxOGQ1N2M0NzAxZGMzYmVmZjBiMmM1Y2IxM2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMzM2Y0ZmEyOTZiMGU0Yzk1OThiYjQ0MGI3ZjNmNzFjZTlkOTA0ZWViN2U1MjA4MjhjY2E2ZjAyNjE0MDc2NGYifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/dashboard.tsx#L316-L634",
+          "version": "repo-lines-v1:sha256:a51688cb348b8325a2d8cd1623eaf2f5a4c6f020bf2c5ed94fa40367c7ed51e3:eyJzZWxlY3RlZExpbmVDb3VudCI6MzE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjN2FiNjU1ZTQ5ZmNmY2RhZjA0OWY3MDk2M2Y0ZTFkY2VjN2U3YzY4ZDE3Yjg4NjFmMWI4M2FhNzQxZWViNjY4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI1MWUzNzI1ZGEwMDJiNDZlZDhiNGRlODgwMDNhZDk3MTBkY2FmMThkNTdjNDcwMWRjM2JlZmYwYjJjNWNiMTNmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/dashboard.tsx#L40-L67",
+          "version": "repo-lines-v1:sha256:5c5ce3be434c7d7e2ad7e93c298d504851f7658dd3f541a3887eacd5f2346895:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwZDYwNTlhODU0NWVhMzRiYWZkYWZhYWQ3ODJhNjg0M2MwYTQzYzgwMzhhZDJiMDg4OTFhMjk4MjU2ODc0MjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxOTc5ZDJmMjZhMTk3YTEwYmYwZDZkZDRlZWFiZmE0MjdkYzRhMzNiNTUwZGJjYWNiNjQ0NjJjMWIwMzIxNWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxZjg3ZTUzYzBhNzI5ODViYzJmMjY3MDQ3NDI0YjFkNzZkNzczOTdiNTI3ZGRhYjU4YTQyYTI2ZDlhMjRmZjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f1742f120a5142c8adeeeb5d0ce2bea6",
+      "statement": "The resume page consumes a token from the URL, calls the resume API with React Query, removes the token from browser history, invalidates session queries, and navigates to /dashboard with the restored session id; when the token is missing or invalid it renders the expired-token recovery UI instead.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/routes/resume.test.tsx#L54-L111",
+          "version": "repo-lines-v1:sha256:1da079651facac83b702f7efcff7e45827e9a2c70408177b211404462c28b622:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkxNjYwMWQzMWQ0NzA0MDUzYjE1ZDZhODViOTVjNzU5NTVjMzc0NzlhM2E4YWNlMzE0OWVlMjY3OGFjYTAyYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5ODhmNzU1ZTlkYTY0NTQyZjA3ODlmYzYyMjIwZDYyZmI5YzBhZDE1MTA1YjdlNTY0NjA1MjhkN2M3YWM5MGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0YjlkM2NlODAyNWZmMmVmYTVmZDljYzMwNWNkN2VhOWJjZjU5ZjkwMzZkYzIyZmRlODY3MmE3NTk5NTg2OWEifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/resume.tsx#L11-L18",
+          "version": "repo-lines-v1:sha256:e74385a291bde6274e89652f7ed10f0bf8a4750e79d24decaffcf86c440ad90d:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjBjNzcyODhjYzhjMzBmNzU5ODViZGYwNDRiMDRkNjZhOGI4ODBmZTA4NGZkZmQ2NDc4NmRhNDVlNWQzNTVjYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjZmNWI0MGIxNTg0NTdkMTc4NjRmMjE3OTA3ODZkZDVhMmVjZGI2NGI2NmE2NTFmNzg4ZDRlMjVjZDMzMDNkMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWZlZGI4MzcwNjMyNWU2N2QwMzg1NzljYTQ3YTJhZjRhYzMzYjVkMzZlNWEzMjUzZDU5OTFlNGMzZDA5YWM3ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZmNiODNlMTQ1NmZmOWMyNzM4MTFjYmI4ODA5YjY2MDgzZjNiNTk4YjU2NGU4NDNiZDRjM2E3ZWQ3YjIyZjkyMCJ9"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/resume.tsx#L20-L58",
+          "version": "repo-lines-v1:sha256:bc45727c1ab5d1b28d49519882e601b7e48879280972b78696a3f5517dcfde5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3NjJiNzljNzliMDY1YTVlMjcyMWU0YjZmZWE2MzA1YmRiZGVlOWIyOGUxNTQzMmUyNzI0NTI1OTI3ZWFhMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYTJjYjI1YTEyMmI0NDIyMWE2MjM0ZWM2NjBhN2I1ZmI3ZjliZGU3YjNiOWUyYjNjNTU5YTBkOTZmYWM3MzkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzODNhYzE5OThhZDg4Mjg4NDVjNzBlZGZmOWQyNWZjYzc4OTU3ZjU1MzBhNzk4MzhkNTE4NGExZTE3MGZlNDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE3MTExODA3ZjViZjY5MmNiZjZhM2ZmY2E2ODhhOThiMDk1MTZmYjBlOTNhODc4YTdiM2VlMDU3YTg0MTM3YTAifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/resume.tsx#L60-L95",
+          "version": "repo-lines-v1:sha256:60b9ec111683a7cb9114ff2d98df6832567879a878417039812927770ce8c040:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1MmNlOTE2MzIyZDYzZTdhZTY4YjU4MDA4YzEzZjgyZTk3ZTc1NmQyOGE2OTA0YzVjMTkxYjM5ZWI2ZDZmY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY2YjdiZjZlYjVmMGM3YmI5NWU1OWUyNzFhY2VjYWIxYmUwYzVhZjhkN2FlYWFkZTZmOTRkOWIzMWY0ZDdiOTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_659a93e64b58434abf3d9f6f62e921bf",
+      "statement": "apps/web/src/api/decision-memory.ts is the frontend hotspot for session and agent traffic: it adds Authorization when present, guarantees an X-Anonymous-ID header by generating and persisting one in localStorage when missing, and owns session CRUD, greeting fetch, autosave, branch/restore, chat, streaming chat, and resume helpers plus zod validation of agent envelopes.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/api/decision-memory.ts#L147-L265",
+          "version": "repo-lines-v1:sha256:249f3f8285d7fe7430c6f5f3b3d34b4db6b759abbbda6fe5bd10e43334f13f2d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE5LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2MjQxNWM2MWFkZGM5M2Y3OTQ5NjdmMjQ4NDBmYTJkNTMwMjE4M2NhZjYyYTE3Y2Q5NjhlYjVlOTkyMDMzNGI1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJkM2ZiNGY2OGEwN2UzMDk5NjhlNDRlOTE1NDUxNDkyZGIyNTZiZWUzMzI0MTQ2M2VmZjQwOTM5Mjk2ZTAzNmI5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJhMTI0ZWZlNDQyZTMyZDUwODcwZmM0ZTJiMzFhNmZkY2RmZTA1ZTI4ZmI1YWIwYzkzMWJmZjFjYzA4ZGIyMDgzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIxMTYyYjY1OWQwNWE4NGUxMDBkYzdmZDFiOTA2ZGFkZjRkMDY3NjQ0ZWU4YTRkYTE3M2Q3MGM4YjczZjdmNGU1In0"
+        },
+        {
+          "resource": "repo://apps/web/src/api/decision-memory.ts#L26-L47",
+          "version": "repo-lines-v1:sha256:5d0c8289e9b079d7dede6e704e62c93bb2d594605c7767460334964669379163:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MzJlNGE2Njk4NWNlMzE0YTQwNTA2MGZlYTk4OTAzOWNkOGRiN2QxZTc4NWU4MTNmYzliZGE3NTg4ZDIzNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxNDYzYjUxMjhlYTVhZWUwMzhhNDg1Y2NmZWE0NzE1N2MzZDBiMjg2NGUyM2QzMDUyYjBkNGIyNjkxZTQ1NGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdjOGQxNGE2ZDhlNTAwMDFjNTIzNGRlMGE2YmFmZTA1ZDQ3ZmJlNTRhNDY5NDdlMWM0ZDJiYmY2NDQwMjU1OWQifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/api/decision-memory.ts#L267-L494",
+          "version": "repo-lines-v1:sha256:f94c2ef0f9c8f8ec89f2ca4e1bbbf02e89b38505708cdc71a01bc79fcdffe63b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjI4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzNmQ1ODNhYTIzZTllYjFmN2YyYTM0MjQwMGY0ZjBlZTdhODJiMjMwYjA0ZjFhODVhYmRiNWEzNTIzZDBiNjA5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjMTI3N2JkYTllMTU5NDMyZDgzMzA2ZDg1MTZmMmI4MjFiZDIxZDUwZDNjNTcwYTIyMWMyNzM2MzlmNDM4ZTllIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://apps/web/src/api/decision-memory.ts#L49-L145",
+          "version": "repo-lines-v1:sha256:cab49dfb44a7b9f050e13c3debdbd3026193f11192ed470ed0fe0b691409d78c:eyJzZWxlY3RlZExpbmVDb3VudCI6OTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1YzJjZTg4ODk0ZWQ3MGNkNzdkYjZjMTQzYzJlM2YxZTU0YzM2YWZkODhhN2FhYjI3ZDBkNTdkOGRkMGYyYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVmOTE5MzI1NDEyMzBiYzI4Y2E5ZjRiZjQ4ZDRjNzIxMDAzZGFhNzBmYjhkZWExM2JkMDVmYmM0MWU3ZGFlNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU4NDYyNWNhODE5MTEyNWFhYjFhN2I5NTAwN2JhOGY4MDkzMjIzNjEwOTUxYmEwZTM1OGU4ODc4MmJlZDM4ZjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_50083733e932411f9219e2fada028f1d",
+      "statement": "The mobile app is currently a shell rather than a major product hotspot: apps/mobile/app/_layout.tsx defines the Expo Router stack and native providers, while the current home tab at apps/mobile/app/(drawer)/(tabs)/index.tsx is still placeholder content.",
+      "evidence": [
+        {
+          "resource": "repo://apps/mobile/app/(drawer)/(tabs)/index.tsx#L1-L18",
+          "version": "repo-lines-v1:sha256:f542bb46e52a11a074ac86804accc44f1c15bb90dbc244787c32e4c106e21c22:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlNzA4ZDBlZGZiNTkwY2UzNzVkYTkxMDRlNWE3ODgyOGE1ZGU0MjU4MjQ3MDM4YTVlN2EzMGIyNTU4N2ViMTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhlNTZmM2M0ZWJmNTgwYmZlYjBlZTUzN2ZiYmMxZmRkNGU2MzQ0MTVmYTBkNmVlZjQyZmFjNjU0ZjQ5NDJkM2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://apps/mobile/app/_layout.tsx#L1-L39",
+          "version": "repo-lines-v1:sha256:f533284f63a532be10360aefb5eab8eeb4bbcea9a63acbb2e34763fefb1a2b6b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4ZmNkZWQ0YzcyMzg0NmE0ZjAxZWFiOTYwMmYyYzA4NjM3ZjQyNzAyYjljZWNkMzZhYmZlNTY3MDg2YTE0MjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlY2JkMDdlMDdmMTllOWZjNjc4MzUxOGM3MGNjMDY0NzQyZGM2ODVlY2MyM2MyMDZhNzhhNDE0ZjgwMDM1NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c33d9ca0ff8c422c841a74761ad8a2bb",
+      "statement": "services/main-backend/cmd/retail/main.go is the backend process entrypoint and supports three execution modes: normal server startup through bootstrap.Run, database migrations through -migrate, and metadata seeding through -seed.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/cmd/retail/main.go#L17-L38",
+          "version": "repo-lines-v1:sha256:d4246b548c87eb80c39b10515b5dd461dc0d7a252579b6084e42de62f2dd9d2a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNWQ2NGY5NzFiMjRmNzAxZDM0Yzc3ZjEyNWFkOTNkNzBiN2I0MGEwMmMwMjM2YjA0NTM5M2UyNGJmNmI1ZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc1NDE5Njg5NDJjMjAyNTE1NDM4OTQ2MDU0NTQ1NTBlMzAyZDIyOThkZGZlYjhhZWQwNjc2NWU4MDkyMjFkNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7ca729e075674c11bb785c32a4cecd2e",
+      "statement": "services/main-backend/internal/bootstrap/bootstrap.go is the highest-signal backend wiring file because it loads config, connects Postgres, Redis, and the job client, constructs the domain services and handlers, and registers route groups for identity, users, checkout, orders, files, products, accessories, stores, sessions, resume-session, promotions, and admin.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L141-L178",
+          "version": "repo-lines-v1:sha256:262243d4e273336085c68905108608a6c840baa3411377f8fe5fb066af2e3aea:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzNmFiZDdjMWZiMWY0ZTQ2NzkxMzliODRmYTY4NGY5MmFkMzI2NDNjMjBiZTUzY2I4MTZhMzM4NWZhYTVkYjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM1MjhhNjY3NWEyMTBmZDE5YTNkNDEyYjU4N2Q0ODg1ZmU0NmY4MjkxYWQ5YWRhYmI3MDFjYjJmY2I3YzM4OTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI4NDY1NWZlMjNlZGQ3OTEwYWE2ZGE2ZmNkMmNiNWVjYWY3YjY0MGRkMDg3NGU0M2IwY2RlZWEwMmY3OTQxMjkifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L51-L140",
+          "version": "repo-lines-v1:sha256:8aa8b8f16376871bdfefe7c443ef707c3932a6faf10962a7338a7073343190b9:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRiZjJiMmNlNzg2N2Q5NzA4YTViZTBiNWE4MDVhOTNiN2IwYTY5MmFiMDNhYTBhNzM0NDE0MDg3MWJjZjdkOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiMjA1MmY5NGQwOWNiMWMzN2Y3YTgzY2Q0ODRkNTIxZGNkNzYyMmYxOTIxMjA2Y2RjODQ4NjE1ZjU5MjNhYzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkYTFiMzY1MzgyMGM2YTEzOGU0NjNjZDhhNTg3OWRlM2U5MjIzNmE3MTQxMjQxZTY2YWMxZTBmNjIxNmI1NmYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2038c520c44c4544886aa94c70adda5f",
+      "statement": "The decision-memory backend handlers use optional bearer auth plus X-Anonymous-ID ownership to scope session access, and they require some identity to create or list sessions.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/handler.go#L33-L74",
+          "version": "repo-lines-v1:sha256:7ec8c94ffcf4d2743c06f9d7c4acf5e8c7786d26d383631877b838bbff0f001f:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyZTY3NTEzNGJiNjA0YWU3MTg4OWIyYTAwYTdjZWNhMTVmNWJlYjUwZWYzYWZlNTY2NTM1ODI4NjE2MjIwOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRmN2U2MWYzMDVjNDQyNWM4YTkwYzUwMDFkMmY4YjIwODNjYzZjOTQ0MzhkMmM0YTRlM2JhZTEyOTc1NjM3YzQifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/handler.go#L80-L113",
+          "version": "repo-lines-v1:sha256:600093a18a1c6148ad4301e1dd8fe21fd13930f888215d659c30e0e554950372:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5ODVhNGFmODk2YTUxODgzYTZiOTkyOWNiYTVmMTgyNzE4MjQ5NTcxMTFjY2I0ZThmYmMwMTk4OGZkNDQwZjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ2NDljYzk3NDY0NDAwMmQ0MjhhNzRhYWE2ZDU3YzQyNTYxYmZiYTcxOWU2ZjVmZDM1YWRlZWFiYWI5ZWE4ODQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBhNDkyNjMyZmQ1MmU3OWFlYmQwNzU3N2M2ZDVjZTZiZTExOTQ3ZDMwMTIyYjU5YmRkNWYyZGJhYjQ2ZTcxYmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf8d4438de1e498cb3dc2e49a9f2e406",
+      "statement": "The backend chat handler persists the new user message, reloads the session history, forwards only user/assistant messages plus extracted comparison-eligible product ids to the AI runtime, validates the returned envelope, and stores the assistant message with the full envelope JSON in ReasoningGraph.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat.go#L148-L190",
+          "version": "repo-lines-v1:sha256:0bce0645b9390edbbcf768da5e2c55dd704bbf0d4479f3c5074e519812b2fefb:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRmOTkzZGI0MTVjZDk2NmRjYzI5MGFmYmE1ZjQwODgxZTQ3NGNhZTI4MjRiZjBiNWMyOWNiYjQ1MDQ4OTEwYTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ4MTM1NTAwODRiY2ZjMzQ0YTI4NWQwYzVlMmYzYjdhMjBjZTU3ZGFkZWZiMTJmYzgxZjU0YWMwYjA4MDcwZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2YTNlOWJmMDlmNWE0NDc5YzZiNDBlODBiYmQ1NTVlMTk1Yjc1NTRhZGJkNjQ2M2I3YTEzOTI0NmY2YTkyODEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat.go#L40-L84",
+          "version": "repo-lines-v1:sha256:2ba4e235dc7de15fc38ff443d640ff03b5e898a4aea5a43efadb044383ac6bdc:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyZjYyMzkyYjY3NTQyYTNlZTQ2NWJiZTQ3NmJkNWY4ODU2NzE5YWUzMGZlMjM0Yjk1NWFmOGFlMGUyYWFhMGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMxN2M4MWVmMzlhMzFmZjcxZDJiYjEzODQxZWE1ZGZjNjcyZGI0MTY1ODllN2Y2NmFhYWQ5MjE4MmY5Nzc4OWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmOWIyYmNhNTIyMzAwNmRmZDYwNDFhMDQwMGZiZTY2YWJiMDlhNDEwOTY2YTViY2EyMDU5NGY1NzE4OTYyZDcifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat.go#L86-L146",
+          "version": "repo-lines-v1:sha256:2ce5cc0354696d3484e46876970a69eaa3a7c5fafba70eed2542dcbd5b0f1da6:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExZjVhNGM3MGRlNDAzMTljNzFjYjZmODVjZTFiNTE0YTA4NGFkYzlkZTE0NGRkNWQyOGI0OWU1YTVkNGM1YWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFjODVlNTc3NTI4MTZiYmMyODcyNGUyMWRhNTU2NTA2ODc0MjNjMTdjNjU1MThjODA5ODIwYzRjOWU4ZDc4YTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjYTZkNzQ2YWEwMTcwNzQ1YmZhM2FkNDI3OGNkYjkwYzdiOGY1ZDg3YzE1NzEzMTg5NWRiNjExMDMxZDhmMmQifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat_test.go#L58-L120",
+          "version": "repo-lines-v1:sha256:29eefab7113d9d1d7905b966076008ed7c74666017ea04400dc79005daabe21c:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxOWE1ZmYxZTc1ZTBkMWE2Y2QxYzQ2MDk5NDZlMDA4OGQ1N2RiNjMwNjYzY2VkMjRmMWNiNjBiZDMwYWY5OTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiOTQ3NTM1OGRkNDVhNjc0Nzg4YmU3ZjcxNzNjZmZjMWEzNDk3MWE1ODM3MTIzNGU2NGRmZTFiOTMyNTIzZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRjNTMyNTRlODZjZDhjNDgxZTE0NjIwODFmODcyNjBlZTRhZDQ0ODQ2M2NjMmI1NjFjZWIzOGNlOGNhMzU0YTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fcc81e48fd204fd7a362fbd96d661666",
+      "statement": "The backend streaming chat path proxies AI runtime SSE events, reconstructs the final assistant message and decision/envelope from streamed events, and persists the assistant response when the stream finishes successfully.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat.go#L192-L295",
+          "version": "repo-lines-v1:sha256:49e0a86465b3397f24c15586dea8a311a51b429690fa5aeb2604b1db93352ff6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhZjdjNjJmMTdlNzdmMDJkZTIxZjI5OGMyYTdlZTExNDAwZjgxODFlZmJjNTg4N2IwNDZkNmU1N2Q0YmJmYTcyIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlNTEwZTk0Y2M4ZDY5MDcxNjVjOWNhMTY5OWJkNDViODQyYTNmNDM3NjUwOGM2ZTU4ZGY5MjczMDMwMWJkZjUzIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlZWZjM2U5ZWE2MjUxZTc4ZWRjZmVlN2FlMzUxZjA3ZjIzOGUxOGQ4ODQwZGU1Y2NlNGJhYTRmNTMzYmU3NjBlIn0"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat_test.go#L181-L219",
+          "version": "repo-lines-v1:sha256:f52d63c2522d0780496ab7ee216792847cc466af3a934ecd0e5734398fda6d80:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlN2M0MmZjNDE4YzMzMzcxYjNhZjhhNjI2YTM3MzI0OGQ3MzQ0ZDA3YjI5MTk1OTRjN2VhZGIwNTY4MDQ2NzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6d0974f81c62408886c23cd918bf9bf0",
+      "statement": "The decision-memory interaction handler is the main dynamic-UI interaction hotspot: it accepts only schema_version 1.0 question.answer submit events, deduplicates work by interaction_id with a leased persisted interaction record, validates that the request matches the currently stored question envelope, and can replay a previously stored response envelope instead of calling the AI runtime again.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction.go#L179-L243",
+          "version": "repo-lines-v1:sha256:4152328b73857d727bea7fdb498e1ce44c61af4ccd51e60b209a1748d22953ad:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkNDY4ZDFmOGIxZTEzZDRiZjBjNWNjODY2YzE0NDIwNjZiODU2NjEwMTI5NDRlZmUwOWVkZGY1OThjNzQ5ZGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjYzYTZlNDA3MWFiYmFjMjZmYzgzNDE1NGYyZDczOTE3ZjVhMWMyYzg2YTMxM2YxMmNkNjMwNzZiZWYzYjlmMjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1Zjc2NGUxNmY5ZjYyMzZmMDFkNTZhMTdiODhhNGY0YmViNWE5ZGUzYzQ5NGFhYjM3MWJmZGM5NjQ2MDE4MTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction.go#L21-L25",
+          "version": "repo-lines-v1:sha256:bb674b1ef0b6ad7063142aec853989350039679956d1a6de9af09a1a9446f09c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBkOTg2YjBkZjdlOWM0N2FhNzgyYjA2NjA5NDY5YmM4ZWVjYTQ3NjEyYjgzOGNmODI5ZGRhNGJjZGRkMzMyOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjQ4ZjI2YjJmM2ZlY2FiMTFjMmFhNTNkOTdjNTg5NTMyN2EyNDAwMmE3YTQ2MTNhYWQwN2Q4NzNkYmUzZDQzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWY0Yjg4ZWNlN2E3MzRlOTQ4NmQ2MzNiOWM3ZDQ5MWFiYzA5ZTZlMjQ2ZDQ5MGIzMjYyMWM2MmZiY2MyNzVhZiJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction.go#L64-L154",
+          "version": "repo-lines-v1:sha256:f665f9b8dec668b9ddc9a8d15839d7da6c3cafc18c427e9b371cd5c84b77e94e:eyJzZWxlY3RlZExpbmVDb3VudCI6OTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzYWFmMmQ4OGVhNzY1NWU4OWViMjljY2NkMjlmY2FkNzY0YzRlYTM5NjkzMGM5ODU2ZTJkYWY0ZWRlZjk1ZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUxMWI2OWYxNmVlYjg3MDhlYjM4NDQ2MmQ4NTgxZGY2YjRmZDRhMTdlYjg0MmQwM2VlN2E3OTljNTJiMWVlMGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ4MWY4ZWVlZmFiMWI1NTU1MGQ0NDcxOTAwYjg3MDQzY2VjZjZjYjc0NDkwMjFkZDcwMzM5YThkZmZhZTEwMjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_36a0b1702dfd49dab5ff299fedf5a38d",
+      "statement": "The resume-session service enforces single-use token lifecycle rules: generating a new resume token revokes prior unconsumed tokens for the same session, resumption rejects invalid, revoked, consumed, or expired tokens, and successful resume marks the token consumed before returning the session.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L50-L84",
+          "version": "repo-lines-v1:sha256:0b63cb241e339495aa7bc24502dfd7a8af26228967af61b3541e84b207958dd0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0MmVjZjE5ZmRmODI4NTM0NDRhMjk4NmQ1YWRkZTM2MTNmYjliNjE3OGU0MWFlOTg4ZjAzNDk1ZGI5YTEzNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwMzAzMGE5MzkzYjhmZTE0Yzc5NGIxMTlkZDRkNWNkZDY3M2RmYjlkZmZlNzAxMTJmZjkzMDRhODYwOGRmNDcifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L86-L139",
+          "version": "repo-lines-v1:sha256:3154d12b89cea0646256ca9c97205a6786e8b6efe11dd0c903b4e4f734cb040f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNDJhMmVmZjdkNzM1YmFiYmQ0NGU2NTYyNzQwZGY0NjE4MjVlODNhOTg1OWI0NDljMTU2ZWQ1NWFiZjUxYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5NmVkMjcyMDIxODRkMGY0ZTQ5MGFmNjVjODc4MTI4OGUyNWNhMjYzNzRiOTU5MDIxNTk3OWMzYjcwZmVkYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiNmIzNjU0ZTM0NDNmZDZkMjM4YzdlYmVmMWJjNTllNzI2NDc5ZGQyZWY3YWQwNDMwZmNhZDE1MGRiZTgwYjkifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service_test.go#L123-L175",
+          "version": "repo-lines-v1:sha256:700c76b765586c83e128ade131d42cc50c284dfe03da09f561eaa7cddd013107:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYjM0MjQ2NzgzY2I5NWM0NjdiM2E1Njc3ZTllMWY4ZjgwYjg4MGU2ZjEyODQwYTg2M2JmNmZkYjQ4NmYzMjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNiNDBhZjI5YWQwMGQ5ZjQ4NmNjMTQ4M2ViN2U1OTkxZTlhOTFiZTRkMjYzMDMzM2UzMjYwNjYzMmEzMzNkMjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjZmQ4MGYwYmI0NDZiYzViMGYwZGExOWNjOTk1NDVhYWRhMWIzZDBiMjljZjZhZTU3NjRlZGFkMjRlNWE2N2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_67b2dfc069244c4fb9b69964dce64868",
+      "statement": "The resume-session service treats issuance/consumption context hashes as audit signals rather than hard blockers for cross-device resume, and its inactivity notification flow requires an authenticated session with a verified notification identity before generating a token, sending through the provider, and persisting a notification log.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L117-L138",
+          "version": "repo-lines-v1:sha256:6320be858576110af09c5ee502dce7a92c309e66afd68f5699ff7430ad89dc49:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5N2YyNjNiNWViNjg3NDNhZDI1NGMwM2MyYWEyNzMwYzA3MDlkMzAwZTQzOGJiMzQzNjg2NDM5NDUyOTA1Y2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiYjMxMDA0ZTU1YzJjNTU0MjI0NGRjMmExMWVhNDNlZDU5YTQ1ZTc0YzA5ZjllYmFhNTJhOTg3ZTU3Njk1MWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUwMmUyY2ZhYWY0N2M3YTEyNGE3YTY5MWM5NjQ2MmJkOWRhMWE3ZmU4N2NlNGZlZWZkNDdlNTZhM2MyZTE1ODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdkZTU3MTI5OWNjY2UyYTM5NWZiNjg1NzQwMWVkODExZjMzZWQxNTRhNGRhMzNiM2Q0NjRiZjE5YzFlMjNhOTgifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L141-L182",
+          "version": "repo-lines-v1:sha256:296e6ec4136275dfa4c92414cc5b211c0730ed1dde4f1e9829c0db57a194af3d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwM2ZmNWQ2MzkyNWI3Y2RmOGMwZmE3YjIzMzk2YWQ1NGE3OTc1MTBjZTAzYWM3OTkzYzBmMTg4NWJiZTc1M2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJiMjQ3ODgwYThlNWEyMGJiYjdmMGQ5NTg4MTkyOTgwYzQzNWU4ZTgyZGU3Y2UyYTRmZWI5NzA2ZTJjMTZlY2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service_test.go#L157-L208",
+          "version": "repo-lines-v1:sha256:980425b99b612d68a1bccb27a6577f45d38855e482290bca9c91b6b1b89ed077:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA5YjFlODNmNWM4NDU2NzdiN2JjZDU2MzFjOWU0NWMxZmFhMmZjMmJmMjQ3Yjk3MTY5N2JhMTc3YTJjMDZjNWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwNmVjZWYyMTBiN2UxNzBmZjM3MDJjMDkyYmZlZTgzODg3MDcwMDlkM2MyNWMzMjJmMjg2NjM4MTc4MGQ5OTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRjZjJmZDYwMmU3NjJiYzc1NjEwMmI2ZjE0ZGRiYzAxZTFiYmNjZjhlOGYyNjM4NjdlNjk5Y2RkZDg5MzUxZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b43e6d4f9c474255aa38765326c4aaeb",
+      "statement": "The AI runtime entrypoint in services/ai-runtime/src/main.py mounts the chat router under /api/v1, adds request-latency logging middleware that also sets X-Process-Time, exposes /health, and converts uncaught exceptions into a structured internal_error JSON response.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/main.py#L11-L18",
+          "version": "repo-lines-v1:sha256:d64cb198cb4af7cdf572a0f72d023d3f00813a1df2c6b74af8816632f818d08f:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjhlZDY4ZjZhYzNkZjI4NWI1YmJiZjJlN2M0ZWUyNzllOWQ0MTcyMjc3Y2YxZjdkODI0M2E0NTI5YzgxNzBlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGRjZDgzOTZmYWU5MGYxY2ViYjAxYWIyMjFiNjQ2NWViMWZiODdiNGRhZmNhNGY0MzdmOTVhODg5YWMzNDUxZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGE2YTUwMTE0OTgxNjE0YzNkOTk1ZTE4MjZhMGUxOGQwMWY0Y2M2Y2E5MGJjZjI0Y2M4NjUyMzZmOTM2NTQ3MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWMwOGM2MTE4NzdmYTY4ZTQ4MDczMGUxYzc0YjRjZjgzOGU4Y2JkZjFlYzFmNzE3NjBiMTQyODBmOGY2YTIyZiJ9"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/main.py#L19-L35",
+          "version": "repo-lines-v1:sha256:803ee42d9f373932089eb5f9242418bb3b3815373f93f2c43d58ce9f67f0f154:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZTJiNTk5NzIyODExMjQzOTIyZDJmNzIzNDY4N2NmMzBhZDUwYWYwZDZiZjRhMWU3NDY1OTM1ODQ3NDg1YzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdiMjU0ZDEyY2I3YjczMGY1ZDBiOGM2MDdhYjY1NDk1MGNlZTRlZjRlNjExMTgzZWNmNWEzM2Y5Zjc3YTExMDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ0ZjJlNGE4MjUyNTY5MDIyZTU4N2ZmY2QzYWFhMDM5NzdhNjM5NWY5YTY5OWQ2MmUzNjBkMTM5MWVjODkwNzYifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/main.py#L37-L55",
+          "version": "repo-lines-v1:sha256:cb0803db1ad38204c54efc51d88214346e9dec14815094aab74ae67b865afd81:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU0ZTIzZjJkMjYwNGQ2NGZmNWQwZjZkZTk0NDIxYzI5YjBmZGFmODRlNDAwNmNlYTllMDc2YzFjODdiN2JmYzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRlNjRlZDZhZjhkM2RlYzcwNzEyMjk1OTY1ZDJjN2I3NTMzNDU1MTEyNmU2ZmYzNmFjYzU4ZTJmMTdlMGVhMDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjczMDMyNWY5ODBiNGFiZTBhNWJmZGViMmQzZWI5MzQ4NzZkM2EwNDMzMjU2NDQ0NzJjMTM2Y2NhMDJiOWE4MGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNDEzNDBjYzIzOWExNTljZTliNjAyMmU5ZjYzMjI4MzJlMmVhZDc2Y2FlOWU0NzU0ZDIxMGViOGZiNmQ1ZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f0bf3d89951a46fda2089e75c1541e06",
+      "statement": "services/ai-runtime/src/api/chat.py is the runtime’s main request hotspot: it defines greeting and chat request models, builds an OpenAI provider and backend ToolProxy from settings, serves direct chat responses and SSE chat streaming, and falls back to a canned localized greeting if model-generated greeting creation fails.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/api/chat.py#L21-L61",
+          "version": "repo-lines-v1:sha256:41aadb111e706de1ac66c20b5d541b59a738239ef29e0532cdef2f32cfa6f108:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkOWI1ZmRjYmJhOTMwYzkwYmI3YjBkMDlkZThlYjg1NmY0MTI2ZTkyNjFhN2IxNTMwZmY4NDAxNTRlODJmOTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA0OGY4ZTBmZjEyYWE3ZTAyNmIyYWJlZjllMzJmZmU2MmZlNTE4OThkMDlhNjRlODZmNzk5NDNiOTZhY2QyMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNlOWRjYTE0YWJjMGNkMTg3YjQzZjQzOGEzMzg1NGI4OWQ3YTAxMDkwZWQyNTM2MGQwMzBlMzdjMTRmYmQ4OWYifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/api/chat.py#L63-L93",
+          "version": "repo-lines-v1:sha256:d70556a91d59308e60db68a604076a189c4fa10ace03c385c559d3f870dc7fa6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4MTdiM2Q1YTM1NThjNWJkOTM2OGJkMzI2ZWVjZDczNzcxODNkNjFhNjgxN2I0N2JiZDZmODJjOWI1MGRiYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1NzE2YThiNzVmMjNiNWFlYzkzZWYzZDdhZDA0OWY3OGI2MDg1MGViOTkzOTgyZWE1MDE3OWFjMDZmODkwMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA2NzA2ZjQ5YzkyNDg2MjY3M2QyNTkzYmU4OTQ1NmQ3MzQ4ZDE5YWZlMWRkODVlYWYyNDFkOGQ4Zjk3MWM5MjUifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/api/chat.py#L95-L144",
+          "version": "repo-lines-v1:sha256:65857a7ecee3baf040840a79fc8287ae01e5e424648ec5d01a41d077549a3b52:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5ZDgxOWZmYjdlYmRlZGZmODY0MWUyN2JjNzU3ZmZmNTAwMjc0MTI0NWE3NjQ4YzE0NTE4MzdjMzA4NzJlZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjZWE3M2M0YWRiYmQ1ZjQ3ZmVmYTcyNmY3MTVhZjk2M2IyM2NlNjg3ODVkN2M5NTA3NjM0NjA1NmUzNjcxZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIzNDA3ZmNjNjJlMDZlY2M2NzMzYjEzNzIyYWQ2ZDg4NTE1NDI2MTk2NDkwOWYwMWU4ZDc0NDI3OTg5NmQ2ZjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_713fea6971c64a1082041f01d0bf962f",
+      "statement": "The AI runtime workflow in services/ai-runtime/src/graph/workflow.py first loads catalog data and offer comparisons through the backend tool proxy, then invokes the LLM with a strict AgentDraft JSON schema, hydrates the final AgentResponse against backend data, and retries self-correction up to two times when structured output validation fails.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/graph/workflow.py#L20-L21",
+          "version": "repo-lines-v1:sha256:043562af962d78db50df1bf2e813ed7dead24beee0563c0c8ab4df65f1798ddf:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTQxYWIyMTAzNmQ0N2JkZWI2NDNlNzRiYmUyODRmNjQ2ZmE1OTc1MmUzMGVkZGRhMWI0MWQ1YTFhYjJhYzQ4MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWE3NmNjMGI4Y2E4YTM3Y2FjMjUwODFmMTk1YTk4YmZmNTZjMjRjYjczMmU1MGU2Njg0OTU1NWU2YTcxYWUzMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGFiMTRjMGI0MDdmMmE0MWQ4YzEwOTFlZTQwNTJmZTU1MDFjMzgxOGVmMDYyNmE5OGJjMjY1Yjk3Y2Y4ZjNlYiJ9"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/graph/workflow.py#L34-L46",
+          "version": "repo-lines-v1:sha256:6e842a0455c3d07ab380c46e9ee2e900eb9dcba7af5a8d5f6219a798f1b49a16:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0MmVjMWZjZWQ1ZWYwZjRiMGZjMmI2ZjgzY2Q3NTk0NjhiOWQwMTJlZTFmYTlhZTdiYTQ4YzNjZjVmZjUyYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFhNTNhMWQ3YWI2ODEyZTEzZDExNDM4ZjA5YTI4N2VmOTMyNmYxY2RhNzg1MDQxYmI1OWU4MTk1MGI4OTkwNmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJkNTRmNWY1OWM5YmI4ZWJjYjk5OGJkOTc2OWVkNjc5NDcyZWE2MjgwYjFjNzNlMzdkYTg1NWMyNjZiZTczYWMifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/graph/workflow.py#L47-L129",
+          "version": "repo-lines-v1:sha256:1ae867f3a065ffe5f937341c52340edd1a59b47d9260b274f4350173cd879179:eyJzZWxlY3RlZExpbmVDb3VudCI6ODMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhNjdjNTliYTI3NmJmMDdhNTk5NzViZTE4ODVjYWY0MjM3ZGM0ZTMxMGM0N2FkMmZlY2UyN2QyMTBjYzNmYzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjOTQwZDQxNzQwZDRiYjBjMmFhMjliMTRlMTc0NTE2ZjY1Y2E3MTY4Yjk0MDcwMTdhZDBiYmJmMmQzYzFlYWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmY2JiZDE5MTdiYmRmYTY5ODQwZGUwMjUwNmRmNWM2OGNmMmQzOGI3ZWY2ODIzMTFmNWEzMmM2Y2NlYzEyYzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/tests/unit/test_self_correction.py#L17-L42",
+          "version": "repo-lines-v1:sha256:daf16e165b67a4f98330c6bd91047c2708162c4570856895a6899fb689a64bab:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkOTk0MmRlYjdkYmFiYzExNGIxYzQ4ZDAyZGE0NjM4NmU5YWNhNTE1YTUyZmI3YjNjNDEyZGM2Mjc5MjFiMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5OWE3YTE4MzZlMTMwNTc5MzA1MGM3OThjZGNlZjJlODQ1Yzc1NmRjMjUyYzdjYmQ5M2Y0NWEwNmM5NDdmN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzMjZiYTBlM2I3YjNkMTA1MjJjMjhiZjZkNDU4NDIxOGJjN2U4MGQ1OWNiZjIxNDE4MTUxN2M3NDVmZjZiOTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cca1574f75944754863039e027d79421",
+      "statement": "The most important shared contract package for dynamic UI is packages/protocols/src/index.ts, which defines the allowed dynamic component and action types, the InteractionRequest payload shape, and applyUIOperations(), which sorts operations deterministically by sequence and id before replacing surface or nested components.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/api/dynamic-ui-protocol.test.ts#L1-L56",
+          "version": "repo-lines-v1:sha256:ad091ce6291a5cfafb82999d1bcf457a33c3949bb15e232ea41911a474e2400b:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkZmJjMTY1Yzg3OWExMDg1OGZmYjk4ZjM3ZmE5YzBiNDdlNzUwMDYwNDlhNGRlYTM5NjkyMzNiZTU0MmZkY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://packages/protocols/src/index.ts#L1-L113",
+          "version": "repo-lines-v1:sha256:2b633845e2633d22dd80d896d02553eee32064afd59b7094ad5c59f526d393f8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiMWUxNzY3YWQ4MmM5MzdkNTJjNjQ0NmY4NDE4ODY4YWNkZjE2MDBiNGNjOGQ5MWNlNDQxMTg5MDg0YzNhOTg4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI4NzQyNmRmMmM5ODZhNDc2NGE4M2QzYTY3ZjY0OWYxNDk4MWEyMGFhMDYwYjMzNTdiYzIzZWUwMGMzYmZlNDMwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzMWUyM2NiYzgxZDU4NDZhZWJiNmU0M2QwNjVhNjc3MTdiNGZmZDdiMDg0NTNkMGYzMDc5Yjk0ZjBlYjE1NmUzIn0"
+        },
+        {
+          "resource": "repo://packages/protocols/src/index.ts#L115-L166",
+          "version": "repo-lines-v1:sha256:aed6a88df04c828fd26d58a4387dbeea1d4bb97ad62b1e3a2a208dbb66ef653d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1N2FkMGU0ZTQ5NTkwZDFmYTExZjU1OGQ1NWEwNGY5OGYwYmU2NTc5ZTdjZjg0ODRjZWExMzc1NzFjZjk4NzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMWQxYTYzMzkwMjI5Yzc5ODM0N2U4M2EwNDA1NDQxYzk0MDAwMzUyODRhZDE2OGMxYmY2Y2RmMWQ3MGEzNzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2NTdjYWQ0MTcwZTc5ZWZlYjc4M2JkOGZmY2VmNTM0NjZkMDg3OTE1NzVmMzlkMTc4MGYyYmRlNGQwMTc5OWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0352a9da433b4ee095f723ed5c52bfdc",
+      "statement": "packages/api-types is the shared TypeScript API payload surface for client code: src/index.ts re-exports identity, decision-memory, and promotions modules; identity.ts defines Zod-backed auth request and token response schemas; and promotions.ts defines checkout incentive trigger and promotion status payloads.",
+      "evidence": [
+        {
+          "resource": "repo://packages/api-types/src/identity.ts#L1-L32",
+          "version": "repo-lines-v1:sha256:21823766e0fa7cca939db55ce3ffd3b2b79b5768c5069f3da88505324b143c83:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgxNDUyODY0YjBkOTZlZmU4NjkxNmZmNzQ1YTBmNzdhYzcwYjMyNjU4NWMwZWFmNWMzNGY5ZTRhNGY2ZmJmNjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRiMDJmZWZhMzU2OTc5Nzg4OTQ5Njk5ZGRmY2M3NjVmZDlmZTczMmZiYjg5NmI4ZTQ1ZThiYzE2ZWFjNzlkNDYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://packages/api-types/src/index.ts#L1-L14",
+          "version": "repo-lines-v1:sha256:26667b54a21f64b0f176747ead16e0f65ab8d6a72e66500ab3b4297bb4ae56bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExNzQ0MjkwOTg3MDNlNjM0Y2M2NjRlNDk3NWQxNGFjNDkxMjc0OWU1MTYyNGFiMWEzNTNiZTI0NzNmOWMxMGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2ZTAwMzU2MDUyNmM4NGFkYzNmNjU2NDZlYzkzMDA0OGY1NmNiMmYyOWNmZmQxOWY3OWFiNWU3YzJjZDkwN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://packages/api-types/src/promotions.ts#L1-L22",
+          "version": "repo-lines-v1:sha256:0ee219ab8678d615ed39f3cfe3afa096f48a56dc775f57fefcc7948b61ef8e10:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4ODYxNmVjYmY5MjY2MDgyNDc4ZTYxNzU4MzEyNTRjMjU0NmIyODZjMGM0ZmNlMGYyNmE5NTJmNDU3NWI1MmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmMGFhOWVjMTNmMTVmZmY5ZTc4YTU3ZWQ4N2U0ODhkMDM1MGQyMGU0MTZjODI4NmU4MjUxMzlhN2EzN2MzOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4802e2278a764de6a23eb1e40037f926",
+      "statement": "The highest-signal tests to open before changing active flows are the web decision-memory and resume tests, backend decision-memory chat and resume-session tests, AI runtime graph and self-correction tests, and backend OpenAPI contract tests, because they cover anonymous/session headers, SSE parsing, ownership, token lifecycle, workflow hydration, bounded retries, and documented API surface expectations.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/api/decision-memory.test.ts#L9-L136",
+          "version": "repo-lines-v1:sha256:bd01e59235d60cc44dba669a7dce73ef9ba32416d3bec80c9584066a59d995c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTI4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIyMjIyY2M2MjExOGUxODJlN2EyN2VlODkyMWY5YTI5MjNlZWQ1OWZjYzkzOTM5MTgyNzc4YjVjNTYwMjNhZGJiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjMGUwMWM5NTk1NzQ0NWJhMjhlNGEyMGQ3OTJiYjNjYWFkYWVmOWFmODg4OTAzNDA3MTQwNGIxYTFmNzhhNmMxIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/resume.test.tsx#L43-L132",
+          "version": "repo-lines-v1:sha256:35d0f3f28040ed80dd6831df47a01deced431d7062a4b2ab24b33c915a008228:eyJzZWxlY3RlZExpbmVDb3VudCI6OTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI2MDRmZjU5ZGU2MjVmMWI4OWZhMGNkNTI4N2JiOWI0MWNhYTIzNDA4ODI0NzVhZWI3NjQ1YmI1MjQwYTA4ZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4ZDUzMmY3NDgyM2M0NTcyYWQ3OWI3ZTg1YjFhODAyOTYyN2E2ZTBjOTYzMTBjZGQ2MGZiMzk4MDczMzUxZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/tests/unit/test_graph.py#L54-L130",
+          "version": "repo-lines-v1:sha256:52e5f67406fe4cb55d69fe26fbcc359dff7bc989a5071b892d0820fa35fa0483:eyJzZWxlY3RlZExpbmVDb3VudCI6NzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkOTk0MmRlYjdkYmFiYzExNGIxYzQ4ZDAyZGE0NjM4NmU5YWNhNTE1YTUyZmI3YjNjNDEyZGM2Mjc5MjFiMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlNGI3YzMyZjExOGZiNzg4ZTAyODU2NzFlM2EzNTQ2MTdkZDk2M2ViMDVkNThkOWFmMTk3ODY5ZmU0NjAyMzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIzZGYyYWNmMDZlOGMzZjAzYzcxMzVjNmU4YWM1YTljYTU0MzJhYmUwNmE3NGFjYTBmZGQ5YTUzYTAwOGY5ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVhYjdiMjcyYWI0ZTI1MTc1YjVmZDI0YzEzY2ZlNTYzNDI1MTRjMDI3OTQ2ZjAzYjUzMDVkZjIwMzM3ODc5ZjkifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/tests/unit/test_self_correction.py#L17-L42",
+          "version": "repo-lines-v1:sha256:daf16e165b67a4f98330c6bd91047c2708162c4570856895a6899fb689a64bab:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJkOTk0MmRlYjdkYmFiYzExNGIxYzQ4ZDAyZGE0NjM4NmU5YWNhNTE1YTUyZmI3YjNjNDEyZGM2Mjc5MjFiMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE5OWE3YTE4MzZlMTMwNTc5MzA1MGM3OThjZGNlZjJlODQ1Yzc1NmRjMjUyYzdjYmQ5M2Y0NWEwNmM5NDdmN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAzMjZiYTBlM2I3YjNkMTA1MjJjMjhiZjZkNDU4NDIxOGJjN2U4MGQ1OWNiZjIxNDE4MTUxN2M3NDVmZjZiOTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat_test.go#L58-L219",
+          "version": "repo-lines-v1:sha256:6b87d8ce4d06d735343345d2529de99fb2ecc25f22ed3a84d9310b667388cadf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3MTlhNWZmMWU3NWUwZDFhNmNkMWM0NjA5OTQ2ZTAwODhkNTdkYjYzMDY2M2NlZDI0ZjFjYjYwYmQzMGFmOTkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJkYjk0NzUzNThkZDQ1YTY3NDc4OGJlN2Y3MTczY2ZmYzFhMzQ5NzFhNTgzNzEyMzRlNjRkZmUxYjkzMjUyM2VhIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/platform/testutil/contract/openapi_test.go#L9-L30",
+          "version": "repo-lines-v1:sha256:f48d3cc4d1cb800abdf5fbdd9bee0ba0e638e16c89644f14cac50de3eaa75c45:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyMjg0ZjdkNTAzZDBkMmFhNjJkNmJiZmY1NDhlY2VjZjBkMThmN2VhMTFjNTFhYjk0ZDgyNjg3ODFmMjZiNDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmMzEyZTdiNzJhYjUxODFhOWQ3MmU4NjA2ZGYzM2I4ZGIzYWE5NmQ1MTlmOWFkZjI1MzNkZGNmM2Q4MjQzYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM4OTI2NDZkMDg4YWFmOGUwMTE2YjhlMzk4NDExMTcyZDI2MGU1MDYyOTY5OTlkYTQ4YmYwZmQyNjE1NjA4N2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service_test.go#L106-L208",
+          "version": "repo-lines-v1:sha256:c4288b51cfd5d61eee1fc6421300dad2474aaacc1217c90ca7388d1005701d2c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZWVmNjk4ZjYwZDllNWFjMzE2ZjYwZTUwMmFlZjcxMTNlOGRlMGE3NTgwNjg0OTBlNDdhZGNkMjBkMjYxN2Q1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJiMDZlY2VmMjEwYjdlMTcwZmYzNzAyYzA5MmJmZWU4Mzg4NzA3MDA5ZDNjMjVjMzIyZjI4NjYzODE3ODBkOTkzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5NTRmOTZlYzhjNmU1ZmZlMTRiNzU2YmFhODQwNDc1NjQzMzlmNTE1NzYxZWExNDkyNzllMzkwN2MwMzkyN2VmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MSwiZm9sbG93aW5nQ29udGV4dEhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_1f7eed45bad04598b516d62c093ced1c",
+      "statement": "The highest-signal specs to open before changing current product flows are specs/005-decision-memory/spec.md, specs/007-resume-shopping-session/spec.md, and specs/008-llm-integration/spec.md, because they define the repository’s intended behavior for autosave/branching, secure resume-link handling, and AI runtime streaming plus structured-output requirements.",
+      "evidence": [
+        {
+          "resource": "repo://specs/005-decision-memory/spec.md#L11-L24",
+          "version": "repo-lines-v1:sha256:b08875a99ad2787c9a6de87cb2eb0aa254a896e1bab0fc8bf9423109594d36a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMzNiYjY0ZDViYjk4NzRlYmY5N2NiZDZiYWM2Mjc0OTU2ZGUyNzNmZDE4Y2Y2OTdmZjBlMDcwMjhkOTI2OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkNWNjMjZlMjNkNWQ2MDVlODdkMTBkY2UxZDE5MDBhMjk3MTFhMWRmNWVlMmZkMWU0Nzg1MTQyMDA5NTJkNWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwMWYyZWMxNzU5M2MxMDU0ZWI0NjM2N2Q4NDUzZWYyNGExNzNjZTk2YjcxMTdkOTFmOWE2OGQ0NGZlZjhiMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwMWYyZWMxNzU5M2MxMDU0ZWI0NjM2N2Q4NDUzZWYyNGExNzNjZTk2YjcxMTdkOTFmOWE2OGQ0NGZlZjhiMDEifQ"
+        },
+        {
+          "resource": "repo://specs/005-decision-memory/spec.md#L91-L105",
+          "version": "repo-lines-v1:sha256:d5166bb116f2bf419383418cb8957a093770938f447501ff6e7174527991b393:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxZjJhYzIyODI2ZGMxZWY1MzljZDdlZjFkZjU3ZDMzM2VkODA3ZGFkMTc2YjhjNTQyYmZjNTBkY2VhZTIwZDEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwMWYyZWMxNzU5M2MxMDU0ZWI0NjM2N2Q4NDUzZWYyNGExNzNjZTk2YjcxMTdkOTFmOWE2OGQ0NGZlZjhiMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxMzc0NDQyNjUwY2UxMDhjNWE3ZDc3NjZkYjBmZDhkMTFiNTJmZTllZDNkNzQ5ZTAzZGQ3YTk2Yzk5M2RjZDgifQ"
+        },
+        {
+          "resource": "repo://specs/007-resume-shopping-session/spec.md#L101-L123",
+          "version": "repo-lines-v1:sha256:c6497b748aa7eb3040dc9095b3c4bcc701fb0843e1d3b5060d90ee3d90d80c38:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1MmNkZjkwZmM5NDJiOTcxNWE4Y2EwYTI1ODI4NGZiZTA5YWE2YmZhNzRjODM2NGJkMWFlZWMzYTUyZDI4NjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZhMzM0ZjczNDRmOWE4OTdmMWNmZDEyNDY3MmNhZDQ1MGRkOTlkNWU4OTIzYzU0ZGJjMTVmYjYwN2I4YmU3YTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQyM2Y2MjM2ZmUwN2NhNTU5YTc0NTk3MzlkMDhkYzM2MmJkNTg1Y2M3ZjdjZDRlMzUwMTg0ZDgwOGMwYzAwZDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwMWYyZWMxNzU5M2MxMDU0ZWI0NjM2N2Q4NDUzZWYyNGExNzNjZTk2YjcxMTdkOTFmOWE2OGQ0NGZlZjhiMDEifQ"
+        },
+        {
+          "resource": "repo://specs/007-resume-shopping-session/spec.md#L11-L19",
+          "version": "repo-lines-v1:sha256:5a1b938f35767b8bfbfbdb79107b25329bef523269dcf05a669d2f645375d600:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzEzM2JiNjRkNWJiOTg3NGViZjk3Y2JkNmJhYzYyNzQ5NTZkZTI3M2ZkMThjZjY5N2ZmMGUwNzAyOGQ5MjY5MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjlhMzFmZjhjZWIwYWMzZThlNmVlMzM2MmJjZGNkY2Q3MjNiYjA5ZDFlMTRkYTJlNzJlZTU3MTYwOTY3NzI1OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDAxZjJlYzE3NTkzYzEwNTRlYjQ2MzY3ZDg0NTNlZjI0YTE3M2NlOTZiNzExN2Q5MWY5YTY4ZDQ0ZmVmOGIwMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDAxZjJlYzE3NTkzYzEwNTRlYjQ2MzY3ZDg0NTNlZjI0YTE3M2NlOTZiNzExN2Q5MWY5YTY4ZDQ0ZmVmOGIwMSJ9"
+        },
+        {
+          "resource": "repo://specs/008-llm-integration/spec.md#L11-L17",
+          "version": "repo-lines-v1:sha256:6cd847d12bd5484955e08c35711316dc4774ee36f76aebbb91a5ba805b53e8b8:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ5MGUwOTI4MjMyZGJkYTBjYzVmYWE0OGE0Y2MyODQzMzRjNzA2MmQ5Y2Y2YmE3NjlhYWQ5NDQ2NTU5ODBmNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWE3Y2YzYmZkZDQwYjYzOGEyZDUxMzBlZjU5YzhlMGU3Nzk2NGJmMTU3MTljMDlhYzZjNTM4NzY5ZTdiMGQ4YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjYyNWY1MDg3ZWJiMjY5NTllZjI3N2MwZTgyYzU2NzYzZWJmYmMyY2VjMTdhYmYxOGY2NDdiMTU5NzMzZTQ1MyJ9"
+        },
+        {
+          "resource": "repo://specs/008-llm-integration/spec.md#L66-L77",
+          "version": "repo-lines-v1:sha256:5856e47c4433ca1b686b7ef55d301d1521fc3baca3771f33474ad49a5ce9e1bd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmODk2MmQ3YTg5Y2Y4NmY4M2I1ODQzZjljNDhlMmMyZWNkZTViODVhZGQzZjU4YzJhYmQxMjc5ZmNiMzk2YTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwM2Y2YjQwMDhkNDYyMGYwNjg3OTBkOTYxMzkzNGFmMmEzYjNjN2YwYmE0ODdjMjk3MzljMTQ4NTVmNGE4NTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQxMzdmMTRkZjZhNDdjMmQxYWNmMmMxNDYxM2YyNDE3ZGJkYzQzNWZlMDdlMzU3YzQ3MTA1ZWZlZDQ1MGQxODgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5NjM3MDY3M2U2MDYzY2IxN2JiNzI1Yjk5N2IzMGUyODcxZjMxNDc0MjhlY2IxMmExNWExZWI3NTk3NzgwYWMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.5.2",
+    "at": "2026-09-21T02:34:46.016Z"
+  }
+}
