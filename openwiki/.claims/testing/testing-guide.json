@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:36a4bcf24ca3bc97bdb171d6746fa11da6d16e550604799949378d742283b0d4",
+  "claims": [
+    {
+      "id": "claim_b04429c7cd7e4a69b44b2a9e99891dd3",
+      "statement": "The web app's current automated tests concentrate on two high-signal areas: `applyUIOperations` reducer behavior in `apps/web/src/api/dynamic-ui-protocol.test.ts`, and resume-route control flow in `apps/web/src/routes/resume.test.tsx`, with Vitest configured for `jsdom`, globals, and `./src/test/setup.ts`.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/api/dynamic-ui-protocol.test.ts#L1-L56",
+          "version": "repo-lines-v1:sha256:ad091ce6291a5cfafb82999d1bcf457a33c3949bb15e232ea41911a474e2400b:eyJzZWxlY3RlZExpbmVDb3VudCI6NTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkZmJjMTY1Yzg3OWExMDg1OGZmYjk4ZjM3ZmE5YzBiNDdlNzUwMDYwNDlhNGRlYTM5NjkyMzNiZTU0MmZkY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/resume.test.tsx#L1-L133",
+          "version": "repo-lines-v1:sha256:94faa4497e7dc1e435a0749c8fdd5bfeea50717cee43576e79b73e2265a11857:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwZDg5NzY2OTRkMDg2YWYzMWEyMDgxNzFhMGQwNDRhNWVlZDhiYjRhMTY5ZjU5ZmVjM2ZhNTEyZjA1MjgwOWIwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJmNmY1YjQwYjE1ODQ1N2QxNzg2NGYyMTc5MDc4NmRkNWEyZWNkYjY0YjY2YTY1MWY3ODhkNGUyNWNkMzMwM2QyIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://apps/web/vitest.config.ts#L1-L15",
+          "version": "repo-lines-v1:sha256:f092ddd9f17eef2eeca1fae312f70d8dd8e70b398d83a94ea724bad4c77a44a5:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlZGNhOTQ0NjMwM2JjYzA5YWY4ZDMyOWEyNzU0ZGVhNDAxZGFhNmEzYmNjMmMxNDc2MTQxODc3NDhlYzBiOWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a896d8312d9742379468e6eae3aa85d8",
+      "statement": "The dynamic UI protocol tests verify that UI operations are applied deterministically by sequence without mutating prior state, and that a later `replace` can correctly target nested components introduced by an earlier `append`.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/api/dynamic-ui-protocol.test.ts#L4-L56",
+          "version": "repo-lines-v1:sha256:4a50057ce4cedfe2753b93253bc3d2519161052c2ff40b58ac209ae4c8a3f6a7:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmOWFmOGYwN2FhMjIxYjBhZTgyYWU0MWViMDU5ZTA5YTBkNjI1MDhlNzMwNjRiYWRhNGNiYTdlOGVmZWYzNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljNDJjMzliOTI4ZmM0NzU4YmJlODk4MzAzMWExNDY3MTM0MmQ2YjdlZTc1MWViNGRlZjQ2NzkyZWQzZjA1MTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_45c5d06f02584475bde0554a2c3408d2",
+      "statement": "The resume route tests and implementation together verify that a successful token resume removes the token from the URL, invalidates session-related React Query caches, and redirects to `/dashboard`, while expired-token and generic network failures render distinct error UI instead of navigating.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/routes/resume.test.tsx#L54-L132",
+          "version": "repo-lines-v1:sha256:f1cf69bf770709881164017b0904fd6137136005fcf1010cc35d50fb6b0ab2af:eyJzZWxlY3RlZExpbmVDb3VudCI6NzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkxNjYwMWQzMWQ0NzA0MDUzYjE1ZDZhODViOTVjNzU5NTVjMzc0NzlhM2E4YWNlMzE0OWVlMjY3OGFjYTAyYmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNhM2U0NmY5NDI3NmI2ZjZmNGVkMWYwMmFmNzhiZWY2YTJlZTFjNDM5ZGQ1NTg0Yjk3Mzk0ODMxMzIxNGQyYjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5ODhmNzU1ZTlkYTY0NTQyZjA3ODlmYzYyMjIwZDYyZmI5YzBhZDE1MTA1YjdlNTY0NjA1MjhkN2M3YWM5MGUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/routes/resume.tsx#L20-L95",
+          "version": "repo-lines-v1:sha256:5253b7108cdcd0d1aee38d2f38895483cceafdade985d6fa2914ebc7a58a1c5d:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3NjJiNzljNzliMDY1YTVlMjcyMWU0YjZmZWE2MzA1YmRiZGVlOWIyOGUxNTQzMmUyNzI0NTI1OTI3ZWFhMmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEzODNhYzE5OThhZDg4Mjg4NDVjNzBlZGZmOWQyNWZjYzc4OTU3ZjU1MzBhNzk4MzhkNTE4NGExZTE3MGZlNDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_95d7fb0c75314e9c9d6320943ac4b040",
+      "statement": "`services/main-backend/package.json` exposes broad Go package testing (`test`, `test:unit`, `test:race`) plus a narrower tagged integration suite for selected repository packages, so most current backend confidence comes from package-local tests rather than a full end-to-end runner.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/package.json#L1-L24",
+          "version": "repo-lines-v1:sha256:83d68140608b24a12ea29794bf091a1c8fc7a0d66a2e3dd0b13daf42994b7363:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3b72c7ce16994b2f877fa5a6adc960a5",
+      "statement": "The decision-memory interaction tests verify that backend interaction handling converts selected option ids back into answer text, rejects unknown options, and refuses interaction streaming for sessions owned by another anonymous user before the AI runtime is called.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction_test.go#L23-L103",
+          "version": "repo-lines-v1:sha256:d09a53fd5922fc3801d1f44044897ab4da0563fd665117de814550f1955cc2eb:eyJzZWxlY3RlZExpbmVDb3VudCI6ODEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0NjBlZWVhOTFjZWM0Y2ZmNTI2NmVjNWZkNWI3NTk5YzkwZDMyMzkyY2RiMGM3NTcxNTdmNDMwOGNkZGQwZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNkNThjMDE0YzNmOTZiY2VkMzJlY2M0YmM2ZDMwYzJkZTYxMWQ2NTU0NjZmNTkxMjEzMThjZWQ5YzgwN2E3ZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b30839b341d34941ad52e05d66dc3dad",
+      "statement": "The decision-memory interaction handler enforces server-side chat/protocol guardrails by bounding request size, accepting only schema version `1.0` with `submit`/`question.answer`, validating the interaction against the active stored question and rendered component tree, forwarding the normalized answer to the AI runtime, and replaying the stored response as SSE events named `token`, `ui_operation`, `envelope`, and `done`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction.go#L21-L284",
+          "version": "repo-lines-v1:sha256:e949299b7dd05ab3f6119a512ef16a854cea6fe167114560dc20a6d714f7de98:eyJzZWxlY3RlZExpbmVDb3VudCI6MjY0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkMGQ5ODZiMGRmN2U5YzQ3YWE3ODJiMDY2MDk0NjliYzhlZWNhNDc2MTJiODM4Y2Y4MjlkZGE0YmNkZGQzMzI5IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIyNDhmMjZiMmYzZmVjYWIxMWMyYWE1M2Q5N2M1ODk1MzI3YTI0MDAyYTdhNDYxM2FhZDA3ZDg3M2RiZTNkNDNjIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c6f325ebd6c143ce9434c9cdd07a0923",
+      "statement": "The checkout service tests cover pricing and order-safety invariants including VAT-inclusive consumer pricing, mixed official-plus-retailer orders, acceptance of authoritative zero-priced ShopWise bundle lines without external refresh, changed-offer detection with persisted refreshed snapshots, idempotent order reuse, persisted customer/product checkout snapshots, and coupon discount application.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service_test.go#L115-L309",
+          "version": "repo-lines-v1:sha256:b21e84873298554a7346b5ec8793df4a44c3d63afb809868f4f941d21a7da77b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTk1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiZmQ5YWExNjFmNmM0ZDA4ZTc3Y2VlNWZkZjVjOWVkMzM1MjAyYzQwOTU1NjRjZTAxNmM3MGYwMDMyMWZlODZkIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0MjIwY2NkNTFhYzVhZTRjZmRlNzNhM2M3MTJhYzk3MmExYmYwYTY0MWRkODkzNzllZjczNTA0MjNhYTAzMTU2IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIwNTljNDFiM2JiOTg2ZGRhNDAyMzkzNDM4YWMyYzNlYjk1ODRjMTg5MTY5Mzg2NWNiZjMyZjEwMWNkYmQyZDNlIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_6a23bb0e9f9d435884e9a5c085e691a9",
+      "statement": "The resume-session service tests verify token lifecycle rules including single-use consumption, revocation of older unconsumed tokens when a new token is issued for the same session, rejection of invalid or expired tokens, tolerance of context-hash mismatches as an audit signal rather than a hard block, and inactivity notifications requiring a verified identity and writing notification logs.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/handler/handler.go#L22-L76",
+          "version": "repo-lines-v1:sha256:1700a271ebaed0046329ded710f9525e5b6c5ea8d34914f7927ee4329d01159d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1NGIxNTcyZDA1NWYwNTZmZjNkNWM4ZTZiYzEzMjU1NjExZjUwMTBiNTQ4ZWZkNTUyNDI3MDQ5ODg1OTZjNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyMDEyYzFkYTA4MjNkOGI3ZjVhNjMxY2M1NTdkNjMyM2U3MzYzYzI0ZGZmNzQ4MjUwODY5ZmQ5ZWQ5NWEwNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L16-L183",
+          "version": "repo-lines-v1:sha256:16a9f9bbbbd23ec420e15120b0a79c2d2a794bb0557ad6cbf3a0319b0989c813:eyJzZWxlY3RlZExpbmVDb3VudCI6MTY4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJlMTQ1NmQzOWY2ZmFhMTI4ZmRkOTc1NzVmNGQxMDI5NjFhMWQ2MjU2NjY3M2RhNGUzYmU5ODBjMDNhN2U5ZDMxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlMGU1MTQ0ZmVjNTFlYTM3ZDhiYmE0MmE3YjNiMDRkMDNmZmI3OTlmZDA4MTAyN2VkOThlYmEyZGEwNzU0MWM2IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service_test.go#L106-L209",
+          "version": "repo-lines-v1:sha256:85fb60da70e7a86d84130e9c8846c8a2c39ebcaf83cfed1a4df3ec1305ef7af2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJjZWVmNjk4ZjYwZDllNWFjMzE2ZjYwZTUwMmFlZjcxMTNlOGRlMGE3NTgwNjg0OTBlNDdhZGNkMjBkMjYxN2Q1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI5NTRmOTZlYzhjNmU1ZmZlMTRiNzU2YmFhODQwNDc1NjQzMzlmNTE1NzYxZWExNDkyNzllMzkwN2MwMzkyN2VmIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_04593f92c6e446809a90d629da2692ec",
+      "statement": "The current backend end-to-end test file is only a placeholder scaffold: `services/main-backend/tests/e2e_test.go` defines named recommendation, comparison, clarification, timeout, out-of-stock, and checkout tests, but each body contains only a comment and no assertions or setup.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/tests/e2e_test.go#L1-L28",
+          "version": "repo-lines-v1:sha256:5277c3284ec2708b1db097aeb1dbc650daaacc760cc6f3500c177298650fca1c:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE4Mjg0YjYxYzJjYTZkODI4Mzg5ZGVjZTY5MThjZmI0YjU4YzUwZWMzYWQ1OWQwYmUyODQzYzNlOTEwYjY3NTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d54e770475bc488aa711d89d1309ff60",
+      "statement": "The AI runtime uses pytest with repository-root `pythonpath` and function-scoped asyncio loops, and splits meaningful coverage between workflow unit tests in `tests/unit/test_graph.py` and FastAPI endpoint tests in `tests/integration/test_chat_endpoint.py`.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/pytest.ini#L1-L5",
+          "version": "repo-lines-v1:sha256:fc00c906c33eef839b6e35ddc8c2a8e21a9cf1eebbc572c46c7f1b772eb84e83:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODI1MGQyMGY0MmI0MTlhZjQwNzA2NDkwZWFkNzhhYWJhYjlmZWJhOTNlYWIwOWEzZjYyNmUzZGU1MjU2ZTFmNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGM2NmIyMGY2ODk1NmMzYzMzYjBlYzM2N2UwYzFkZjY5YWIzYTdlNmRhYzYxN2QzYTJmZTgxZDE4ZGQ2NGMwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://services/ai-runtime/tests/integration/test_chat_endpoint.py#L1-L88",
+          "version": "repo-lines-v1:sha256:c1c11b04ec0d9d7f3e8855be154c7a4cfc9d8e79cc7e71fcbf5eb2a0288ba5de:eyJzZWxlY3RlZExpbmVDb3VudCI6ODgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkM2M1MjJmMTBkNGU3YWIwMTMyMjQ2MzU0NDI1NTc4MjVhYjhlNTQwMzgxNGEwNDdkMzQ1MTY5ZDg2ZTI5NzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTNkMzIyYTQwMjQ4NWMxMjA2ZThkNjQxZDU5NzI4NzgzZmMzYTg4Y2Q3NWU2Yzk5ZjNhMmU5MGE2ZDQyNzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/tests/unit/test_graph.py#L1-L251",
+          "version": "repo-lines-v1:sha256:4bf2f722b93561da824ad26f416c40ab92f1d7710c34ab1854f81b0588c5f19b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUxLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI2NzVhODMwMmM2MjE5MDc0NmNkOGZjMjI5YzYxODZmMTFmYjUzMTQyMThiMjBkMWI3NDI5MjAzMDFhNDk1Yjc1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2YWUwNDU3ODRiY2E1MGFjMDFiNmQwNGU4ODk4MjIyMmZiN2ZmYWRkYWM5N2U5ODJhNDQ1NDRkNTU5ODg0NjYwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_8b9eb4039a2c4c89a92f97ef62e18210",
+      "statement": "The AI runtime workflow tests verify that `create_workflow` passes through the configured model and full message history, hydrates recommendations from catalog data and offer-comparison tool results, and preserves prompt-level recommendation rules such as asking for workload before budget, requesting exactly one missing dimension per turn, and treating flexible answers as satisfied dimensions.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/graph/workflow.py#L23-L129",
+          "version": "repo-lines-v1:sha256:9c7196c5dfab4bd4770a4447d250c25cae90ef46fdd0e6e8ad4fe98f686c428f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwYmFiMGYwYWEwMDM4NTA1MzJmYzhjMzc4Y2VkNTY1ODU1YWVhMzcxNzZlNzkzYjY2ODY1MDFkZmViYTJkMzhlIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxYzk0MGQ0MTc0MGQ0YmIwYzJhYTI5YjE0ZTE3NDUxNmY2NWNhNzE2OGI5NDA3MDE3YWQwYmJiZjJkM2MxZWFjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlNDdkNDBlODIzMGU4MDY3MDRhMWZiNzZjYWU1MzViZjQzOWEzMjliMGJlY2FkNDQ1YzkzOTc3YzAwYWU0NzY2IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://services/ai-runtime/tests/unit/test_graph.py#L54-L251",
+          "version": "repo-lines-v1:sha256:ed176912e68f2d6b266f6f2ae967853046d05089cb117e887828e6f998d86a89:eyJzZWxlY3RlZExpbmVDb3VudCI6MTk4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiZDk5NDJkZWI3ZGJhYmMxMTRiMWM0OGQwMmRhNDYzODZlOWFjYTUxNWE1MmZiN2IzYzQxMmRjNjI3OTIxYjA4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2YWUwNDU3ODRiY2E1MGFjMDFiNmQwNGU4ODk4MjIyMmZiN2ZmYWRkYWM5N2U5ODJhNDQ1NDRkNTU5ODg0NjYwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiM2RmMmFjZjA2ZThjM2YwM2M3MTM1YzZlOGFjNWE5Y2E1NDMyYWJlMDZhNzRhY2EwZmRkOWE1M2EwMDhmOTg3IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_f657d232b7fd4ef0936499a3d11a0b93",
+      "statement": "The AI runtime endpoint tests verify that `/api/v1/chat` accepts multi-turn history and returns an agent envelope with schema version `1.1`, `/api/v1/chat/stream` emits named SSE events `token`, `ui_operation`, `envelope`, and `done`, and `/api/v1/greeting` falls back to a localized canned greeting when the provider fails.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/api/chat.py#L56-L144",
+          "version": "repo-lines-v1:sha256:30086f7999ab22f360ae97bf1d509b484cf95fe924826501ae976cf1339dcee9:eyJzZWxlY3RlZExpbmVDb3VudCI6ODksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNjFiMjIwMGNhNzZlMzNhN2Q0YTViNmE0ZGRiOGVhMzk2Y2IwNjQ2MTkxNjFhZTYxNWJkYTYzZTkzYTU2Y2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjZWE3M2M0YWRiYmQ1ZjQ3ZmVmYTcyNmY3MTVhZjk2M2IyM2NlNjg3ODVkN2M5NTA3NjM0NjA1NmUzNjcxZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVlZDI4MGQ5MWUzYjUyMTQ2MTFiMzcwYjVlZjE0ZGRjNTA4YjQyYTA0M2YyYmFiYTQ2Y2FlYThmMWM5Yjg4ZDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/tests/integration/test_chat_endpoint.py#L24-L88",
+          "version": "repo-lines-v1:sha256:27cdd35012f844e6c0d68aee82d254d780e291a9fc7707394dccf74fe2fca603:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkNTViNzdmNGJmOTFhMzc5ZDQ1ZDUwMzA3MzFhZmJlMWY2Y2I3YmUwODBkZmUwYTA2YzUwYTNlZDI3M2MyZWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyNTNkMzIyYTQwMjQ4NWMxMjA2ZThkNjQxZDU5NzI4NzgzZmMzYTg4Y2Q3NWU2Yzk5ZjNhMmU5MGE2ZDQyNzMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljZmUwZTM4NDQ0MmNhZWE5MzRjMDM1MzVhZGJlMjljM2U1MzI2ODBjNGU1YmI1ODU1NjQ2NjQwMjQzZGIwMDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_bf6321c180c74544a90d5b0fdd93b645",
+      "statement": "The `conformance/retail-sdk`, `conformance/tool-sdk`, and `conformance/ui-protocol` packages are currently scaffolds only: each contains a minimal private `package.json` and no substantive conformance tests, so they should not be treated as active coverage.",
+      "evidence": [
+        {
+          "resource": "repo://conformance/retail-sdk/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:1cd2c657d470ab05a5b3fb03ce02dd68b424b1f5eb057bbfffeb5f2964b39a75:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://conformance/tool-sdk/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:27833b2679ed8384b6cf7d461cc157f4e7b70293afd3024bab87caed4f646742:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://conformance/ui-protocol/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:dac78a7977a4b9b17f85524191e01f958119327710494e938741cac28804a228:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-28T02:48:19.098Z"
+  }
+}

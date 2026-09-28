@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:b1cd35d0cd02f02f5fae953c6277f0e7fdae1182d1eb396390ff4a33188c7280",
+  "claims": [
+    {
+      "id": "claim_f6350952ebd54abc9e6f82ce154f94d5",
+      "statement": "The repository is organized as a pnpm workspace that includes app, package, service, conformance, deploy, infra, and scripts roots, making those directories the primary top-level ownership boundaries for development.",
+      "evidence": [
+        {
+          "resource": "repo://pnpm-workspace.yaml#L1-L8",
+          "version": "repo-lines-v1:sha256:e36b0c0e45930ff12120118137f40b938fc584deae6ce24a21761296cb1f8c3e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRiMDc2ZWI4MGFkZTE5ZmVhM2UwYTQzMTk4NmI2NTVmNWZhNTllZDYyNjdlMTA3ZDY4OGI2MWMzZjQyMTc5NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDI3YTdiNTg2NTRhZjY3NDQzZWE4OGZhNGExOWM3NTRkZTgxMDI4MjkwYWNkNWM5OTJjM2Y2YjJjNDQ3NDUwZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODhkMjU2NTY5NDdmOWM0ZGQyNTgwOGZjOWVkZDcyODhhMjk0MGQwZDRmNTUyNmNlMDY4YTQxNTZkODg2YjJlZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1f5814e699f14caf846d1ba77e134a6d",
+      "statement": "The web runtime is a Vite React application whose bootstrap in `apps/web/src/main.tsx` creates a TanStack router and React Query client, then renders them inside theme and shared font providers.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/package.json#L1-L57",
+          "version": "repo-lines-v1:sha256:fb7f58a65b2c1894347dd50ac74c3dd739369fe07e1a0058670b1a0a6291756f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://apps/web/src/main.tsx#L1-L53",
+          "version": "repo-lines-v1:sha256:7bf4bda9b49edbab8a08a16015557d0e7b219f6a68454e3b2b7dc709e9a595a6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkOGJhNjQ1OTM5MjBiNzE1OGViYTY1MDkyNjc3MTkyMDQ4MGIwMjQxZTNhYjc2YTYwM2M1OTc5YmMyNmE3NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_891aefceb2bf4361bc29bf13bcfa1e2a",
+      "statement": "The web app's root route in `apps/web/src/routes/__root.tsx` provides the application shell, including tooltip support, theme handling, checkout incentive context and panel, global toasts, and router/query devtools in development.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/routes/__root.tsx#L1-L75",
+          "version": "repo-lines-v1:sha256:e9a9d0545f5f428686ea7d9296429f38cbef53ccd3cf1a670680520509ef7aa6:eyJzZWxlY3RlZExpbmVDb3VudCI6NzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA1MDQwZjg4MmM5ZWNlYTUyY2ExNTQ4ZTlmNzlmNmI4MTBmZGIzMzljNDkzMjI3NGVkN2U1ODIwYmUxMmM4MTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d5743dec1d24c059199fbc97dfba792",
+      "statement": "`apps/web/src/routes/dashboard.tsx` is the main shopping workspace route, coordinating agent interactions, session state, product views, comparison and accessory flows, checkout affordances, and other dashboard modals.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/routes/dashboard.tsx#L1-L260",
+          "version": "repo-lines-v1:sha256:985fcacece61273f9e6d32f70db6c1ce8d5c6b3bbd3b9cf45fae7de5a37f2a46:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhMDQ4NmJiZGU4YmYyNjVkMDZmYjIwZmRiNWZjYWIzOGRiNzI1ZjdjZjc4MjgwMTQxMjNiYWQxM2UzY2I4NWM1IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2NjViN2NjMzUzMzFkMTA5OWRjOWFjYjU0ZGYyNDEyMTE0ZDc3MWQyOWExZDE0NWQ1OWNiNTNkYTBhYWY0OWE5IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJiOTFhOTMyYzVjNjU1ZTYzMGNiNDUwMDQ1YWJkYzFkNGNlNGE4OWIzNmE5MDQ1NGFiYmU0MjQ3Mzg1MzkwZjRiIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_62e1624601884519b656f204a707815e",
+      "statement": "The web decision-memory API adapter persists an anonymous ID in localStorage, adds bearer authorization when available, calls `/api/v1/sessions` endpoints, validates agent envelopes with Zod, and supports both standard and streamed chat flows.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/src/api/decision-memory.ts#L218-L320",
+          "version": "repo-lines-v1:sha256:973a73fa02261acdfada67701705d26c5d8171bf74891e92b26e4969fbbef8a0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIzMjEyZTNkNzZkZmNjZTAyMGRhNWU2MGRjNmMzZjk1NTk4MGY0MDlmMmJmNmQ4MWVjOGY3YzU5Y2RlZjNkYjE3IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIzYTNlNDZmOTQyNzZiNmY2ZjRlZDFmMDJhZjc4YmVmNmEyZWUxYzQzOWRkNTU4NGI5NzM5NDgzMTMyMTRkMmI3IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI0YmNhZTVjNzA4NjUyNTk0ZjU2YTkyMjg5ZDcyMjZmM2QyMjZiN2IyZjk4YzNmY2RkZDc3ZjhmZmI2MTFiYmY4IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiJiMjQzODVlZjI1MjYwNjc5NTA0YzY0OTI3NDA3NTM0MjFiOGIwMDBmYWQ5OWJkNjFkNWI4MDFhN2UzMWVkNjZjIn0"
+        },
+        {
+          "resource": "repo://apps/web/src/api/decision-memory.ts#L26-L69",
+          "version": "repo-lines-v1:sha256:11b57b8015064f11c037bda7cb0ca4a01f12dd8d4e1abf206c30ee60cab4a560:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MzJlNGE2Njk4NWNlMzE0YTQwNTA2MGZlYTk4OTAzOWNkOGRiN2QxZTc4NWU4MTNmYzliZGE3NTg4ZDIzNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxNDYzYjUxMjhlYTVhZWUwMzhhNDg1Y2NmZWE0NzE1N2MzZDBiMjg2NGUyM2QzMDUyYjBkNGIyNjkxZTQ1NGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZmYmVlMzU3NGQ0MzUyMTgzOTgzNjAyMzg1OWVmODRiOGIxMzIwOGY3OTg0ZWE5N2Q3ZGRhMGM5NTc5OTEyZWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0c1d8150e3094a68b716356b7d257f43",
+      "statement": "The mobile runtime is an Expo Router application whose root layout wraps screens with gesture, keyboard, theme, and HeroUI providers, while the drawer layout defines the main mobile navigation shell.",
+      "evidence": [
+        {
+          "resource": "repo://apps/mobile/app/(drawer)/_layout.tsx#L1-L138",
+          "version": "repo-lines-v1:sha256:025048e69524d33a0c7a35a36067d2dfc94861b0dbbc30271204e4dfc0b74426:eyJzZWxlY3RlZExpbmVDb3VudCI6MTM4LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIwMWRjMGYyMTFiNWQzMDJjNTRmOGU3OTIxNzgzYTcxM2JmZjEzOWIyMjU3YWE4ZDdiNThjMmVmMWIwYWY0NzJhIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI5YjBkYjdhOTY1YjZmOWE4ZmI2YzIyOTliYmY2Nzk3MWNhNWVkYzgxNWRhYTAxMzU3YmQxNjc3MTI4MDlmOWMzIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://apps/mobile/app/_layout.tsx#L1-L39",
+          "version": "repo-lines-v1:sha256:f533284f63a532be10360aefb5eab8eeb4bbcea9a63acbb2e34763fefb1a2b6b:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU4ZmNkZWQ0YzcyMzg0NmE0ZjAxZWFiOTYwMmYyYzA4NjM3ZjQyNzAyYjljZWNkMzZhYmZlNTY3MDg2YTE0MjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlY2JkMDdlMDdmMTllOWZjNjc4MzUxOGM3MGNjMDY0NzQyZGM2ODVlY2MyM2MyMDZhNzhhNDE0ZjgwMDM1NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://apps/mobile/package.json#L1-L54",
+          "version": "repo-lines-v1:sha256:a599c08fa0ab869081d4f1b6fb918c5721ae3950e80604505a3b91ee29d79545:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_46d231811add4be4806c32c9e765e070",
+      "statement": "The main backend is a Go modular monolith: `cmd/retail/main.go` supports normal server startup plus migration and seed modes, and `internal/bootstrap/bootstrap.go` loads config, connects database and Redis dependencies, wires domain services, registers `/api/v1` routes, and performs graceful shutdown.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/cmd/retail/main.go#L1-L39",
+          "version": "repo-lines-v1:sha256:be9b025c52447b72e516f0d35011900c67eeb1220230c0e97624ecf9b7f78368:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjNzY5ZDVlOTUyZjIwODM1NmE2YzNhOWM3OGIxMjdiYTI3MjFiOTljOWJkOTQ2M2ZlNzlmYjQ5MTA1ZGNjYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L225-L300",
+          "version": "repo-lines-v1:sha256:9b10f9b0002c8ed59d0c63ecb30e005dcf39275dbeca80384f77df6ee2ac9aaa:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhYzM1OTEyMDUxNDg3NGVhN2NkYzcwMTRkYzMyNGZkYmU2ZjdkMTkyYjU4NDRkZjY4YzIwZjc1ZTMyMDE5ZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L51-L223",
+          "version": "repo-lines-v1:sha256:6a10ca7f22621416eef562b6558fe8d6707ed8cccb763044df43317714fef7e4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTczLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkYmYyYjJjZTc4NjdkOTcwOGE1YmUwYjVhODA1YTkzYjdiMGE2OTJhYjAzYWEwYTczNDQxNDA4NzFiY2Y3ZDkxIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2YjIwNTJmOTRkMDljYjFjMzdmN2E4M2NkNDg0ZDUyMWRjZDc2MjJmMTkyMTIwNmNkYzg0ODYxNWY1OTIzYWMyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI4MzcxZjI3NzFkMmM2OTc2Mzc3ZTZhN2U5NDVlYjM0Y2UxMzdlMWE4M2FkMjhlMzNjMjZjZGIwZGIyMzRlN2IxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_496bfc5bac224ecfb52f71d9d6fe5524",
+      "statement": "The backend route bootstrap shows the main owned domain groups: identity, users, checkout/orders, files, products, accessories, stores, sessions, session resume, promotions, and admin, with separate wiring for health checks and admin rate limiting.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L146-L177",
+          "version": "repo-lines-v1:sha256:1611e50008efd10db9ec86ef83d6c9a827c36188c90c5bf81da31fbb4e534e70:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVjYjdiYWZkMGZmYjViMGQ0NTMxZTM3ODIzZGI0NDM3M2Q3MjA0MGVhMTkyNmI2Y2U1NzVhMTM2M2JiNDViMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMTcyZmM1ODYwMzQ4ZTRmNzk2NjI5Y2FjODU2YzE3YTQ3ZTk1MWNjOGZmMDRiNmI4NTViMjk2YTRmZWNiMTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU2OWVmMDhiMGJjNTA2YjQ3ZGIyMmEwZGZmNzlkOWZmNDgzM2NhY2Y3ZGFlZTE5YzQ0MGZmYzc2ZDQ5MTRjMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjMWQ2ZDY1MGQ4MDA0Nzk3NmE1ZmQxYmMwZDk2MGQxZTc3YzdmZWM1ZGJiOGY4NzhkMzdiNjcyMTY4ZjQwMmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_22e81596a3654b2e9e671f73c22771d9",
+      "statement": "The backend's decision-memory flow is the integration boundary to the AI runtime: bootstrap constructs the handler with `cfg.AIRuntimeURL`, and tests verify that chat requests forward session history and allowed comparison IDs to the Python service while persisting assistant responses and enforcing anonymous-session ownership.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L128-L139",
+          "version": "repo-lines-v1:sha256:24e3a7c43b6abc2e6dfc978b44aafbdf41d50fc79bc72505355a129b346bdf5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwYzkyMjZhMDUyMzA1YTEyYmUwOGNkOTRjZDcwYjM0YzJkMTA4MDBlMDk3OTRiOGRmYWM5NTZiYzJmZjQ3ODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxY2U1ZjU3MjYzM2Y0OTI3ZDg2MjQ2NDMzNGQ1MGQ0OGMxZTA0ZDNiZDIyOWZhNDE3OWQ1ZmE3NDNiZjBhZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU1Y2VlNDA2ZjA0NzM3YzRiYTM1YzhmZmU5MTY5YzZjYzc0ZWM4NzE1ZjhhMjUyYzliZjY4YTMxYWM5ZWFmZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg4ZGZjZTFhODViMTk2NWNhOTY5NGM1YTU4OTQ4ZWRhMTBiNzc0MDM5MDc2NDBlYzM5MjBmMjY4MDhiNGRmMmMifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat_test.go#L122-L179",
+          "version": "repo-lines-v1:sha256:b61179b5b8397597587d900be9987d2f4da8b8da9823fcab3987e2f6ba4d71f8:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3NWM5YjVlMGRkYTJlN2I4OGNhYzYxODc0YWYxMzFiNDE2MGY5NWYyODdjZGU4ZThkZTBmZTJmMmNkMDU2NjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1MTBiNGJiMTA3NTc0OWYwMWJmN2NjNmMwZTk0ZmUzNjVhZGYzMDJlZTg2ZjgxN2YxNWJhODRlMGJiODhlNDEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat_test.go#L181-L219",
+          "version": "repo-lines-v1:sha256:f52d63c2522d0780496ab7ee216792847cc466af3a934ecd0e5734398fda6d80:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlN2M0MmZjNDE4YzMzMzcxYjNhZjhhNjI2YTM3MzI0OGQ3MzQ0ZDA3YjI5MTk1OTRjN2VhZGIwNTY4MDQ2NzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat_test.go#L58-L120",
+          "version": "repo-lines-v1:sha256:29eefab7113d9d1d7905b966076008ed7c74666017ea04400dc79005daabe21c:eyJzZWxlY3RlZExpbmVDb3VudCI6NjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcxOWE1ZmYxZTc1ZTBkMWE2Y2QxYzQ2MDk5NDZlMDA4OGQ1N2RiNjMwNjYzY2VkMjRmMWNiNjBiZDMwYWY5OTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiOTQ3NTM1OGRkNDVhNjc0Nzg4YmU3ZjcxNzNjZmZjMWEzNDk3MWE1ODM3MTIzNGU2NGRmZTFiOTMyNTIzZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRjNTMyNTRlODZjZDhjNDgxZTE0NjIwODFmODcyNjBlZTRhZDQ0ODQ2M2NjMmI1NjFjZWIzOGNlOGNhMzU0YTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_55aab966e63a4337be3d6e84993b397a",
+      "statement": "The AI runtime is a FastAPI service that mounts its chat router under `/api/v1`, adds request-latency logging middleware, exposes `/health`, and returns a structured internal-error payload from a global exception handler.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/main.py#L1-L61",
+          "version": "repo-lines-v1:sha256:c7bd5a5c43cebb2fe062c16edb49b982172eded437ae6d9934b4d7994207e5cd:eyJzZWxlY3RlZExpbmVDb3VudCI6NjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdiMmRkYjhhMmU2NGM2MTY2ZmVlZGFmMzBlZTUwYWM2MjE2NWZlMTQ5ZmRkOGIwZDdiNzc3ZWJlZTIxY2EzNGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzZGZhYTRhNzk4YWQ4NDM1MTQxNDg4NzgyZTYwZTBlNTdiYTdjNTU2NzBkMDA1NWNkNDAzZDRmMTI0MmZlMTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a350ffa479354f14aafdbd319e3625fd",
+      "statement": "The AI runtime's chat API provides a greeting endpoint plus standard and streamed chat endpoints; each chat request creates a workflow with an OpenAI-backed provider and backend tool proxy, and the streamed endpoint emits SSE events derived from the same logical response flow.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/api/chat.py#L45-L144",
+          "version": "repo-lines-v1:sha256:ccc35c8ea640d42240d7e186fbf8b76836de7589321a5dc04f0427b719ab73db:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI5YzM5N2YyMTRjZTNjYzdmYWIxMmY3YmNlOTY4ZTg3ZjMyYjQzODVlNWQ4MWE3OWZhMTJlY2Y2MWM4YzZlOTk0IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2Y2VhNzNjNGFkYmJkNWY0N2ZlZmE3MjZmNzE1YWY5NjNiMjNjZTY4Nzg1ZDdjOTUwNzYzNDYwNTZlMzY3MWZkIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJiZGRhY2YzYzZmYWE1MGE4MTgzNmE1NWQ0MWRkN2M0MTdlMWY4YzI1MTE0MTVkY2VhYzljNTY4NDY2NTQyYzI1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_9416e0d4e3854e0bb5352381115c5bb5",
+      "statement": "The AI runtime workflow first loads backend catalog and allowed offer-comparison data through the tool proxy, then requests a schema-constrained LLM response, hydrates the final agent response from backend-owned data, and retries invalid model output up to the self-correction limit.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/README.md#L5-L20",
+          "version": "repo-lines-v1:sha256:14214a42b0af961f1cb65c8893fec47f91f52217ca5aa674124be64bb7b5920a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkYTc5Y2U0NWYzNTNkMmQ5ZDIxNTcwMjU2MTJkMjNkMDJlMTA4M2Q3ODVlYzI3Yjk1NDdhMTRiMWQ4ZTE5ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3NjI5MzljMTZiNGM4NWFiNWNjMDNlN2M3N2M0MWIyMDczZTQyMWE1M2NiMTk4ZjhjMzgwYTJiYjQ3NzcxYWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk5NzljN2RiMWNmYjFlNDZmYWY4ZWFjY2FmMzk3ZWY3NDVhNWYyODRiYjIxMTJjNmIzMjlkMjM5ODk4NTg4YWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcyMTA2ZGE4ZDU4NWJiYzY3MTZlYjFlMzE1NzVkY2Y3MDJjMWQ2MmRjYTI0ZTVkM2JlNmRiYTk3ZmU5N2Q3OTYifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/graph/workflow.py#L20-L129",
+          "version": "repo-lines-v1:sha256:9e790bd14cda1ba7deb119dc5809284712fa9b891f2a7eebbcd7165ed0cc03fd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEwLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxNDFhYjIxMDM2ZDQ3YmRlYjY0M2U3NGJiZTI4NGY2NDZmYTU5NzUyZTMwZWRkZGExYjQxZDVhMWFiMmFjNDgzIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIxYzk0MGQ0MTc0MGQ0YmIwYzJhYTI5YjE0ZTE3NDUxNmY2NWNhNzE2OGI5NDA3MDE3YWQwYmJiZjJkM2MxZWFjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlYTc2Y2MwYjhjYThhMzdjYWMyNTA4MWYxOTVhOThiZmY1NmMyNGNiNzMyZTUwZTY2ODQ5NTU1ZTZhNzFhZTMyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/tools/interfaces.py#L6-L39",
+          "version": "repo-lines-v1:sha256:25e0229b7d7f46d1d770a1f9fa13980ef153ad5e12f128cd595e6505b792105f:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAyY2FiYTg4MWU0Nzc5NzFlODIxMzM4ZTVjNTVmODhlMTU1YzBhZGZkNTYwODEyMzQ5OGVjYWQwYThlY2RkNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3NmZhZWRjNzU0YzY5OGJhM2M4ZGEzNTkyNDYyYmQ1NzQ3OWY2ZDdlNDMzM2I3MTUwNzMxNWVjYmQ2YzM2YzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjEyMzViMGZhYjExYTZjZjYyYTk0NWRkMDc5OWU3YTMyZTM1MmVlNTZkMzZmNmYzMWQ1NTc0ZTU3ZDRhMTVhNTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d890ede400e54b089e1339963e0bcefd",
+      "statement": "Among shared packages, `packages/ui` exports reusable styles, components, hooks, and contexts; `packages/env` splits validated environment access into `./web` and `./mobile`; `packages/api-types` exports shared API-facing types; and `packages/protocols` defines the dynamic UI component, interaction, and UI-operation contracts used by clients.",
+      "evidence": [
+        {
+          "resource": "repo://packages/api-types/package.json#L1-L20",
+          "version": "repo-lines-v1:sha256:f2bf1d10b838b97fde93177a39050ad906881dcb42deae62a023eca4b45d1916:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://packages/env/package.json#L1-L20",
+          "version": "repo-lines-v1:sha256:a1139161f328d838679f6f37c4c31a27a9572cee185bf95af4602e2b25a19844:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://packages/protocols/package.json#L1-L9",
+          "version": "repo-lines-v1:sha256:0d3eabcaddaf000194b76620f129f6b844bcf1896b190ed005e74ae269c03bdb:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://packages/protocols/src/index.ts#L1-L166",
+          "version": "repo-lines-v1:sha256:5b5ec04c64d5a3860d87a1ac38f04a790aca90457a58825175db64c8c04e0ccd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTY2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiMWUxNzY3YWQ4MmM5MzdkNTJjNjQ0NmY4NDE4ODY4YWNkZjE2MDBiNGNjOGQ5MWNlNDQxMTg5MDg0YzNhOTg4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiJhYTFkMWE2MzM5MDIyOWM3OTgzNDdlODNhMDQwNTQ0MWM5NDAwMDM1Mjg0YWQxNjhjMWJmNmNkZjFkNzBhMzcwIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://packages/ui/package.json#L1-L49",
+          "version": "repo-lines-v1:sha256:1011ca2ed7168f8518e400d995dbea8d9f19e6610552cdd49499c78df563a32e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_36d441c75b864790935848715cfa2f22",
+      "statement": "The Go backend also has its own dynamic UI contract package in `internal/ui-protocol`, which defines document, component, validation, action, and interaction-event structures for server-side UI protocol payloads.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/ui-protocol/base.go#L1-L49",
+          "version": "repo-lines-v1:sha256:1e46382ca8946a09ea415242b75af9264d4abd3718d77ccdda57e3d02456aba0:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2OGQyNjM4MTQ2OTE1YzU3MWE2ZTdlNDQ4MjFiNWUxZTgzMDU5MjlkYTZiZDM4Y2Y3ZTBkNDZmYjE4ODUyZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5628e44cfbd24658ba6628e5ba22c7e0",
+      "statement": "Deployment and conformance roots are currently mostly scaffolding: `deploy` and `infra` are private workspace packages with minimal package manifests, `infra/docker-compose.yml` is empty in this snapshot, and each `conformance/*` package currently contains only a minimal private manifest plus `.gitkeep`.",
+      "evidence": [
+        {
+          "resource": "repo://conformance/retail-sdk/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:1cd2c657d470ab05a5b3fb03ce02dd68b424b1f5eb057bbfffeb5f2964b39a75:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://conformance/tool-sdk/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:27833b2679ed8384b6cf7d461cc157f4e7b70293afd3024bab87caed4f646742:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://conformance/ui-protocol/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:dac78a7977a4b9b17f85524191e01f958119327710494e938741cac28804a228:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://deploy/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:92c7a884be113b4990f053ffd07326b4891d7911a98d3138aaa1c3fa0419400e:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://infra/docker-compose.yml",
+          "version": "repo-file-v1:sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "resource": "repo://infra/package.json#L1-L5",
+          "version": "repo-lines-v1:sha256:e8088be503bd562f14195c67b05e61bbf3aaadedd49c3ec77918d7a99401f6d4:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZmYjA4ZmRhMWFjYjk1N2I2MTE2YmQzNzgxMWExZmU0MWEwMTYxMWMwNjMxZWRiZjc4NmQ2ODg5YTI3YTU1YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4aaf6c3ab89845d0b17b921b5638ba6f",
+      "statement": "The main test locations are web Vitest files under `apps/web/src`, backend Go tests under service domain packages and platform test utilities, and AI runtime pytest suites under `services/ai-runtime/tests/unit` and `services/ai-runtime/tests/integration`.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/package.json#L6-L13",
+          "version": "repo-lines-v1:sha256:cec1a2870460ea177e9f25874f009527f1e906b3bc66e8404f4fbd91a0dc1207:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzQ4MzNkNTk0OWMwM2E0MGNhOTUyNDkxNjEwYTY2NTk2NDRiM2FhNDY2MzYyZjc5OTAyMGRiZjE5ODE1NDdkYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGQ1Y2QyZmI0ZjNkZjg4NDUxNTI1NWIzOTUyM2YyZjhiNTQ3MmJlZWE5ZjU2NmZmY2EyMDRkYjgwMjU2MTA0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTc4Njg4ODc1OWM1YzdkOWQ1ZDZiMGE4ODY2YmQ5ZmJhNzMzZDY3NTdhMjY5MThhZWYxZWJhNDRkMzFjZjlkZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzdiNTZhNjliZDQ0OTUwMmU3OGYzMzZhMTU5YTJjOWUzOGJkMDY0M2VmNzQ0ODQyZTQ0YWQ4YzEwZjUzZDEyNCJ9"
+        },
+        {
+          "resource": "repo://services/ai-runtime/README.md#L22-L37",
+          "version": "repo-lines-v1:sha256:03087c1b8c83d28dfe50d6f584adc31e5e1b91bde4dc7c98666fe215b80442f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhYjRmODE0ZjU1YjUwOWY0M2I4ZDBjYzg0OWRlZDk5OTcxMTE0NzMxMzRjZmUyYzg2YjE2ZmYxZjc3ZTVlNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNDVmMjQ3OGY4ZWJiMzdkZGQ5ZGM0ZWYxYzFlZjJkYTI1ZDU0MGFjZDc0NDBhNTRhYTZiOTRlMjVhOTBiMDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/platform/testutil/contract/openapi_test.go#L1-L30",
+          "version": "repo-lines-v1:sha256:b414ee0e1ac32fbbbeecb2dba120924be33b112e51824bdf868158cfb04b7cc6:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2MTY3NjM1YWQ0MTNmNDQxYWIyMDc3NjFmMDI2N2E4ZGJkYTk0ZGU4OGNmYjhjZTdiMjBlNTJlZjdlOTI1NDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdmMzEyZTdiNzJhYjUxODFhOWQ3MmU4NjA2ZGYzM2I4ZGIzYWE5NmQ1MTlmOWFkZjI1MzNkZGNmM2Q4MjQzYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/package.json#L17-L23",
+          "version": "repo-lines-v1:sha256:4e023a3f61ee57aba4fd680d4b004cec1dbc95e44cd67c092859cb58706be1d0:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTY4ZmJlM2I4ZmNkZWEzOTA5M2JlYjJiMTc5NzUyZjZhYzA2YjVmNmFhM2QzNjRmMjQ4MTU0YmNlZjNjYmJlYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzJjYTE2NTNmN2E1ODgyZTAzNTA0NmU3NzYzZTQ1YzQxYjVkMGY3ODI2ZTg1NjVlOGViZTAxYjRhMjUzZGY0YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjNiYjdlYTdlOTBiYjFhYjM0YjkxNTIwODY1ZDZkYjZmYTY5YzY3M2E0ZTI5YTZmNTM1MDY0OWEyOTRhY2FiYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGY3MzlhMDZjMWNiYjEyNDRlMzM2M2QzOGJjZjlmYTUwY2U4NGZlZDM5OWMyMTkzYTNjN2YwOGQ1OTkxOGIyYSJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-28T02:48:19.098Z"
+  }
+}

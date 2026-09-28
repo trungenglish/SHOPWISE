@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9382066277f2c9d12e70657f5f202f752dd5a3f4d43f8be141068dbbff6a9053",
+  "claims": [
+    {
+      "id": "claim_c4c59117e8ca45f8ac4c04c8110f5c8d",
+      "statement": "The main local infrastructure definition is `services/main-backend/docker-compose.yml`, which starts Postgres on `127.0.0.1:5432`, Redis on `127.0.0.1:6379`, a `server` container mapped from host port `18080` to container port `8080`, and a separate `worker` container that runs `/worker`; the root `infra/docker-compose.yml` is currently empty.",
+      "evidence": [
+        {
+          "resource": "repo://infra/docker-compose.yml",
+          "version": "repo-file-v1:sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "resource": "repo://services/main-backend/docker-compose.yml#L1-L97",
+          "version": "repo-lines-v1:sha256:f86c82ed9b5c4ba9522e7ac2591ee46dca47424e181f5644ebc955e600527be8:eyJzZWxlY3RlZExpbmVDb3VudCI6OTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhNzNmY2NkYzk5ZWE4MzU5NjdjN2RlZTdlZmJlZDFmM2NhODcyNjBkOTI5MzE4NTBmZGQ2NmRhOGNiMTJmMWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUzMTg4MGFmZThlNTc5OWY3MjA1NTk2ODhjMjc5Yjg1YWEyYTc2MGQ0YzMxZGUwZGI4ZGQ4MzVjYmQzMmI2MGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_153d0cd3260f42f5bb580c78d42830cb",
+      "statement": "The repository standardizes local backend access on `http://localhost:18080`; the README explicitly says this avoids a Windows and WSL `wslrelay` conflict on `localhost:8080`, while the backend config defaults `PORT` to `18080` and the Docker stack maps host `18080` to container `8080`.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L24-L47",
+          "version": "repo-lines-v1:sha256:affcdead05e6aab8babb97a867f423f5d644d120a45ca96eb5f80dee9a4e3e28:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyZmQ3OWI1MjIxZjU5Nzg1YTVmMzgxMmUzMDUwOWRhNDIzNjBhN2U2MWQ4YTdkYzdjZWY5OTA5YjQzNWI1M2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzNDEyMjYyZGI0ODVjZDAxOGQ0ZGY3ZjZkMTMwOWUyYjE3ZTQ1Y2Q2Yjg2OGMxYTgwZDdlMjQ2NGMyNDBiMGYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdmMThjMmM4YjBhNjllODFmZWRjMmMzNzAzMDg3NDE0OGIwYzUxMWU3ZmI2MWM0NjY5MDI4OTg4YzFmZjFjMzYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZhNjZlNmI0N2Y3YmUxZmFiOWYxNTE2N2Y5YjdmMmJjNWY0MjU0ZTM0NjRlNWRhZDJkOTQ1NGRiNjE1OTUwNmIifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/docker-compose.yml#L33-L45",
+          "version": "repo-lines-v1:sha256:022b0d5b37c122be82b101fc0d64a19c9c0534142170623410a3261c5aede37d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhYmY4NDNkY2ZlODZiMzk2MGQ0OGUwNGUxZTI5NGNiYzc0MDlmZDUyYjc1Zjc0ODBjMmExYzM3ZWQwM2IzZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmZGQ1NWVmMmFlM2NhNjc0YTRjM2E1NmRhYjM0Zjg5MDhkNzQwNDMyM2RiNTRlYWRkYzRlNGNmMTg5ZThmY2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJlZGQ3NDgwMzNjNGUwYzJhYjZlZWYzN2YyYjVmNDljZjk4Yjk0ZWMwMDEwNzBlNDdmNTJlMjY0MDUzZThiZmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ4MDc0ZGZhMzUwODc3NDYwOGIwYmM0MDZmYTY2MzdmNWEwMjAxMjM1NDI5YTdhM2JhYmJiMGY1MjJjOTRlNmUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/platform/config/config.go#L69-L85",
+          "version": "repo-lines-v1:sha256:78f61c68fa003bbc5da1feccd2f3fa1fc3631d0521d193fcbcd55e0aae7611c1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkzOTYzNjY2YTE1ZTFkNzBhMzE5MWY3OGE0MjA2Y2Y4MGUyNTUwZWNkZGExZDdlYjVmNzhkMWE4ZTE5MzdmM2IiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1MTI1OTUxNmMyNGUyYmQ3YTQxNTRhNDQ4OThiMjc2NjJhZDU0MzI4OWJkYzlkMjA3YzlmNzBkMmEwZjZiNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyYjA5NDkzMGM1ZDdjYzk0YTA4ZjUzNmFmMTRhN2VjNDRkMTY0ODAyYjkzMzk3MjZkZTZhZGM2ZTdjYzFjMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdiZjUzNGYzMmQ0ZGZmOTRlMzhjNGIwMGZmNDc4ZTc5OTY4ZDNkMjExYmI5MGU3ZGRlMDMyOWM1MDU1NTQ4YzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_500f4cf1157540e8a7249888d91f3ac7",
+      "statement": "The web app runs on port `3001` and proxies `/api`, `/health`, and `/swagger` to `VITE_SERVER_URL`, falling back to `http://localhost:18080` when that variable is unset or blank.",
+      "evidence": [
+        {
+          "resource": "repo://apps/web/.env.example#L1-L2",
+          "version": "repo-lines-v1:sha256:539f1744dfd150e19174c99d6dd6306d006971bdfbe31821bbb5eb0b06419ea5:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjQyNDA3ZjJjYzAyMWIxYjlmYzgwYTI1Mzg5NDVlYjAwMjQ2MDM0NmE2ZDdhN2M4MGY5OTVjNzhlNGRjMTJiMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDY5YjJkNmE3MmQ1M2MzMWY1NjJhYWVjNGMwMzZkNmMzZDc5ZjVjYzlkMzgyYTVhNmRmZWIwYjVlNjBlODk4OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://apps/web/vite.config.ts#L1-L47",
+          "version": "repo-lines-v1:sha256:4fbe3faee984e41644dadac381fe6f8c5051abb1f7c2e17cd5f4f98c3269d7c1:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwYTI5OGEwMmFjODdhYjllYTdlMjRkY2MzMDhiYzcwNzc0MDUzNmUyYjBiYjg1ODBlOWVhY2QyMTQ1YjhhMzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY2ZjViNDBiMTU4NDU3ZDE3ODY0ZjIxNzkwNzg2ZGQ1YTJlY2RiNjRiNjZhNjUxZjc4OGQ0ZTI1Y2QzMzAzZDIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_04e9d64d3d4741a2ad8c75b82eaa9e60",
+      "statement": "The mobile app’s local backend target is configured through `EXPO_PUBLIC_SERVER_URL`, and the shipped example points it at `http://localhost:18080`.",
+      "evidence": [
+        {
+          "resource": "repo://apps/mobile/.env.example#L1-L1",
+          "version": "repo-lines-v1:sha256:1fe30007841d0eca8b280215cd4be9a3c4f2abc697934e10472618a40a5f0104:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWZlMzAwMDc4NDFkMGVjYThiMjgwMjE1Y2Q0YmU5YTNjNGYyYWJjNjk3OTM0ZTEwNDcyNjE4YTQwYTVmMDEwNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWZlMzAwMDc4NDFkMGVjYThiMjgwMjE1Y2Q0YmU5YTNjNGYyYWJjNjk3OTM0ZTEwNDcyNjE4YTQwYTVmMDEwNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_af2d7ea2eeba4f3e8344ecf3565f09c6",
+      "statement": "The backend config loader reads `.env` first and, when `DATABASE_URL` or `REDIS_URL` are still missing, falls back to `.env.example`; it defaults `GIN_MODE` to `debug`, `PORT` to `18080`, `WEB_APP_URL` to `http://localhost:3001`, and `AI_RUNTIME_URL` to `http://localhost:8000`, while treating `DATABASE_URL`, `REDIS_URL`, and `JWT_SECRET` as required.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/platform/config/config.go#L50-L125",
+          "version": "repo-lines-v1:sha256:6306802863c0c37b7dce695c29cc69526f88f171264a2e32cc8ee4d465c399c7:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhMzY5MDU4OTk0MDc0YTliNDk5OWI1ZmI4MGMxZDdmOWRlNWNiMWQyY2IyNjRhNjc4ZDBlYzY1MzdmYzVmMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA5M2Y0Yzk4YjAyMmM5YWVjZTNiY2MwZTdmYWNjNzc1MzNmMGYxMTJiOTNlOGIxZDZiMTYyYmJlYTZmMTQ1N2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlZWNkYjEwNGVlMTMwNDYyNGRiMTc2NDU3ODQ5ZDIwMzY4MWE4NGJhMjhiNjUzZjQwMWE0N2I1NTVlYTg0ZjYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1a6f048f95174a0489b01cf9b2ced342",
+      "statement": "`CHECKOUT_AUTH_BYPASS` is a debug-only relaxation: the backend only enables it when the flag parses true and `GIN_MODE` equals `debug`, and bootstrap then applies that setting to the order handler via `WithDevelopmentAuthBypass()`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L108-L115",
+          "version": "repo-lines-v1:sha256:191ec37ac1f715786d379eb52d7af49494d8e6372617718f4ef0074bbbedf8cf:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTQ0YzVjMzUzZDE4NjE2MWIyMGY4ZmJmZDllZjMyZGQxMzM2NDI2N2E4MWZkZTA5YjBlZDQ1NTk0ZGM5MTU3ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjdjZGE4MmRhNjA2MjM4ZTA1ZTYyMzk5NTY5YzVlZTAzOTkzNDE5NjQ4YWU1ZDQzYTJiZjhjZDYzNDdmODI2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzUyMTNiMmFkMGNkOGRkMDY2YmZlZTE0ZTY2NmI5ODQwNGU1MWUzYzVhOTExMmRmZjIxYTk5ZTg1NmQ4NjY0MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjJlYjNmZDJlMWNkNGE3ZWVmODQzOGY2NDBkNjRkN2RkNDliNTk3OTc3MGM1NzUwMDRlMjEwMDAxOTNlMTQ3ZiJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/platform/config/config.go#L61-L100",
+          "version": "repo-lines-v1:sha256:eb4510bc849c37686e4156fcc725131555b9944ce78912b59a0b7e87519c9bb8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4MTY3YjM2NjZiNmUwMzk1ZTFkNzg2OTc3ZWVjOWM1NjRmNGZjNDY4NTllYzY0NTM4MDc1Y2U3ZGQ2YzY4ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmYjQ1NzI2MGM4ZTNhOTNhZWMyZGJiMGNlNjI5YWZiM2JmZTkxNDg4YjA4OWU2MmRmNGE0MGM4MDYzYTk2ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjNWUwNTYyMTJjNmMzYjIxNDg5MmQ0NTZjNDM0ZWYzNWMxOTYxMTgwZWFmMjY2OGRmZmZiNWY1NTAxODhiOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxOTNkMWQ0MmEzNDRlY2YzYjc1MjExNGIzMDhiMWU4MDhmOGE0Nzg4ZGFlYWY2MDU0ZTQxMzBhMmY2MjE4OWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_92900de9abb141a0b18217d0527ff225",
+      "statement": "The main backend binary in `cmd/retail` supports two operational flags before normal server startup: `-migrate` runs `bootstrap.Migrate()` and `-seed` runs `bootstrap.Seed()`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/cmd/retail/main.go#L17-L39",
+          "version": "repo-lines-v1:sha256:587879ed4d40eac0c2347736bb304da268d8c223def47fe173bcf47bb99fe83b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNWQ2NGY5NzFiMjRmNzAxZDM0Yzc3ZjEyNWFkOTNkNzBiN2I0MGEwMmMwMjM2YjA0NTM5M2UyNGJmNmI1ZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc1NDE5Njg5NDJjMjAyNTE1NDM4OTQ2MDU0NTQ1NTBlMzAyZDIyOThkZGZlYjhhZWQwNjc2NWU4MDkyMjFkNjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_119589c9f7294095a7f7d7da9c5cde58",
+      "statement": "`bootstrap.Migrate()` currently runs schema migrations for users, identity, orders, decision memory, accessory catalog, resume session, and promotions, while `bootstrap.Seed()` only seeds startup metadata through `database.EnsureStartupKey(...)` rather than loading demo products.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L225-L300",
+          "version": "repo-lines-v1:sha256:9b10f9b0002c8ed59d0c63ecb30e005dcf39275dbeca80384f77df6ee2ac9aaa:eyJzZWxlY3RlZExpbmVDb3VudCI6NzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhYzM1OTEyMDUxNDg3NGVhN2NkYzcwMTRkYzMyNGZkYmU2ZjdkMTkyYjU4NDRkZjY4YzIwZjc1ZTMyMDE5ZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTFkNzkxNDgwOWUzNDk5ZDQ1NzNlOGJmZTU4MjZhZTA4MmVhMmUyYTE0ZGI3Y2MxNDE3MjU3N2M2YTczNWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a83516834a92482fa6fea908c4948bb0",
+      "statement": "The backend package also has a separate demo product seed program in `cmd/seed` that reads `cmd/seed/products/seed_products_demo.json`, converts seeded prices into VND, applies a special override for SKU `ASUS-0001`, and upserts the resulting products.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/cmd/seed/main.go#L20-L122",
+          "version": "repo-lines-v1:sha256:287bac9e338f7aadfd4a2b1f6e1c8d85f7cd41318be01afc37a04669b1be208b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAzLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJkODVhY2FkZjBlYTM1N2NiZDU1MWIxYTU1Mzc2M2EyYjA3M2IxN2JjNDU1NTY2ZTJlNjg4NzcyNmI5ZjNmNzkwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzNzRkMDUyODQ0YjdmOGEzOGRlMzQzMDFhMjIxN2Q2MTVmYzI5NWU1YTdjZGNiNmI4OGVmZDc5YjQ4OGM4OTIwIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://services/main-backend/package.json#L5-L24",
+          "version": "repo-lines-v1:sha256:64c0c769827a1ad30d58d52d589f3e4288815b47e704af3a419f300c1cfce461:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM0ODMzZDU5NDljMDNhNDBjYTk1MjQ5MTYxMGE2NjU5NjQ0YjNhYTQ2NjM2MmY3OTkwMjBkYmYxOTgxNTQ3ZGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmOGNjOGI3M2IwMTQ4NWY4Njk2NGFiZjQ5Y2Q3OWFjYjY0NDFlNGQ0MDc4ZjU1NjJjNGQ2NDQzZTRiOGFjZjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ea79ae77d434f93a41a571d1e9ea239",
+      "statement": "The backend HTTP server bootstraps database, Redis, an async job client, file storage, identity, users, orders, catalog, accessories, promotions, decision-memory sessions, resume sessions, and the `/health` route in one process through `bootstrap.Run()`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/bootstrap/bootstrap.go#L52-L223",
+          "version": "repo-lines-v1:sha256:3752ae98347620e91c72def76f32efef846303566a3c5000260f7a112b26b7e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcyLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI4ZjVlNjVlYTE5NjUyYWQyZDU3YWRiNWY1MjhmMTk5OTJmYmMxYWZkNzgxZGU0MzRjYmZkYjc0MDY3ZjU1MDljIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI3ZjhkNzNmOGE1OTAyNGI2NzYyZDk0NGMxMDY4MGNiZDZkM2VhYzM3ZTdlYmY2NDhjZmUxNjQxMWRjNDFiMTI1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI4MzcxZjI3NzFkMmM2OTc2Mzc3ZTZhN2U5NDVlYjM0Y2UxMzdlMWE4M2FkMjhlMzNjMjZjZGIwZGIyMzRlN2IxIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_94e48289ccfa43ecbfcbe980c05e9486",
+      "statement": "The worker is a separate Go process that connects to the same Redis and Postgres services, runs both an Asynq queue server and an Asynq scheduler, handles order-confirmation jobs, and registers a recurring price-check job every 30 minutes.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/cmd/worker/main.go#L24-L116",
+          "version": "repo-lines-v1:sha256:2b262c8d24e1a9606aa4c146973a6fa7248c9f6318f8d05b27b4bdbf6343fcef:eyJzZWxlY3RlZExpbmVDb3VudCI6OTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxNWQ2NGY5NzFiMjRmNzAxZDM0Yzc3ZjEyNWFkOTNkNzBiN2I0MGEwMmMwMjM2YjA0NTM5M2UyNGJmNmI1ZmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMyMDNkYWY2NGZmNmViNDQxNjhjYjJhYmU2MzZiNWMzOWFmODNmZGFmNDk1N2ViYWM3ZTk4ZGY5OTQzYzZkNTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliNDdlMGY2ZjA4MWIxODM5NzBlZGUxMDgwMzM1YWMzMjJiMzU3YzM3OWU0ZTJiYzRhZTExZDI2NGEyMDIxZDYifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/platform/job/client.go#L15-L20",
+          "version": "repo-lines-v1:sha256:7c26f177743c077ea76e9f3ac8282a7c3095e5a5dcc3cf9f1f01fe3e91ea9def:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBkOTg2YjBkZjdlOWM0N2FhNzgyYjA2NjA5NDY5YmM4ZWVjYTQ3NjEyYjgzOGNmODI5ZGRhNGJjZGRkMzMyOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzIwM2RhZjY0ZmY2ZWI0NDE2OGNiMmFiZTYzNmI1YzM5YWY4M2ZkYWY0OTU3ZWJhYzdlOThkZjk5NDNjNmQ1MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjc5YmRhYTY4ZmI5MzA2NzA1Nzg2NzEzZDk3YzZiYThjZDM2M2EzNWQwODQxM2E4NTBiYTM0ZmY1ZmI2YjZjMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6fe9c1c6ae1d421c8d68c2371bb82862",
+      "statement": "When `PHONGVU_CONNECTOR_ENABLED` is true, the worker registers a Phong Vu accessory-sync task every 6 hours, enqueues an initial unique sync task on startup, and builds that sync from a fixed list of Phong Vu category URLs such as mice, keyboards, headsets, monitors, hubs, webcams, bags, and external SSDs.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/cmd/worker/main.go#L118-L145",
+          "version": "repo-lines-v1:sha256:076825a914cf07a26ba2c2e8b8f8e61d815bcabfb5acd7d425e2d8cbbec85224:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzMGVjODJkZDZlNjkzNDJlMzk2YzEzN2Y0MDA3NTM1ZGY0MTUxNmMxZjJlMzUyYWRlZWE1Yzg4ZmZjMGFhMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlMTczNDc0Y2VjY2Q3ZWJjYzE3MjlmM2JlMGI4OTVjNTA2ODRmYTAzNWQzMTFkMmY0NzVlNWE5Yzc1NGRlYTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/cmd/worker/main.go#L63-L86",
+          "version": "repo-lines-v1:sha256:d07046f51cb82e87ee760f743c86e7c9204cf8f619d86677dae07a84b95bc6b5:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFjODUwYWNmNTU5MmUzZGQ3NjQwNGE3NzM3OGEyMWU1YTY0ZWYwMDk3N2ZiNWZjZmZkODBlOGIwYTQ3MDEwMzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBlYTMzM2U5Y2Y3NjE1ZTIyMWUzYzcwY2Y5ZTdhZjEyYjYyZjE5NjQzZmMxZDgxOWYyZTA3YTI0MzQ0ZjE5NDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3NGY1OTc1NzkyNTU5MzQ2MTMxZDMxMDIwMjA4NTJlZDQ2ODUyZTJjNjQzOWIzZGFhYzEyNTYyY2FiM2VmMTEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/platform/config/config.go#L61-L100",
+          "version": "repo-lines-v1:sha256:eb4510bc849c37686e4156fcc725131555b9944ce78912b59a0b7e87519c9bb8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4MTY3YjM2NjZiNmUwMzk1ZTFkNzg2OTc3ZWVjOWM1NjRmNGZjNDY4NTllYzY0NTM4MDc1Y2U3ZGQ2YzY4ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmYjQ1NzI2MGM4ZTNhOTNhZWMyZGJiMGNlNjI5YWZiM2JmZTkxNDg4YjA4OWU2MmRmNGE0MGM4MDYzYTk2ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZjNWUwNTYyMTJjNmMzYjIxNDg5MmQ0NTZjNDM0ZWYzNWMxOTYxMTgwZWFmMjY2OGRmZmZiNWY1NTAxODhiOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxOTNkMWQ0MmEzNDRlY2YzYjc1MjExNGIzMDhiMWU4MDhmOGE0Nzg4ZGFlYWY2MDU0ZTQxMzBhMmY2MjE4OWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a44e0822483c4504b65113d1bca1771f",
+      "statement": "The accessory syncer prevents overlapping runs only with a process-local mutex and `running` flag, and the code comment explicitly says multi-replica deployments would need a distributed lock such as Redis; on fetch or upsert failure it records failure state through `MarkPhongVuSyncFailure(...)`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/accessories/sync.go#L11-L83",
+          "version": "repo-lines-v1:sha256:67c82084c51f64ef22087fcbac8b6cea1dac01cf82efa8c8b70c8ae30ea53a5e:eyJzZWxlY3RlZExpbmVDb3VudCI6NzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRhMTRiNzMzMDljOWU3NDRiZGIwYWFlYzI4ZTI5ZGE3OTdlNjcyZTkyNmU4OWU5Mzk0MzI1MDdiZTBlYmZkYTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc5ZWRkNzJiYTZiNDAwODNjZTk1MjY5ZmE1NmZjZjNhYzFiZDk4MjIxYWE2NjIxYTY4M2Y3ZDU2MzJiYjIxZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_521650e7be2f4d3596a566d4f6e73e8b",
+      "statement": "The AI runtime is a FastAPI service intended to run with `uv run uvicorn src.main:app --reload --port 8000`; its settings require an `openai_api_key`, default the model to `gpt-5.4-mini`, default `backend_url` to `http://localhost:18080`, and default the runtime port to `8000`.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/README.md#L22-L37",
+          "version": "repo-lines-v1:sha256:03087c1b8c83d28dfe50d6f584adc31e5e1b91bde4dc7c98666fe215b80442f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhYjRmODE0ZjU1YjUwOWY0M2I4ZDBjYzg0OWRlZDk5OTcxMTE0NzMxMzRjZmUyYzg2YjE2ZmYxZjc3ZTVlNmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3YzA2YzU2MWQ1YzMyNzM0MzY4NTI2OGE0NmIzMzkxZjM5OThlZWU4OTBkMmJlNTFmMGQyMWNjNGE1M2FlNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNDVmMjQ3OGY4ZWJiMzdkZGQ5ZGM0ZWYxYzFlZjJkYTI1ZDU0MGFjZDc0NDBhNTRhYTZiOTRlMjVhOTBiMDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/ai-runtime/src/core/config.py#L1-L28",
+          "version": "repo-lines-v1:sha256:0ef402b8589a2436e2a5e189878883f655c49b6d3f3fe6cdd683ae3d49057807:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjYjlmZmNjYmE1MTQ2YjJkZDE3N2EzMGMzMDU3YTQzOTVlYmQ1Yzc0NWQwNzg5ZDJlZDk1ZDBjZjRhZmUyNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4ZjRiZjE4NzYxNjAyZDNiNTkwYjM3ZDM5OGZhOTk3Nzk3MzBhNzdiNjgxMzhmZGQxNDA3MzQ5MmUzNzY2ZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_13e0a3e5edf9487b98b110b36b5698e9",
+      "statement": "The AI runtime exposes `POST /api/v1/greeting`, `POST /api/v1/chat`, and `POST /api/v1/chat/stream`; the backend’s decision-memory chat handler proxies chat streaming requests to `AI_RUNTIME_URL + \"/api/v1/chat/stream\"`, so session chat depends on that runtime being reachable.",
+      "evidence": [
+        {
+          "resource": "repo://services/ai-runtime/src/api/chat.py#L63-L144",
+          "version": "repo-lines-v1:sha256:b5c5a39c01628bfc9492e8530b593b7a61d4be24f602e6fef1323915cb72cd83:eyJzZWxlY3RlZExpbmVDb3VudCI6ODIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk4MTdiM2Q1YTM1NThjNWJkOTM2OGJkMzI2ZWVjZDczNzcxODNkNjFhNjgxN2I0N2JiZDZmODJjOWI1MGRiYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZjZWE3M2M0YWRiYmQ1ZjQ3ZmVmYTcyNmY3MTVhZjk2M2IyM2NlNjg3ODVkN2M5NTA3NjM0NjA1NmUzNjcxZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1NzE2YThiNzVmMjNiNWFlYzkzZWYzZDdhZDA0OWY3OGI2MDg1MGViOTkzOTgyZWE1MDE3OWFjMDZmODkwMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/chat.go#L192-L216",
+          "version": "repo-lines-v1:sha256:08440b41fefa640fd5d313c57e1779d9bd1ce6b4d9659f0a7bb95ed2313b11cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmN2M2MmYxN2U3N2YwMmRlMjFmMjk4YzJhN2VlMTE0MDBmODE4MWVmYmM1ODg3YjA0NmQ2ZTU3ZDRiYmZhNzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2NmEzNDI0MWRmZDdkZTIyMzg2NTY3ZDE1ZWUxN2RlZWIyZmY5NGY0YjExMzQwMWVhNzY1MzJkMmEwZDk1N2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU1MTBlOTRjYzhkNjkwNzE2NWM5Y2ExNjk5YmQ0NWI4NDJhM2Y0Mzc2NTA4YzZlNThkZjkyNzMwMzAxYmRmNTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkNjM2YjU5ZjYzMWZhM2YxMzA0MzllYTliNDgyNWU2OGQ2NjZjZjQyYTE4NGMxM2RmNDlkOTg5NzQ0NTFmMTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_de280f462d0c40e38e12737060bcfe19",
+      "statement": "The repository root commands use Turborepo for development, build, type-checking, web-only, mobile-only, backend-only, Docker-backed backend startup, and Cloudflare deployment workflows, while the backend package adds explicit scripts for dependency startup, app startup, worker startup, Docker Compose, Swagger generation, tests, and the demo seed program.",
+      "evidence": [
+        {
+          "resource": "repo://package.json#L1-L15",
+          "version": "repo-lines-v1:sha256:363b0626932c9fc504566bbba94449c6423c3018eebb79c9eb286885090bbee6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjRkNWNkMmZiNGYzZGY4ODQ1MTUyNTViMzk1MjNmMmY4YjU0NzJiZWVhOWY1NjZmZmNhMjA0ZGI4MDI1NjEwNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjljNmEyYWE3ZGY5MmYxYTJkMzFmYzM4NjAxMDAxYTYzMmY1OTZlYmQ4ZWEzNDQ3ZDEwMmFkMjM4MWM1ZDNkMDkifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/package.json#L1-L24",
+          "version": "repo-lines-v1:sha256:83d68140608b24a12ea29794bf091a1c8fc7a0d66a2e3dd0b13daf42994b7363:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2ZmIwOGZkYTFhY2I5NTdiNjExNmJkMzc4MTFhMWZlNDFhMDE2MTFjMDYzMWVkYmY3ODZkNjg4OWEyN2E1NWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZTU3ODhkNWQ5ZDczZDI0YTgxZGJjMGE1YTc0YmZhODJjOWMzYjNhZjk5ZTUyYWY3OTZlOTBiNDY4YThhM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_edc687405c72475ead0b19971be4348d",
+      "statement": "The Cloudflare deployment script currently covers only the web app: it loads root and `apps/web` env files, requires `VITE_SERVER_URL`, deploys from `apps/web/dist`, and binds `VITE_SERVER_URL` into the Alchemy-managed Vite deployment.",
+      "evidence": [
+        {
+          "resource": "repo://packages/infra/alchemy.run.ts#L1-L25",
+          "version": "repo-lines-v1:sha256:117f96acbab252d647c7c325c903fd4819deeef8b1cd1001d7f712bec141bd24:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUyZWRjNzgwNDVmOTI2MzhlNWI3YWE3NmVjYjU5MzYxZDgyN2RhZjI2MTY4NzkxYmRiYTM1OTE5ZGI2YWExZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwNDcwZDEyZDNiNWMxZjQyYjVmNzY5Y2FhOGVlYjhjNGU5Nzg4NjYyMzA3OTBmZjNiN2QwMTM1MTgzZjE1NzgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-28T02:48:19.098Z"
+  }
+}

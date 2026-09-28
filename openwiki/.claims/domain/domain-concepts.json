@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:9564daa728b09123ba363c141d2f1555445db98219f3b9d64e99f1e4df8b98a5",
+  "claims": [
+    {
+      "id": "claim_e4b729cb6f3d4d62a3db9f5c38c843ad",
+      "statement": "Decision sessions persist both conversational history and machine-readable assistant artifacts: a `DecisionSession` owns session identity, ownership, parent-session linkage, timestamps, and ordered `Messages`, while each `SessionMessage` can carry `ReasoningGraph` and `PinnedProducts` data in addition to text content.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/domain/domain.go#L15-L35",
+          "version": "repo-lines-v1:sha256:19f2abcbc2b30fc37cc2fde8c1e0a9284d932359c546e445da71ca7d2a5587c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVlYzZhMzcxZDk4ZTkyZjg1MmJiNWQ5Yzg4ZTBhYThmOTY3Mjc5MGUzOTViYTA3MWI1YjNiNmM2OTIyNTFkNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMzYzc1NzE0ZDlhODc2ZGU2OTQyY2NiNTJmMDU2YzRjNTQ1YWRmZjdmYTA0MzE3MjQ5YzBmNjIzNDZkOTc0NjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYxMzQ4ODUzMzE1MjE2M2Q5Y2QzYjcyODQ3ZmQwNmMyODkxZmY4MDFlYjIwNGEwODM4ZWVhYjliMTQ3Y2JlYjEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/repository/postgres/repository.go#L123-L157",
+          "version": "repo-lines-v1:sha256:7ad52186192496e01b7f28af08e1369e40e4c342fc8a8c8d8487f5e2d94e5026:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwODJhNjhkMTJjNDA4ZjdmYTg4MDliMzFlYzU2NjFhMGNjZTQ4ZmYzZWFjOTQ1NzYxNzdjODA5ZTViN2U0YTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljOWJiNmZmNmJjMGE2MDlkMmUzYzFmMDg2ZDMxYmFlZTNjYjAwNGVlZGZkNjA3NmFmOGI2MzY5NzBhY2Q2ZmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRlMjJiZjQ1YTI2YjhlMTljMGRhNzIyNWFiMDgxZmM4MDYzNDM4YTdjZGQzNTM0NzQ1Y2JhODFjYzcwMjFjYjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4864a06d34124c7cb21adb38c8b46b02",
+      "statement": "The dynamic AI UI contract is a whitelisted, schema-validated envelope: version `1.0` envelopes carry turn, revision, conversation state, UI state, and `ui_operations`, component types and action names are enumerated up front, and component props reject dangerous property names such as `html`, `script`, `style`, and `dangerouslySetInnerHTML`.",
+      "evidence": [
+        {
+          "resource": "repo://packages/protocols/src/index.ts#L1-L111",
+          "version": "repo-lines-v1:sha256:0c871f3522ac7c41d1f797be5f1c9ac2c09e7e4bab5cf36739123a833f7c489a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTExLCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiMWUxNzY3YWQ4MmM5MzdkNTJjNjQ0NmY4NDE4ODY4YWNkZjE2MDBiNGNjOGQ5MWNlNDQxMTg5MDg0YzNhOTg4IiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiIzNjU3Y2FkNDE3MGU3OWVmZWI3ODNiZDhmZmNlZjUzNDY2ZDA4NzkxNTc1ZjM5ZDE3ODBmMmJkZTRkMDE3OTljIn0"
+        },
+        {
+          "resource": "repo://packages/schemas/dynamic-ui-v1.schema.json#L1-L157",
+          "version": "repo-lines-v1:sha256:6fe674e6da231c72003b506c6f0b55c5e8aa270de8bbca1526e71e699e0daf99:eyJzZWxlY3RlZExpbmVDb3VudCI6MTU3LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJhNmZiMDhmZGExYWNiOTU3YjYxMTZiZDM3ODExYTFmZTQxYTAxNjExYzA2MzFlZGJmNzg2ZDY4ODlhMjdhNTVjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MCwicHJlY2VkaW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_c1eb53df31ba4367a7389a71e4c7c0d0",
+      "statement": "Dynamic UI operations are applied deterministically by sorting first on `sequence` and then `id`; a surface-level `replace` clears existing roots before inserting the new component, while component-targeted operations recursively replace the subtree matching `target_id`.",
+      "evidence": [
+        {
+          "resource": "repo://packages/protocols/src/index.ts#L115-L166",
+          "version": "repo-lines-v1:sha256:aed6a88df04c828fd26d58a4387dbeea1d4bb97ad62b1e3a2a208dbb66ef653d:eyJzZWxlY3RlZExpbmVDb3VudCI6NTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1N2FkMGU0ZTQ5NTkwZDFmYTExZjU1OGQ1NWEwNGY5OGYwYmU2NTc5ZTdjZjg0ODRjZWExMzc1NzFjZjk4NzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMWQxYTYzMzkwMjI5Yzc5ODM0N2U4M2EwNDA1NDQxYzk0MDAwMzUyODRhZDE2OGMxYmY2Y2RmMWQ3MGEzNzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM2NTdjYWQ0MTcwZTc5ZWZlYjc4M2JkOGZmY2VmNTM0NjZkMDg3OTE1NzVmMzlkMTc4MGYyYmRlNGQwMTc5OWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4b461b7d2e064300a6574aa808218dce",
+      "statement": "Interactive question submissions are tightly validated against the last stored assistant question envelope: the backend only accepts schema version `1.0`, event `submit`, and action `question.answer`, caps free text at 1000 characters, requires the interaction, question, and turn identifiers to match the active question, verifies the component existed in the stored UI, enforces single-choice questions, and rejects unknown or duplicate selected options or empty answers.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction.go#L179-L284",
+          "version": "repo-lines-v1:sha256:e2174d214545a9f1c52e76a52f1215ce18d913342ae7b3016a515803d32d483c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA2LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiIxZDQ2OGQxZjhiMWUxM2Q0YmYwYzVjYzg2NmMxNDQyMDY2Yjg1NjYxMDEyOTQ0ZWZlMDllZGRmNTk4Yzc0OWRjIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI0MTJjYTM0NWNjZjc1YmY5YzA4MDZiY2U2OTViZThkZTgwOGI3OTk4NDI1MWE3YTU0ZDIwMmNmNjEwMWRkNDUxIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiI2M2E2ZTQwNzFhYmJhYzI2ZmM4MzQxNTRmMmQ3MzkxN2Y1YTFjMmM4NmEzMTNmMTJjZDYzMDc2YmVmM2I5ZjI1IiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction.go#L21-L25",
+          "version": "repo-lines-v1:sha256:bb674b1ef0b6ad7063142aec853989350039679956d1a6de9af09a1a9446f09c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBkOTg2YjBkZjdlOWM0N2FhNzgyYjA2NjA5NDY5YmM4ZWVjYTQ3NjEyYjgzOGNmODI5ZGRhNGJjZGRkMzMyOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjQ4ZjI2YjJmM2ZlY2FiMTFjMmFhNTNkOTdjNTg5NTMyN2EyNDAwMmE3YTQ2MTNhYWQwN2Q4NzNkYmUzZDQzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWY0Yjg4ZWNlN2E3MzRlOTQ4NmQ2MzNiOWM3ZDQ5MWFiYzA5ZTZlMjQ2ZDQ5MGIzMjYyMWM2MmZiY2MyNzVhZiJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/handler/interaction.go#L75-L153",
+          "version": "repo-lines-v1:sha256:582ed79051d1ac102681332de2d50a4e7eb188edbdae1f677b72fec09c004f28:eyJzZWxlY3RlZExpbmVDb3VudCI6NzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwNDY0OWQzYWU5NzdmYTIyYTM0NzlhZWEwY2MxZjhmOTc2OGViOWU4ZWRjNDg2ZGNmYjU4ZjU5OTQyM2MxOTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0ODE2MzA5ZTE0NTk1MzlhMmRiOWY2MGQ1YWYxZjMxMGQ2NGUyMjQ2ZmYzZjUzNDZjZGRhMzA1MjY2MGZkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3OGJlYTllZGZmZDU3NWUzNmI4Y2ZlZWIxMmRjN2M0ZmEwNGViNWU0YWJkZjVmMjIyYjg5MGNlOWQ0MDJmYmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1OWMyZDJiYmVlZWM4MzcxNjY0OTJlODc3NmU5NmY2OTkxY2JlZThiMjZmY2MwMDZlZmVkZGJlZGYzNDczMTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ea477dbac5b04fc6a724337aeee6cc3f",
+      "statement": "Session interactions are database-backed idempotent work records keyed by session and interaction ID: begin logic rejects reuse with a different payload hash, rejects still-leased pending work as in-progress, allows completed requests to replay the stored response envelope, and lets an expired lease be reacquired for the same payload.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/domain/domain.go#L10-L13",
+          "version": "repo-lines-v1:sha256:3838aa468ff4940d6597852aba6c91b4387cad8ba6e5835430274ff2d5049a69:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTE0NTZkMzlmNmZhYTEyOGZkZDk3NTc1ZjRkMTAyOTYxYTFkNjI1NjY2NzNkYTRlM2JlOTgwYzAzYTdlOWQzMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjQ4ZjI2YjJmM2ZlY2FiMTFjMmFhNTNkOTdjNTg5NTMyN2EyNDAwMmE3YTQ2MTNhYWQwN2Q4NzNkYmUzZDQzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWFjN2U3ZmMwZGFmNGQyYmYxZmExN2RmY2VkMmRiNjA2ZGQ2MTk1MjJjNzRmYjM2Yzk4NGY1Mjg3ZjNjNmMxMCJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/domain/domain.go#L37-L46",
+          "version": "repo-lines-v1:sha256:ac5939d2cb2b516ba8193592733ac1e987c79ce8b2a7f44f506a21602d3c72de:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwZjMwNDk5ZDNkY2U3NTZhMTNjOWJjOTNkZGNmNGVjZjIyNThlMDI2NzY2MjA1NGNiOGZlMTg3NTY1NzczMWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhOWViMjFkYzQ3MmQ5Yjk1Y2NlZWYyNzc5Y2IwZTU2NWIzYmFjODNmYWY4ZGE0MzA5NjVkODk0MWIwYjY5YjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU2ODFkYTMyMjI2ODRiMDYyMDQ1MDMzNWI5Yjk2NzM1NjhiYzcyMDdlNjIzMzkxM2I5NjZhMzg4MzM5NDQ1OGIifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/repository/postgres/repository.go#L19-L80",
+          "version": "repo-lines-v1:sha256:a47eb494b9c319eb20f0b3b9c55c5bcfe89bfd47e1dc7312f955dc7ddc25308c:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhZGI1OGQyOWJiZGUwNjM0OGVlNTgzMzI0MzlhMzgxMWEwNDhhZmRhNzJjMmVlYTJhMGFkNTM3ZGEyM2RjNzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0YWI4NThmMjJjMjJjOTc3NGNhMWRiYzg4ZjE1OWZkZWI1YTU5YmNlOTM0OTU0YWM0NTEwYjZmODk2MjAyY2UiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZkN2YxNDU0MDEyMzJlZTg0MTE4YmM3MDBkYmNlNmUzY2MxMTUwZWM5Mjc3MzJjODhkY2E3NDU0ODI5YTgxMWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4ZDgzOTJjZWIxNTU4MDM5YTAzYzAxMzA4ZDdlNmVkYjc5ODg4OTFmNzNmM2I2MWM5YTE4YTYwNzFlZDMwYTQifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/decision_memory/repository/postgres/repository.go#L83-L100",
+          "version": "repo-lines-v1:sha256:cfbdf7e48f3eca733c77a52cd90657cb22855b163eb260d86df86aea1427a14a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2Y2VjNzU2NTZmNTdmOGQ5OGI5OTYyYTcwMTdkNjk2N2UxM2M2Mzg0YWVhMjNlMjgwZGM3ZGZiNzA4OGI4YmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2ZmNlMzcyMTFmNmU2MDBjMWU5NmU1NmNiODBjNjM2NTdhN2NhZmQyNWYwY2Q5NDcwYmQyMzZlMjZhYTZlNTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiNWIyMmZlZWM5ZjVlMjFlMTNmYTUwNmI0YzkwNjU3NTZkNzA1MGM3MjZlMGQ4MjhmMzViNGRjYmIwN2UyNjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0c66b0c2ad844aa38fe268c8c2eaef67",
+      "statement": "Checkout creation requires the authenticated customer ID to match the requested customer ID and copies the persisted customer name, email, and phone into the order, so checkout uses a customer snapshot only after verifying those profile fields are populated.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/orders/domain/order.go#L36-L57",
+          "version": "repo-lines-v1:sha256:57bad64ef99f38cda2747d68fa54f883a072b44801636b58625cd4f022da84c4:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU3NDM4OGYwNDk5NzU4MGQ5OTlmZGVkZDczYWNmMDMzZTQ4NDIwZjQwYTFkZmU3YzVhODc1MjdmMDk0ZmQyYWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwNjVlOWJkMGM3ODI0MmI5MDU5NzlkMWEzNTQ3ZGIzN2ZiNGY4N2I1ZWJkYjFhYzlhODkzNDZhNjdiOTQwY2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service.go#L129-L158",
+          "version": "repo-lines-v1:sha256:b2b13bf985984dbde5592ab2d8b8ec2e8355dc7fa436c06b5d42dcdb7b4a2a85:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2ODIwOTgyYWQ2ODdkOTUxMjI4NmNkOGMxYTZlOGUxMjNjYjYyZjkyMzJkMjM4ZTZhNjFlYTUzNDMwNmQxZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImIyMmVhNGYyYmMxOTJkZGY4MDMzNDkyNzY3YjFjMzI4Nzc3MGE5ZmM4Y2IxOTBjMzE4ZTNkYzY1ZGYyMTIyM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY4MDJmZTBmMTg5YjcxN2ExNTFjYjE4ZWQ1ZjkzZWM3ZTY4NjQ2ZWY3N2Q0ZjFkODljNzg4N2NkYjEwYjA1YWEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service_test.go#L244-L278",
+          "version": "repo-lines-v1:sha256:c62be2b3beb4d2ab6263fb4f09454035ad3c38d40376ddce72bdc271893209dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiNDFkMjY3N2I4NjNmZjVlNTQxM2U4Y2VhN2IxYzhmYjBiMmFjMDc0MTAxZDc0OTYxOGZiMTE5YWQwZTllNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZmYzA3NTlmMWM4N2YyOTE0NTcwNGI5ZDVlODk5ZDQ5MWE1NDM2NTI0OGUyOTgzNjk0YTIwNzljNWYxZWZkMTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d5d74afddf54af781e37e2d009b6b32",
+      "statement": "Checkout pricing is backend-authoritative and VAT-inclusive: requested lines must specify exactly one of `product_id` or `retailer_offer_id`, product prices are reloaded from backend product quotes, consumer tax is fixed at zero because catalog prices are VAT-inclusive, and tests verify order unit prices and totals come from those official backend values rather than caller input.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/orders/repository/postgres/checkout_data.go#L97-L119",
+          "version": "repo-lines-v1:sha256:dcfd564cbd3755b41f863b5683cf5e04a1f81474584870395280deb8e4a7bd87:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3YmQ1NGFlY2NmZjY0MGUyZjNiODVhZTExNTM5MWI4YmE4M2UzNDEzMTBiZjhjZjgwZDU1NTU2NmRjNTFiOTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MzFiNmUyY2EwN2Q4YmFmMGViNDRlNzQ5ZGJmNDkwYjM5MmUzYTUzNGVmNjEwMjI3NzExNDZjZGY5YWYxYTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxZjlmMDQ2MGJlODQ2ZmUzZWRiOTdhOGViZjRiNDc3ODU2YWE3NzMxMzJlOTgxYmRkYzNiNTRiODRkZTc1MDAifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/pricing.go#L11-L13",
+          "version": "repo-lines-v1:sha256:1cce7e9ecb882a38f61534803db23415d1cb86fffb47516ca91d5b439040bed9:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzJmY2VjN2IxNjk4MGExNGI3M2NhOTY4MzhjYjMyZDliMDAwMGJlMzU0ZWY0MTNjYzVjYjYwNDViNTAyZjNlMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjY1MDExZTlkYTlkOTJlMjk1ZTRhNDNlMDQ3YTY2OTFkYWY3YzVkMjBiNzdmNGJkNmQzOTgwMzg5NzFmMDVmNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTJmYjgwZTFlNzk3NDQ3ZmQyY2Y5ODQ5ODI1ZDJmYjYzODNiOGJlZTU1MGVkMWFjMjZhZTU2ZjJmMzY3ZDMwMCJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service.go#L141-L191",
+          "version": "repo-lines-v1:sha256:89fa03626b0f3fdaefd331e42788ccd3353b8c851366ec2135bb77a656272fcb:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4MDI5YmQzMTI1ZDM2NjUyZmJiOGNkN2EwY2NiMDRiZTc3NDNlYmY1MWQ4ODhkMDljMzI4Yzg4ZjM3MGZkZjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM3NTBlMGIwNTk2YjJiYTYyZjEyMTMzNDFlNTNlY2FkNjIzZDkxNGQzYTg2MmUxMjk5YzA3MWRiYzI4ZTQyNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVjMmJmNmY3Y2ViZmJhODBkOTk1ZjA3NDc2ZGMyNjJhMmJhOWViMzFlNjc2NjYyZjdhMjQwM2NmODU0ZjQ5NWYifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service.go#L401-L434",
+          "version": "repo-lines-v1:sha256:e5d469ded40e299d521c6d9095569d8549c4cb486e2795deb5400cb5e19a67d9:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyNzVhNTYyMzA0OGZmNmFkNmQ5NTdmZjA0MzY4MDMxNDg5NTQyYWZlYWE3YmYyMTQ5Y2QxOTBiMmU4NWE5MmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY1MmUxODgzY2UxZjExMDE0YmJhNjcwOGZhNmM4YjY5NTMwNDllZDlhNDhlZjRmYTE4NTNjZjcyMzJiYTA3NDciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service_test.go#L244-L308",
+          "version": "repo-lines-v1:sha256:29a84aa4dfea0dcf3df2730f1be32a001a3502ec570d7c2af1d8b526a6a3b01d:eyJzZWxlY3RlZExpbmVDb3VudCI6NjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiNDFkMjY3N2I4NjNmZjVlNTQxM2U4Y2VhN2IxYzhmYjBiMmFjMDc0MTAxZDc0OTYxOGZiMTE5YWQwZTllNWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4NWJlZmY2NWYwMWNkN2FjMDk2OTg4MWRmMTY3MjlkYWIwNGU5ZjY3YWI3MDNmMmE0NjQ1MGM3N2U5YjhlODUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e999a020035a41d094a81f70227898fa",
+      "statement": "Retailer accessory checkout is both idempotent and backend-hydrated: any retailer offer line requires an `Idempotency-Key`, the service hashes the full payload to detect key reuse with different content, returns an existing idempotent order before refreshing retailer offers, and marks resulting orders as `PENDING_SUPPLIER_CONFIRMATION`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/orders/domain/pricing.go#L10-L14",
+          "version": "repo-lines-v1:sha256:cd5d35577ffbf9b56ee35f16ff6c6ca386a5c2cf26bbd2704be9ed504e97e073:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTE0NTZkMzlmNmZhYTEyOGZkZDk3NTc1ZjRkMTAyOTYxYTFkNjI1NjY2NzNkYTRlM2JlOTgwYzAzYTdlOWQzMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjQ4ZjI2YjJmM2ZlY2FiMTFjMmFhNTNkOTdjNTg5NTMyN2EyNDAwMmE3YTQ2MTNhYWQwN2Q4NzNkYmUzZDQzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzM1N2M3ODk0NzdhNzE5MmJjYmUzOWRkNjgxNWEwZDFjZmZhMWI1YWZmOGM3MzQ4YmQyZjEyMDdjZjgxNTgxZCJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service.go#L145-L174",
+          "version": "repo-lines-v1:sha256:f420ce6a47bace19a1eec75ac270a572c5bf900139993e3236a1ad6dc3caf1ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxMzcxY2U0YTBjN2U0MjJlMjMyMTAyNjEwMjI2ZmQ0NGMxN2I3Y2UwZDU3MTA5YWNlOGJiYTBiYTNjYjk0ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM3NTBlMGIwNTk2YjJiYTYyZjEyMTMzNDFlNTNlY2FkNjIzZDkxNGQzYTg2MmUxMjk5YzA3MWRiYzI4ZTQyNjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEzYTVhY2NhNDYwYzc0MjM4NThlMWI5MDdhYTA5NzIxMmY5MTIwNjkxNDgxY2NhMDdiYTA4ZWJjZmRhOWZkYzEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service.go#L227-L260",
+          "version": "repo-lines-v1:sha256:2ebf00ce76539a2a10425a8a2cae3a26e1ae03df4f7833f7834f2f01d6c1201d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4M2E4OGEwMmJjNGUxNmU1ZGZmZTk2ZmRmYzIxMjExNTk5MTJkODMxNWVmZGJiOTk0ZDQ1YjA4M2RlYzQ3YzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRkZDk5ZWU5YmE4YmMyZmFjNzRkMzc2ZDE1ZDY1YWUxNjkzODM5OTQ3MmFhZjQ2ZTMwZDFmOTIyZGEzNWVhYWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU4MDkxNmNlZWZmYTRkZjAyMGUwZGMxNTMyZGYyN2ZmMzJjMjAyMDc0OTE2Mjg5NjYwNzQzOTQzYWQ1ZTFiMGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJiN2MyMzMwNTZjYjAzMTgzZDVhMjY5Mzg0MjRiMjM0ZjNjYTY5MTk4MWFlYzA2Mzg4NGYwMWEyOGQ3ODBkNTQifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service_test.go#L115-L142",
+          "version": "repo-lines-v1:sha256:f54fd1d0ce40e53727ef9cebdc35e5534bba7854bcd6d213e50fbb9cc43a5931:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmZDlhYTE2MWY2YzRkMDhlNzdjZWU1ZmRmNWM5ZWQzMzUyMDJjNDA5NTU2NGNlMDE2YzcwZjAwMzIxZmU4NmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQyMjBjY2Q1MWFjNWFlNGNmZGU3M2EzYzcxMmFjOTcyYTFiZjBhNjQxZGQ4OTM3OWVmNzM1MDQyM2FhMDMxNTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJmZWRlY2M1N2E4ZmQ5NWY1OWQ3YjYyYmQ4YzIyZGNiZTZkMDFlMjlkMmM4ZjVhZjliYmJjMmE1MjRjY2ZmNzIifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service_test.go#L192-L210",
+          "version": "repo-lines-v1:sha256:25954f3086e90c7af3de272ef5cd3266e7649fc7402f1bc3f4e6975f377cdf2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM1MjNmYTI0ODc3OWMwOTVlNGMzMDIxN2ExNTg0NjhlYzU5NjY3M2E5ZGVlM2ViMWEyNzc3NzY1ZDIwODA0ZmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3Y2RhODJkYTYwNjIzOGUwNWU2MjM5OTU2OWM1ZWUwMzk5MzQxOTY0OGFlNWQ0M2EyYmY4Y2Q2MzQ3ZjgyNjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNiMjYzZTc1ZWY2ZjNmNTE4YzAxNWEzYzQ1NzUzZTA5MWNhMmNmOTA3M2VjMzcyYTk4YzU0YWE5ZWZkMTQ4ZWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_02a13fb11a7d43c8bff65f12812c0645",
+      "statement": "Accessory offers follow an authoritative refresh split: ShopWise-owned bundle offers are loaded from backend storage, exposed only when compatible with one of the ordered products, may legitimately have zero price, and must not be externally refreshed; non-ShopWise retailer offers are refreshed at checkout, and if the refreshed price changes the backend persists the new snapshot and forces an explicit retry via `OfferChangedError`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/orders/repository/postgres/checkout_data.go#L31-L77",
+          "version": "repo-lines-v1:sha256:a7112a5bf02906d9e56966bbe34ee2467a3139e6f7c1e0d80aae9ee4af7a44a8:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIxZjgxODgzMDAxNmNlYjAyMTQ0MTI1NjZmNWRkNzMyMDA0ZWI5ODQ4NDhjZDY3MTk0MjE2YzdlMzBmZGMxNmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNGU0MmY3MDQwMTdiZmYxMWViODYxODQ1ZDMyYTA0MjRhNjc4OGJhMWU3NDQyOGFiMTI2MDJjOGEzZmEyZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk1NjFiMmVlMTdhNDU2ZjA4YWZjMDExZjliNGVhZDhlMzFhZTQxNTg4MGU1NTRmNDliYmU4ZmU5NTU0OWU5M2UifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service.go#L346-L393",
+          "version": "repo-lines-v1:sha256:77d2b38851e7a37e443901fb78f776184dad7a6275b62b5ccb7fd1f1aee76dfa:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ2ZDc2NzFkMmJkNjRmMmQzZGVjODZhODMxYWYxODJjMjQ4ODc2ODE2M2NkYjM5NDg2NzQyNzI3YWQzZGQzMGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhmOGMxZDViZjYwYjU2YzE1NjdjOTlkN2YxMTlkM2Q5OWU0MjM1YzU1ZGVjZmE4MTRlZGMwNjc3MDM1ZTRmZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk0OWFkM2M4YTJlMWIzMDUzMzMyMGEwOTZjNzJmNGRkZDcxNDJlOTQ2MTE4OTUzZDM3NmNkNjA3MzBlMjIwMmEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/orders/usecase/service_test.go#L144-L190",
+          "version": "repo-lines-v1:sha256:54328ec68ef297b3c8e3efe00bcc89dc5489426cb681cb76d6632bff6ef4c77e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1MjBjOGNjZjJlMzIyZjg4ZTUwMWVhNGIwMzRhNzZjM2I2NjBkZGQ1MGFkYmE5NDRiNDQwZDI0YjNkMGJhNjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcyYjE4NDQxNmRjNGQwZmVkNjAzMWI0NjRlMDdkNmFiOTRlNTE4ZDM5MmZjZTdhOWIzNDM1ODVmN2E1ODFhMDUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_41bede1fc1d34e83ba371860fcbc42f3",
+      "statement": "Accessory recommendation distinguishes offer freshness and compatibility confidence: offers are `fresh` for 6 hours, `stale` until 72 hours, then `unavailable`; stale offers can still be recommended but checkout is only available for fresh in-stock offers; and model-specific compatibility overrides category compatibility, with upgrade accessories additionally requiring a verified product upgrade profile and model-level verification.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/accessories/domain.go#L77-L103",
+          "version": "repo-lines-v1:sha256:141a29002ef1789dc52111dd5ef61a447759266c728531f7eb7ea770e56f12a9:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQzNGFkMzhkZjEyN2UxZGJmYTFjNWJlNmE2MzBlN2Q0NWU1NDBlYTBkZjhjNTAyNjhjMmZjMTk2YTg5Yjg3ZDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI3ZWViNzRlMGY0ZmFiOTkxYzhlMDVhY2IyYjIyZDIwNDE5YTU5NTdjOTc2ZGM1ZTc5NjIyMGVlNTM1YWM0YjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/accessories/domain.go#L9-L23",
+          "version": "repo-lines-v1:sha256:b2529aa5c8793da246301ce9885e98e8d50db1c335f2faf2c9fe852cd7f0a85f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiMTU0YTJiNTRjYWU3ZWUxMjA1YmQxYmMwZmE5ZDQwNjUxMGY1NWI1YjU3Y2RhYTNlYzFlMjc2OWJlYWNjZTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0OGYyNmIyZjNmZWNhYjExYzJhYTUzZDk3YzU4OTUzMjdhMjQwMDJhN2E0NjEzYWFkMDdkODczZGJlM2Q0M2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRmZjkxN2UzZjRkZmFmNDEwMGFhODhmYWY0NDJlMGIxOGFjYmQ0YzViMjdjOTdkY2FkOGZlZTkyYTY0NDA5MTIifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/accessories/service.go#L13-L17",
+          "version": "repo-lines-v1:sha256:c57a3ca5d196ff69bf6246172b2fbcd4b1debdd9df5ec8c40643d0107c8cd033:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBkOTg2YjBkZjdlOWM0N2FhNzgyYjA2NjA5NDY5YmM4ZWVjYTQ3NjEyYjgzOGNmODI5ZGRhNGJjZGRkMzMyOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjQ4ZjI2YjJmM2ZlY2FiMTFjMmFhNTNkOTdjNTg5NTMyN2EyNDAwMmE3YTQ2MTNhYWQwN2Q4NzNkYmUzZDQzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTIxMmI4MzZlMzBmNmJiMmUyZTU0NDA0NTUwZjQ4NjY5ZDdmMDMyNThmZGU4YmNhZDYyY2M4M2I0YTg3YTFlYyJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/accessories/service.go#L48-L67",
+          "version": "repo-lines-v1:sha256:a09477a43e933230b79121b5ae79e2f2b6f4c6d92793f48c5800847577133700:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFhMzU2NWQ4YzdjY2QzNmMxODBiNTQ4OTMyM2U4NGRjMTc2YTBmZmU0MDdhMGFjNzdlODZmMDlkMWYzNzA2NWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ1NzlmODRkNjVjZmFiOTU5MTg2MzE1ODQ2YjI3ZDQ1ZmExMjRjNGFlN2M3NjdjYzdlNjY0NjgxNjJjMDUxMDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyOWQyOWE1N2U1OWQ0NzMxYTg0M2I4ZTIzNGU2ZTlmZjcyMGMyMDlmYzQxOWY2ZjA2NTE1NjNkMzYyYzA4NjkifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/accessories/service.go#L92-L140",
+          "version": "repo-lines-v1:sha256:71edb2a089812d38197d4a37424a6d1968c696525e79fa016e16f6fa8f9bfd0e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlMjQyZDM5NTI5NGFmOWVkMThkODgyNWNiYzNmM2JlOGI0YWJkOTg3OThlYTM0NjI4YjgzYTc3MjJiNDkzMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA4N2VlM2FhZTc0MDJhZjRhMzcwZTk2NWNiNzFhOGU3OTMzOTE0MDAxMTUyMzhhMDI1MTkxNjE2NjJlYTgxYTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRhZGNkZjNmN2YwNzk2MmY3ODI3ZjQ3ZTZjNWExNTJkYzZiM2M1MzMwNDBmZWViNzVkMjM1OGU1MWJiNjk1MjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkY2I5NjYzOTY3N2JjNTNmNzIxZWJlMzE4NmExZWFmMjEzMTE1YTcyNjk4NTcyOGNhZWEzYTNjNWI3MDNmZTIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0fd24dfd9a104736ab09fdfb512faa78",
+      "statement": "Resume tokens are single-use JWT-backed credentials with hashed server storage: issuance signs an HS256 token for 24 hours, stores only the SHA-256 hash plus token metadata, and revokes older unconsumed tokens for the same session before creating the new token.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/domain/domain.go#L9-L20",
+          "version": "repo-lines-v1:sha256:69fe6a5a008274dec0f91b9a5427dcfcd19cddf5453a60224c3d9a064ab9b00e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1MDE2NWNkYjMyMmQ0M2Y3YjIwMmIzMDdhYTkyYmZkOGQ5NjU5MmNmYTk1MjBjM2FmYmFjYTZmNGJhOGMwYmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0OGYyNmIyZjNmZWNhYjExYzJhYTUzZDk3YzU4OTUzMjdhMjQwMDJhN2E0NjEzYWFkMDdkODczZGJlM2Q0M2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlZjk0MDBhYTg4YjMwODIyOGFkN2Q3YjkxYTg5ZDc0ZmIyZWM2Y2I5MjhjZGExYzJhOTY3NjNlZWU3NjU4MjEifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/jwt.go#L11-L52",
+          "version": "repo-lines-v1:sha256:74fd4d6c08316b7422faddc29be187d72f825b0bd74b2ee9092d6bf468118492:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4ZjQ5MTk3YTZhMmMyYmU2YTg2ODFjODQyNmVlYmZhYTU4ZGM4M2Y3OThkM2NmNmU1ZGFjNzUxNzRjYmNhMWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0OGYyNmIyZjNmZWNhYjExYzJhYTUzZDk3YzU4OTUzMjdhMjQwMDJhN2E0NjEzYWFkMDdkODczZGJlM2Q0M2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0ODBiZDI3MTc3ZGM5NDM2ZDY4ZWQ3NGFlNTBiYzA0YzVjOTdhNGExMGQ2MGZlNTU0MDc4OTk1NzhlODgxM2YifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L50-L84",
+          "version": "repo-lines-v1:sha256:0b63cb241e339495aa7bc24502dfd7a8af26228967af61b3541e84b207958dd0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0MmVjZjE5ZmRmODI4NTM0NDRhMjk4NmQ1YWRkZTM2MTNmYjliNjE3OGU0MWFlOTg4ZjAzNDk1ZGI5YTEzNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImEwMzAzMGE5MzkzYjhmZTE0Yzc5NGIxMTlkZDRkNWNkZDY3M2RmYjlkZmZlNzAxMTJmZjkzMDRhODYwOGRmNDcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_03d9c7c7204643a79fc8f7e9b2accb56",
+      "statement": "Resuming a session requires a verified JWT plus matching stored token metadata, and the backend rejects revoked, consumed, expired, or mismatched tokens; successful resume marks the token consumed, while an issued-versus-consumed context mismatch is logged as an audit-risk signal rather than blocked.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L86-L139",
+          "version": "repo-lines-v1:sha256:3154d12b89cea0646256ca9c97205a6786e8b6efe11dd0c903b4e4f734cb040f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmNDJhMmVmZjdkNzM1YmFiYmQ0NGU2NTYyNzQwZGY0NjE4MjVlODNhOTg1OWI0NDljMTU2ZWQ1NWFiZjUxYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ5NmVkMjcyMDIxODRkMGY0ZTQ5MGFmNjVjODc4MTI4OGUyNWNhMjYzNzRiOTU5MDIxNTk3OWMzYjcwZmVkYmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZiNmIzNjU0ZTM0NDNmZDZkMjM4YzdlYmVmMWJjNTllNzI2NDc5ZGQyZWY3YWQwNDMwZmNhZDE1MGRiZTgwYjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a9a527695c514c0fa02ef979a770f5bf",
+      "statement": "Inactivity notifications can only be triggered for sessions with an authenticated user and a verified notification destination; the service generates a fresh resume token, sends it through the notification provider, and persists a notification log even when sending fails.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/domain/domain.go#L22-L29",
+          "version": "repo-lines-v1:sha256:807b1b245ba6486c1c51b346c0c7d4667dcd793855319787b9b20e5cc1a1a015:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWE4YWE5ZDIxZTE4MWEyZGZkMzk2Zjg0MzM4Nzc5YzYwYTA2NWQ2M2IzNWE0ZjNjNGIxNjdmYzdmY2E2ZjRmNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjVlYTZhMjNjYzUxMmQxMzM3MzRiZDZhODQ1MTQ2OGVhNzZkYmY3Mjk4ZmZhZTg4ZWMwYmJlZjkyYTAwYzE5NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/resume_session/usecase/service.go#L141-L183",
+          "version": "repo-lines-v1:sha256:6047beeb4bc34e5f00d0fb490ee6bf97ee410457da6733e2b1de357a2a5fcf8a:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwM2ZmNWQ2MzkyNWI3Y2RmOGMwZmE3YjIzMzk2YWQ1NGE3OTc1MTBjZTAzYWM3OTkzYzBmMTg4NWJiZTc1M2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJiMjQ3ODgwYThlNWEyMGJiYjdmMGQ5NTg4MTkyOTgwYzQzNWU4ZTgyZGU3Y2UyYTRmZWI5NzA2ZTJjMTZlY2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e91e33be32b8430a94bce4d907d3a1f3",
+      "statement": "Checkout promotions are session-scoped and idempotent per session: `StartPromotion` returns an existing promotion for the same session without restarting it, but checks user- or device-level cooldown eligibility across prior sessions before creating a new promotion.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/promotions/model.go#L35-L57",
+          "version": "repo-lines-v1:sha256:fe22a8363a8931485707c652b47f8d795d13fb6d843f97ddcfaa6abbb1d285d8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBiMWVmZmY4NWU1OWVhZmFmNzExNGI3M2QyMGQ4Y2Y1ZmRmYzllNzdmMjVmOTM2OGEyNTgwOThiN2NjYjM3ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYmVkMDU2ZGY0YmQ4NWRkMzY5ZjgyMGY0MDI3NTYwYTk3NzVjYmI1OGQ2NjI0MTBmODQ4MjUxZGExMjdmN2UiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/promotions/service.go#L30-L87",
+          "version": "repo-lines-v1:sha256:f21fcc3ffbc6925abab69d60aa74a0de629ec80122a0c7bb2f0f3aa8620c01b9:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzNmNhMGE5NTMxN2Q3M2I1YzQ0MDE1ZmZmNzhhZTA5OGEzODE4MDU2MGE1MDU0MjUyODdiN2RiOTRmMzU1NjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg1ZWI2YTkyZWExNTRkZmU1ZTRhOWM3YmI3OTUzN2UyZDA0ZWZkNzMyNzhkOWIzMTk5NGUzYmRmMGZkODViYTIifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/promotions/service_test.go#L86-L129",
+          "version": "repo-lines-v1:sha256:c74e55d81133e96b44176ce1d1adddef8319ab21cc7dae9d4da61c1f525b398e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2NTgwYTc5MmJhY2VlZDA2N2JhYjVjNTVlYmNkOWE3ODQ0MTk2MTJjZmVkNGRhNWZkMThhNzNjODZkMjU1MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlNGU0MmY3MDQwMTdiZmYxMWViODYxODQ1ZDMyYTA0MjRhNjc4OGJhMWU3NDQyOGFiMTI2MDJjOGEzZmEyZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE5ZGMyMzkxMDU5ZTZmYjc4YmZhY2ZkNmFhNTU5OWYzNTVjYWE4OTQ3OWEwNmE1YjE1NzQ1NWZhYWZlOWQ1NzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3f01cc9e59f3474f9c269333b022d143",
+      "statement": "Promotion expiry and reward issuance are authoritative backend-time decisions: new promotions default to a 15-minute expiry and 30-day cooldown, `GetStatus` lazily flips overdue active promotions to `EXPIRED`, payment after expiry never issues a voucher, payment before expiry transitions to pending voucher issuance, and voucher-generation failures move the promotion into the only retryable state `ISSUE_RETRY_REQUIRED`.",
+      "evidence": [
+        {
+          "resource": "repo://services/main-backend/internal/promotions/service.go#L110-L181",
+          "version": "repo-lines-v1:sha256:6481e714a1bbfb5e918237704d3788f7a4a77fd2344ad9b2411b647018664efa:eyJzZWxlY3RlZExpbmVDb3VudCI6NzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkwYWNlYjY3MTZjMTMyNWI2MmE4ZWFiMzMxZGNiNzlmNDU0MWEyMGQ2ZDY5N2M3MWFkYzcwN2FhZmM1ZjU5NGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyMTUyMGY3ZGJlNzQ1ZmEyZTE5ZjUyNzRlYmRhOTdjODEwMjY1MTI0NDNjY2I3MGMxZjA0NjQyZDE0MWQyMWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/promotions/service.go#L58-L107",
+          "version": "repo-lines-v1:sha256:e8168ca28918493b3fb000226c3a0ac4b2d084164be2767e0c254bb0610a7cae:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEwODljMDJkMTk3YzQ2MzA4ZjE1OTg1ZTZhYTY0ZDZkMjgxYmMzNTg2ZTQ5MjU3ZTg1ZjJjMjFlOGFmN2FjODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRlMzY3MzI4MWU4YzgxN2UyYThiNjA3NGQ4YjAyZjEyNWUyODk1OWJlN2Q3ZDZjNWQzYmYzOGQ1ZDE1Y2RmM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2NmIwMzA2ZjIwNjViYjFjNTcxMTFkYTg5ZjFkNDc5Yzc4ZmY4NTU2YTQ4NDQyYjE2NzlmZmEwN2JlNDljMzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVlYTAzZTkwMzk3OWY5NDliYjM2YzViOWJhMzZjMjNjMGEwOGI2OTIyOGY1OTMyNDVjZmNlMmFiNjM2MjUyMTQifQ"
+        },
+        {
+          "resource": "repo://services/main-backend/internal/promotions/service_test.go#L131-L189",
+          "version": "repo-lines-v1:sha256:4182469989eabb274231c5409b2b079c2fdc67c0724c90bcc59c202a213a4a6a:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5YjJkMWI1MDJlNzJmMDZkMjkyMzJhOGM1Nzc5N2ZjNDI1YzVmOTU2YmNlZDIzYjEyMjUwZTViYTZkOGE1ZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxMmNhMzQ1Y2NmNzViZjljMDgwNmJjZTY5NWJlOGRlODA4Yjc5OTg0MjUxYTdhNTRkMjAyY2Y2MTAxZGQ0NTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTY0MDc5YzNjNWM4MTUyMGVmMzNhMmI5ZDJlMTVhMWI4NGQ3MjgwZGI4NTkwZGNkNjU3NDdlM2UwMTJhNDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-28T02:48:19.098Z"
+  }
+}
